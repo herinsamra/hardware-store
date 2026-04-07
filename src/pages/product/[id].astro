@@ -1,14 +1,33 @@
 ---
 import Layout from '../../components/Layout.astro';
-import { fetchProductById } from '../../lib/products';
+import { fetchAllProducts, fetchProductById } from '../../lib/products';
 
-export async function getStaticPaths() {
-  // For static generation - remove if using SSR only
-  return [];
+export const prerender = true;
+
+// Define Product type (match what your API returns)
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description?: string;
+  category: string;
+  subcategory: string;
+  subSubcategory?: string;
+  sku: string;
+  stock: number;
+  image: string;
+  thumbnail?: string;
 }
 
-const { id } = Astro.params;
-const product = await fetchProductById(id);
+export async function getStaticPaths() {
+  const allProducts: Product[] = await fetchAllProducts();
+  return allProducts.map((product: Product) => ({
+    params: { id: String(product.id) }
+  }));
+}
+
+const { id } = Astro.params as { id: string };
+const product: Product | null = await fetchProductById(id);
 
 if (!product) {
   return Astro.redirect('/404');
@@ -38,6 +57,11 @@ if (!product) {
           <div style="margin-bottom: 1rem;">
             <strong>Subcategory:</strong> {product.subcategory}
           </div>
+          {product.subSubcategory && (
+            <div style="margin-bottom: 1rem;">
+              <strong>Sub‑Subcategory:</strong> {product.subSubcategory}
+            </div>
+          )}
           <div style="margin-bottom: 1rem;">
             <strong>Availability:</strong> {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
           </div>

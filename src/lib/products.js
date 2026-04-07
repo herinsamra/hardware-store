@@ -5,6 +5,10 @@ import matter from 'gray-matter';
 const productsDirectory = path.join(process.cwd(), 'src/content/products');
 
 export async function fetchAllProducts() {
+  if (!fs.existsSync(productsDirectory)) {
+    console.warn('Products directory not found, returning empty array');
+    return [];
+  }
   const files = fs.readdirSync(productsDirectory);
   const products = files
     .filter(file => file.endsWith('.md'))
@@ -12,7 +16,6 @@ export async function fetchAllProducts() {
       const filePath = path.join(productsDirectory, file);
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContents);
-      // Generate Cloudinary URL from first image (if any)
       const mainImage = data.images?.[0]?.image || '';
       return {
         id: file.replace('.md', ''),
@@ -39,17 +42,18 @@ export async function fetchProductById(id) {
   const { data } = matter(fileContents);
   const mainImage = data.images?.[0]?.image || '';
   return {
-  id: file.replace('.md', ''),
-  name: data.name,
-  price: data.price,
-  description: data.description,
-  category: data.category,
-  subcategory: data.subcategory,
-  subSubcategory: data.subSubcategory,   // ADD THIS
-  sku: data.sku,
-  stock: data.stock,
-  brand: data.brand,
-  image: mainImage,
-  thumbnail: mainImage.replace('/upload/', '/upload/c_fill,w_200,h_200/')
-};
+    id,
+    name: data.name,
+    price: data.price,
+    description: data.description,
+    category: data.category,
+    subcategory: data.subcategory,
+    subSubcategory: data.subSubcategory,
+    sku: data.sku,
+    stock: data.stock,
+    brand: data.brand,
+    image: mainImage,
+    thumbnail: mainImage.replace('/upload/', '/upload/c_fill,w_200,h_200/'),
+    images: data.images || []
+  };
 }

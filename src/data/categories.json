@@ -1,0 +1,268 @@
+{
+  "Electrical": {
+    "Wiring Devices": {
+      "Switches": [],
+      "Outlets": [],
+      "Dimmers": [],
+      "Switch Plates": []
+    },
+    "Power Distribution": {
+      "Circuit Breakers": [],
+      "Distribution Boards": [],
+      "MCB Boxes": []
+    },
+    "Wires and Cables": {
+      "Concealed Wires": [],
+      "Multicore Wires": [],
+      "Submersible Wires": [],
+      "Service Wires": []
+    },
+    "Lighting Fixtures": {
+      "LED Bulbs & Tubes": [],
+      "Concealed Lights": [],
+      "Surface Lights": [],
+      "Submersible Pumps": [],
+      "Decorative Lights": []
+    },
+    "Fans": {
+      "Ceiling Fans": [],
+      "Pedestal Fans": [],
+      "Table Fans": [],
+      "Wall Fans": [],
+      "Exhaust Fans": []
+    },
+    "Water Heaters": {
+      "Instant Water Heaters": [],
+      "Storage Water Heaters": [],
+      "Immersion Water Heaters": []
+    },
+    "General": {
+      "Smart Switches": [],
+      "Conduit Pipes": [],
+      "Conduit Fittings": [],
+      "Enclosures": [],
+      "Capacitors & Starters": []
+    },
+    "Stabilizers": {
+      "V Guard": []
+    },
+    "Household Items": {
+      "Iron Box": []
+    }
+  },
+  "Hardwares": {
+    "Locks and Latches": {
+      "Door Locks": [],
+      "Padlocks": []
+    },
+    "Handles and Knobs": {
+      "SS Handles": [],
+      "Brass Handles": []
+    },
+    "Curtain Accessories": {
+      "Curtain Holder": [],
+      "Curtain Rods": []
+    },
+    "Cabinet Hardware": {
+      "Plain Basket": [],
+      "Designer Basket": [],
+      "Other Items": [],
+      "Drawer Channels": []
+    },
+    "Hinges": {
+      "Door Hinges": [],
+      "Cut Hinges": [],
+      "Auto Hinges": [],
+      "Military Hinges": []
+    },
+    "Fasteners": {
+      "Screws": [],
+      "Nails": [],
+      "Bolts": [],
+      "Anchors": []
+    }
+  },
+  "Paints": {
+    "Emulsion": {
+      "Interior Emulsion": [],
+      "Exterior Emulsion": [],
+      "Decorative Emulsion": [],
+      "Cooling Paints": []
+    },
+    "Enamels": {
+      "Gloss Enamel": [],
+      "Satin Enamel": [],
+      "Metallic Enamel": []
+    },
+    "Sealers": {
+      "Sanding Sealer": [],
+      "Wood Filler": [],
+      "Sealer 2 Pack": []
+    },
+    "Water Proofing": {
+      "Roof & Terraces": [],
+      "Below Ground": [],
+      "Kitchen & Bathrooms": [],
+      "Interior & Exterior Wall": [],
+      "Other Items": []
+    },
+    "Wood Finishes": {
+      "Interior Glossy": [],
+      "Interior Matt": [],
+      "Exterior Glossy": [],
+      "Exterior Matt": []
+    },
+    "Primers": {
+      "Exterior Wall Primers": [],
+      "Interior Wall Primers": [],
+      "Wood Primer": [],
+      "Metal Primers": []
+    },
+    "Putty": {
+      "Exterior Wall Putty": [],
+      "Acrylic Wall Putty": [],
+      "Water Proof Wall Putty": [],
+      "Texture Putty": []
+    },
+    "Brushes and Rollers": {
+      "Interior Roller": [],
+      "Exterior Roller": [],
+      "Decorative Roller": [],
+      "Paint Brushes": [],
+      "Flat Brushes": []
+    }
+  },
+  "Plumbing": {
+    "Pipes": {
+      "PVC Pipe": [],
+      "CPVC Pipe": [],
+      "UPVC Pipes": [],
+      "Column Pipes": [],
+      "PPR Pipes": []
+    },
+    "Valves": {
+      "Ball Valves": [],
+      "Check Valves": [],
+      "Gate Valves": []
+    },
+    "Tanks": {
+      "Over Head Tanks": [],
+      "Concealed Flush Tanks": [],
+      "Wall Mounted Flush Tanks": [],
+      "Other Tanks": []
+    },
+    "Pipe Fittings": {
+      "Elbows & Tees": [],
+      "Sockets & Adaptors": [],
+      "Union & End Caps": [],
+      "Reducers & Bushings": [],
+      "Brass Fittings": []
+    },
+    "Manhole Covers": {
+      "Pupa Heavy Duty Man Hole Cover": [],
+      "FRP Man Hole Cover": []
+    },
+    "Water Pumps": {
+      "Self Priming Pumps": [],
+      "Mono Block Pumps": [],
+      "Submersible Pumps": [],
+      "Open Well Submersible Pumps": [],
+      "Booster Pumps": []
+    },
+    "Hoses": {
+      "Suction Hose": [],
+      "Braided Hose": [],
+      "Nylon Connector": [],
+      "Rubber Hose": []
+    },
+    "PP R Fittings": {
+      "Prince": []
+    }
+  },
+  "Sanitary Ware": {
+    "Closets": {
+      "Single Piece Closets": [],
+      "Wall Hung Closets": [],
+      "Floor Mounted Closets": [],
+      "Indian Closets": [],
+      "Standard Urinals": []
+    },
+    "Basins": {
+      "Wall Hung Basins": [],
+      "Pedestal Basins": [],
+      "Table Top Basins": [],
+      "Bowl Basins": [],
+      "Kitchen Sinks": []
+    },
+    "Seat Covers": {
+      "Standard Seat Covers": [],
+      "Solid Seat Covers": []
+    },
+    "Faucets": {
+      "Bathroom Faucets": [],
+      "Kitchen Faucets": [],
+      "Shower Faucets": [],
+      "Bathtub Faucets": [],
+      "Basin Faucets": []
+    },
+    "Showers": {
+      "Shower Heads": [],
+      "Shower Panels": [],
+      "Shower Arms": []
+    },
+    "Divertors": {
+      "High Flow Divertors": [],
+      "Medium Flow Divertors": []
+    },
+    "Bath Tub": {
+      "Pupa Bath Tub": [],
+      "Hindware Bath Tub": [],
+      "Parryware Bath Tub": [],
+      "Jaquar Bath Tub": []
+    },
+    "Bathroom Accessories": {
+      "Towel Bars & Rack": [],
+      "Soap Dishes & Dispensers": [],
+      "Bathroom Cabinets": [],
+      "Cabinet & Mirrors": [],
+      "Vanity Units": []
+    }
+  },
+  "Brands": {
+    "Electricals": [
+      "Havells",
+      "Opple",
+      "Inventaa",
+      "Legrand",
+      "Hi-Fi",
+      "Arcline",
+      "Finolex",
+      "Luminous"
+    ],
+    "Plumbing": [
+      "Finolex",
+      "Supreme",
+      "Ashirvad",
+      "Parryware",
+      "Jaquar & Essco",
+      "Jass",
+      "Watertec",
+      "Pupa"
+    ],
+    "Hardwares": [
+      "Godrej",
+      "Nova",
+      "Vinayak",
+      "Aceline",
+      "Sleek",
+      "Hindware",
+      "Glen"
+    ],
+    "Paints": [
+      "Asian",
+      "Esdee",
+      "Dr. Fixit",
+      "Padmashree"
+    ]
+  }
+}

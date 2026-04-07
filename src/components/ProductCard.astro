@@ -1,0 +1,22 @@
+---
+export interface Props {
+  product: {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    category: string;
+  }
+}
+
+const { product } = Astro.props;
+---
+
+<a href={`/product/${product.id}`} class="product-card">
+  <img src={product.image} alt={product.name} class="product-image" loading="lazy" />
+  <div class="product-info">
+    <div class="product-name">{product.name}</div>
+    <div class="product-price">${product.price.toFixed(2)}</div>
+    <div style="font-size: 0.75rem; color: #6c757d; margin-top: 0.25rem;">{product.category}</div>
+  </div>
+</a>

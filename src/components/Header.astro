@@ -1,0 +1,18 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="logo-center">
+      <a href="/" class="logo">
+        <span>🏪</span> HARDWARE<span>STORE</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="/products" class={currentPath === '/products' ? 'active' : ''}>PRODUCTS</a>
+      <a href="/products?brand=featured" class={currentPath.includes('brand') ? 'active' : ''}>BRANDS</a>
+      <a href="/contact" class={currentPath === '/contact' ? 'active' : ''}>CONTACT</a>
+    </div>
+  </div>
+</nav>

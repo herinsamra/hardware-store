@@ -1,0 +1,27 @@
+---
+import Layout from '../components/Layout.astro';
+import { categories } from '../lib/categories';
+---
+
+<Layout>
+  <div style="padding: 2rem 0;">
+    <h1 style="text-align: center;">Welcome to Hardware Store</h1>
+    {Object.entries(categories).map(([catName, subcats]) => (
+      <section class="category-section">
+        <h2 class="category-title">{catName}</h2>
+        {Object.entries(subcats).map(([subcatName, subsubcats]) => (
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: #c5a028; margin-bottom: 0.5rem;">{subcatName}</h3>
+            <div class="subcategory-grid">
+              {Object.keys(subsubcats).map(subsub => (
+                <a href={`/products?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subcatName)}&subsub=${encodeURIComponent(subsub)}`} class="subcategory-item">
+                  {subsub}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+    ))}
+  </div>
+</Layout>

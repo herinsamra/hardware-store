@@ -1,0 +1,49 @@
+---
+import Layout from '../../components/Layout.astro';
+import { fetchProductById } from '../../lib/products';
+
+export async function getStaticPaths() {
+  // For static generation - remove if using SSR only
+  return [];
+}
+
+const { id } = Astro.params;
+const product = await fetchProductById(id);
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout>
+  <div style="padding: 2rem 0;">
+    <div class="product-detail">
+      <div>
+        <img src={product.image} alt={product.name} class="product-detail-image" />
+      </div>
+      <div class="product-detail-info">
+        <h1>{product.name}</h1>
+        <div class="product-detail-price">${product.price?.toFixed(2)}</div>
+        <div style="margin: 1rem 0; padding: 0.5rem; background: #e9ecef; border-radius: 8px; display: inline-block;">
+          SKU: {product.sku}
+        </div>
+        <div class="product-detail-description">
+          <h3>Description</h3>
+          <p>{product.description || 'High-quality product perfect for your home improvement needs.'}</p>
+        </div>
+        <div style="margin-top: 2rem;">
+          <div style="margin-bottom: 1rem;">
+            <strong>Category:</strong> {product.category}
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <strong>Subcategory:</strong> {product.subcategory}
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <strong>Availability:</strong> {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+          </div>
+          <button class="button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

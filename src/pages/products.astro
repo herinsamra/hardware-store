@@ -1,0 +1,108 @@
+---
+import Layout from '../components/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { fetchAllProducts } from '../lib/products';
+
+// Define Product type (match what your API returns)
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description?: string;
+  category: string;
+  subcategory: string;
+  subSubcategory?: string;   // ADD THIS LINE
+  sku: string;
+  stock: number;
+  image: string;
+  thumbnail?: string;
+}
+
+// Get URL parameters with null checks
+const url = new URL(Astro.request.url);
+const subcategoryParam = url.searchParams.get('subcategory');
+const subSubParam = url.searchParams.get('subsub');
+const categoryParam = url.searchParams.get('category');
+const page = parseInt(url.searchParams.get('page') || '1', 10);
+const productsPerPage = 12;
+
+// Fetch all products (typed)
+const allProducts: Product[] = await fetchAllProducts();
+
+// Filter products
+let filteredProducts = allProducts;
+if (subSubParam) {
+  filteredProducts = allProducts.filter(p => p.subSubcategory === subSubParam);
+} else if (subcategoryParam) {
+  filteredProducts = allProducts.filter(p => p.subcategory === subcategoryParam);
+} else if (categoryParam) {
+  filteredProducts = allProducts.filter(p => p.category === categoryParam);
+}
+// Pagination
+const totalProducts = filteredProducts.length;
+const totalPages = Math.ceil(totalProducts / productsPerPage);
+const startIndex = (page - 1) * productsPerPage;
+const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+
+// Helper to build pagination URL
+function getPageUrl(pageNum: number): string {
+  const params = new URLSearchParams(url.searchParams);
+  params.set('page', pageNum.toString());
+  return `?${params.toString()}`;
+}
+
+// Calculate which page numbers to display
+let startPage = Math.max(1, page - 2);
+let endPage = Math.min(totalPages, page + 2);
+
+if (endPage - startPage < 4) {
+  if (startPage === 1) endPage = Math.min(totalPages, startPage + 4);
+  if (endPage === totalPages) startPage = Math.max(1, endPage - 4);
+}
+
+const pageNumbers: number[] = [];
+for (let i = startPage; i <= endPage; i++) {
+  pageNumbers.push(i);
+}
+---
+
+<Layout>
+  <div style="padding: 2rem 0;">
+    <h1 style="color: #1a472a; margin-bottom: 0.5rem;">
+       {subSubParam ? subSubParam : (subcategoryParam ? subcategoryParam : (categoryParam ? `${categoryParam} Products` : 'All Products'))}
+    </h1>
+    <p style="color: #6c757d; margin-bottom: 2rem;">{totalProducts} products found</p>
+    
+    {
+      paginatedProducts.length > 0 ? (
+        <div class="product-grid">
+          {paginatedProducts.map((product: Product) => <ProductCard product={product} />)}
+        </div>
+      ) : (
+        <p style="text-align: center; padding: 3rem;">No products found in this category.</p>
+      )
+    }
+    
+    {/* Pagination */}
+    {totalPages > 1 && (
+      <div class="pagination">
+        {page > 1 && (
+          <a href={getPageUrl(page - 1)}>Previous</a>
+        )}
+        
+        {pageNumbers.map((pageNum) => (
+          <a 
+            href={getPageUrl(pageNum)}
+            class:list={[{ current: pageNum === page }]}
+          >
+            {pageNum}
+          </a>
+        ))}
+        
+        {page < totalPages && (
+          <a href={getPageUrl(page + 1)}>Next</a>
+        )}
+      </div>
+    )}
+  </div>
+</Layout>

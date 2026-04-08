@@ -1,9 +1,7 @@
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  output: 'static',
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  integrations: [tailwind()],
+  output: 'static', // or 'server' if you need SSR
 });

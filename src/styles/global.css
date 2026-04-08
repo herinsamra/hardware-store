@@ -169,8 +169,10 @@
 
   /* Category Carousel */
   .category-carousel {
-    @apply flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-hide;
+    @apply flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .category-carousel::-webkit-scrollbar {
@@ -191,16 +193,7 @@
   }
 }
 
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-}
+
 
 /* Animation for brand scroller */
 @keyframes scroll {

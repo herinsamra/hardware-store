@@ -26,5 +26,20 @@ import '../styles/global.css';
       <p style="margin-top: 0.5rem; font-size: 0.875rem;">Quality tools & materials for every project</p>
     </div>
   </footer>
+  <script is:inline>
+  // Netlify Identity Widget
+  (function() {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function() {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  })();
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
 </body>
 </html>

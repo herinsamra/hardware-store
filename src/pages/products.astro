@@ -11,7 +11,7 @@ interface Product {
   description?: string;
   category: string;
   subcategory: string;
-  subSubcategory?: string;   // ADD THIS LINE
+  subSubcategory?: string;
   sku: string;
   stock: number;
   image: string;
@@ -23,6 +23,7 @@ const url = new URL(Astro.request.url);
 const subcategoryParam = url.searchParams.get('subcategory');
 const subSubParam = url.searchParams.get('subsub');
 const categoryParam = url.searchParams.get('category');
+const brandParam = url.searchParams.get('brand');
 const page = parseInt(url.searchParams.get('page') || '1', 10);
 const productsPerPage = 12;
 
@@ -38,6 +39,19 @@ if (subSubParam) {
 } else if (categoryParam) {
   filteredProducts = allProducts.filter(p => p.category === categoryParam);
 }
+
+// Build page title
+let pageTitle = 'All Products';
+if (brandParam) {
+  pageTitle = `${brandParam} Products`;
+} else if (subSubParam) {
+  pageTitle = subSubParam;
+} else if (subcategoryParam) {
+  pageTitle = subcategoryParam;
+} else if (categoryParam) {
+  pageTitle = `${categoryParam} Products`;
+}
+
 // Pagination
 const totalProducts = filteredProducts.length;
 const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -66,12 +80,14 @@ for (let i = startPage; i <= endPage; i++) {
 }
 ---
 
-<Layout>
-  <div style="padding: 2rem 0;">
-    <h1 style="color: #1a472a; margin-bottom: 0.5rem;">
-       {subSubParam ? subSubParam : (subcategoryParam ? subcategoryParam : (categoryParam ? `${categoryParam} Products` : 'All Products'))}
-    </h1>
-    <p style="color: #6c757d; margin-bottom: 2rem;">{totalProducts} products found</p>
+<Layout title={`${pageTitle} | Hardware Store`}>
+  <div>
+    <div class="mb-6">
+      <h1 class="text-2xl sm:text-3xl font-bold text-primary mb-1">
+        {pageTitle}
+      </h1>
+      <p class="text-gray-500">{totalProducts} products found</p>
+    </div>
     
     {
       paginatedProducts.length > 0 ? (
@@ -79,7 +95,15 @@ for (let i = startPage; i <= endPage; i++) {
           {paginatedProducts.map((product: Product) => <ProductCard product={product} />)}
         </div>
       ) : (
-        <p style="text-align: center; padding: 3rem;">No products found in this category.</p>
+        <div class="text-center py-16 bg-white rounded-xl shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <p class="text-gray-500 text-lg">No products found in this category.</p>
+          <a href="/products" class="inline-block mt-4 text-secondary hover:underline font-medium">
+            Browse all products
+          </a>
+        </div>
       )
     }
     
@@ -87,7 +111,12 @@ for (let i = startPage; i <= endPage; i++) {
     {totalPages > 1 && (
       <div class="pagination">
         {page > 1 && (
-          <a href={getPageUrl(page - 1)}>Previous</a>
+          <a href={getPageUrl(page - 1)} class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Previous
+          </a>
         )}
         
         {pageNumbers.map((pageNum) => (
@@ -100,7 +129,12 @@ for (let i = startPage; i <= endPage; i++) {
         ))}
         
         {page < totalPages && (
-          <a href={getPageUrl(page + 1)}>Next</a>
+          <a href={getPageUrl(page + 1)} class="flex items-center gap-1">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
         )}
       </div>
     )}

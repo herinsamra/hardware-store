@@ -1,0 +1,70 @@
+---
+import { fetchBrands, type Brand } from '../lib/categories';
+
+const brands = await fetchBrands();
+---
+
+<section class="py-16 bg-white overflow-hidden">
+  <div class="container mb-10">
+    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-2 text-center">
+      Trusted Brands
+    </h2>
+    <p class="text-gray-600 text-center max-w-2xl mx-auto">
+      We partner with industry-leading brands to bring you quality products
+    </p>
+  </div>
+  
+  <div class="relative">
+    <!-- Gradient Overlays -->
+    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    
+    <!-- Scrolling Container -->
+    <div class="flex items-center overflow-hidden">
+      <div class="brand-scroller">
+        {/* First set of brands */}
+        {brands.map((brand) => (
+          <a 
+            href={`/products?brand=${encodeURIComponent(brand.name)}`}
+            class="flex-shrink-0 flex flex-col items-center gap-2 group"
+            title={brand.name}
+          >
+            <div class="w-24 h-16 flex items-center justify-center bg-gray-50 rounded-lg p-3 transition-all group-hover:bg-gray-100 group-hover:shadow-md">
+              <img 
+                src={brand.logo} 
+                alt={brand.name}
+                class="brand-logo max-w-full max-h-full"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-xs text-gray-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              {brand.name}
+            </span>
+          </a>
+        ))}
+        
+        {/* Duplicate set for seamless loop */}
+        {brands.map((brand) => (
+          <a 
+            href={`/products?brand=${encodeURIComponent(brand.name)}`}
+            class="flex-shrink-0 flex flex-col items-center gap-2 group"
+            title={brand.name}
+            aria-hidden="true"
+          >
+            <div class="w-24 h-16 flex items-center justify-center bg-gray-50 rounded-lg p-3 transition-all group-hover:bg-gray-100 group-hover:shadow-md">
+              <img 
+                src={brand.logo} 
+                alt=""
+                class="brand-logo max-w-full max-h-full"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-xs text-gray-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              {brand.name}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

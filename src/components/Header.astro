@@ -1,18 +1,29 @@
 ---
 const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/products', label: 'PRODUCTS' },
+  { href: '/brands', label: 'BRANDS' },
+  { href: '/contact', label: 'CONTACT' },
+];
 ---
 
 <nav class="navbar">
   <div class="navbar-content">
     <div class="logo-center">
       <a href="/" class="logo">
-        <span>🏪</span> HARDWARE<span>STORE</span>
+        HARDWARE<span>STORE</span>
       </a>
     </div>
     <div class="nav-links">
-      <a href="/products" class={currentPath === '/products' ? 'active' : ''}>PRODUCTS</a>
-      <a href="/products?brand=featured" class={currentPath.includes('brand') ? 'active' : ''}>BRANDS</a>
-      <a href="/contact" class={currentPath === '/contact' ? 'active' : ''}>CONTACT</a>
+      {navLinks.map(link => (
+        <a 
+          href={link.href} 
+          class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}
+        >
+          {link.label}
+        </a>
+      ))}
     </div>
   </div>
 </nav>

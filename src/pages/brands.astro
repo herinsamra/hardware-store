@@ -1,0 +1,35 @@
+---
+import Layout from '../components/Layout.astro';
+import { fetchBrands } from '../lib/categories';
+
+const brands = await fetchBrands();
+---
+
+<Layout 
+  title="Our Brands | Hardware Store"
+  description="Shop from trusted brands like Havells, Finolex, Asian Paints, Jaquar, Godrej and more."
+>
+  <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-2">Our Brands</h1>
+  <p class="text-gray-600 mb-8">We partner with industry-leading brands to bring you quality products</p>
+  
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    {brands.map(brand => (
+      <a 
+        href={`/products?brand=${encodeURIComponent(brand.name)}`}
+        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center gap-4 group"
+      >
+        <div class="w-20 h-14 flex items-center justify-center">
+          <img 
+            src={brand.logo} 
+            alt={brand.name}
+            class="max-w-full max-h-full grayscale group-hover:grayscale-0 transition-all"
+            loading="lazy"
+          />
+        </div>
+        <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors">
+          {brand.name}
+        </span>
+      </a>
+    ))}
+  </div>
+</Layout>

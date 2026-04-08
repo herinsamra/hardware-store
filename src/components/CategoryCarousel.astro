@@ -1,0 +1,115 @@
+---
+import { fetchCategories, type Category } from '../lib/categories';
+
+const categories = await fetchCategories();
+---
+
+<section class="py-16 bg-light">
+  <div class="container">
+    <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-2 text-center">
+      Shop by Category
+    </h2>
+    <p class="text-gray-600 text-center mb-10 max-w-2xl mx-auto">
+      Browse our wide selection of quality hardware supplies
+    </p>
+    
+    <div class="relative">
+      <!-- Navigation Arrows -->
+      <button 
+        id="carousel-prev" 
+        class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors hidden md:flex items-center justify-center -ml-4"
+        aria-label="Previous categories"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      
+      <button 
+        id="carousel-next" 
+        class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors hidden md:flex items-center justify-center -mr-4"
+        aria-label="Next categories"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      
+      <!-- Carousel Container -->
+      <div 
+        id="category-carousel" 
+        class="category-carousel px-1"
+      >
+        {categories.map((category) => (
+          <article class="category-card">
+            <div class="relative h-40 bg-gradient-to-br from-primary to-primary-dark">
+              <img 
+                src={category.image} 
+                alt={category.name}
+                class="w-full h-full object-cover opacity-60"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="bg-white/95 rounded-full p-4 shadow-lg">
+                  <img 
+                    src={category.icon} 
+                    alt="" 
+                    class="w-10 h-10 object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-5">
+              <h3 class="text-xl font-bold text-primary mb-3">{category.name}</h3>
+              
+              <ul class="space-y-1 mb-4">
+                {category.subcategories.slice(0, 3).map((sub) => (
+                  <li class="text-sm text-gray-600 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+                    {sub}
+                  </li>
+                ))}
+              </ul>
+              
+              <a 
+                href={`/products?category=${encodeURIComponent(category.name)}`}
+                class="inline-flex items-center gap-1 text-secondary font-semibold text-sm hover:gap-2 transition-all"
+              >
+                View More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const carousel = document.getElementById('category-carousel');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  
+  const scrollAmount = 300;
+  
+  prevBtn?.addEventListener('click', () => {
+    carousel?.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+  
+  nextBtn?.addEventListener('click', () => {
+    carousel?.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+  
+  // Mouse wheel horizontal scroll
+  carousel?.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+      e.preventDefault();
+      carousel.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+</script>

@@ -1,0 +1,303 @@
+---
+import Layout from '../components/Layout.astro';
+import categoriesData from '../data/categories.json';
+
+const { Brands, ...categories } = categoriesData;
+const brandList = Brands ? Object.values(Brands).flat() : [];
+
+function getFilterUrl(category?: string, subcategory?: string, subsub?: string, brand?: string) {
+  const params = new URLSearchParams();
+  if (category) params.set('category', category);
+  if (subcategory) params.set('subcategory', subcategory);
+  if (subsub) params.set('subsub', subsub);
+  if (brand) params.set('brand', brand);
+  return `/products?${params.toString()}`;
+}
+---
+
+<Layout title="Categories | Peniel Hardwares">
+  <div class="categories-page">
+    <!-- Search Bar -->
+    <div class="search-section">
+      <form action="/products" method="get" class="search-form">
+        <input type="text" name="search" placeholder="Search products..." class="search-input" />
+        <button type="submit" class="search-btn">🔍</button>
+      </form>
+    </div>
+
+    <h1 class="page-title">Shop by Category</h1>
+
+    <!-- Accordion Categories (mobile friendly) -->
+    <div class="accordion-container">
+      {Object.entries(categories).map(([catName, subcats]) => (
+        <div class="accordion-item" data-category={catName}>
+          <button class="accordion-header">
+            <span class="category-name">{catName}</span>
+            <svg class="accordion-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <!-- Subcategories as horizontal scroll chips -->
+            <div class="subcategories-scroll">
+              {Object.entries(subcats).map(([subcatName, subsubs]) => (
+                <div class="subcategory-chip-group">
+                  <a href={getFilterUrl(catName, subcatName)} class="subcategory-chip">
+                    {subcatName}
+                  </a>
+                  <div class="subsub-chips">
+                    {Object.keys(subsubs).map(subsub => (
+                      <a href={getFilterUrl(catName, subcatName, subsub)} class="subsub-chip">
+                        {subsub}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Brands Section (horizontal scroll on mobile) -->
+    {brandList.length > 0 && (
+      <div class="brands-section">
+        <h2 class="brands-heading">Shop by Brand</h2>
+        <div class="brands-scroll">
+          {brandList.map(brand => (
+            <a href={getFilterUrl(undefined, undefined, undefined, brand)} class="brand-chip">
+              {brand}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+  <script is:inline>
+    // Accordion toggle for mobile (touch friendly)
+    document.querySelectorAll('.accordion-header').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.accordion-item');
+        const content = item.querySelector('.accordion-content');
+        const isOpen = content.style.display === 'block';
+        // Close all others (optional – can be omitted)
+        document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
+        // Toggle current
+        content.style.display = isOpen ? 'none' : 'block';
+      });
+    });
+    // On desktop (≥768px) we can keep all open by default, but fine.
+  </script>
+</Layout>
+
+<style is:global>
+  .categories-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  /* Search */
+  .search-section {
+    margin-bottom: 1.5rem;
+  }
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+  .search-input {
+    flex: 1;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 0.7rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    background-clip: padding-box;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(197, 160, 40, 0.25);
+  }
+  .search-btn {
+    background: var(--accent-gold);
+    border: none;
+    border-radius: 2rem;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--accent-gold);
+    padding-left: 0.8rem;
+  }
+
+  /* Accordion */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .accordion-item {
+    background: var(--glass-bg);
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+  }
+  .accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+  }
+  .accordion-header .category-name {
+    color: var(--accent-gold);
+  }
+  .accordion-icon {
+    transition: transform 0.2s;
+  }
+  .accordion-item.open .accordion-icon {
+    transform: rotate(180deg);
+  }
+  .accordion-content {
+    display: none;
+    padding: 0 1rem 1rem 1rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  /* On desktop, keep all open by default */
+  @media (min-width: 768px) {
+    .accordion-content {
+      display: block !important;
+    }
+    .accordion-icon {
+      display: none;
+    }
+  }
+
+  /* Subcategories horizontal scroll */
+  .subcategories-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .subcategory-chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+  }
+  .subcategory-chip {
+    background: var(--accent-gold);
+    color: #0f172a;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .subsub-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .subsub-chip {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: 0.2s;
+    white-space: nowrap;
+  }
+  .subsub-chip:hover {
+    background: var(--accent-gold);
+    color: #0f172a;
+  }
+
+  /* Brands horizontal scroll on mobile */
+  .brands-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .brands-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+  }
+  .brands-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .brand-chip {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+  }
+
+  /* Desktop improvement: show chips in a grid */
+  @media (min-width: 768px) {
+    .categories-page {
+      padding: 2rem;
+    }
+    .subcategories-scroll {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .subcategory-chip-group {
+      flex-direction: column;
+      align-items: flex-start;
+      background: transparent;
+      padding: 0;
+    }
+    .subsub-chips {
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .brands-scroll {
+      flex-wrap: wrap;
+    }
+  }
+</style>

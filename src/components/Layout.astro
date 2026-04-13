@@ -29,21 +29,24 @@ const {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <Header />
-  
-  {isHomePage ? (
-    <main>
-      <slot />
-    </main>
-  ) : (
-    <main>
-      <div class="container py-8">
+  <div class="particles-bg" aria-hidden="true"></div>
+  <div class="site-layer">
+    <Header />
+    
+    {isHomePage ? (
+      <main>
         <slot />
-      </div>
-    </main>
-  )}
-  
-  <Footer />
+      </main>
+    ) : (
+      <main>
+        <div class="container py-8">
+          <slot />
+        </div>
+      </main>
+    )}
+    
+    <Footer />
+  </div>
   
   <script is:inline>
     // Netlify Identity Widget

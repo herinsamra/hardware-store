@@ -2,37 +2,106 @@
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
+  { href: '/categories', label: 'CATEGORIES' },
   { href: '/products', label: 'PRODUCTS' },
-  { href: '/brands', label: 'BRANDS' },
-  { href: '/contact', label: 'CONTACT' },
+
 ];
 ---
 
-<nav class="navbar">
+<nav class="navbar glass-strong">
   <div class="navbar-content">
-    
-    <!-- LOGO -->
+    <!-- Logo + brand name (centered) -->
     <div class="logo-center">
-      <a href="/" class="logo">
+      <a href="/" class="logo-link">
         <img 
-          src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1775647766/logo_1_kdf7ij.png" 
+          src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
           alt="Peniel Hardwares Logo"
           class="logo-img"
         />
+        <span class="logo-text">Peniel Hardwares</span>
       </a>
     </div>
-
-    <!-- NAV LINKS -->
+    <!-- Nav links -->
     <div class="nav-links">
       {navLinks.map(link => (
         <a 
           href={link.href} 
-          class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}
+          class:list={[
+            'nav-link',
+            { active: currentPath === link.href || currentPath.startsWith(link.href + '/') }
+          ]}
         >
           {link.label}
         </a>
       ))}
     </div>
-
   </div>
 </nav>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar-content {
+    padding: 1rem 1.5rem;
+  }
+  .logo-center {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .logo-link:hover {
+    opacity: 0.9;
+  }
+  .logo-img {
+    height: 2.5rem;
+    width: auto;
+  }
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff, var(--accent-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+  }
+  .nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--accent-gold);
+  }
+  .nav-link.active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-gold);
+    margin-top: 4px;
+  }
+  @media (max-width: 640px) {
+    .logo-img { height: 2rem; }
+    .logo-text { font-size: 1.2rem; }
+  }
+</style>

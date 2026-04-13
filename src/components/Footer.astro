@@ -22,7 +22,7 @@ const footerLinks = {
 };
 ---
 
-<footer class="bg-dark text-white">
+<footer class="bg-dark text-white glass-strong">
   <div class="container py-12 sm:py-16">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
       <!-- Brand Column -->
@@ -141,3 +141,17 @@ const footerLinks = {
     </div>
   </div>
 </footer>
+<style is:global>
+  footer.bg-dark {
+    background: var(--glass-bg-strong) !important;
+    border-top: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+  }
+  footer .text-gray-400 {
+    color: var(--text-secondary);
+  }
+  footer .border-white\/10 {
+    border-color: var(--border);
+  }
+</style>

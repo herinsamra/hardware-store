@@ -1,0 +1,318 @@
+---
+// BrandsScroller.astro
+// Multi‑row infinite scrolling brand logos with 3D tilt effect
+
+const brandRows = [
+  // Row 1 - Electrical Brands
+  [
+    { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtC3bk82uvXDNIHUxUC8kpMYidmhapxVJqOA&s", name: "Havells" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761135748/legrand-logo-png_seeklogo-83164_zn0ruu.png", name: "Legrand" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761143030/crompton_xb5lbx.png", name: "Crompton" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137573/luminous_kup8tq.png", name: "Luminous" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761144313/vguard_m4id3e.jpg", name: "V-Guard" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761133916/electrical-inventaa_ph7gba.webp", name: "Inventaa" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761144456/philips_dubah9.png", name: "Philips" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137371/hifi_gcjo2z.png", name: "Hifi" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394226/images_r72daq.png", name: "Anchor" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137434/arcline_s2wdwf.png", name: "Arcline" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394128/panasonic_nwkqrk.avif", name: "Panasonic" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137128/opple_strvq2.png", name: "Opple" },
+  ],
+  // Row 2 - Plumbing & Sanitary Brands
+  [
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138902/jaguar_ihsext.webp", name: "Jaquar" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138115/parryware_wecckh.jpg", name: "Parryware" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394495/5dc1b452b461a_l5xo0t.png", name: "Waterman" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394363/images_vnibkf.jpg", name: "Essco" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138826/jass_ih2qut.png", name: "Jass" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761143254/weber_namzks.webp", name: "Weber" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138488/watertec_ls3eid.png", name: "Watertec" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761139022/pupa_imdjzl.png", name: "Pupa" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761143186/atomberg_ugnp7j.jpg", name: "Atomberg" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394798/images_1_ro4beh.png", name: "CRI" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138488/watertec_ls3eid.png", name: "Watertec" },
+  ],
+  // Row 3 - Pipes, Paints & Hardware Brands
+  [
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761133916/finolex-logo-png_seeklogo-428098_jlcook.png", name: "Finolex" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137128/supreme_rqid8t.jpg", name: "Supreme" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138276/ashirvad_dezfr5.png", name: "Ashirvad" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761143118/indigo_umwraw.png", name: "Indigo" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138276/ashirvad_dezfr5.png", name: "Ashirvad" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761134221/asianpaint_jaymcv.jpg", name: "Asian Paints" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761142914/drfixit_cqxohx.png", name: "Dr. Fixit" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761133917/godrej-logo-godrej-icon-free-free-vector_k3qznd.jpg", name: "Godrej" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394798/images_1_ro4beh.png", name: "CRI Pumps" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761138488/watertec_ls3eid.png", name: "Watertec" },
+  ],
+  // Row 4 - Additional Brands
+  [
+    { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtC3bk82uvXDNIHUxUC8kpMYidmhapxVJqOA&s", name: "Yama Locks" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761135748/legrand-logo-png_seeklogo-83164_zn0ruu.png", name: "Prince" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761143030/crompton_xb5lbx.png", name: "Lisha" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137573/luminous_kup8tq.png", name: "Luminous" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761144313/vguard_m4id3e.jpg", name: "V-Guard" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761133916/electrical-inventaa_ph7gba.webp", name: "Inventaa" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761144456/philips_dubah9.png", name: "Philips" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137371/hifi_gcjo2z.png", name: "Hifi" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394226/images_r72daq.png", name: "Anchor" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137434/arcline_s2wdwf.png", name: "Arcline" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761394128/panasonic_nwkqrk.avif", name: "Panasonic" },
+    { url: "https://res.cloudinary.com/dvvpabney/image/upload/v1761137128/opple_strvq2.png", name: "Opple" },
+  ],
+];
+---
+
+<div class="brands-scroller-component">
+  <!-- Top black separator -->
+  <div class="separator-top"></div>
+
+  <div class="brands-scroller-header">
+  
+  </div>
+
+  <!-- Slider container with extra padding -->
+  <div class="slider-container">
+    <div class="wrapper-images">
+      {brandRows.map((row, rowIndex) => (
+        <div class="images-line" style={`--duration: ${rowIndex % 2 === 0 ? 10 : 15}s`}>
+          {[...row, ...row, ...row].map((brand, idx) => (
+            <div
+              class="line"
+              style={`background-image: url(${brand.url})`}
+              title={brand.name}
+            >
+              <span
+                class="img"
+                style={`background-image: url(${brand.url})`}
+                aria-label={brand.name}
+              />
+              <span class="brand-name">{brand.name}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom black separator -->
+  <div class="separator-bottom"></div>
+</div>
+
+<style is:global>
+  .brands-scroller-component * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .brands-scroller-component {
+    display: block;
+    width: 100%;
+    overflow-x: clip;
+    background: #f8f9fa;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Separators – semi‑transparent black bars */
+  .separator-top,
+  .separator-bottom {
+    width: 100%;
+    height: 4rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+  }
+  .separator-bottom {
+    background: linear-gradient(0deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  }
+
+  /* Header – now with clear spacing */
+  .brands-scroller-header {
+    text-align: center;
+    margin: 2rem 1rem 1rem;
+    position: relative;
+    z-index: 2;
+    background: #f8f9fa;
+  }
+  .brands-scroller-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a472a;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .brands-scroller-header p {
+    color: #6c757d;
+    font-size: 1rem;
+  }
+
+  /* Container that gives the slider room to breathe */
+  .slider-container {
+    margin: 2rem 0;
+    padding: 2rem 0;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Original slider styles – unchanged, but now inside a padded container */
+  .wrapper-images {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 380px;
+    max-height: 70vh;
+    justify-content: center;
+    left: 50%;
+    position: relative;
+    top: 0;
+    opacity: 0.85;
+    transform: translate3d(-50%, 0, 0) perspective(800px) rotateY(10deg) rotateX(-10deg);
+    width: 100vw;
+    margin: 0 auto;
+    pointer-events: none;
+  }
+
+  .images-line {
+    animation: runner var(--duration, 10s) linear infinite;
+    display: flex;
+    transform: translateX(23%);
+    pointer-events: auto;
+  }
+
+  .line {
+    background-position: 50% 50%;
+    background-size: cover;
+    flex: none;
+    height: 22vh;
+    aspect-ratio: 1 / 1.1;
+    min-width: 120px;
+    max-width: 180px;
+    margin: clamp(6px, 2vw, 16px);
+    position: relative;
+    transition: box-shadow 0.3s, filter 0.3s;
+    border-radius: 1rem;
+    overflow: visible;
+    box-shadow: 0 8px 16px rgba(30, 32, 39, 0.2);
+    cursor: pointer;
+  }
+
+  .img {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-position: 50% 50%;
+    background-size: cover;
+    transition: transform 0.3s, filter 0.3s;
+    border-radius: 1rem;
+  }
+
+  .line:hover .img {
+    cursor: pointer;
+    transform: scale(1.12) translateZ(0px);
+    box-shadow: 0 18px 32px rgba(30, 32, 39, 0.4);
+    filter: blur(0px) brightness(1.08);
+  }
+
+  .line:after {
+    content: "";
+    background: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    top: 3vh;
+    position: absolute;
+    background-size: cover;
+    z-index: -1;
+    transition: filter 0.3s;
+    filter: blur(20px) opacity(0.6);
+  }
+
+  .line:hover:after {
+    filter: blur(35px) opacity(0.85);
+  }
+
+  .brand-name {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #1a472a;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  .line:hover .brand-name {
+    opacity: 1;
+  }
+
+  @keyframes runner {
+    to {
+      transform: translateX(-10.4%);
+    }
+  }
+
+  /* Responsive adjustments – keep slider height, add padding */
+  @media (max-width: 1000px) {
+    .wrapper-images {
+      height: 66vh;
+      min-height: 200px;
+      max-height: 300px;
+      padding-top: 2vh;
+    }
+    .line {
+      min-width: 85px;
+      max-width: 120px;
+      margin: 4px;
+      height: 13vh;
+    }
+    .brands-scroller-header h2 {
+      font-size: 1.5rem;
+    }
+    .separator-top,
+    .separator-bottom {
+      height: 2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .wrapper-images {
+      height: 50vw;
+      min-height: 120px;
+      max-height: 180px;
+      padding-top: 2vw;
+    }
+    .line {
+      min-width: 66px;
+      max-width: 85px;
+      margin: 3px;
+      height: 7.4vh;
+    }
+    .brand-name {
+      font-size: 0.5rem;
+      bottom: -1.2rem;
+    }
+    .brands-scroller-header h2 {
+      font-size: 1.2rem;
+    }
+    .brands-scroller-header p {
+      font-size: 0.8rem;
+    }
+    .separator-top,
+    .separator-bottom {
+      height: 1.5rem;
+    }
+  }
+</style>

@@ -1,7 +1,19 @@
 ---
 import Header from './Header.astro';
-import CategoryNav from './CategoryNav.astro';
+import Footer from './Footer.astro';
 import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  isHomePage?: boolean;
+}
+
+const { 
+  title = 'Hardware Store | Quality Tools & Materials',
+  description = 'Your one-stop shop for quality hardware, tools, plumbing, electrical, and building materials.',
+  isHomePage = false 
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -9,37 +21,44 @@ import '../styles/global.css';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hardware Store | Quality Tools & Materials</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content={description}>
+  <meta name="theme-color" content="#1a472a">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <Header />
-  <CategoryNav />
-  <main>
-    <div class="container">
+  
+  {isHomePage ? (
+    <main>
       <slot />
-    </div>
-  </main>
-  <footer style="background: #1e1e1e; color: white; padding: 2rem 0; margin-top: 3rem;">
-    <div class="container" style="text-align: center;">
-      <p>&copy; 2024 Hardware Store. All rights reserved.</p>
-      <p style="margin-top: 0.5rem; font-size: 0.875rem;">Quality tools & materials for every project</p>
-    </div>
-  </footer>
+    </main>
+  ) : (
+    <main>
+      <div class="container py-8">
+        <slot />
+      </div>
+    </main>
+  )}
+  
+  <Footer />
+  
   <script is:inline>
-  // Netlify Identity Widget
-  (function() {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', function(user) {
-        if (!user) {
-          window.netlifyIdentity.on('login', function() {
-            document.location.href = '/admin/';
-          });
-        }
-      });
-    }
-  })();
-</script>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+    // Netlify Identity Widget
+    (function() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function(user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function() {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    })();
+  </script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
 </body>
 </html>

@@ -1,18 +1,38 @@
 ---
 const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/products', label: 'PRODUCTS' },
+  { href: '/brands', label: 'BRANDS' },
+  { href: '/contact', label: 'CONTACT' },
+];
 ---
 
 <nav class="navbar">
   <div class="navbar-content">
+    
+    <!-- LOGO -->
     <div class="logo-center">
       <a href="/" class="logo">
-        <span>🏪</span> HARDWARE<span>STORE</span>
+        <img 
+          src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1775647766/logo_1_kdf7ij.png" 
+          alt="Peniel Hardwares Logo"
+          class="logo-img"
+        />
       </a>
     </div>
+
+    <!-- NAV LINKS -->
     <div class="nav-links">
-      <a href="/products" class={currentPath === '/products' ? 'active' : ''}>PRODUCTS</a>
-      <a href="/products?brand=featured" class={currentPath.includes('brand') ? 'active' : ''}>BRANDS</a>
-      <a href="/contact" class={currentPath === '/contact' ? 'active' : ''}>CONTACT</a>
+      {navLinks.map(link => (
+        <a 
+          href={link.href} 
+          class={currentPath === link.href || currentPath.startsWith(link.href + '/') ? 'active' : ''}
+        >
+          {link.label}
+        </a>
+      ))}
     </div>
+
   </div>
 </nav>

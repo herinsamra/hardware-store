@@ -1,0 +1,50 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  videoUrl?: string;
+}
+
+const {
+  title = "Your One-Stop Hardware Store",
+  subtitle = "Quality tools, materials & supplies for every project",
+  ctaText = "Shop Now",
+  ctaLink = "/products",
+  videoUrl = "https://res.cloudinary.com/dthi2vgiz/video/upload/v1775646510/InShot_20260408_163545367_qjnldx.mp4"
+} = Astro.props;
+---
+
+<section class="hero">
+  <video 
+    class="hero-video"
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    poster="https://res.cloudinary.com/demo/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto/samples/landscapes/architecture-signs"
+  >
+    <source src={videoUrl} type="video/mp4" />
+  </video>
+  
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight text-balance">
+      {title}
+    </h1>
+    <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty">
+      {subtitle}
+    </p>
+    <a 
+      href={ctaLink} 
+      class="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-light text-dark font-bold px-8 py-4 rounded-lg text-lg transition-all hover:scale-105 shadow-lg"
+    >
+      {ctaText}
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </a>
+  </div>
+</section>

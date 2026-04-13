@@ -1,0 +1,243 @@
+---
+// StackingCards.astro
+// Displays categories as scroll‑stacking cards with parallax effect
+
+// Category data (you can later import from categories.json or lib)
+const categories = [
+  {
+    name: 'Plumbing',
+    slug: 'plumbing',
+    description: 'Pipes, fittings, faucets, water heaters, valves & tanks.',
+    image: 'https://res.cloudinary.com/demo/image/upload/c_fill,w_800,h_600/v1/samples/food/spices',
+    btnLink: '/products?category=Plumbing',
+  },
+  {
+    name: 'Electrical',
+    slug: 'electrical',
+    description: 'Wiring devices, switches, cables, lighting fixtures, fans.',
+    image: 'https://res.cloudinary.com/demo/image/upload/c_fill,w_800,h_600/v1/samples/landscapes/architecture-signs',
+    btnLink: '/products?category=Electrical',
+  },
+  {
+    name: 'Sanitary',
+    slug: 'sanitary-ware',
+    description: 'Closets, basins, faucets, showers, bath tubs & accessories.',
+    image: 'https://res.cloudinary.com/demo/image/upload/c_fill,w_800,h_600/v1/samples/landscapes/nature-mountains',
+    btnLink: '/products?category=Sanitary',
+  },
+  {
+    name: 'Hardware',
+    slug: 'hardwares',
+    description: 'Locks, handles, hinges, fasteners, cabinet hardware.',
+    image: 'https://res.cloudinary.com/demo/image/upload/c_fill,w_800,h_600/v1/samples/food/pot-mussels',
+    btnLink: '/products?category=Hardware',
+  },
+  {
+    name: 'Painting',
+    slug: 'paints',
+    description: 'Emulsions, enamels, primers, putty, brushes & rollers.',
+    image: 'https://res.cloudinary.com/dthi2vgiz/image/upload/v1775669545/paint-bucket-and-brushes-photo_brydgv.jpg',
+    btnLink: '/products?category=Painting',
+  },
+];
+
+const numCards = categories.length;
+---
+
+<div class="stacking-cards-wrapper">
+  <div class="stacking-header">
+    <h2>Shop by Category</h2>
+   
+  </div>
+
+  <ul class="stacking-cards-list" style="--numcards: {numCards};">
+    {categories.map((cat, index) => {
+      const cardId = `card_${index + 1}`;
+      return (
+        <li class="card" id={cardId} style="--index: {index + 1};">
+          <div class="card__content">
+            <div>
+              <h3>{cat.name}</h3>
+              <p>{cat.description}</p>
+              <a href={cat.btnLink} class="btn">View More →</a>
+            </div>
+            <figure>
+              <img src={cat.image} alt={cat.name} loading="lazy" />
+            </figure>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<style is:global>
+  /* Reset only inside this wrapper */
+  .stacking-cards-wrapper * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stacking-cards-wrapper {
+    --card-height: 40vw;
+    --card-margin: 4vw;
+    --card-top-offset: 1em;
+    --outline-width: 0px;
+    background: #f8f9fa; /* match your site’s light background */
+    padding: 2rem 0 4rem;
+  }
+
+  .stacking-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .stacking-header h2 {
+    font-size: 2.5rem;
+    color: #1a472a;
+    margin-bottom: 0.5rem;
+  }
+  .stacking-header p {
+    color: #6c757d;
+  }
+
+  .stacking-cards-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(var(--numcards), var(--card-height));
+    gap: var(--card-margin);
+    padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+    margin-bottom: var(--card-margin);
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card {
+    position: sticky;
+    top: 0;
+    padding-top: calc(var(--index) * var(--card-top-offset));
+  }
+
+  .card__content {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: grid;
+    grid-template-areas: "text img";
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1);
+    transform-origin: 50% 0%;
+    will-change: transform;
+  }
+
+  .card__content > div {
+    grid-area: text;
+    width: 80%;
+    place-self: center;
+    text-align: left;
+    display: grid;
+    gap: 1rem;
+    place-items: start;
+    padding: 1rem;
+  }
+
+  .card__content h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1a472a;
+  }
+
+  .card__content p {
+    font-family: sans-serif;
+    line-height: 1.5;
+    color: #4b5563;
+  }
+
+  .card__content .btn {
+    background: #c5a028;
+    color: #1e1e1e;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .card__content .btn:hover {
+    background: #d4b44a;
+  }
+
+  .card__content > figure {
+    grid-area: img;
+    overflow: hidden;
+    margin: 0;
+  }
+  .card__content > figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Scroll-driven animation (modern browsers) */
+  @supports (animation-timeline: view()) {
+    .card {
+      --index0: calc(var(--index) - 1);
+      --reverse-index: calc(var(--numcards) - var(--index0));
+      --reverse-index0: calc(var(--reverse-index) - 1);
+    }
+
+    @keyframes scale {
+      to {
+        transform: scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+      }
+    }
+
+    .stacking-cards-list {
+      view-timeline-name: --cards-element-scrolls-in-body;
+    }
+
+    .card__content {
+      --start-range: calc(var(--index0) / var(--numcards) * 90%);
+      --end-range: calc(var(--index) / var(--numcards) * 80%);
+      animation: linear scale forwards;
+      animation-timeline: --cards-element-scrolls-in-body;
+      animation-range: exit-crossing var(--start-range) exit-crossing var(--end-range);
+    }
+  }
+
+  /* Fallback for browsers without animation-timeline */
+  @supports not (animation-timeline: view()) {
+    .card__content {
+      transition: transform 0.3s ease;
+    }
+    .card:hover .card__content {
+      transform: scale(1.02);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stacking-cards-wrapper {
+      --card-height: 70vw;
+    }
+    .stacking-cards-list {
+      width: 90vw;
+    }
+    .card__content {
+      grid-template-areas: "text" "img";
+      grid-template-columns: 1fr;
+    }
+    .card__content > div {
+      width: 90%;
+      text-align: center;
+      place-items: center;
+    }
+    .card__content h3 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

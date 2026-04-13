@@ -110,16 +110,20 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
   }
   .search-input {
     flex: 1;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 2rem;
     padding: 0.7rem 1rem;
     color: var(--text-primary);
     font-size: 0.9rem;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    background-clip: padding-box;
   }
   .search-input:focus {
     outline: none;
     border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(197, 160, 40, 0.25);
   }
   .search-btn {
     background: var(--accent-gold);
@@ -148,10 +152,12 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     gap: 0.75rem;
   }
   .accordion-item {
-    background: var(--bg-card);
+    background: var(--glass-bg);
     border-radius: 1rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     overflow: hidden;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
   }
   .accordion-header {
     width: 100%;
@@ -179,7 +185,7 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
   .accordion-content {
     display: none;
     padding: 0 1rem 1rem 1rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--glass-border);
   }
   /* On desktop, keep all open by default */
   @media (min-width: 768px) {
@@ -202,9 +208,12 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 2rem;
     padding: 0.5rem;
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
   }
   .subcategory-chip {
     background: var(--accent-gold);
@@ -222,7 +231,8 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     gap: 0.4rem;
   }
   .subsub-chip {
-    background: var(--bg-elevated);
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--text-secondary);
     padding: 0.3rem 0.8rem;
     border-radius: 2rem;
@@ -254,14 +264,16 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     gap: 0.6rem;
   }
   .brand-chip {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 2rem;
     padding: 0.4rem 1rem;
     color: var(--text-primary);
     text-decoration: none;
     font-size: 0.85rem;
     white-space: nowrap;
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
   }
 
   /* Desktop improvement: show chips in a grid */

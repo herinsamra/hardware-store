@@ -39,12 +39,12 @@ const categories = [
 ];
 ---
 
-<section class="py-16 bg-light">
+<section class="py-16">
   <div class="container">
     <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-2 text-center">
       Shop by Category
     </h2>
-    <p class="text-gray-600 text-center mb-10 max-w-2xl mx-auto">
+    <p class="text-gray-300 text-center mb-10 max-w-2xl mx-auto">
       Browse our wide selection of quality hardware supplies
     </p>
     
@@ -76,7 +76,7 @@ const categories = [
         class="category-carousel px-1"
       >
         {categories.map((category) => (
-          <article class="category-card">
+          <article class="category-card glass">
             <div class="relative h-40 bg-gradient-to-br from-primary to-primary-dark">
               <img 
                 src={category.image} 
@@ -101,7 +101,7 @@ const categories = [
               
               <ul class="space-y-1 mb-4">
                 {category.subcategories.slice(0, 3).map((sub) => (
-                  <li class="text-sm text-gray-600 flex items-center gap-2">
+                  <li class="text-sm text-gray-300 flex items-center gap-2">
                     <span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
                     {sub}
                   </li>

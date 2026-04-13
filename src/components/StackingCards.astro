@@ -55,7 +55,7 @@ const numCards = categories.length;
       const cardId = `card_${index + 1}`;
       return (
         <li class="card" id={cardId} style="--index: {index + 1};">
-          <div class="card__content">
+          <div class="card__content glass">
             <div>
               <h3>{cat.name}</h3>
               <p>{cat.description}</p>
@@ -120,17 +120,14 @@ const numCards = categories.length;
   }
 
   .card__content {
-    background: var(--bg-card);
     border-radius: 1rem;
     overflow: hidden;
     display: grid;
     grid-template-areas: "text img";
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
-    box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.3), 0 1em 2em rgba(0, 0, 0, 0.4);
     transform-origin: 50% 0%;
     will-change: transform;
-    border: 1px solid var(--border);
   }
 
   .card__content > div {

@@ -15,6 +15,13 @@
   --accent-green: #1a472a;
   --accent-gold: #c5a028;
   --accent-gold-light: #d4b44a;
+  --particle-size: 20px;
+  --particle-opacity: 1;
+  --glass-bg: rgba(15, 23, 42, 0.4);
+  --glass-bg-strong: rgba(15, 23, 42, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
 }
 
 body {
@@ -23,10 +30,79 @@ body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   margin: 0;
+  position: relative;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+.glass {
+  background-color: var(--glass-bg);
+  background-image: linear-gradient(135deg, var(--glass-highlight), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+.glass-strong {
+  background-color: var(--glass-bg-strong);
+  background-image: linear-gradient(135deg, var(--glass-highlight), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+}
+
+.site-layer {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.particles-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--particle-opacity);
+  background: conic-gradient(
+    from 180deg at 50% 70%,
+    hsla(0, 0%, 98%, 1) 0deg,
+    #eec32d 72deg,
+    #ec4b4b 144deg,
+    #709ab9 216deg,
+    #4dffbf 288deg,
+    hsla(0, 0%, 98%, 1) 1turn
+  );
+  mask:
+    radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--particle-size) var(--particle-size),
+    url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
+  mask-composite: intersect;
+  -webkit-mask:
+    radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--particle-size) var(--particle-size),
+    url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
+  -webkit-mask-composite: source-in;
+  animation: particles-flicker 20s linear infinite;
+}
+
+.category-card {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@keyframes particles-flicker {
+  to {
+    mask-position: 50% 50%, 0 50%;
+    -webkit-mask-position: 50% 50%, 0 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particles-bg {
+    animation: none;
+  }
 }

@@ -4,11 +4,11 @@ const currentPath = Astro.url.pathname;
 const navLinks = [
   { href: '/categories', label: 'CATEGORIES' },
   { href: '/products', label: 'PRODUCTS' },
-  { href: '/contact', label: 'CONTACT' },
+
 ];
 ---
 
-<nav class="navbar">
+<nav class="navbar glass-strong">
   <div class="navbar-content">
     <!-- Logo + brand name (centered) -->
     <div class="logo-center">
@@ -40,9 +40,6 @@ const navLinks = [
 
 <style>
   .navbar {
-    background: rgba(15, 23, 42, 0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 50;

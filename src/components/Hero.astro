@@ -27,20 +27,11 @@ const {
   >
     <source src={videoUrl} type="video/mp4" />
   </video>
-  
   <div class="hero-overlay"></div>
-  
   <div class="hero-content">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight text-balance">
-      {title}
-    </h1>
-    <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty">
-      {subtitle}
-    </p>
-    <a 
-      href={ctaLink} 
-      class="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-light text-dark font-bold px-8 py-4 rounded-lg text-lg transition-all hover:scale-105 shadow-lg"
-    >
+    <h1>{title}</h1>
+    <p>{subtitle}</p>
+    <a href={ctaLink} class="hero-button">
       {ctaText}
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -48,3 +39,70 @@ const {
     </a>
   </div>
 </section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+    padding: 0 1rem;
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .hero-content p {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2rem;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-button {
+    background: var(--accent-gold);
+    color: #0f172a;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  .hero-button:hover {
+    background: var(--accent-gold-light);
+    transform: scale(1.02);
+  }
+  @media (min-width: 640px) {
+    .hero-content h1 { font-size: 3.5rem; }
+  }
+  @media (min-width: 768px) {
+    .hero-content h1 { font-size: 4rem; }
+  }
+</style>

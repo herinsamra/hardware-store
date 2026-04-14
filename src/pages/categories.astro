@@ -2,6 +2,11 @@
 import Layout from '../components/Layout.astro';
 import categoriesData from '../data/categories.json';
 
+function cleanName(str: string): string {
+  if (!str) return '';
+  return str.replace(/_/g, ' ');
+}
+
 const { Brands, ...categories } = categoriesData;
 const brandList = Brands ? Object.values(Brands).flat() : [];
 

@@ -1,0 +1,159 @@
+{
+  "products": [
+    {
+      "name": "Electra LED Gate Light",
+      "slug": "electra-led-gate-light",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "LED PIPE MOUNT GATE LIGHT",
+      "brand": "Inventaa",
+      "description": "Premium LED gate/post light - Electra series",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ00925",
+          "sku": "12C 075T",
+          "variant_name": "Clear LED",
+          "new_mrp": 1243
+        },
+        {
+          "part_no": "ZZ00923",
+          "sku": "12C 075B",
+          "variant_name": "SB Clear LED",
+          "new_mrp": 1243
+        }
+      ]
+    },
+
+    {
+      "name": "Elena LED Gate Light",
+      "slug": "elena-led-gate-light",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "LED PIPE MOUNT GATE LIGHT",
+      "brand": "Inventaa",
+      "description": "Elegant LED gate light - Elena series",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ00924",
+          "sku": "12C 077T",
+          "variant_name": "Standard",
+          "new_mrp": 1455
+        }
+      ]
+    },
+
+    {
+      "name": "Viva Cute LED Gate Light",
+      "slug": "viva-cute-led-gate-light",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "LED PIPE MOUNT GATE LIGHT",
+      "brand": "Inventaa",
+      "description": "Compact decorative LED gate light",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ00926",
+          "sku": "12C 231",
+          "variant_name": "White",
+          "new_mrp": 712
+        },
+        {
+          "part_no": "ZZ00927",
+          "sku": "12C 232",
+          "variant_name": "White Variant",
+          "new_mrp": 806
+        }
+      ]
+    },
+
+    {
+      "name": "Veeta Eco Street Light",
+      "slug": "veeta-eco-street-light",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "STREET LIGHTS",
+      "brand": "Inventaa",
+      "description": "Energy efficient LED street light",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ04382",
+          "sku": "15W",
+          "variant_name": "15W",
+          "new_mrp": 1198
+        },
+        {
+          "part_no": "ZZ05880",
+          "sku": "20W",
+          "variant_name": "20W",
+          "new_mrp": 1433
+        },
+        {
+          "part_no": "ZZ05881",
+          "sku": "25W",
+          "variant_name": "25W",
+          "new_mrp": 1756
+        }
+      ]
+    },
+
+    {
+      "name": "Fabra Flood Light",
+      "slug": "fabra-flood-light",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "FLOOD LIGHTS",
+      "brand": "Inventaa",
+      "description": "High brightness LED flood light",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ06397",
+          "sku": "20W",
+          "variant_name": "20W",
+          "new_mrp": 1220
+        },
+        {
+          "part_no": "ZZ03935",
+          "sku": "30W",
+          "variant_name": "30W",
+          "new_mrp": 2030
+        },
+        {
+          "part_no": "ZZ06158",
+          "sku": "50W",
+          "variant_name": "50W",
+          "new_mrp": 3340
+        }
+      ]
+    },
+
+    {
+      "name": "Solar Street Light - Erato",
+      "slug": "solar-street-light-erato",
+      "category": "Electrical",
+      "subcategory": "Lighting Fixtures",
+      "subsubcategory": "SOLAR LIGHT",
+      "brand": "Inventaa",
+      "description": "Solar powered outdoor street light",
+      "image": "",
+      "variants": [
+        {
+          "part_no": "ZZ06402",
+          "sku": "40W",
+          "variant_name": "40W",
+          "new_mrp": 5779
+        },
+        {
+          "part_no": "ZZ06403",
+          "sku": "60W",
+          "variant_name": "60W",
+          "new_mrp": 7970
+        }
+      ]
+    }
+  ]
+}

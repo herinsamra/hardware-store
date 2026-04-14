@@ -1,73 +1,144 @@
 ---
+// src/pages/product/[id].astro
 import Layout from '../../components/Layout.astro';
-import { fetchAllProducts, fetchProductById } from '../../lib/products';
+import { fetchProductById, getAllProductSlugs } from '../../lib/products';
 
 export const prerender = true;
 
-// Define Product type (match what your API returns)
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description?: string;
-  category: string;
-  subcategory: string;
-  subSubcategory?: string;
-  sku: string;
-  stock: number;
-  image: string;
-  thumbnail?: string;
-}
-
 export async function getStaticPaths() {
-  const allProducts: Product[] = await fetchAllProducts();
-  return allProducts.map((product: Product) => ({
-    params: { id: String(product.id) }
-  }));
+  const slugs = await getAllProductSlugs();
+  return slugs;
 }
 
-const { id } = Astro.params as { id: string };
-const product: Product | null = await fetchProductById(id);
+const { id } = Astro.params;
+const product = await fetchProductById(id);
 
 if (!product) {
   return Astro.redirect('/404');
 }
 ---
 
-<Layout>
-  <div style="padding: 2rem 0;">
+<Layout title={product.meta_title || `${product.name} | Peniel Hardwares`} description={product.meta_description || product.description}>
+  <div class="product-detail-container">
     <div class="product-detail">
-      <div>
-        <img src={product.image} alt={product.name} class="product-detail-image" />
+      <div class="product-gallery">
+        {product.image ? (
+          <img src={product.image} alt={product.name} class="product-detail-image" />
+        ) : (
+          <div class="no-image">No image available</div>
+        )}
       </div>
       <div class="product-detail-info">
         <h1>{product.name}</h1>
-        <div class="product-detail-price">${product.price?.toFixed(2)}</div>
-        <div style="margin: 1rem 0; padding: 0.5rem; background: #e9ecef; border-radius: 8px; display: inline-block;">
-          SKU: {product.sku}
-        </div>
+        {product.variant_name && (
+          <div class="variant-badge">Variant: {product.variant_name}</div>
+        )}
+        <div class="product-detail-price">₹{product.price.toFixed(2)}</div>
+        {product.part_no && <p class="part-no">Part No: {product.part_no}</p>}
+        {product.sku && <p class="sku">SKU: {product.sku}</p>}
         <div class="product-detail-description">
           <h3>Description</h3>
-          <p>{product.description || 'High-quality product perfect for your home improvement needs.'}</p>
+          <p>{product.description}</p>
         </div>
-        <div style="margin-top: 2rem;">
-          <div style="margin-bottom: 1rem;">
-            <strong>Category:</strong> {product.category}
-          </div>
-          <div style="margin-bottom: 1rem;">
-            <strong>Subcategory:</strong> {product.subcategory}
-          </div>
-          {product.subSubcategory && (
-            <div style="margin-bottom: 1rem;">
-              <strong>Sub‑Subcategory:</strong> {product.subSubcategory}
-            </div>
-          )}
-          <div style="margin-bottom: 1rem;">
-            <strong>Availability:</strong> {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-          </div>
-          <button class="button">Add to Cart</button>
+        <div class="product-meta">
+          <span class="category">Category: {product.category}</span>
+          {product.subcategory && <span> → {product.subcategory}</span>}
+          {product.subsubcategory && <span> → {product.subsubcategory}</span>}
         </div>
+        <button class="button add-to-cart">Enquire Now</button>
       </div>
     </div>
   </div>
 </Layout>
+
+<style is:global>
+  .product-detail-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  .product-detail {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .product-detail {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .product-gallery {
+    background: var(--bg-card);
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .product-detail-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .no-image {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+  .product-detail-info h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .variant-badge {
+    background: var(--accent-gold);
+    color: #0a0c10;
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .product-detail-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin: 1rem 0;
+  }
+  .part-no, .sku {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .product-detail-description {
+    margin: 1.5rem 0;
+  }
+  .product-detail-description h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-gold);
+  }
+  .product-detail-description p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .product-meta {
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .add-to-cart {
+    background: var(--accent-gold);
+    color: #0a0c10;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .add-to-cart:hover {
+    background: var(--accent-gold-light);
+  }
+</style>

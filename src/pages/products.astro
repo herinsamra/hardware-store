@@ -3,41 +3,47 @@ import Layout from '../components/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { fetchAllProducts } from '../lib/products';
 
-// Define Product type (match what your API returns)
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description?: string;
-  category: string;
-  subcategory: string;
-  subSubcategory?: string;   // ADD THIS LINE
-  sku: string;
-  stock: number;
-  image: string;
-  thumbnail?: string;
+// Helper to display clean names (replace underscores with spaces)
+function cleanName(str: string): string {
+  if (!str) return '';
+  return str.replace(/_/g, ' ');
 }
 
-// Get URL parameters with null checks
+// Get URL parameters
 const url = new URL(Astro.request.url);
-const subcategoryParam = url.searchParams.get('subcategory');
-const subSubParam = url.searchParams.get('subsub');
 const categoryParam = url.searchParams.get('category');
+const subcategoryParam = url.searchParams.get('subcategory');
+const subsubParam = url.searchParams.get('subsub');
+const brandParam = url.searchParams.get('brand');
+const searchParam = url.searchParams.get('search');
 const page = parseInt(url.searchParams.get('page') || '1', 10);
 const productsPerPage = 12;
 
-// Fetch all products (typed)
-const allProducts: Product[] = await fetchAllProducts();
+// Fetch all products
+const allProducts = await fetchAllProducts();
+console.log('Products loaded:', allProducts.length, allProducts);
 
-// Filter products
-let filteredProducts = allProducts;
-if (subSubParam) {
-  filteredProducts = allProducts.filter(p => p.subSubcategory === subSubParam);
+// Apply filters
+let filteredProducts = [...allProducts];
+
+if (searchParam) {
+  const q = searchParam.toLowerCase();
+  filteredProducts = filteredProducts.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    (p.description && p.description.toLowerCase().includes(q)) ||
+    (p.brand && p.brand.toLowerCase().includes(q)) ||
+    p.category.toLowerCase().includes(q)
+  );
+} else if (subsubParam) {
+  filteredProducts = filteredProducts.filter(p => p.subsubcategory === subsubParam);
 } else if (subcategoryParam) {
-  filteredProducts = allProducts.filter(p => p.subcategory === subcategoryParam);
+  filteredProducts = filteredProducts.filter(p => p.subcategory === subcategoryParam);
 } else if (categoryParam) {
-  filteredProducts = allProducts.filter(p => p.category === categoryParam);
+  filteredProducts = filteredProducts.filter(p => p.category === categoryParam);
+} else if (brandParam) {
+  filteredProducts = filteredProducts.filter(p => p.brand === brandParam);
 }
+
 // Pagination
 const totalProducts = filteredProducts.length;
 const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -51,58 +57,169 @@ function getPageUrl(pageNum: number): string {
   return `?${params.toString()}`;
 }
 
-// Calculate which page numbers to display
-let startPage = Math.max(1, page - 2);
-let endPage = Math.min(totalPages, page + 2);
-
-if (endPage - startPage < 4) {
-  if (startPage === 1) endPage = Math.min(totalPages, startPage + 4);
-  if (endPage === totalPages) startPage = Math.max(1, endPage - 4);
+// Pagination page numbers (calculated here)
+let paginationPages: number[] = [];
+if (totalPages <= 5) {
+  for (let i = 1; i <= totalPages; i++) paginationPages.push(i);
+} else if (page <= 3) {
+  for (let i = 1; i <= 5; i++) paginationPages.push(i);
+} else if (page >= totalPages - 2) {
+  for (let i = totalPages - 4; i <= totalPages; i++) paginationPages.push(i);
+} else {
+  for (let i = page - 2; i <= page + 2; i++) paginationPages.push(i);
 }
 
-const pageNumbers: number[] = [];
-for (let i = startPage; i <= endPage; i++) {
-  pageNumbers.push(i);
-}
+// Page title (with cleaned names for display)
+let rawTitle = 'All Products';
+if (searchParam) rawTitle = `Search: "${searchParam}"`;
+else if (brandParam) rawTitle = `${brandParam} Products`;
+else if (subsubParam) rawTitle = subsubParam;
+else if (subcategoryParam) rawTitle = subcategoryParam;
+else if (categoryParam) rawTitle = `${categoryParam} Products`;
+
+// Replace underscores with spaces for the displayed title
+const pageTitle = cleanName(rawTitle);
 ---
 
-<Layout>
-  <div style="padding: 2rem 0;">
-    <h1 style="color: #1a472a; margin-bottom: 0.5rem;">
-       {subSubParam ? subSubParam : (subcategoryParam ? subcategoryParam : (categoryParam ? `${categoryParam} Products` : 'All Products'))}
-    </h1>
-    <p style="color: #6c757d; margin-bottom: 2rem;">{totalProducts} products found</p>
-    
-    {
-      paginatedProducts.length > 0 ? (
+<Layout title={`${pageTitle} | Peniel Hardwares`}>
+  <div class="products-page">
+    <!-- Search & Filter Bar -->
+    <div class="filter-bar">
+      <form method="get" class="search-form">
+        <input
+          type="text"
+          name="search"
+          value={searchParam || ''}
+          placeholder="Search products..."
+          class="search-input"
+        />
+        <button type="submit" class="search-btn">🔍 Search</button>
+      </form>
+    </div>
+
+    <h1 class="page-title">{pageTitle}</h1>
+    <p class="product-count">{totalProducts} product{totalProducts !== 1 ? 's' : ''} found</p>
+
+    {paginatedProducts.length > 0 ? (
+      <>
         <div class="product-grid">
-          {paginatedProducts.map((product: Product) => <ProductCard product={product} />)}
+          {paginatedProducts.map(product => (
+            <ProductCard product={product} />
+          ))}
         </div>
-      ) : (
-        <p style="text-align: center; padding: 3rem;">No products found in this category.</p>
-      )
-    }
-    
-    {/* Pagination */}
-    {totalPages > 1 && (
-      <div class="pagination">
-        {page > 1 && (
-          <a href={getPageUrl(page - 1)}>Previous</a>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div class="pagination">
+            {page > 1 && <a href={getPageUrl(page - 1)}>Previous</a>}
+            {paginationPages.map(pageNum => (
+              <a
+                href={getPageUrl(pageNum)}
+                class:list={[{ current: pageNum === page }]}
+              >
+                {pageNum}
+              </a>
+            ))}
+            {page < totalPages && <a href={getPageUrl(page + 1)}>Next</a>}
+          </div>
         )}
-        
-        {pageNumbers.map((pageNum) => (
-          <a 
-            href={getPageUrl(pageNum)}
-            class:list={[{ current: pageNum === page }]}
-          >
-            {pageNum}
-          </a>
-        ))}
-        
-        {page < totalPages && (
-          <a href={getPageUrl(page + 1)}>Next</a>
-        )}
+      </>
+    ) : (
+      <div class="no-results">
+        <p>No products found. Try a different filter or search term.</p>
       </div>
     )}
   </div>
 </Layout>
+
+<style is:global>
+  /* Your existing styles – unchanged */
+  .products-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  .filter-bar {
+    margin-bottom: 2rem;
+  }
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 500px;
+  }
+  .search-input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.7rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+  }
+  .search-btn {
+    background: var(--accent-gold);
+    border: none;
+    border-radius: 2rem;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    color: #0a0c10;
+    cursor: pointer;
+  }
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+    border-left: 4px solid var(--accent-gold);
+    padding-left: 1rem;
+  }
+  .product-count {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .pagination a, .pagination span {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+  .pagination a:hover {
+    background: var(--accent-gold);
+    color: #0a0c10;
+    border-color: var(--accent-gold);
+  }
+  .pagination .current {
+    background: var(--accent-gold);
+    color: #0a0c10;
+    border-color: var(--accent-gold);
+  }
+</style>

@@ -1,11 +1,5 @@
 // src/lib/products.js
-import XLSX from 'xlsx';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Path to your Excel file (place it in the project root)
-const excelPath = path.join(__dirname, '../../products.xlsx');
+import productsData from '../data/products.json' with { type: 'json' };
 
 let cachedProducts = null;
 
@@ -38,49 +32,40 @@ export function getProductUrl(product) {
 export function loadProductsFromExcel() {
   if (cachedProducts) return cachedProducts;
 
-  try {
-    const workbook = XLSX.readFile(excelPath);
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet);
+  const products = productsData.map(row => {
+    const id = row.part_no || row.sku;
+    const slug = slugifyProductValue(row.slug || row.product_name || id);
+    const images = row.images ? row.images.split(',').map(img => img.trim()) : [];
+    const image = images[0] || '';
+    const routeParam = getProductRouteParam({ id, slug, name: row.product_name });
 
-    const products = rows.map(row => {
-      const id = row.part_no || row.sku;
-      const slug = slugifyProductValue(row.slug || row.product_name || id);
-      const images = row.images ? row.images.split(',').map(img => img.trim()) : [];
-      const image = images[0] || '';
-      const routeParam = getProductRouteParam({ id, slug, name: row.product_name });
+    return {
+      // Use part_no as unique ID (fallback to sku if part_no missing)
+      id,
+      part_no: row.part_no || '',
+      sku: row.sku || '',
+      category: row.category,
+      subcategory: row.subcategory,
+      subsubcategory: row.subsubcategory,
+      type: row.type || '',
+      name: row.product_name,
+      description: row.description || '',
+      brand: row.brand || '',
+      images,
+      image,
+      thumbnail: image ? image.replace('/upload/', '/upload/c_fill,w_200,h_200/') : '',
+      variant_name: row.variant_name || '',
+      price: parseFloat(row.mrp),
+      slug,
+      routeParam,
+      url: routeParam ? `/product/${routeParam}` : '/products',
+      meta_title: row.meta_title || '',
+      meta_description: row.meta_description || '',
+    };
+  });
 
-      return {
-        // Use part_no as unique ID (fallback to sku if part_no missing)
-        id,
-        part_no: row.part_no || '',
-        sku: row.sku || '',
-        category: row.category,
-        subcategory: row.subcategory,
-        subsubcategory: row.subsubcategory,
-        type: row.type || '',
-        name: row.product_name,
-        description: row.description || '',
-        brand: row.brand || '',
-        images,
-        image,
-        thumbnail: image ? image.replace('/upload/', '/upload/c_fill,w_200,h_200/') : '',
-        variant_name: row.variant_name || '',
-        price: parseFloat(row.mrp),
-        slug,
-        routeParam,
-        url: routeParam ? `/product/${routeParam}` : '/products',
-        meta_title: row.meta_title || '',
-        meta_description: row.meta_description || '',
-      };
-    });
-
-    cachedProducts = products;
-    return products;
-  } catch (error) {
-    console.error('Error reading Excel file:', error);
-    return [];
-  }
+  cachedProducts = products;
+  return products;
 }
 
 export async function fetchAllProducts() {

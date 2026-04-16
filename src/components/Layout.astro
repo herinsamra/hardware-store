@@ -7,13 +7,30 @@ interface Props {
   title?: string;
   description?: string;
   isHomePage?: boolean;
+  canonical?: string;
+  image?: string;
+  openGraphType?: string;
 }
 
 const { 
   title = 'Hardware Store | Quality Tools & Materials',
   description = 'Your one-stop shop for quality hardware, tools, plumbing, electrical, and building materials.',
-  isHomePage = false 
+  isHomePage = false,
+  canonical,
+  image,
+  openGraphType = 'website',
 } = Astro.props;
+
+function resolveMetaUrl(value?: string): string | undefined {
+  if (!value) return undefined;
+  if (/^https?:\/\//i.test(value)) return value;
+  if (Astro.site) return new URL(value, Astro.site).toString();
+  return value;
+}
+
+const canonicalUrl = resolveMetaUrl(canonical || Astro.url.pathname);
+const socialImage = resolveMetaUrl(image);
+const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) ? canonicalUrl : undefined;
 ---
 
 <!DOCTYPE html>
@@ -22,7 +39,18 @@ const {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
+  <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#1a472a">
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={openGraphType} />
+  {absoluteCanonicalUrl && <meta property="og:url" content={absoluteCanonicalUrl} />}
+  {socialImage && <meta property="og:image" content={socialImage} />}
+  <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  {socialImage && <meta name="twitter:image" content={socialImage} />}
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

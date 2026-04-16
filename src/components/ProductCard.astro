@@ -1,5 +1,7 @@
 ---
 // src/components/ProductCard.astro
+import { getProductUrl } from '../lib/products';
+
 export interface Props {
   product: {
     id: string;
@@ -7,14 +9,18 @@ export interface Props {
     price: number;
     image: string;
     category: string;
+    slug?: string;
+    routeParam?: string;
+    url?: string;
     variant_name?: string;
   };
 }
 
 const { product } = Astro.props;
+const productUrl = getProductUrl(product);
 ---
 
-<a href={`/product/${product.id}`} class="product-card group">
+<a href={productUrl} class="product-card group">
   <div class="product-image-wrapper">
     {product.image ? (
       <img 

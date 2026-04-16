@@ -1,7 +1,11 @@
 ---
 // src/pages/product/[id].astro
 import Layout from '../../components/Layout.astro';
-import { fetchProductById, getAllProductSlugs } from '../../lib/products';
+import {
+  fetchProductByRouteParam,
+  getAllProductSlugs,
+  getProductUrl,
+} from '../../lib/products';
 
 export const prerender = true;
 
@@ -10,15 +14,64 @@ export async function getStaticPaths() {
   return slugs;
 }
 
-const { id } = Astro.params;
-const product = await fetchProductById(id);
+function cleanName(value: string): string {
+  return value.replace(/_/g, ' ');
+}
+
+const routeParam = Astro.params.id || '';
+const product = await fetchProductByRouteParam(routeParam);
 
 if (!product) {
   return Astro.redirect('/404');
 }
+
+const canonicalPath = getProductUrl(product);
+
+if (routeParam !== product.routeParam) {
+  return Astro.redirect(canonicalPath, 301);
+}
+
+const absoluteCanonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const absoluteImageUrl = product.image || undefined;
+const productCategoryTrail = [
+  product.category,
+  product.subcategory,
+  product.subsubcategory,
+].filter(Boolean).map(cleanName).join(' > ');
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.name,
+  description: product.meta_description || product.description,
+  sku: product.sku || undefined,
+  mpn: product.part_no || undefined,
+  image: absoluteImageUrl ? [absoluteImageUrl] : undefined,
+  category: productCategoryTrail || undefined,
+  brand: product.brand ? {
+    '@type': 'Brand',
+    name: cleanName(product.brand),
+  } : undefined,
+  url: absoluteCanonicalUrl,
+  offers: Number.isFinite(product.price) ? {
+    '@type': 'Offer',
+    priceCurrency: 'INR',
+    price: product.price.toFixed(2),
+    availability: 'https://schema.org/InStock',
+    url: absoluteCanonicalUrl,
+  } : undefined,
+};
 ---
 
-<Layout title={product.meta_title || `${product.name} | Peniel Hardwares`} description={product.meta_description || product.description}>
+<Layout
+  title={product.meta_title || `${product.name} | Peniel Hardwares`}
+  description={product.meta_description || product.description}
+  canonical={canonicalPath}
+  image={product.image}
+  openGraphType="product"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+
   <div class="product-detail-container">
     <div class="product-detail">
       <div class="product-gallery">
@@ -41,9 +94,9 @@ if (!product) {
           <p>{product.description}</p>
         </div>
         <div class="product-meta">
-          <span class="category">Category: {product.category}</span>
-          {product.subcategory && <span> → {product.subcategory}</span>}
-          {product.subsubcategory && <span> → {product.subsubcategory}</span>}
+          <span class="category">Category: {cleanName(product.category)}</span>
+          {product.subcategory && <span> → {cleanName(product.subcategory)}</span>}
+          {product.subsubcategory && <span> → {cleanName(product.subsubcategory)}</span>}
         </div>
         <button class="button add-to-cart">Enquire Now</button>
       </div>

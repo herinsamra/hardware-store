@@ -3,137 +3,286 @@ import Layout from '../components/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { fetchAllProducts } from '../lib/products';
 
-// Helper to display clean names (replace underscores with spaces)
-function cleanName(str: string): string {
-  if (!str) return '';
-  return str.replace(/_/g, ' ');
-}
-
-// Get URL parameters
-const url = new URL(Astro.request.url);
-const categoryParam = url.searchParams.get('category');
-const subcategoryParam = url.searchParams.get('subcategory');
-const subsubParam = url.searchParams.get('subsub');
-const brandParam = url.searchParams.get('brand');
-const searchParam = url.searchParams.get('search');
-const page = parseInt(url.searchParams.get('page') || '1', 10);
-const productsPerPage = 12;
-
-// Fetch all products
 const allProducts = await fetchAllProducts();
-console.log('Products loaded:', allProducts.length, allProducts);
-
-// Apply filters
-let filteredProducts = [...allProducts];
-
-if (searchParam) {
-  const q = searchParam.toLowerCase();
-  filteredProducts = filteredProducts.filter(p =>
-    p.name.toLowerCase().includes(q) ||
-    (p.description && p.description.toLowerCase().includes(q)) ||
-    (p.brand && p.brand.toLowerCase().includes(q)) ||
-    p.category.toLowerCase().includes(q)
-  );
-} else if (subsubParam) {
-  filteredProducts = filteredProducts.filter(p => p.subsubcategory === subsubParam);
-} else if (subcategoryParam) {
-  filteredProducts = filteredProducts.filter(p => p.subcategory === subcategoryParam);
-} else if (categoryParam) {
-  filteredProducts = filteredProducts.filter(p => p.category === categoryParam);
-} else if (brandParam) {
-  filteredProducts = filteredProducts.filter(p => p.brand === brandParam);
-}
-
-// Pagination
-const totalProducts = filteredProducts.length;
-const totalPages = Math.ceil(totalProducts / productsPerPage);
-const startIndex = (page - 1) * productsPerPage;
-const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
-
-// Helper to build pagination URL
-function getPageUrl(pageNum: number): string {
-  const params = new URLSearchParams(url.searchParams);
-  params.set('page', pageNum.toString());
-  return `?${params.toString()}`;
-}
-
-// Pagination page numbers (calculated here)
-let paginationPages: number[] = [];
-if (totalPages <= 5) {
-  for (let i = 1; i <= totalPages; i++) paginationPages.push(i);
-} else if (page <= 3) {
-  for (let i = 1; i <= 5; i++) paginationPages.push(i);
-} else if (page >= totalPages - 2) {
-  for (let i = totalPages - 4; i <= totalPages; i++) paginationPages.push(i);
-} else {
-  for (let i = page - 2; i <= page + 2; i++) paginationPages.push(i);
-}
-
-// Page title (with cleaned names for display)
-let rawTitle = 'All Products';
-if (searchParam) rawTitle = `Search: "${searchParam}"`;
-else if (brandParam) rawTitle = `${brandParam} Products`;
-else if (subsubParam) rawTitle = subsubParam;
-else if (subcategoryParam) rawTitle = subcategoryParam;
-else if (categoryParam) rawTitle = `${categoryParam} Products`;
-
-// Replace underscores with spaces for the displayed title
-const pageTitle = cleanName(rawTitle);
+const productsPerPage = 12;
 ---
 
-<Layout title={`${pageTitle} | Peniel Hardwares`}>
+<Layout title="Products | Peniel Hardwares">
   <div class="products-page">
-    <!-- Search & Filter Bar -->
     <div class="filter-bar">
-      <form method="get" class="search-form">
+      <form method="get" class="search-form" id="products-search-form">
+        <input type="hidden" name="category" id="search-category" />
+        <input type="hidden" name="subcategory" id="search-subcategory" />
+        <input type="hidden" name="subsub" id="search-subsub" />
+        <input type="hidden" name="brand" id="search-brand" />
         <input
           type="text"
           name="search"
-          value={searchParam || ''}
+          value=""
           placeholder="Search products..."
           class="search-input"
+          id="search-input"
         />
-        <button type="submit" class="search-btn">🔍 Search</button>
+        <button type="submit" class="search-btn">Search</button>
       </form>
     </div>
 
-    <h1 class="page-title">{pageTitle}</h1>
-    <p class="product-count">{totalProducts} product{totalProducts !== 1 ? 's' : ''} found</p>
+    <h1 class="page-title" id="products-page-title">All Products</h1>
+    <p class="product-count" id="product-count">Loading products...</p>
 
-    {paginatedProducts.length > 0 ? (
-      <>
-        <div class="product-grid">
-          {paginatedProducts.map(product => (
-            <ProductCard product={product} />
-          ))}
-        </div>
+    <div class="product-grid" id="product-grid"></div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div class="pagination">
-            {page > 1 && <a href={getPageUrl(page - 1)}>Previous</a>}
-            {paginationPages.map(pageNum => (
-              <a
-                href={getPageUrl(pageNum)}
-                class:list={[{ current: pageNum === page }]}
-              >
-                {pageNum}
-              </a>
-            ))}
-            {page < totalPages && <a href={getPageUrl(page + 1)}>Next</a>}
-          </div>
-        )}
-      </>
-    ) : (
-      <div class="no-results">
-        <p>No products found. Try a different filter or search term.</p>
+    <div class="no-results" id="no-results" hidden>
+      <p>No products found. Try a different filter or search term.</p>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <noscript>
+      <p class="product-count">
+        JavaScript is required for URL-based filtering on this static build. Showing all products instead.
+      </p>
+      <div class="product-grid">
+        {allProducts.map(product => (
+          <ProductCard product={product} />
+        ))}
       </div>
-    )}
+    </noscript>
   </div>
+
+  <script define:vars={{ allProducts, productsPerPage }}>
+    const cleanName = (value = '') => value.replace(/_/g, ' ');
+
+    const titleEl = document.getElementById('products-page-title');
+    const countEl = document.getElementById('product-count');
+    const gridEl = document.getElementById('product-grid');
+    const noResultsEl = document.getElementById('no-results');
+    const paginationEl = document.getElementById('pagination');
+    const searchInput = document.getElementById('search-input');
+
+    const params = new URLSearchParams(window.location.search);
+    const filters = {
+      category: params.get('category') || '',
+      subcategory: params.get('subcategory') || '',
+      subsub: params.get('subsub') || '',
+      brand: params.get('brand') || '',
+      search: (params.get('search') || '').trim(),
+    };
+
+    const hiddenFieldMap = {
+      category: document.getElementById('search-category'),
+      subcategory: document.getElementById('search-subcategory'),
+      subsub: document.getElementById('search-subsub'),
+      brand: document.getElementById('search-brand'),
+    };
+
+    const rawPage = parseInt(params.get('page') || '1', 10);
+    const requestedPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
+
+    const normalizeText = value => (value || '').toString().toLowerCase();
+
+    const getPageTitle = () => {
+      if (filters.search) return `Search: "${filters.search}"`;
+      if (filters.brand) return `${cleanName(filters.brand)} Products`;
+      if (filters.subsub) return cleanName(filters.subsub);
+      if (filters.subcategory) return cleanName(filters.subcategory);
+      if (filters.category) return `${cleanName(filters.category)} Products`;
+      return 'All Products';
+    };
+
+    const filteredProducts = allProducts.filter(product => {
+      if (filters.category && product.category !== filters.category) return false;
+      if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
+      if (filters.subsub && product.subsubcategory !== filters.subsub) return false;
+      if (filters.brand && product.brand !== filters.brand) return false;
+
+      if (filters.search) {
+        const query = normalizeText(filters.search);
+        const searchFields = [
+          product.name,
+          product.description,
+          product.brand,
+          product.category,
+          product.subcategory,
+          product.subsubcategory,
+          product.variant_name,
+        ];
+
+        return searchFields.some(field => normalizeText(field).includes(query));
+      }
+
+      return true;
+    });
+
+    const totalProducts = filteredProducts.length;
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+    const currentPage = totalPages > 0 ? Math.min(requestedPage, totalPages) : 1;
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+    const pageTitle = getPageTitle();
+
+    const updateSearchForm = () => {
+      if (searchInput) searchInput.value = filters.search;
+
+      Object.entries(hiddenFieldMap).forEach(([key, input]) => {
+        if (!input) return;
+
+        if (filters[key]) {
+          input.value = filters[key];
+          input.disabled = false;
+        } else {
+          input.value = '';
+          input.disabled = true;
+        }
+      });
+    };
+
+    const formatPrice = value => {
+      const amount = Number(value);
+      return Number.isFinite(amount) ? amount.toFixed(2) : '0.00';
+    };
+
+    const buildPageUrl = pageNumber => {
+      const nextParams = new URLSearchParams(window.location.search);
+
+      if (pageNumber <= 1) {
+        nextParams.delete('page');
+      } else {
+        nextParams.set('page', String(pageNumber));
+      }
+
+      const query = nextParams.toString();
+      return query ? `?${query}` : '/products';
+    };
+
+    const getPaginationPages = () => {
+      if (totalPages <= 5) {
+        return Array.from({ length: totalPages }, (_, index) => index + 1);
+      }
+
+      if (currentPage <= 3) return [1, 2, 3, 4, 5];
+      if (currentPage >= totalPages - 2) {
+        return Array.from({ length: 5 }, (_, index) => totalPages - 4 + index);
+      }
+
+      return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+    };
+
+    const createProductCard = product => {
+      const card = document.createElement('a');
+      card.href = product.url || `/product/${product.id}`;
+      card.className = 'product-card group';
+
+      const imageWrapper = document.createElement('div');
+      imageWrapper.className = 'product-image-wrapper';
+
+      if (product.image) {
+        const image = document.createElement('img');
+        image.src = product.image;
+        image.alt = product.name;
+        image.className = 'product-image';
+        image.loading = 'lazy';
+        imageWrapper.appendChild(image);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'product-image-placeholder';
+
+        const placeholderText = document.createElement('span');
+        placeholderText.textContent = 'No Image';
+        placeholder.appendChild(placeholderText);
+        imageWrapper.appendChild(placeholder);
+      }
+
+      const info = document.createElement('div');
+      info.className = 'product-info';
+
+      const name = document.createElement('h3');
+      name.className = 'product-name';
+      name.textContent = product.name || 'Unnamed Product';
+      info.appendChild(name);
+
+      if (product.variant_name) {
+        const variant = document.createElement('p');
+        variant.className = 'product-variant';
+        variant.textContent = cleanName(product.variant_name);
+        info.appendChild(variant);
+      }
+
+      const price = document.createElement('div');
+      price.className = 'product-price';
+      price.textContent = `₹${formatPrice(product.price)}`;
+      info.appendChild(price);
+
+      const category = document.createElement('div');
+      category.className = 'product-category';
+      category.textContent = cleanName(product.category || '');
+      info.appendChild(category);
+
+      card.appendChild(imageWrapper);
+      card.appendChild(info);
+
+      return card;
+    };
+
+    const renderProducts = () => {
+      if (!titleEl || !countEl || !gridEl || !noResultsEl || !paginationEl) return;
+
+      titleEl.textContent = pageTitle;
+      countEl.textContent = `${totalProducts} product${totalProducts !== 1 ? 's' : ''} found`;
+      document.title = `${pageTitle} | Peniel Hardwares`;
+
+      gridEl.replaceChildren();
+      paginationEl.replaceChildren();
+
+      if (paginatedProducts.length > 0) {
+        paginatedProducts.forEach(product => {
+          gridEl.appendChild(createProductCard(product));
+        });
+
+        noResultsEl.hidden = true;
+        gridEl.hidden = false;
+      } else {
+        noResultsEl.hidden = false;
+        gridEl.hidden = true;
+      }
+
+      if (totalPages > 1) {
+        const pages = getPaginationPages();
+
+        if (currentPage > 1) {
+          const previousLink = document.createElement('a');
+          previousLink.href = buildPageUrl(currentPage - 1);
+          previousLink.textContent = 'Previous';
+          paginationEl.appendChild(previousLink);
+        }
+
+        pages.forEach(pageNumber => {
+          const pageLink = document.createElement('a');
+          pageLink.href = buildPageUrl(pageNumber);
+          pageLink.textContent = String(pageNumber);
+
+          if (pageNumber === currentPage) {
+            pageLink.classList.add('current');
+          }
+
+          paginationEl.appendChild(pageLink);
+        });
+
+        if (currentPage < totalPages) {
+          const nextLink = document.createElement('a');
+          nextLink.href = buildPageUrl(currentPage + 1);
+          nextLink.textContent = 'Next';
+          paginationEl.appendChild(nextLink);
+        }
+      }
+    };
+
+    updateSearchForm();
+    renderProducts();
+  </script>
 </Layout>
 
 <style is:global>
-  /* Your existing styles – unchanged */
   .products-page {
     max-width: 1280px;
     margin: 0 auto;

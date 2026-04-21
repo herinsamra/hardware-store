@@ -8,48 +8,84 @@ const navLinks = [
 ];
 ---
 
-<nav class="navbar glass-strong">
-  <div class="navbar-content">
-    <!-- Logo + brand name (centered) -->
-    <div class="logo-center">
-      <a href="/" class="logo-link">
-        <img 
-          src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
-          alt="Peniel Hardwares Logo"
-          class="logo-img"
-        />
-        <span class="logo-text">Peniel Hardwares</span>
-      </a>
-    </div>
-    <!-- Nav links -->
-    <div class="nav-links">
-      {navLinks.map(link => (
-        <a 
-          href={link.href} 
-          class:list={[
-            'nav-link',
-            { active: currentPath === link.href || currentPath.startsWith(link.href + '/') }
-          ]}
-        >
-          {link.label}
+<header class="site-header" data-site-header role="banner">
+  <div class="site-header-spacer" aria-hidden="true"></div>
+
+  <nav class="navbar glass-strong" aria-label="Primary">
+    <div class="navbar-content">
+      <!-- Logo + brand name (centered) -->
+      <div class="logo-center">
+        <a href="/" class="logo-link">
+          <img 
+            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
+            alt="Peniel Hardwares Logo"
+            class="logo-img"
+          />
+          <span class="logo-text">Peniel Hardwares</span>
         </a>
-      ))}
+      </div>
+      <!-- Nav links -->
+      <div class="nav-links">
+        {navLinks.map(link => (
+          <a 
+            href={link.href} 
+            class:list={[
+              'nav-link',
+              { active: currentPath === link.href || currentPath.startsWith(link.href + '/') }
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <style>
-  .navbar {
-    position: sticky;
-    top: 0;
+  .site-header {
+    --header-height-expanded: 8.25rem;
+    --header-height-compact: 6.65rem;
+    position: relative;
     z-index: 50;
   }
+  .site-header-spacer {
+    height: var(--header-height-expanded);
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transform: translateY(0);
+    transition:
+      transform 0.36s cubic-bezier(0.215, 0.61, 0.355, 1),
+      background-color 0.28s ease,
+      border-color 0.28s ease,
+      box-shadow 0.28s ease;
+    will-change: transform;
+  }
+  .site-header.is-hidden .navbar {
+    transform: translateY(calc(-100% - 0.75rem));
+  }
   .navbar-content {
+    max-width: 1280px;
+    margin: 0 auto;
     padding: 1rem 1.5rem;
+    transition: padding 0.3s ease;
+  }
+  .site-header .navbar-content {
+    padding-top: 0.65rem;
+    padding-bottom: 0.75rem;
   }
   .logo-center {
     text-align: center;
     margin-bottom: 0.75rem;
+    transition: margin-bottom 0.3s ease;
+  }
+  .site-header .logo-center {
+    margin-bottom: 0.45rem;
   }
   .logo-link {
     display: inline-flex;
@@ -64,6 +100,10 @@ const navLinks = [
   .logo-img {
     height: 2.5rem;
     width: auto;
+    transition: height 0.3s ease;
+  }
+  .site-header .logo-img {
+    height: 2.15rem;
   }
   .logo-text {
     font-size: 1.5rem;
@@ -73,6 +113,10 @@ const navLinks = [
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    transition: font-size 0.3s ease;
+  }
+  .site-header .logo-text {
+    font-size: 1.35rem;
   }
   .nav-links {
     display: flex;
@@ -81,6 +125,11 @@ const navLinks = [
     flex-wrap: wrap;
     border-top: 1px solid var(--border);
     padding-top: 0.75rem;
+    transition: gap 0.3s ease, padding-top 0.3s ease;
+  }
+  .site-header .nav-links {
+    gap: 1.5rem;
+    padding-top: 0.55rem;
   }
   .nav-link {
     text-decoration: none;
@@ -101,7 +150,69 @@ const navLinks = [
     margin-top: 4px;
   }
   @media (max-width: 640px) {
+    .site-header {
+      --header-height-expanded: 7.5rem;
+      --header-height-compact: 6rem;
+    }
     .logo-img { height: 2rem; }
     .logo-text { font-size: 1.2rem; }
+    .site-header.logo-img { height: 1.85rem; }
+    .site-header .logo-text { font-size: 1.05rem; }
+    .nav-links { gap: 1.5rem; }
+    .site-header .nav-links { gap: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar,
+    .navbar-content,
+    .logo-center,
+    .logo-img,
+    .logo-text,
+    .nav-links {
+      transition: none;
+    }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector('[data-site-header]');
+    if (!(header instanceof HTMLElement)) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateHeader = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      // Always remove hidden when at the very top
+      if (currentScrollY <= 10) {
+        header.classList.remove('is-hidden');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      // Scrolling down → hide
+      if (delta > 5) {
+        header.classList.add('is-hidden');
+      } 
+      // Scrolling up → show
+      else if (delta < -5) {
+        header.classList.remove('is-hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateHeader);
+    }, { passive: true });
+
+    updateHeader();
+  })();
+</script>

@@ -3,6 +3,8 @@
  * Mock data is provided here - to be replaced with Decap CMS integration later.
  */
 
+import { allBrands } from './brands';
+
 // ============================================================================
 // TypeScript Interfaces
 // ============================================================================
@@ -98,18 +100,12 @@ const mockCategories: Category[] = [
   },
 ];
 
-const mockBrands: Brand[] = [
-  { name: 'Havells', slug: 'havells', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Finolex', slug: 'finolex', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Asian Paints', slug: 'asian-paints', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Jaquar', slug: 'jaquar', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Godrej', slug: 'godrej', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Supreme', slug: 'supreme', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Legrand', slug: 'legrand', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Parryware', slug: 'parryware', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Hindware', slug: 'hindware', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-  { name: 'Luminous', slug: 'luminous', logo: getCloudinaryUrl('samples/cloudinary-icon', { width: 120, height: 60, crop: 'fit' }) },
-];
+const mockBrands: Brand[] = allBrands.map((brand) => ({
+  name: brand.name,
+  slug: brand.slug,
+  logo: brand.imageUrl,
+  category: brand.categories.join(', '),
+}));
 
 // ============================================================================
 // Data Fetching Functions

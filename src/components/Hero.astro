@@ -31,7 +31,7 @@ const {
   <div class="hero-content">
     <h1>{title}</h1>
     <p>{subtitle}</p>
-    <a href={ctaLink} class="hero-button">
+    <a href={ctaLink} class="hero-button" data-astro-prefetch="hover">
       {ctaText}
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -45,6 +45,7 @@ const {
     position: relative;
     height: 70vh;
     min-height: 500px;
+    margin-top: -1.35rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,5 +105,10 @@ const {
   }
   @media (min-width: 768px) {
     .hero-content h1 { font-size: 4rem; }
+  }
+  @media (max-width: 640px) {
+    .hero {
+      margin-top: -1rem;
+    }
   }
 </style>

@@ -234,37 +234,59 @@
   "Brands": {
     "Electricals": [
       "Havells",
-      "Opple",
-      "Inventaa",
       "Legrand",
-      "Hi-Fi",
+      "Crompton",
+      "Luminous",
+      "V-Guard",
+      "Inventaa",
+      "Philips",
+      "Hifi",
+      "Anchor",
       "Arcline",
-      "Finolex",
-      "Luminous"
+      "Panasonic",
+      "Atomberg",
+      "Lisha",
+      "Aceline"
     ],
     "Plumbing": [
+      "Waterman",
+      "Essco",
+      "Jass",
+      "Watertec",
+      "Pupa",
+      "CRI",
       "Finolex",
       "Supreme",
       "Ashirvad",
-      "Parryware",
-      "Jaquar_&_Essco",
-      "Jass",
-      "Watertec",
-      "Pupa"
-    ],
-    "Hardwares": [
-      "Godrej",
-      "Nova",
-      "Vinayak",
-      "Aceline",
-      "Sleek",
+      "CRI Pumps",
+      "Prince",
       "Hindware",
       "Glen"
     ],
+    "Sanitary": [
+      "Jaquar",
+      "Parryware",
+      "Waterman",
+      "Essco",
+      "Jass",
+      "Hindware"
+    ],
+    "Hardwares": [
+      "Weber",
+      "Pupa",
+      "Dr. Fixit",
+      "Godrej",
+      "CRI Pumps",
+      "Yama Locks",
+      "Nova",
+      "Aceline",
+      "Hindware"
+    ],
     "Paints": [
-      "Asian",
+      "Indigo",
+      "Asian Paints",
+      "Dr. Fixit",
       "Esdee",
-      "Dr._Fixit",
       "Padmashree"
     ]
   }

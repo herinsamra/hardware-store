@@ -21,7 +21,7 @@ const productUrl = getProductUrl(product);
 const cleanName = (value = '') => value.replace(/_/g, ' ');
 ---
 
-<a href={productUrl} class="product-card group">
+<a href={productUrl} class="product-card group" data-astro-prefetch>
   <div class="product-image-wrapper">
     {product.image ? (
       <img 

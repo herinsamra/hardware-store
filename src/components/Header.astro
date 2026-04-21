@@ -15,7 +15,7 @@ const navLinks = [
     <div class="navbar-content">
       <!-- Logo + brand name (centered) -->
       <div class="logo-center">
-        <a href="/" class="logo-link">
+        <a href="/" class="logo-link" data-astro-prefetch="hover">
           <img 
             src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
             alt="Peniel Hardwares Logo"
@@ -29,6 +29,7 @@ const navLinks = [
         {navLinks.map(link => (
           <a 
             href={link.href} 
+            data-astro-prefetch="hover"
             class:list={[
               'nav-link',
               { active: currentPath === link.href || currentPath.startsWith(link.href + '/') }

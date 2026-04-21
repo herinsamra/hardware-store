@@ -1,107 +1,63 @@
 ---
-// BrandsScroller.astro
-// Multi‑row infinite scrolling brand logos with 3D tilt – seamless loop
-
 import { brandRows } from '../lib/brands';
+
+interface ScrollerBrand {
+  name: string;
+  imageUrl: string;
+}
+
+const typedBrandRows = brandRows as ScrollerBrand[][];
+const getBrandHref = (brand: ScrollerBrand) => `/products?brand=${encodeURIComponent(brand.name)}`;
+const getRowDuration = (rowIndex: number) => (rowIndex % 2 === 0 ? '30s' : '45s');
+const duplicateCount = 4;
+const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount }, () => row).flat();
 ---
 
-<div class="brands-scroller-component">
-  <!-- Top subtle separator -->
-  <div class="separator-top"></div>
-
-  <!-- Restored heading -->
-  <div class="brands-scroller-header">
-   
+<section class="brands-scroller-section" aria-label="Trusted brands">
+  <div class="wrapper-images">
+    {typedBrandRows.map((row, rowIndex) => (
+      <div
+        class:list={['images-line', { reverse: rowIndex % 2 === 1 }]}
+        style={`--duration: ${getRowDuration(rowIndex)}`}
+      >
+        {repeatRow(row).map((brand, index) => (
+          <a
+            href={getBrandHref(brand)}
+            class="line"
+            style={`--brand-image: url("${brand.imageUrl}")`}
+            title={brand.name}
+            aria-label={`${brand.name} products`}
+            data-astro-prefetch
+          >
+            <img
+              class="img"
+              src={brand.imageUrl}
+              alt={`${brand.name} logo`}
+              loading={index < row.length ? 'eager' : 'lazy'}
+            />
+            <span class="brand-name">{brand.name}</span>
+          </a>
+        ))}
+      </div>
+    ))}
   </div>
-
-  <!-- Slider container -->
-  <div class="slider-container">
-    <div class="wrapper-images">
-      {brandRows.map((row, rowIndex) => (
-        <div class="images-line" style={`--duration: ${rowIndex % 2 === 0 ? 20 : 30}s`}>
-          {/* Double duplication for seamless loop: original + clone */}
-          {[...row, ...row].map((brand, idx) => (
-            <div
-              class="line"
-              style={`background-image: url(${brand.url})`}
-              title={brand.name}
-            >
-              <span
-                class="img"
-                style={`background-image: url(${brand.url})`}
-                aria-label={brand.name}
-              />
-              <span class="brand-name">{brand.name}</span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  </div>
-
-  <!-- Bottom subtle separator -->
-  <div class="separator-bottom"></div>
-</div>
+</section>
 
 <style is:global>
-  .brands-scroller-component * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  .brands-scroller-component {
-    display: block;
+  .brands-scroller-section {
+    position: relative;
     width: 100%;
     overflow-x: clip;
-    background: linear-gradient(180deg, var(--bg-primary) 0%, #050505 100%);
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Subtle separators */
-  .separator-top,
-  .separator-bottom {
-    width: 100%;
-    height: 4rem;
-    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
-    pointer-events: none;
-  }
-  .separator-bottom {
-    background: linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
-  }
-
-  /* Heading - fully visible, not overlapped */
-  .brands-scroller-header {
-    text-align: center;
-    margin: 2rem 1rem 3rem;  /* increased bottom margin to avoid overlap */
-    position: relative;
-    z-index: 2;
+    overflow-y: visible;
     background: transparent;
-  }
-  .brands-scroller-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
-  }
-  .brands-scroller-header p {
-    color: var(--text-secondary);
-    font-size: 1rem;
+    z-index: 4;
+    margin-top: -8rem;
+    margin-bottom: 2rem;
+    padding-top: 8rem;
+    padding-bottom: 7rem;
   }
 
-  /* Slider container - gives room */
-  .slider-container {
-    margin: 0 auto;
-    padding: 1rem 0 2rem;
-    overflow: visible;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* 3D wrapper */
-  .wrapper-images {
+  .brands-scroller-section .wrapper-images {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -111,80 +67,100 @@ import { brandRows } from '../lib/brands';
     left: 50%;
     position: relative;
     top: 0;
-    opacity: 0.85;
+    opacity: 0.98;
     transform: translate3d(-50%, 0, 0) perspective(800px) rotateY(10deg) rotateX(-10deg);
     width: 100vw;
     margin: 0 auto;
     pointer-events: none;
   }
 
-  /* Each row – now animates from 0 to -50% for seamless loop */
-  .images-line {
-    animation: runner var(--duration, 20s) linear infinite;
+  .brands-scroller-section .images-line {
+    animation: brand-runner var(--duration, 10s) linear infinite;
     display: flex;
-    transform: translateX(0);
     pointer-events: auto;
-    width: fit-content;
+    width: max-content;
   }
 
-  /* Brand card */
-  .line {
-    background-position: 50% 50%;
-    background-size: cover;
+  .brands-scroller-section .images-line.reverse {
+    animation-direction: reverse;
+  }
+
+  .brands-scroller-section .line {
+    background: transparent;
     flex: none;
     height: 22vh;
-    aspect-ratio: 1 / 1.1;
-    min-width: 120px;
-    max-width: 180px;
+    aspect-ratio: 1.4 / 1;
+    min-width: 150px;
+    max-width: 220px;
     margin: clamp(6px, 2vw, 16px);
     position: relative;
-    transition: box-shadow 0.3s, filter 0.3s;
+    transition: box-shadow 0.3s, filter 0.3s, transform 0.3s;
     border-radius: 1rem;
     overflow: visible;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: none;
     cursor: pointer;
+    text-decoration: none;
+    border: none;
   }
 
-  .img {
+  .brands-scroller-section .img {
     position: absolute;
     z-index: 2;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-position: 50% 50%;
-    background-size: cover;
-    transition: transform 0.3s, filter 0.3s;
+    top: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    left: 0.9rem;
+    width: calc(100% - 1.8rem);
+    height: calc(100% - 1.8rem);
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s, filter 0.3s, opacity 0.3s;
     border-radius: 1rem;
+    opacity: 1;
+    filter:
+      saturate(1.08)
+      contrast(1.04)
+      brightness(1.02)
+      drop-shadow(0 6px 14px rgba(5, 8, 14, 0.18))
+      drop-shadow(0 0 12px rgba(197, 160, 40, 0.12));
   }
 
-  .line:hover .img {
-    cursor: pointer;
-    transform: scale(1.12) translateZ(0px);
-    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.6);
-    filter: blur(0px) brightness(1.08);
+  .brands-scroller-section .line:hover .img,
+  .brands-scroller-section .line:focus-visible .img {
+    transform: scale(1.12) translateZ(0);
+    filter:
+      saturate(1.12)
+      contrast(1.08)
+      brightness(1.05)
+      drop-shadow(0 10px 20px rgba(5, 8, 14, 0.24))
+      drop-shadow(0 0 16px rgba(197, 160, 40, 0.16));
   }
 
-  .line:after {
+  .brands-scroller-section .line::after {
     content: "";
-    background: inherit;
     display: block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     top: 3vh;
+    left: 0;
     position: absolute;
-    background-size: cover;
+    background-image: var(--brand-image);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
     z-index: -1;
     transition: filter 0.3s;
-    filter: blur(20px) opacity(0.6);
+    filter: blur(18px) opacity(0.42);
   }
 
-  .line:hover:after {
-    filter: blur(35px) opacity(0.85);
+  .brands-scroller-section .line:hover::after,
+  .brands-scroller-section .line:focus-visible::after {
+    filter: blur(24px) opacity(0.58);
   }
 
-  .brand-name {
+  .brands-scroller-section .brand-name {
     position: absolute;
     bottom: -1.5rem;
     left: 50%;
@@ -200,77 +176,86 @@ import { brandRows } from '../lib/brands';
     transition: opacity 0.2s;
     pointer-events: none;
     border: 1px solid var(--border);
+    z-index: 3;
   }
 
-  .line:hover .brand-name {
+  .brands-scroller-section .line:hover .brand-name,
+  .brands-scroller-section .line:focus-visible .brand-name {
     opacity: 1;
   }
 
-  /* Seamless infinite scroll: move left by exactly half the total width (since we duplicated the row) */
-  @keyframes runner {
-    0% {
+  .brands-scroller-section .line:focus-visible {
+    outline: 2px solid rgba(197, 160, 40, 0.8);
+    outline-offset: 4px;
+  }
+
+  @keyframes brand-runner {
+    from {
       transform: translateX(0);
     }
-    100% {
-      transform: translateX(-50%);
+
+    to {
+      transform: translateX(-25%);
     }
   }
 
-  /* Responsive */
   @media (max-width: 1000px) {
-    .wrapper-images {
+    .brands-scroller-section {
+      margin-top: -5rem;
+      margin-bottom: 1.5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .brands-scroller-section .wrapper-images {
       height: 66vh;
       min-height: 200px;
       max-height: 300px;
       padding-top: 2vh;
     }
-    .line {
-      min-width: 85px;
-      max-width: 120px;
+
+    .brands-scroller-section .line {
+      min-width: 118px;
+      max-width: 150px;
       margin: 4px;
       height: 13vh;
-    }
-    .brands-scroller-header h2 {
-      font-size: 1.5rem;
-    }
-    .brands-scroller-header {
-      margin-bottom: 2rem;
-    }
-    .separator-top,
-    .separator-bottom {
-      height: 2rem;
     }
   }
 
   @media (max-width: 600px) {
-    .wrapper-images {
+    .brands-scroller-section {
+      margin-top: -2.5rem;
+      margin-bottom: 1rem;
+      padding-top: 2.5rem;
+      padding-bottom: 3.5rem;
+    }
+
+    .brands-scroller-section .wrapper-images {
       height: 50vw;
       min-height: 120px;
       max-height: 180px;
       padding-top: 2vw;
     }
-    .line {
-      min-width: 66px;
-      max-width: 85px;
+
+    .brands-scroller-section .line {
+      min-width: 92px;
+      max-width: 116px;
       margin: 3px;
       height: 7.4vh;
     }
-    .brand-name {
-      font-size: 0.5rem;
-      bottom: -1.2rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brands-scroller-section .images-line {
+      animation: none;
+      transform: translateX(0);
     }
-    .brands-scroller-header h2 {
-      font-size: 1.2rem;
-    }
-    .brands-scroller-header p {
-      font-size: 0.8rem;
-    }
-    .brands-scroller-header {
-      margin-bottom: 1.5rem;
-    }
-    .separator-top,
-    .separator-bottom {
-      height: 1.5rem;
+
+    .brands-scroller-section .img,
+    .brands-scroller-section .line,
+    .brands-scroller-section .line::after,
+    .brands-scroller-section .brand-name {
+      transition: none;
     }
   }
 </style>

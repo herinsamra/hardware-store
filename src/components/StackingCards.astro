@@ -59,7 +59,7 @@ const numCards = categories.length;
             <div>
               <h3>{cat.name}</h3>
               <p>{cat.description}</p>
-              <a href={cat.btnLink} class="btn">View More →</a>
+              <a href={cat.btnLink} class="btn" data-astro-prefetch>View More →</a>
             </div>
             <figure>
               <img src={cat.image} alt={cat.name} loading="lazy" />

@@ -27,7 +27,6 @@ interface Product {
 }
 
 const allProducts: Product[] = await fetchAllProducts();
-
 const productsPerPage = 12;
 ---
 
@@ -39,14 +38,23 @@ const productsPerPage = 12;
         <input type="hidden" name="subcategory" id="search-subcategory" />
         <input type="hidden" name="subsub" id="search-subsub" />
         <input type="hidden" name="brand" id="search-brand" />
-        <input
-          type="text"
-          name="search"
-          value=""
-          placeholder="Search products..."
-          class="search-input"
-          id="search-input"
-        />
+
+        <div class="search-box">
+          <input
+            type="text"
+            name="search"
+            value=""
+            placeholder="Search products..."
+            class="search-input"
+            id="search-input"
+            autocomplete="off"
+            aria-autocomplete="list"
+            aria-controls="search-suggestions"
+            aria-expanded="false"
+          />
+          <div class="search-suggestions" id="search-suggestions" hidden></div>
+        </div>
+
         <button type="submit" class="search-btn">Search</button>
       </form>
     </div>
@@ -74,15 +82,34 @@ const productsPerPage = 12;
     </noscript>
   </div>
 
-  <script define:vars={{ allProducts, productsPerPage }}>
+  <script
+    id="products-page-data"
+    type="application/json"
+    set:html={JSON.stringify({ allProducts, productsPerPage })}
+  />
+
+  <script>
+    import Fuse from 'fuse.js';
+
+    const productsPageDataEl = document.getElementById('products-page-data');
+    if (!(productsPageDataEl instanceof HTMLScriptElement) || !productsPageDataEl.textContent) {
+      throw new Error('Products page data is missing.');
+    }
+
+    const { allProducts, productsPerPage } = JSON.parse(productsPageDataEl.textContent);
+
     const cleanName = (value = '') => value.replace(/_/g, ' ');
+    const normalizeText = value => (value || '').toString().toLowerCase();
+    const productKey = product => product.routeParam || product.slug || product.id || product.url || product.name;
 
     const titleEl = document.getElementById('products-page-title');
     const countEl = document.getElementById('product-count');
     const gridEl = document.getElementById('product-grid');
     const noResultsEl = document.getElementById('no-results');
     const paginationEl = document.getElementById('pagination');
+    const searchForm = document.getElementById('products-search-form');
     const searchInput = document.getElementById('search-input');
+    const suggestionsEl = document.getElementById('search-suggestions');
 
     const params = new URLSearchParams(window.location.search);
     const filters = {
@@ -90,7 +117,15 @@ const productsPerPage = 12;
       subcategory: params.get('subcategory') || '',
       subsub: params.get('subsub') || '',
       brand: params.get('brand') || '',
+    };
+
+    const state = {
       search: (params.get('search') || '').trim(),
+      page: (() => {
+        const rawPage = parseInt(params.get('page') || '1', 10);
+        return Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
+      })(),
+      suggestionsOpen: false,
     };
 
     const hiddenFieldMap = {
@@ -100,56 +135,53 @@ const productsPerPage = 12;
       brand: document.getElementById('search-brand'),
     };
 
-    const rawPage = parseInt(params.get('page') || '1', 10);
-    const requestedPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
+    const searchableKeys = [
+      'name',
+      'variant_name',
+      'brand',
+      'part_no',
+      'sku',
+      'category',
+      'subcategory',
+      'subsubcategory',
+      'description',
+    ];
 
-    const normalizeText = value => (value || '').toString().toLowerCase();
-
-    const getPageTitle = () => {
-      if (filters.search) return `Search: "${filters.search}"`;
-      if (filters.brand) return `${cleanName(filters.brand)} Products`;
-      if (filters.subsub) return cleanName(filters.subsub);
-      if (filters.subcategory) return cleanName(filters.subcategory);
-      if (filters.category) return `${cleanName(filters.category)} Products`;
-      return 'All Products';
-    };
-
-    const filteredProducts = allProducts.filter(product => {
+    const structureFilteredProducts = allProducts.filter(product => {
       if (filters.category && product.category !== filters.category) return false;
       if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
       if (filters.subsub && product.subsubcategory !== filters.subsub) return false;
       if (filters.brand && product.brand !== filters.brand) return false;
-
-      if (filters.search) {
-        const query = normalizeText(filters.search);
-        const searchFields = [
-          product.name,
-          product.description,
-          product.brand,
-          product.category,
-          product.subcategory,
-          product.subsubcategory,
-          product.variant_name,
-        ];
-
-        return searchFields.some(field => normalizeText(field).includes(query));
-      }
-
       return true;
     });
 
-    const totalProducts = filteredProducts.length;
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
-    const currentPage = totalPages > 0 ? Math.min(requestedPage, totalPages) : 1;
-    const startIndex = (currentPage - 1) * productsPerPage;
-    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
-    const pageTitle = getPageTitle();
+    const fuse = new Fuse(structureFilteredProducts, {
+      includeScore: true,
+      includeMatches: true,
+      threshold: 0.34,
+      ignoreLocation: true,
+      shouldSort: true,
+      minMatchCharLength: 2,
+      keys: [
+        { name: 'name', weight: 0.35 },
+        { name: 'variant_name', weight: 0.16 },
+        { name: 'brand', weight: 0.15 },
+        { name: 'part_no', weight: 0.1 },
+        { name: 'sku', weight: 0.08 },
+        { name: 'category', weight: 0.07 },
+        { name: 'subcategory', weight: 0.04 },
+        { name: 'subsubcategory', weight: 0.02 },
+        { name: 'description', weight: 0.03 },
+      ],
+    });
 
     const updateSearchForm = () => {
-      if (searchInput) searchInput.value = filters.search;
+      if (searchInput instanceof HTMLInputElement) {
+        searchInput.value = state.search;
+      }
 
       Object.entries(hiddenFieldMap).forEach(([key, input]) => {
-        if (!input) return;
+        if (!(input instanceof HTMLInputElement)) return;
 
         if (filters[key]) {
           input.value = filters[key];
@@ -166,12 +198,19 @@ const productsPerPage = 12;
       return Number.isFinite(amount) ? amount.toFixed(2) : '0.00';
     };
 
-    const buildPageUrl = pageNumber => {
-      const nextParams = new URLSearchParams(window.location.search);
+    const buildPageUrl = (pageNumber = state.page) => {
+      const nextParams = new URLSearchParams();
 
-      if (pageNumber <= 1) {
-        nextParams.delete('page');
-      } else {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (!value) return;
+        nextParams.set(key, value);
+      });
+
+      if (state.search.trim()) {
+        nextParams.set('search', state.search.trim());
+      }
+
+      if (pageNumber > 1) {
         nextParams.set('page', String(pageNumber));
       }
 
@@ -179,7 +218,152 @@ const productsPerPage = 12;
       return query ? `?${query}` : '/products';
     };
 
-    const getPaginationPages = () => {
+    const getPageTitle = () => {
+      if (state.search) return `Search: "${state.search}"`;
+      if (filters.brand) return `${cleanName(filters.brand)} Products`;
+      if (filters.subsub) return cleanName(filters.subsub);
+      if (filters.subcategory) return cleanName(filters.subcategory);
+      if (filters.category) return `${cleanName(filters.category)} Products`;
+      return 'All Products';
+    };
+
+    const normalizeIndices = indices => {
+      if (!Array.isArray(indices) || indices.length === 0) return [];
+      const sorted = [...indices].sort((a, b) => a[0] - b[0]);
+      const merged = [[sorted[0][0], sorted[0][1]]];
+
+      for (let index = 1; index < sorted.length; index += 1) {
+        const [start, end] = sorted[index];
+        const previous = merged[merged.length - 1];
+
+        if (start <= previous[1] + 1) {
+          previous[1] = Math.max(previous[1], end);
+        } else {
+          merged.push([start, end]);
+        }
+      }
+
+      return merged;
+    };
+
+    const setHighlightedText = (element, value, indices = []) => {
+      const displayValue = cleanName(value || '');
+      element.replaceChildren();
+
+      if (!displayValue) return;
+
+      const ranges = normalizeIndices(indices);
+      if (ranges.length === 0) {
+        element.textContent = displayValue;
+        return;
+      }
+
+      let cursor = 0;
+
+      ranges.forEach(([start, end]) => {
+        if (start > cursor) {
+          element.appendChild(document.createTextNode(displayValue.slice(cursor, start)));
+        }
+
+        const mark = document.createElement('mark');
+        mark.className = 'search-highlight';
+        mark.textContent = displayValue.slice(start, end + 1);
+        element.appendChild(mark);
+        cursor = end + 1;
+      });
+
+      if (cursor < displayValue.length) {
+        element.appendChild(document.createTextNode(displayValue.slice(cursor)));
+      }
+    };
+
+    const buildMatchInfo = matches => {
+      const matchInfo = {};
+
+      (matches || []).forEach(match => {
+        if (!match || typeof match.key !== 'string' || !Array.isArray(match.indices)) return;
+        matchInfo[match.key] = normalizeIndices(match.indices);
+      });
+
+      return matchInfo;
+    };
+
+    const buildFallbackMatchInfo = (product, query) => {
+      const normalizedQuery = normalizeText(query);
+      const matchInfo = {};
+
+      searchableKeys.forEach(key => {
+        const value = product[key];
+        const normalizedValue = normalizeText(value);
+        if (!normalizedValue || !normalizedQuery) return;
+
+        const indices = [];
+        let startIndex = normalizedValue.indexOf(normalizedQuery);
+
+        while (startIndex !== -1) {
+          indices.push([startIndex, startIndex + normalizedQuery.length - 1]);
+          startIndex = normalizedValue.indexOf(normalizedQuery, startIndex + normalizedQuery.length);
+        }
+
+        if (indices.length > 0) {
+          matchInfo[key] = indices;
+        }
+      });
+
+      return matchInfo;
+    };
+
+    const getSearchData = () => {
+      const query = state.search.trim();
+      if (!query) {
+        return {
+          products: structureFilteredProducts,
+          matchMap: new Map(),
+          suggestions: [],
+          query: '',
+        };
+      }
+
+      if (query.length < 2) {
+        const normalizedQuery = normalizeText(query);
+        const products = structureFilteredProducts.filter(product =>
+          searchableKeys.some(key => normalizeText(product[key]).includes(normalizedQuery))
+        );
+
+        const matchMap = new Map(
+          products.map(product => [productKey(product), buildFallbackMatchInfo(product, query)])
+        );
+
+        return {
+          products,
+          matchMap,
+          suggestions: products.slice(0, 6).map(product => ({
+            product,
+            matchInfo: matchMap.get(productKey(product)) || {},
+          })),
+          query,
+        };
+      }
+
+      const results = fuse.search(query);
+      const matchMap = new Map();
+
+      results.forEach(result => {
+        matchMap.set(productKey(result.item), buildMatchInfo(result.matches));
+      });
+
+      return {
+        products: results.map(result => result.item),
+        matchMap,
+        suggestions: results.slice(0, 6).map(result => ({
+          product: result.item,
+          matchInfo: buildMatchInfo(result.matches),
+        })),
+        query,
+      };
+    };
+
+    const getPaginationPages = (currentPage, totalPages) => {
       if (totalPages <= 5) {
         return Array.from({ length: totalPages }, (_, index) => index + 1);
       }
@@ -192,10 +376,29 @@ const productsPerPage = 12;
       return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
     };
 
-    const createProductCard = product => {
+    const getMatchContext = (product, matchInfo) => {
+      const contextFields = [
+        ['brand', 'Brand'],
+        ['part_no', 'Part No'],
+        ['sku', 'SKU'],
+        ['subcategory', 'Subcategory'],
+        ['subsubcategory', 'Range'],
+      ];
+
+      for (const [key, label] of contextFields) {
+        if (matchInfo[key]?.length && product[key]) {
+          return { key, label, value: product[key], indices: matchInfo[key] };
+        }
+      }
+
+      return null;
+    };
+
+    const createProductCard = (product, matchInfo = {}) => {
       const card = document.createElement('a');
       card.href = product.url || `/product/${product.id}`;
       card.className = 'product-card group';
+      card.setAttribute('data-astro-prefetch', '');
 
       const imageWrapper = document.createElement('div');
       imageWrapper.className = 'product-image-wrapper';
@@ -222,24 +425,36 @@ const productsPerPage = 12;
 
       const name = document.createElement('h3');
       name.className = 'product-name';
-      name.textContent = product.name || 'Unnamed Product';
+      setHighlightedText(name, product.name || 'Unnamed Product', matchInfo.name || []);
       info.appendChild(name);
 
       if (product.variant_name) {
         const variant = document.createElement('p');
         variant.className = 'product-variant';
-        variant.textContent = cleanName(product.variant_name);
+        setHighlightedText(variant, product.variant_name, matchInfo.variant_name || []);
         info.appendChild(variant);
+      }
+
+      const matchContext = getMatchContext(product, matchInfo);
+      if (matchContext) {
+        const matchLine = document.createElement('p');
+        matchLine.className = 'product-match';
+        matchLine.appendChild(document.createTextNode(`${matchContext.label}: `));
+
+        const matchValue = document.createElement('span');
+        setHighlightedText(matchValue, matchContext.value, matchContext.indices);
+        matchLine.appendChild(matchValue);
+        info.appendChild(matchLine);
       }
 
       const price = document.createElement('div');
       price.className = 'product-price';
-      price.textContent = `₹${formatPrice(product.price)}`;
+      price.textContent = `Rs ${formatPrice(product.price)}`;
       info.appendChild(price);
 
       const category = document.createElement('div');
       category.className = 'product-category';
-      category.textContent = cleanName(product.category || '');
+      setHighlightedText(category, product.category || '', matchInfo.category || []);
       info.appendChild(category);
 
       card.appendChild(imageWrapper);
@@ -248,8 +463,63 @@ const productsPerPage = 12;
       return card;
     };
 
-    const renderProducts = () => {
+    const renderSuggestions = searchData => {
+      if (!(suggestionsEl instanceof HTMLDivElement) || !(searchInput instanceof HTMLInputElement)) return;
+
+      suggestionsEl.replaceChildren();
+
+      const shouldShow = state.suggestionsOpen && !!searchData.query;
+      if (!shouldShow) {
+        suggestionsEl.hidden = true;
+        searchInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      if (searchData.suggestions.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'search-suggestion-empty';
+        empty.textContent = 'No matching products found.';
+        suggestionsEl.appendChild(empty);
+      } else {
+        searchData.suggestions.forEach(({ product, matchInfo }) => {
+          const suggestion = document.createElement('a');
+          suggestion.href = product.url || `/product/${product.id}`;
+          suggestion.className = 'search-suggestion';
+          suggestion.setAttribute('data-astro-prefetch', '');
+
+          const suggestionName = document.createElement('span');
+          suggestionName.className = 'search-suggestion-name';
+          setHighlightedText(suggestionName, product.name, matchInfo.name || []);
+
+          const suggestionMeta = document.createElement('span');
+          suggestionMeta.className = 'search-suggestion-meta';
+          suggestionMeta.textContent = [cleanName(product.brand), cleanName(product.category)]
+            .filter(Boolean)
+            .join(' / ');
+
+          suggestion.appendChild(suggestionName);
+          suggestion.appendChild(suggestionMeta);
+          suggestionsEl.appendChild(suggestion);
+        });
+      }
+
+      suggestionsEl.hidden = false;
+      searchInput.setAttribute('aria-expanded', 'true');
+    };
+
+    const renderProducts = (replaceHistory = true) => {
       if (!titleEl || !countEl || !gridEl || !noResultsEl || !paginationEl) return;
+
+      const searchData = getSearchData();
+      const filteredProducts = searchData.products;
+      const totalProducts = filteredProducts.length;
+      const totalPages = Math.ceil(totalProducts / productsPerPage);
+      const currentPage = totalPages > 0 ? Math.min(state.page, totalPages) : 1;
+      const startIndex = (currentPage - 1) * productsPerPage;
+      const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+      const pageTitle = getPageTitle();
+
+      state.page = currentPage;
 
       titleEl.textContent = pageTitle;
       countEl.textContent = `${totalProducts} product${totalProducts !== 1 ? 's' : ''} found`;
@@ -260,7 +530,8 @@ const productsPerPage = 12;
 
       if (paginatedProducts.length > 0) {
         paginatedProducts.forEach(product => {
-          gridEl.appendChild(createProductCard(product));
+          const matchInfo = searchData.matchMap.get(productKey(product)) || {};
+          gridEl.appendChild(createProductCard(product, matchInfo));
         });
 
         noResultsEl.hidden = true;
@@ -271,7 +542,7 @@ const productsPerPage = 12;
       }
 
       if (totalPages > 1) {
-        const pages = getPaginationPages();
+        const pages = getPaginationPages(currentPage, totalPages);
 
         if (currentPage > 1) {
           const previousLink = document.createElement('a');
@@ -299,10 +570,52 @@ const productsPerPage = 12;
           paginationEl.appendChild(nextLink);
         }
       }
+
+      renderSuggestions(searchData);
+
+      if (replaceHistory) {
+        window.history.replaceState({}, '', buildPageUrl(currentPage));
+      }
     };
 
+    if (searchForm instanceof HTMLFormElement && searchInput instanceof HTMLInputElement) {
+      searchInput.addEventListener('input', () => {
+        state.search = searchInput.value.trim();
+        state.page = 1;
+        state.suggestionsOpen = true;
+        renderProducts(true);
+      });
+
+      searchInput.addEventListener('focus', () => {
+        state.suggestionsOpen = true;
+        renderProducts(false);
+      });
+
+      searchInput.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          state.suggestionsOpen = false;
+          renderProducts(false);
+          searchInput.blur();
+        }
+      });
+
+      searchForm.addEventListener('submit', event => {
+        event.preventDefault();
+        state.search = searchInput.value.trim();
+        state.page = 1;
+        state.suggestionsOpen = false;
+        renderProducts(true);
+      });
+
+      document.addEventListener('click', event => {
+        if (searchForm.contains(event.target)) return;
+        state.suggestionsOpen = false;
+        renderProducts(false);
+      });
+    }
+
     updateSearchForm();
-    renderProducts();
+    renderProducts(false);
   </script>
 </Layout>
 
@@ -312,16 +625,25 @@ const productsPerPage = 12;
     margin: 0 auto;
     padding: 2rem 1.5rem;
   }
+
   .filter-bar {
     margin-bottom: 2rem;
   }
+
   .search-form {
     display: flex;
+    align-items: flex-start;
     gap: 0.5rem;
     max-width: 500px;
   }
-  .search-input {
+
+  .search-box {
+    position: relative;
     flex: 1;
+  }
+
+  .search-input {
+    width: 100%;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 2rem;
@@ -329,10 +651,12 @@ const productsPerPage = 12;
     color: var(--text-primary);
     font-size: 0.9rem;
   }
+
   .search-input:focus {
     outline: none;
     border-color: var(--accent-gold);
   }
+
   .search-btn {
     background: var(--accent-gold);
     border: none;
@@ -342,6 +666,59 @@ const productsPerPage = 12;
     color: #0a0c10;
     cursor: pointer;
   }
+
+  .search-suggestions {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.45rem;
+    border-radius: 1rem;
+    background: rgba(17, 24, 39, 0.96);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    z-index: 20;
+  }
+
+  .search-suggestions[hidden] {
+    display: none;
+  }
+
+  .search-suggestion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 0.8rem;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .search-suggestion:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .search-suggestion-name {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .search-suggestion-meta {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+  }
+
+  .search-suggestion-empty {
+    padding: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+  }
+
   .page-title {
     font-size: 1.8rem;
     font-weight: 700;
@@ -350,26 +727,50 @@ const productsPerPage = 12;
     border-left: 4px solid var(--accent-gold);
     padding-left: 1rem;
   }
+
   .product-count {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
   }
+
+  .product-match {
+    margin: -0.15rem 0 0.65rem;
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .search-highlight {
+    background: rgba(197, 160, 40, 0.2);
+    color: var(--accent-gold-light);
+    padding: 0 0.08em;
+    border-radius: 0.18rem;
+  }
+
   .product-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
   @media (min-width: 768px) {
-    .product-grid { grid-template-columns: repeat(3, 1fr); }
+    .product-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
+
   @media (min-width: 1024px) {
-    .product-grid { grid-template-columns: repeat(4, 1fr); }
+    .product-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
+
   .no-results {
     text-align: center;
     padding: 3rem;
     color: var(--text-secondary);
   }
+
   .pagination {
     display: flex;
     justify-content: center;
@@ -377,7 +778,9 @@ const productsPerPage = 12;
     margin-top: 2rem;
     flex-wrap: wrap;
   }
-  .pagination a, .pagination span {
+
+  .pagination a,
+  .pagination span {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -385,11 +788,13 @@ const productsPerPage = 12;
     color: var(--text-secondary);
     transition: all 0.2s;
   }
+
   .pagination a:hover {
     background: var(--accent-gold);
     color: #0a0c10;
     border-color: var(--accent-gold);
   }
+
   .pagination .current {
     background: var(--accent-gold);
     color: #0a0c10;

@@ -99,7 +99,7 @@ const productSchema = {
         )}
         <div class="product-detail-price">₹{product.price.toFixed(2)}</div>
         {product.brand && (
-          <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="product-brand-card">
+          <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="product-brand-card" data-astro-prefetch="hover">
             <div class="product-brand-copy">
               <span class="product-brand-label">Brand</span>
               <span class="product-brand-name">{cleanName(product.brand)}</span>
@@ -125,11 +125,11 @@ const productSchema = {
           <p>{product.description}</p>
         </div>
         <div class="product-meta">
-          <a href={getFilterUrl(product.category)} class="product-meta-tag">
+          <a href={getFilterUrl(product.category)} class="product-meta-tag" data-astro-prefetch="hover">
             {cleanName(product.category)}
           </a>
           {product.subcategory && (
-            <a href={getFilterUrl(product.category, product.subcategory)} class="product-meta-tag">
+            <a href={getFilterUrl(product.category, product.subcategory)} class="product-meta-tag" data-astro-prefetch="hover">
               {cleanName(product.subcategory)}
             </a>
           )}
@@ -137,6 +137,7 @@ const productSchema = {
             <a
               href={getFilterUrl(product.category, product.subcategory, product.subsubcategory)}
               class="product-meta-tag"
+              data-astro-prefetch="hover"
             >
               {cleanName(product.subsubcategory)}
             </a>

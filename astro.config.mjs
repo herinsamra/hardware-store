@@ -11,6 +11,9 @@ const astroLegacyEntrypoint = fileURLToPath(
 export default defineConfig({
   site: process.env.SITE_URL,
   output: 'static',   // keep static for Netlify/Vercel
+  prefetch: {
+    defaultStrategy: 'viewport',
+  },
   vite: {
     resolve: {
       alias: {

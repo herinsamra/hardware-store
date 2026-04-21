@@ -3,7 +3,31 @@ import Layout from '../components/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { fetchAllProducts } from '../lib/products';
 
-const allProducts = await fetchAllProducts();
+interface Product {
+  id: string;
+  part_no: string;
+  sku: string;
+  category: string;
+  subcategory: string;
+  subsubcategory: string;
+  type: string;
+  name: string;
+  description: string;
+  brand: string;
+  images: string[];
+  image: string;
+  thumbnail: string;
+  variant_name: string;
+  price: number;
+  slug: string;
+  routeParam: string;
+  url: string;
+  meta_title: string;
+  meta_description: string;
+}
+
+const allProducts: Product[] = await fetchAllProducts();
+
 const productsPerPage = 12;
 ---
 

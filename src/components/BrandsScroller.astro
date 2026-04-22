@@ -61,8 +61,8 @@ const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount 
     display: flex;
     flex-direction: column;
     height: 100vh;
-    min-height: 380px;
-    max-height: 70vh;
+    min-height: 400px;
+    max-height: 80vh;
     justify-content: center;
     left: 50%;
     position: relative;
@@ -88,11 +88,11 @@ const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount 
   .brands-scroller-section .line {
     background: transparent;
     flex: none;
-    height: 22vh;
+    height: 18vh;
     aspect-ratio: 1.4 / 1;
-    min-width: 150px;
-    max-width: 220px;
-    margin: clamp(6px, 2vw, 16px);
+    min-width: 160px;
+    max-width: 240px;
+    margin: 4px;
     position: relative;
     transition: box-shadow 0.3s, filter 0.3s, transform 0.3s;
     border-radius: 1rem;
@@ -106,12 +106,12 @@ const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount 
   .brands-scroller-section .img {
     position: absolute;
     z-index: 2;
-    top: 0.9rem;
-    right: 0.9rem;
-    bottom: 0.9rem;
-    left: 0.9rem;
-    width: calc(100% - 1.8rem);
-    height: calc(100% - 1.8rem);
+    top: 0.2rem;
+    right: 0.2rem;
+    bottom: 0.2rem;
+    left: 0.2rem;
+    width: calc(100% - 0.4rem);
+    height: calc(100% - 0.4rem);
     object-fit: contain;
     object-position: center;
     display: block;
@@ -215,10 +215,10 @@ const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount 
     }
 
     .brands-scroller-section .line {
-      min-width: 118px;
-      max-width: 150px;
-      margin: 4px;
-      height: 13vh;
+      min-width: 110px;
+      max-width: 160px;
+      margin: 2px;
+      height: 11vh;
     }
   }
 
@@ -238,10 +238,10 @@ const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount 
     }
 
     .brands-scroller-section .line {
-      min-width: 92px;
-      max-width: 116px;
-      margin: 3px;
-      height: 7.4vh;
+      min-width: 80px;
+      max-width: 100px;
+      margin: 1px;
+      height: 7vh;
     }
   }
 

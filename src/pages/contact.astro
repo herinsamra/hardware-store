@@ -1,0 +1,634 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout title="Contact Us | Peniel Hardwares" showFooter={false}>
+  <main class="contact-main">
+    <div data-scroll class="page page--layout-2">
+      <h1 class="page__title">Connect with Peniel</h1>
+
+      <!-- Animated Arrow (repositioned, no text) -->
+      <svg class="arrow" aria-hidden="true">
+        <path class="a1" d="M0 0 L30 22 L60 0"></path>
+        <path class="a2" d="M0 20 L30 42 L60 20"></path>
+        <path class="a3" d="M0 40 L30 62 L60 40"></path>
+      </svg>
+
+      <div class="content content--alternate content--padded">
+        <!-- Section 1: Visit Our Store (Address + Hours combined) -->
+        <div class="content__item content__item--expand">
+          <div class="content__item-imgwrap">
+            <div class="content__item-img" style="background-image: url('https://images.pexels.com/photos/4484078/pexels-photo-4484078.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+          </div>
+          <h2 class="content__item-title">Visit Our Store</h2>
+          <p class="content__item-description">
+            <strong>Peniel Hardwares</strong><br />
+            60/1, Rajakkamangalam Rd, opp. SBI Bank Building,<br />
+            East Ramanputhoor, Ramanputhoor Junction,<br />
+            Nagercoil, Tamil Nadu 629002<br /><br />
+            <strong>⏰ Opening Hours:</strong><br />
+            Monday – Saturday: 9:00 AM – 8:30 PM<br />
+            Sunday: <span class="closed">Closed</span><br />
+         
+          </p>
+        </div>
+
+        <!-- Section 2: Get In Touch (Phone, WhatsApp, Email optional) -->
+        <div class="content__item content__item--expand">
+          <div class="content__item-imgwrap">
+            <div class="content__item-img" style="background-image: url('https://images.pexels.com/photos/8297031/pexels-photo-8297031.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+          </div>
+          <h2 class="content__item-title">Get In Touch</h2>
+          <p class="content__item-description">
+            <strong>📞 Phone:</strong> <a href="tel:+919488614888" class="phone-link">094886 14888</a><br />
+            <strong>📞 Phone 2:</strong> <a href="tel:+919488624888" class="phone-link">094886 24888</a><br />
+            <strong>💬 WhatsApp:</strong> <a href="https://wa.me/919488614888" target="_blank" class="whatsapp-link">Chat with Us</a><br />
+            <strong>✉️ Email:</strong> <a href="mailto:penielhardwares@gmail.com" class="email-link">penielhardwares@gmail.com</a>
+          </p>
+        </div>
+
+        <!-- Section 3: Map (using your Google Maps short link) -->
+        <div class="content__item content__item--expand">
+          <div class="content__item-imgwrap">
+            <div class="content__item-img" style="background: rgba(255,255,255,0.05); overflow: hidden;">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.125460582443!2d77.4326462!3d8.1763244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b04f14798993957%3A0x6a053c06180327f3!2sPeniel%20Hardwares!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+              </iframe>
+            </div>
+          </div>
+          <h2 class="content__item-title">Find Us</h2>
+          <p class="content__item-description">
+            <a href="https://maps.app.goo.gl/c6uQxM2e4mxq9T8MA" target="_blank" class="map-link">
+              📍 Open in Google Maps →
+            </a>
+          </p>
+        </div>
+
+        <!-- Section 4: About Us (SEO-friendly paragraph) -->
+        <div class="content__item content__item--expand">
+          <div class="content__item-imgwrap">
+            <div class="content__item-img" style="background-image: url('https://images.pexels.com/photos/1750450/pexels-photo-1750450.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+          </div>
+          <h2 class="content__item-title">About Us</h2>
+          <p class="content__item-description">
+            Peniel Hardwares is Nagercoil's trusted destination for premium hardware, electrical, plumbing, sanitary, and paint solutions. 
+            We serve homeowners, contractors, and businesses with top brands like Havells, Finolex, Asian Paints, Jaquar, and more. 
+            Our knowledgeable team ensures you get the right products at competitive prices. Whether you're building a new home or renovating, 
+            visit our spacious showroom near Ramanputhoor Junction for quality materials and expert advice.
+          </p>
+        </div>
+
+        <p class="credits">
+          <a href="/">© 2026 Peniel Hardwares</a>
+        </p>
+      </div>
+    </div>
+
+    <button class="scrollToTopBtn">
+      <svg version="1.1" viewBox="0 0 512.001 512.001">
+        <path d="M403.015,296.471L264.5,108.591c-4.22-5.725-12.778-5.725-16.999,0l-138.515,187.88c-5.14,6.972-0.162,16.826,8.499,16.826h277.03C403.177,313.297,408.155,303.443,403.015,296.471z" />
+        <path d="M413.693,288.598L275.18,100.718c-4.471-6.066-11.641-9.688-19.178-9.688s-14.707,3.621-19.178,9.688L156.992,209h-34.146L256.001,28.39l136.335,184.924c4.348,5.898,12.653,7.154,18.552,2.806c5.898-4.348,7.154-12.655,2.805-18.552L275.18,9.688C270.708,3.621,263.537,0,256.001,0s-14.707,3.621-19.178,9.688L98.308,197.568c-5.365,7.279-6.166,16.813-2.09,24.884c4.077,8.071,12.226,13.083,21.268,13.083h19.943l-39.121,53.063c-5.365,7.279-6.166,16.813-2.09,24.884c4.077,8.071,12.226,13.083,21.268,13.083h45.236V483.23c0,15.864,12.907,28.771,28.771,28.771h129.015c15.864,0,28.771-12.907,28.771-28.771v-88.805c0-15.864-12.907-28.771-28.771-28.771h-78.976c-7.326,0-13.268,5.94-13.268,13.268c0,7.328,5.941,13.268,13.268,13.268h78.976c1.233,0,2.236,1.003,2.236,2.236v88.805c0,1.233-1.003,2.236-2.236,2.236H191.493c-1.233,0-2.236-1.003-2.236-2.236V326.565h205.257c9.042,0,17.191-5.014,21.268-13.083C419.86,305.411,419.059,295.877,413.693,288.598z M122.846,300.03L256.001,119.42l133.154,180.61L122.846,300.03z" />
+      </svg>
+    </button>
+  </main>
+</Layout>
+
+<style is:global>
+  /* ===== Base styles (same as before, but with arrow positioning fix) ===== */
+  @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Righteous&display=swap");
+
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  :root {
+    font-size: 16px;
+  }
+
+  body {
+    margin: 0;
+    --color-text: #dc6e25;
+    --color-bg: #efded3;
+    --color-link: #000;
+    --color-link-hover: #dc6e25;
+    --aspect-ratio: 1/1.5;
+    --imgwidthmax: 500px;
+    --size-title: 10rem;
+    --font-weight-title: 400;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    font-size: 1.5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Dark theme overrides */
+  .page {
+    --color-text: #f0a35e;
+    --color-bg: #120605;
+    --color-link: #f0a35e;
+    --color-link-hover: #ffcc80;
+    --imgwidthmax: 400px;
+    --color-description: #e0c8b0;
+    --font-title: "Dancing Script", serif;
+    --size-title: 6vw;
+    --imgwidthmax: 600px;
+  }
+
+  /* Typography improvements */
+  .content__item-description {
+    font-size: 1.3rem !important;
+    line-height: 1.6 !important;
+    font-weight: 500;
+    color: var(--color-description);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  .content__item-title {
+    font-size: clamp(2.5rem, 8vw, 4rem) !important;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+    color: #ffb347 !important;
+  }
+
+  /* Links */
+  .phone-link, .whatsapp-link, .map-link, .email-link {
+    color: #ffb347;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    border-bottom: 1px dashed rgba(255,180,71,0.5);
+  }
+  .phone-link:hover, .whatsapp-link:hover, .map-link:hover, .email-link:hover {
+    color: #ffdd99;
+    border-bottom-color: #ffdd99;
+    text-shadow: 0 0 5px rgba(255,180,71,0.5);
+  }
+
+  .closed {
+    color: #ff8888;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(255,0,0,0.3);
+  }
+
+  /* Arrow repositioned – no overlap, no extra text */
+  .arrow {
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    width: 50px;
+    height: 70px;
+    z-index: 10;
+  }
+  .arrow path {
+    stroke: var(--color-text);
+    stroke-width: 2px;
+    fill: transparent;
+    animation: down 2s infinite;
+  }
+  @keyframes down {
+    0% { opacity: 0; transform: translateY(0); }
+    25% { opacity: 1; transform: translateY(5px); }
+    75% { opacity: 1; transform: translateY(10px); }
+    100% { opacity: 0; transform: translateY(15px); }
+  }
+  .arrow path.a1 { animation-delay: -1s; }
+  .arrow path.a2 { animation-delay: -0.5s; }
+  .arrow path.a3 { animation-delay: 0s; }
+
+  /* Keep all original layout styles (grid, content__item, etc.) */
+  body::-webkit-scrollbar {
+    width: 0.25em;
+  }
+  body::-webkit-scrollbar-track {
+    background: #120605;
+  }
+  body::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #8d5146;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color-link);
+    outline: none;
+  }
+  a:hover, a:focus {
+    color: var(--color-link-hover);
+  }
+
+  .scrollToTopBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    width: 80px;
+    bottom: 20px;
+    right: 10px;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.5s ease;
+    filter: invert(35%) sepia(12%) saturate(1922%) hue-rotate(321deg) brightness(96%) contrast(88%);
+  }
+  .showBtn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .page {
+    display: grid;
+    padding: 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-columns: 100%;
+    grid-template-areas: "header" "grid";
+    position: relative;
+  }
+  .page__title {
+    grid-area: header;
+    margin: 0 0 0.5rem;
+    font-family: "Righteous", cursive;
+    font-size: var(--size-title);
+    font-weight: 400;
+    color: #ffb347;
+    text-shadow: 0 0 10px rgba(255,180,71,0.3);
+    padding-right: 80px; /* prevent overlap with arrow */
+  }
+  .content {
+    grid-area: grid;
+    margin: 25vh 0 30vh;
+  }
+  .contact-main {
+  padding-top: 120px; /* adjust based on your navbar height */
+}
+  .content--padded {
+    padding: 0 10vw;
+  }
+  .content__item {
+    --imgwidth: calc(var(--imgwidthmax) * var(--aspect-ratio));
+    width: var(--imgwidth);
+    max-width: 100%;
+    position: relative;
+    will-change: transform;
+    margin-bottom: 30vh;
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  .content__item--expand {
+    width: 100%;
+    grid-template-columns: minmax(0, var(--imgwidth)) 1fr;
+  }
+  .content__item--expand:nth-child(even) {
+    grid-template-columns: 1fr minmax(0, var(--imgwidth));
+  }
+  .content--alternate .content__item {
+    max-width: 90vw;
+  }
+  .content--alternate .content__item:nth-child(even) {
+    margin-left: auto;
+  }
+  .content__item-imgwrap {
+    position: relative;
+    --imgwidth: 100%;
+    margin: 0 auto;
+    grid-area: 1 / 1 / 3 / 3;
+    overflow: hidden;
+    width: var(--imgwidth);
+    padding-bottom: calc(var(--imgwidth) / (var(--aspect-ratio)));
+    will-change: transform;
+  }
+  .content__item--expand .content__item-imgwrap {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+  .content__item--expand:nth-child(even) .content__item-imgwrap {
+    grid-area: 1 / 2 / 3 / 3;
+    justify-self: end;
+  }
+  .content__item-img {
+    --overflow: 40px;
+    height: calc(100% + (2 * var(--overflow)));
+    top: calc(-1 * var(--overflow));
+    width: 100%;
+    position: absolute;
+    background-size: cover;
+    background-position: 50% 0%;
+    will-change: transform;
+    opacity: 0.8;
+  }
+  .content__item-title {
+    position: relative;
+    font-size: var(--size-title);
+    padding: 0 3vw;
+    margin: calc(var(--size-title) * -1 / 2) 0 0 0;
+    align-self: start;
+    line-height: 1;
+    font-family: var(--font-title);
+    font-weight: var(--font-weight-title);
+    will-change: transform;
+  }
+  .credits {
+    text-align: center;
+  }
+  .credits a {
+    color: var(--color-text);
+  }
+  .credits a:hover {
+    color: #fff;
+  }
+  .content__item-description {
+    grid-area: 3 / 1 / 3 / 3;
+    width: 70%;
+    position: relative;
+    margin: 0;
+    padding: 1rem 0 0 0;
+  }
+  .content--alternate .content__item-title,
+  .content__item--wide:nth-child(even) .content__item-description {
+    grid-area: 3 / 1 / 4 / 2;
+    justify-self: start;
+  }
+  .content--alternate .content__item:nth-child(even) .content__item-title,
+  .content__item--wide .content__item-description {
+    grid-area: 3 / 2 / 4 / 3;
+    justify-self: end;
+    width: auto;
+  }
+  .content__item--expand .content__item-description {
+    grid-area: 1 / 2 / 3 / 3;
+    justify-self: start;
+    align-self: start;
+    padding: 0 2rem;
+    width: 350px;
+    font-size: 1.2rem !important;
+  }
+  .content__item--expand:nth-child(even) .content__item-description {
+    grid-area: 1 / 1 / 3 / 2;
+    justify-self: end;
+    text-align: right;
+  }
+  nav, .navbar, .site-header, [data-site-header] {
+  font-size: 1rem !important;
+}
+  @media screen and (min-width: 53em) {
+    .page--layout-2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "header header" "...  meta" "grid grid";
+    }
+  }
+  @media screen and (max-width: 40em) {
+    .content__item--expand .content__item-imgwrap,
+    .content__item--expand:nth-child(even) .content__item-imgwrap {
+      grid-area: 1 / 1 / 3 / 3;
+    }
+    .content__item--expand .content__item-description,
+    .content__item--expand:nth-child(even) .content__item-description {
+      grid-area: 3 / 1 / 4 / 3;
+      padding: 1rem 0;
+      width: 100%;
+      text-align: left;
+    }
+    .content--alternate .content__item-title,
+    .content--alternate .content__item:nth-child(even) .content__item-title {
+      grid-area: 1 / 1 / 4 / 2;
+    }
+    .content__item-description {
+      font-size: 1.1rem !important;
+    }
+    .content__item--expand .content__item-description {
+      width: 100% !important;
+      font-size: 1rem !important;
+    }
+    .page__title {
+      padding-right: 20px;
+      font-size: 12vw !important;
+    }
+    .arrow {
+      top: 8%;
+      right: 3%;
+      width: 35px;
+      height: 50px;
+    }
+  }
+</style>
+
+<script lang="js">
+  // (Keep the exact same scroll + bending script as before – unchanged)
+  (function() {
+    const MathUtils = {
+      map: (x, a, b, c, d) => ((x - a) * (d - c)) / (b - a) + c,
+      lerp: (a, b, n) => (1 - n) * a + n * b,
+      getRandomFloat: (min, max) => (Math.random() * (max - min) + min).toFixed(2)
+    };
+
+    const body = document.body;
+    let winsize;
+    const calcWinsize = () => (winsize = { width: window.innerWidth, height: window.innerHeight });
+    calcWinsize();
+    window.addEventListener("resize", calcWinsize);
+
+    let docScroll;
+    let lastScroll;
+    let scrollingSpeed = 0;
+
+    const getPageYScroll = () => (docScroll = window.pageYOffset || document.documentElement.scrollTop);
+    window.addEventListener("scroll", getPageYScroll);
+
+    class Item {
+      constructor(el) {
+        this.DOM = { el: el };
+        this.DOM.image = this.DOM.el.querySelector(".content__item-img");
+        this.DOM.imageWrapper = this.DOM.image.parentNode;
+        this.DOM.el.style.perspective = "1000px";
+        this.DOM.imageWrapper.style.transformOrigin = "50% 100%";
+        this.ry = MathUtils.getRandomFloat(-0.5, 0.5);
+        this.rz = MathUtils.getRandomFloat(-0.5, 0.5);
+        this.DOM.title = this.DOM.el.querySelector(".content__item-title");
+        if (this.DOM.title) this.DOM.title.style.transform = "translate3d(0,0,200px)";
+        this.renderedStyles = {
+          innerTranslationY: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            setValue: () => {
+              const toValue = parseInt(getComputedStyle(this.DOM.image).getPropertyValue("--overflow"), 10);
+              const fromValue = -1 * toValue;
+              return Math.max(Math.min(MathUtils.map(this.props.top - docScroll, winsize.height, -1 * this.props.height, fromValue, toValue), toValue), fromValue);
+            }
+          },
+          itemRotation: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            toValue: Number(MathUtils.getRandomFloat(-70, -50)),
+            setValue: () => {
+              const toValue = this.renderedStyles.itemRotation.toValue;
+              const fromValue = toValue * -1;
+              const val = MathUtils.map(this.props.top - docScroll, winsize.height * 1.5, -1 * this.props.height, fromValue, toValue);
+              return Math.min(Math.max(val, toValue), fromValue);
+            }
+          }
+        };
+        this.getSize();
+        this.update();
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => (this.isVisible = entry.intersectionRatio > 0));
+        });
+        this.observer.observe(this.DOM.el);
+        this.initEvents();
+      }
+      update() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].previous = this.renderedStyles[key].setValue();
+        }
+        this.layout();
+      }
+      getSize() {
+        const rect = this.DOM.el.getBoundingClientRect();
+        this.props = {
+          height: rect.height,
+          top: docScroll + rect.top
+        };
+      }
+      initEvents() {
+        window.addEventListener("resize", () => this.resize());
+      }
+      resize() {
+        this.getSize();
+        this.update();
+      }
+      render() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].setValue();
+          this.renderedStyles[key].previous = MathUtils.lerp(this.renderedStyles[key].previous, this.renderedStyles[key].current, this.renderedStyles[key].ease);
+        }
+        this.layout();
+      }
+      layout() {
+        this.DOM.image.style.transform = `translate3d(0,${this.renderedStyles.innerTranslationY.previous}px,0)`;
+        this.DOM.imageWrapper.style.transform = `rotate3d(1,${this.ry},${this.rz},${this.renderedStyles.itemRotation.previous}deg)`;
+      }
+    }
+
+    class SmoothScroll {
+      constructor() {
+        this.DOM = { main: document.querySelector("main") };
+        this.DOM.scrollable = this.DOM.main.querySelector("div[data-scroll]");
+        this.items = [];
+        this.DOM.content = this.DOM.main.querySelector(".content");
+        if (this.DOM.content) {
+          [...this.DOM.content.querySelectorAll(".content__item")].forEach((item) => this.items.push(new Item(item)));
+        }
+        this.renderedStyles = {
+          translationY: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            setValue: () => docScroll
+          }
+        };
+        this.setSize();
+        this.update();
+        this.style();
+        this.initEvents();
+        requestAnimationFrame(() => this.render());
+      }
+      update() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].previous = this.renderedStyles[key].setValue();
+        }
+        this.layout();
+      }
+      layout() {
+        this.DOM.scrollable.style.transform = `translate3d(0,${-1 * this.renderedStyles.translationY.previous}px,0)`;
+      }
+      setSize() {
+        body.style.height = `${this.DOM.scrollable.scrollHeight}px`;
+      }
+      style() {
+        this.DOM.main.style.position = "fixed";
+        this.DOM.main.style.width = this.DOM.main.style.height = "100%";
+        this.DOM.main.style.top = this.DOM.main.style.left = 0;
+        this.DOM.main.style.overflow = "hidden";
+      }
+      initEvents() {
+        window.addEventListener("resize", () => this.setSize());
+      }
+      render() {
+        scrollingSpeed = Math.abs(docScroll - lastScroll);
+        lastScroll = docScroll;
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].setValue();
+          this.renderedStyles[key].previous = MathUtils.lerp(this.renderedStyles[key].previous, this.renderedStyles[key].current, this.renderedStyles[key].ease);
+        }
+        this.layout();
+        for (const item of this.items) {
+          if (item.isVisible) {
+            if (item.insideViewport) {
+              item.render();
+            } else {
+              item.insideViewport = true;
+              item.update();
+            }
+          } else {
+            item.insideViewport = false;
+          }
+        }
+        requestAnimationFrame(() => this.render());
+      }
+    }
+
+    const preloadImages = () => {
+      return new Promise((resolve) => {
+        const images = document.querySelectorAll(".content__item-img");
+        let loaded = 0;
+        const total = images.length;
+        if (total === 0) return resolve();
+        images.forEach((img) => {
+          const bgImage = getComputedStyle(img).backgroundImage;
+          if (bgImage && bgImage !== "none") {
+            const url = bgImage.replace(/.*\("?([^)]+)"?\).*/, "$1");
+            const tempImg = new Image();
+            tempImg.onload = () => {
+              loaded++;
+              if (loaded === total) resolve();
+            };
+            tempImg.src = url;
+          } else {
+            loaded++;
+            if (loaded === total) resolve();
+          }
+        });
+      });
+    };
+
+    preloadImages().then(() => {
+      document.body.classList.remove("loading");
+      getPageYScroll();
+      lastScroll = docScroll;
+      new SmoothScroll();
+    });
+  })();
+
+  (function() {
+    const btn = document.querySelector(".scrollToTopBtn");
+    if (!btn) return;
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > window.innerHeight * 0.4) {
+        btn.classList.add("showBtn");
+      } else {
+        btn.classList.remove("showBtn");
+      }
+    });
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  })();
+</script>

@@ -1,157 +1,284 @@
 ---
 const currentYear = new Date().getFullYear();
 
-const footerLinks = {
-  about: [
-    { label: 'Our Story', href: '/about' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'Store Locations', href: '/locations' },
-  ],
-  customerService: [
-    { label: 'Contact Us', href: '/contact' },
-    { label: 'FAQs', href: '/faqs' },
-    { label: 'Shipping Info', href: '/shipping' },
-    { label: 'Returns', href: '/returns' },
-  ],
-  social: [
-    { label: 'Facebook', href: 'https://facebook.com', icon: 'facebook' },
-    { label: 'Instagram', href: 'https://instagram.com', icon: 'instagram' },
-    { label: 'Twitter', href: 'https://twitter.com', icon: 'twitter' },
-    { label: 'YouTube', href: 'https://youtube.com', icon: 'youtube' },
-  ],
-};
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Products', href: '/products' },
+  { label: 'Categories', href: '/categories' },
+  { label: 'Contact', href: '/contact' },
+];
 ---
 
-<footer class="bg-dark text-white glass-strong">
-  <div class="container py-12 sm:py-16">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-      <!-- Brand Column -->
-      <div class="sm:col-span-2 lg:col-span-1">
-        <a href="/" class="inline-block mb-4">
-          <span class="text-2xl font-bold text-white">
-            HARDWARE<span class="text-secondary">STORE</span>
-          </span>
+<footer class="main-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <span class="logo-text">PENIEL<span>HARDWARES</span></span>
         </a>
-        <p class="text-gray-400 text-sm leading-relaxed mb-4">
-          Your trusted partner for quality hardware, tools, and building materials since 1985.
+        <p class="brand-desc">
+          Quality hardware, electrical, plumbing & sanitary solutions since 1995.
         </p>
-        <div class="flex items-center gap-2 text-sm text-gray-400">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" viewBox="0 0 20 20" fill="currentColor">
+        <div class="address">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
           </svg>
-          <span>123 Hardware Street, City</span>
+          <span>60/1, Rajakkamangalam Rd, opp. SBI Bank, Ramanputhoor Jn, Nagercoil – 629002</span>
         </div>
       </div>
-      
-      <!-- About Us -->
-      <div>
-        <h3 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">About Us</h3>
-        <ul class="space-y-3">
-          {footerLinks.about.map(link => (
-            <li>
-              <a href={link.href} class="text-gray-400 hover:text-secondary transition-colors text-sm">
-                {link.label}
-              </a>
-            </li>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+        <h3>Explore</h3>
+        <ul>
+          {quickLinks.map(link => (
+            <li><a href={link.href}>{link.label}</a></li>
           ))}
         </ul>
       </div>
-      
-      <!-- Customer Service -->
-      <div>
-        <h3 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Customer Service</h3>
-        <ul class="space-y-3">
-          {footerLinks.customerService.map(link => (
-            <li>
-              <a href={link.href} class="text-gray-400 hover:text-secondary transition-colors text-sm">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      
+
       <!-- Contact Info -->
-      <div>
-        <h3 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact Info</h3>
-        <ul class="space-y-3 text-sm text-gray-400">
-          <li class="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+      <div class="footer-contact">
+        <h3>Get in touch</h3>
+        <ul>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
             </svg>
-            <span>+1 (555) 123-4567</span>
+            <div>
+              <a href="tel:+919488614888">094886 14888</a> <span class="small"></span><br />
+              <a href="tel:+919488624888">094886 24888</a> <span class="small"></span>
+            </div>
           </li>
-          <li class="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
               <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
               <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
             </svg>
-            <span>info@hardwarestore.com</span>
+            <a href="mailto:penielhardwares@gmail.com">penielhardwares@gmail.com</a>
           </li>
-          <li class="flex items-start gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
             </svg>
             <div>
-              <span class="block">Mon - Sat: 8AM - 8PM</span>
-              <span class="block">Sunday: 10AM - 6PM</span>
+              Mon – Sat: 9:00 AM – 8:30 PM<br />
+              <span class="closed">Sunday: Closed</span>
             </div>
           </li>
         </ul>
-        
-        <!-- Social Links -->
-        <div class="flex gap-4 mt-6">
-          {footerLinks.social.map(link => (
-            <a 
-              href={link.href} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary hover:text-dark transition-all"
-              aria-label={link.label}
-            >
-              {link.icon === 'facebook' && (
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-              )}
-              {link.icon === 'instagram' && (
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
-              )}
-              {link.icon === 'twitter' && (
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
-              )}
-              {link.icon === 'youtube' && (
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-              )}
-            </a>
-          ))}
-        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="footer-whatsapp">
+        <a href="https://wa.me/919488614888" target="_blank" class="whatsapp-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.032 2c-5.523 0-10 4.477-10 10 0 1.887.523 3.66 1.437 5.186l-1.494 4.833 4.976-1.418A9.961 9.961 0 0012.032 22c5.523 0 10-4.477 10-10s-4.477-10-10-10zm0 1.5c4.695 0 8.5 3.805 8.5 8.5s-3.805 8.5-8.5 8.5a8.46 8.46 0 01-4.554-1.307l-.288-.172-2.972.846.857-2.83-.179-.293A8.434 8.434 0 013.532 12c0-4.695 3.805-8.5 8.5-8.5zM8.752 7.388c-.138 0-.358.048-.552.24-.194.192-.735.72-.735 1.756 0 1.036.756 2.038.86 2.178.104.14 1.43 2.247 3.496 3.057.488.19.946.302 1.316.382.553.144 1.056.124 1.453.074.446-.056 1.366-.564 1.558-1.108.192-.544.192-1.01.135-1.107-.057-.097-.21-.156-.438-.273-.228-.117-1.348-.665-1.556-.74-.208-.076-.36-.117-.512.117-.152.234-.588.74-.72.892-.133.152-.266.171-.494.058-.228-.113-.962-.355-1.832-1.13-.677-.604-1.135-1.35-1.267-1.578-.132-.228-.014-.35.1-.464.102-.102.228-.267.342-.4.114-.133.152-.228.228-.38.076-.152.038-.285-.019-.399-.057-.114-.512-1.235-.702-1.69-.185-.446-.373-.386-.512-.394-.133-.008-.286-.008-.438-.008z"/>
+          </svg>
+          <span>Chat on WhatsApp</span>
+        </a>
       </div>
     </div>
-  </div>
-  
-  <!-- Bottom Bar -->
-  <div class="border-t border-white/10">
-    <div class="container py-6">
-      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <p>&copy; {currentYear} Hardware Store. All rights reserved.</p>
-        <div class="flex gap-6">
-          <a href="/privacy" class="hover:text-secondary transition-colors">Privacy Policy</a>
-          <a href="/terms" class="hover:text-secondary transition-colors">Terms of Service</a>
-        </div>
-      </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {currentYear} Peniel Hardwares. All rights reserved.</p>
     </div>
   </div>
 </footer>
-<style is:global>
-  footer.bg-dark {
-    background: var(--glass-bg-strong) !important;
+
+<style>
+  /* ===== FOOTER STYLES ===== */
+  .main-footer {
+    width: 100%;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px) saturate(170%);
-    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    margin-top: 4rem;
+    padding: 3rem 1.5rem 1.5rem;
+    box-shadow: var(--glass-shadow);
   }
-  footer .text-gray-400 {
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Desktop grid: 4 equal columns */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Brand column */
+  .footer-logo {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+  .logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff, var(--accent-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .logo-text span {
+    background: none;
+    color: var(--accent-gold);
+    -webkit-background-clip: unset;
+    background-clip: unset;
+  }
+  .brand-desc {
     color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
   }
-  footer .border-white\/10 {
-    border-color: var(--border);
+  .address {
+    display: flex;
+    gap: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .address svg {
+    flex-shrink: 0;
+    color: var(--accent-gold);
+    margin-top: 0.2rem;
+  }
+
+  /* Headings */
+  .footer-links h3, .footer-contact h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Lists */
+  .footer-links ul, .footer-contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-links li, .footer-contact li {
+    margin-bottom: 0.7rem;
+  }
+  .footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: var(--accent-gold);
+  }
+  .footer-contact li {
+    display: flex;
+    gap: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .footer-contact svg {
+    flex-shrink: 0;
+    color: var(--accent-gold);
+    margin-top: 0.2rem;
+  }
+  .footer-contact a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-contact a:hover {
+    color: var(--accent-gold);
+  }
+  .small {
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+  .closed {
+    color: #ef4444;
+    font-weight: 500;
+  }
+
+  /* WhatsApp button */
+  .footer-whatsapp {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #25D366;
+    color: white;
+    padding: 0.7rem 1.3rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  }
+  .whatsapp-btn:hover {
+    background: #128C7E;
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+  .footer-bottom p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .main-footer {
+      padding: 2rem 1rem 1rem;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+    }
+    .footer-brand {
+      grid-column: span 2;
+    }
+    .footer-whatsapp {
+      grid-column: span 2;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .footer-links h3, .footer-contact h3 {
+      margin-bottom: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      gap: 1.2rem;
+    }
+    .footer-contact li {
+      flex-wrap: wrap;
+    }
+    .logo-text {
+      font-size: 1.5rem;
+    }
   }
 </style>

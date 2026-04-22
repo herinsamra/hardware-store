@@ -19,6 +19,7 @@
     "autoprefixer": "^10.4.27",
     "fuse.js": "^7.3.0",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "postcss": "^8.5.9",
     "tailwindcss": "^3.4.19",
     "xlsx": "^0.18.5"

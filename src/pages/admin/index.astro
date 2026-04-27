@@ -1,0 +1,317 @@
+---
+export const prerender = false;
+// src/pages/admin/index.astro
+import AdminLayout from '../../components/AdminLayout.astro';
+import rawCategories from '../../data/categories.json';
+import { fetchAllProducts } from '../../lib/products';
+
+const allProducts = await fetchAllProducts();
+
+// Filter out Brands
+const { Brands, ...categories } = rawCategories;
+
+// Helper to calculate total products in a bucket
+function getCount(cat, sub, subsub) {
+  return allProducts.filter(p => {
+    if (cat && p.category !== cat) return false;
+    if (sub && p.subcategory !== sub) return false;
+    if (subsub && p.subsubcategory !== subsub) return false;
+    return true;
+  }).length;
+}
+
+const totalProducts = allProducts.length;
+---
+
+<AdminLayout title="Dashboard | Peniel Admin">
+  <div class="dashboard-header">
+    <div>
+      <h1 class="page-title">Category Dashboard</h1>
+      <p class="subtitle">Overview of your product catalog hierarchy.</p>
+    </div>
+    <div class="stat-card total-stat">
+      <span class="stat-value">{totalProducts}</span>
+      <span class="stat-label">Total Products</span>
+    </div>
+  </div>
+
+  <div class="categories-grid">
+    {Object.keys(categories).map(catName => {
+      const subcats = categories[catName];
+      const catCount = getCount(catName);
+
+      return (
+        <div class="category-card glass-panel">
+          <div class="cat-header">
+            <h2>{catName.replace(/_/g, ' ')}</h2>
+            <span class="badge count-badge">{catCount}</span>
+          </div>
+
+          <div class="subcategories">
+            {Object.keys(subcats).map(subName => {
+              const subsubs = subcats[subName];
+              const subCount = getCount(catName, subName);
+
+              return (
+                <div class="subcategory-group">
+                  <div class="sub-header">
+                    <h3>{subName.replace(/_/g, ' ')}</h3>
+                    <span class="badge sub-count">{subCount}</span>
+                  </div>
+
+                  <ul class="subsub-list">
+                    {Object.keys(subsubs).length > 0 ? (
+                      Object.keys(subsubs).map(subsubName => {
+                        const subsubCount = getCount(catName, subName, subsubName);
+                        const addUrl = `/admin/add-product?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subName)}&subsub=${encodeURIComponent(subsubName)}`;
+                        const viewUrl = `/admin/products?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subName)}&subsub=${encodeURIComponent(subsubName)}`;
+
+                        return (
+                          <li class="subsub-item">
+                            <span class="subsub-name">{subsubName.replace(/_/g, ' ')}</span>
+                            <div class="subsub-actions">
+                              <span class="badge minor-count">{subsubCount}</span>
+                              <div class="action-links">
+                                <a href={viewUrl} class="action-btn view-btn" title="View Products">👁️</a>
+                                <a href={addUrl} class="action-btn add-btn" title="Add Product Here">➕</a>
+                              </div>
+                            </div>
+                          </li>
+                        )
+                      })
+                    ) : (
+                      // Handle case where there are no sub-subcategories
+                      <li class="subsub-item">
+                        <span class="subsub-name text-muted">No specific ranges</span>
+                        <div class="subsub-actions">
+                           <div class="action-links">
+                             <a href={`/admin/add-product?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subName)}`} class="action-btn add-btn" title="Add Product Here">➕ Add directly</a>
+                           </div>
+                        </div>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</AdminLayout>
+
+<style>
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: #fff;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, rgba(197, 160, 40, 0.2), rgba(197, 160, 40, 0.05));
+    border: 1px solid rgba(197, 160, 40, 0.3);
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 25px -5px rgba(197, 160, 40, 0.15);
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.4rem;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2rem;
+  }
+
+  .category-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cat-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #fff;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .count-badge {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .subcategories {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .sub-header h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #cbd5e1;
+  }
+
+  .sub-count {
+    color: #9ca3af;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .subsub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .subsub-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.2s;
+  }
+
+  .subsub-item:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(197, 160, 40, 0.2);
+  }
+
+  .subsub-name {
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+
+  .subsub-item:hover .subsub-name {
+    color: #f3f4f6;
+  }
+
+  .text-muted {
+    font-style: italic;
+    opacity: 0.6;
+  }
+
+  .subsub-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .minor-count {
+    background: transparent;
+    color: #6b7280;
+    padding: 0;
+  }
+
+  .action-links {
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.2s;
+  }
+
+  .subsub-item:hover .action-links {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .action-btn {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.2s;
+    font-size: 0.85rem;
+  }
+
+  .action-btn.add-btn {
+    background: rgba(197, 160, 40, 0.15);
+    color: var(--accent);
+  }
+
+  .action-btn.add-btn:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .action-btn.view-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .action-links {
+      opacity: 1;
+      transform: none;
+    }
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+  }
+</style>

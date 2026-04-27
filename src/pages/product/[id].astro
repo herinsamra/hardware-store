@@ -19,6 +19,32 @@ function cleanName(value: string): string {
   return value.replace(/_/g, ' ');
 }
 
+function formatIndianNumber(num: number): string {
+  // Convert to absolute value first
+  const absNum = Math.abs(num);
+  
+  // Split the number into integer and decimal parts
+  const integerPart = Math.floor(absNum).toString();
+  const decimalPart = num % 1 !== 0 ? '.' + Math.round((num % 1) * 100).toString().padStart(2, '0') : '';
+  
+  // Handle numbers less than 1000
+  if (absNum < 1000) {
+    return integerPart + decimalPart;
+  }
+  
+  // Extract the last three digits and the rest
+  const lastThree = integerPart.slice(-3);
+  const rest = integerPart.slice(0, -3);
+  
+  // Format the rest with commas (every 2 digits after the first comma)
+  const restFormatted = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+  
+  // Combine everything
+  const formattedInteger = rest.length > 0 ? `${restFormatted},${lastThree}` : lastThree;
+  
+  return formattedInteger + decimalPart;
+}
+
 function getFilterUrl(category?: string, subcategory?: string, subsub?: string, brand?: string): string {
   const params = new URLSearchParams();
   if (category) params.set('category', category);
@@ -67,7 +93,7 @@ const productSchema = {
   offers: Number.isFinite(product.price) ? {
     '@type': 'Offer',
     priceCurrency: 'INR',
-    price: product.price.toFixed(2),
+    price: formatIndianNumber(product.price),
     availability: 'https://schema.org/InStock',
     url: absoluteCanonicalUrl,
   } : undefined,
@@ -97,7 +123,7 @@ const productSchema = {
         {product.variant_name && (
           <div class="variant-badge">Variant: {cleanName(product.variant_name)}</div>
         )}
-        <div class="product-detail-price">₹{product.price.toFixed(2)}</div>
+        <div class="product-detail-price">MRP: ₹{formatIndianNumber(product.price)}</div>
         {product.brand && (
           <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="product-brand-card" data-astro-prefetch="hover">
             <div class="product-brand-copy">

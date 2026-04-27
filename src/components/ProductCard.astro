@@ -19,6 +19,32 @@ export interface Props {
 const { product } = Astro.props;
 const productUrl = getProductUrl(product);
 const cleanName = (value = '') => value.replace(/_/g, ' ');
+
+function formatIndianNumber(num: number): string {
+  // Convert to absolute value first
+  const absNum = Math.abs(num);
+  
+  // Split the number into integer and decimal parts
+  const integerPart = Math.floor(absNum).toString();
+  const decimalPart = num % 1 !== 0 ? '.' + Math.round((num % 1) * 100).toString().padStart(2, '0') : '';
+  
+  // Handle numbers less than 1000
+  if (absNum < 1000) {
+    return integerPart + decimalPart;
+  }
+  
+  // Extract the last three digits and the rest
+  const lastThree = integerPart.slice(-3);
+  const rest = integerPart.slice(0, -3);
+  
+  // Format the rest with commas (every 2 digits after the first comma)
+  const restFormatted = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+  
+  // Combine everything
+  const formattedInteger = rest.length > 0 ? `${restFormatted},${lastThree}` : lastThree;
+  
+  return formattedInteger + decimalPart;
+}
 ---
 
 <a href={productUrl} class="product-card group" data-astro-prefetch>
@@ -41,7 +67,7 @@ const cleanName = (value = '') => value.replace(/_/g, ' ');
     {product.variant_name && (
       <p class="product-variant">{cleanName(product.variant_name)}</p>
     )}
-    <div class="product-price">MRP: ₹{product.price.toFixed(2)}</div>
+    <div class="product-price">MRP: ₹{formatIndianNumber(product.price)}</div>
     <div class="product-category">{cleanName(product.category)}</div>
   </div>
 </a>

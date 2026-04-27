@@ -1,7 +1,6 @@
 // src/lib/products.js
 import productsData from '../data/products.json' with { type: 'json' };
 
-let cachedProducts = null;
 
 export function slugifyProductValue(value) {
   return String(value || '')
@@ -30,7 +29,6 @@ export function getProductUrl(product) {
 }
 
 export function loadProductsFromExcel() {
-  if (cachedProducts) return cachedProducts;
 
   const products = productsData.map(row => {
     const id = row.part_no || row.sku;
@@ -64,7 +62,6 @@ export function loadProductsFromExcel() {
     };
   });
 
-  cachedProducts = products;
   return products;
 }
 

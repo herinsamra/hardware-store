@@ -5,15 +5,16 @@
     "subcategory": "Lighting_Fixtures",
     "subsubcategory": "Gate_Lights",
     "type": "PIPE MOUNT",
-    "product_name": "Viva Cute 12W LED Post Top Design",
+    "product_name": "Viva Cute 12W LED Post Top Design (Updated)",
     "description": "The Viva Cute 12W LED Post Top Gate Light delivers a perfect blend of modern aesthetics and efficient illumination. Designed for outdoor use, this stylish gate light emits a cool white light that enhances visibility while adding a sleek decorative touch to your entrance, garden, or pathway. Built with durable materials, it ensures long-lasting performance and resistance to weather conditions. Its energy-efficient 12W LED technology provides bright lighting with low power consumption, making it an ideal choice for both residential and commercial spaces.",
     "brand": "Inventaa",
-    "images": "https://inventaa.in/cdn/shop/files/Viva_PC_LED_Gate_Light_Cool_White.jpg?,https://inventaa.in/cdn/shop/files/Unbreakable_Viva_PC_LED_Gate_Light.jpg?v=1765448300&width=500v=1765448300&width=500,https://inventaa.in/cdn/shop/files/Bulb_Options_Of_Viva_PC.jpg?v=1765448300&width=500",
-    "mrp": 712,
-    "slug": "viva-cute-12w-led-post-top-gate-light-cool-white",
+    "images": "https://inventaa.in/cdn/shop/files/Viva_PC_LED_Gate_Light_Cool_White.jpg?, https://inventaa.in/cdn/shop/files/Unbreakable_Viva_PC_LED_Gate_Light.jpg?v=1765448300&width=500v=1765448300&width=500, https://inventaa.in/cdn/shop/files/Bulb_Options_Of_Viva_PC.jpg?v=1765448300&width=500",
+    "mrp": "712",
+    "slug": "viva-cute-12w-led-post-top-design-updated",
     "meta_title": "Viva Cute 12W LED Post Top Gate Light – Cool White Outdoor Light",
     "meta_description": "Buy Viva Cute 12W LED Post Top Gate Light with cool white illumination. Stylish, energy-efficient, and perfect for gates, gardens, and outdoor spaces.",
-    "sku": "10C-231"
+    "sku": "10C-231",
+    "variant_name": ""
   },
   {
     "part_no": "ZZ07207",
@@ -46,5 +47,22 @@
     "meta_title": "Viva 12W LED Gate Pillar Light | Modern Outdoor Door Light",
     "meta_description": "Buy Viva 12W LED gate pillar light for modern outdoor spaces. Energy-efficient, weather-resistant exterior door light perfect for gates, walls & entrances.",
     "sku": "12C 245"
+  },
+  {
+    "part_no": "ZZ03239",
+    "category": "Sanitary_Ware",
+    "subcategory": "Closets",
+    "subsubcategory": "Single_Piece_Closets",
+    "type": "ORISSA PAN",
+    "product_name": "C01111C WHITE  ORISSA PAN W/O P-TRAP",
+    "description": "Premium C01111C WHITE  ORISSA PAN W/O P TRAP from Parryware. Enhance your setup with this high-quality hardware component.",
+    "brand": "Parryware",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1776885794/C01311C_t_Product_Pictures_TF_Mob_prod_xxl_v2-Photoroom_zzzwko.png",
+    "mrp": "2350",
+    "slug": "c01111c-white-orissa-pan-wo-p-trap",
+    "meta_title": "C01111C WHITE  ORISSA PAN W/O P TRAP - Parryware | Premium Hardware",
+    "meta_description": "Discover the C01111C WHITE  ORISSA PAN W/O P TRAP by Parryware. High performance and reliability for your needs.",
+    "sku": "ZZ03239",
+    "variant_name": "500x405x255mm"
   }
 ]

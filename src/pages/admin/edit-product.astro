@@ -1,0 +1,589 @@
+---
+export const prerender = false;
+// src/pages/admin/edit-product.astro
+import AdminLayout from '../../components/AdminLayout.astro';
+import rawCategories from '../../data/categories.json';
+import brandsData from '../../data/brands.json';
+import { fetchProductById } from '../../lib/products';
+
+const partNo = Astro.url.searchParams.get('id');
+const product = partNo ? await fetchProductById(partNo) : null;
+
+if (partNo && !product) {
+  return Astro.redirect('/admin/products');
+}
+
+const { Brands, ...productCategories } = rawCategories;
+
+// Safely serialize data for the client
+const categoryDataStr = JSON.stringify(productCategories);
+const brandsDataStr = JSON.stringify(Brands);
+const productDataStr = JSON.stringify(product || {});
+---
+
+<AdminLayout title={product ? `Edit Product ${product.part_no}` : "Edit Product"}>
+  <div class="admin-wrapper">
+    <div class="glass-container">
+      <header class="admin-header">
+        <h1>{product ? `Edit Product: ${product.name}` : "Product Not Found"}</h1>
+        <p>Update product details and save changes.</p>
+        {product && <a href={`/product/${product.routeParam}`} target="_blank" class="view-link">View live page ↗</a>}
+      </header>
+
+      {product ? (
+        <form id="editProductForm" class="product-form">
+          <input type="hidden" id="original_part_no" name="original_part_no" value={product.part_no} />
+
+          <div class="form-grid">
+            <!-- Left Column: Manual Inputs -->
+            <div class="form-column">
+              <h2>Basic Details</h2>
+              
+              <div class="form-group">
+                <label for="part_no">Part Number (Unique ID) <span class="required">*</span></label>
+                <input type="text" id="part_no" name="part_no" required placeholder="e.g. ZZ03239" value={product.part_no} readonly class="readonly-input" />
+                <small>Part number cannot be changed once created.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="sku">SKU (Optional)</label>
+                <input type="text" id="sku" name="sku" placeholder="Leave blank if none" value={product.sku || ''} />
+              </div>
+
+              <div class="form-group">
+                <label for="product_name">Product Name <span class="required">*</span></label>
+                <input type="text" id="product_name" name="product_name" required placeholder="e.g. WHITE ORISSA PAN" value={product.name} />
+              </div>
+
+              <div class="form-group">
+                <label for="brand">Brand <span class="required">*</span></label>
+                <select id="brand" name="brand" required>
+                  <option value="">-- Select Brand --</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mrp">MRP (₹) <span class="required">*</span></label>
+                <input type="number" id="mrp" name="mrp" step="0.01" required placeholder="0.00" value={product.price} />
+              </div>
+              
+              <div class="form-group">
+                <label for="images">Image URLs (comma separated)</label>
+                <textarea id="images" name="images" rows="3" placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg">{product.images?.join(', ')}</textarea>
+              </div>
+            </div>
+
+            <!-- Right Column: Categorization & Description -->
+            <div class="form-column">
+              <h2>Categorization</h2>
+              
+              <div class="form-group">
+                <label for="category">Category <span class="required">*</span></label>
+                <select id="category" name="category" required>
+                  <option value="">-- Select Category --</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="subcategory">Subcategory <span class="required">*</span></label>
+                <select id="subcategory" name="subcategory" required disabled>
+                  <option value="">-- Select Subcategory --</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="subsubcategory">Sub-subcategory</label>
+                <select id="subsubcategory" name="subsubcategory" disabled>
+                  <option value="">-- Select Sub-subcategory --</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="type">Type (Optional)</label>
+                <input type="text" id="type" name="type" placeholder="e.g. Standard" value={product.type || ''} />
+              </div>
+              
+              <div class="form-group">
+                <label for="variant_name">Variant Name (Optional)</label>
+                <input type="text" id="variant_name" name="variant_name" placeholder="e.g. Large, 12W" value={product.variant_name || ''} />
+              </div>
+
+              <h2>AI Generated Content</h2>
+              <div class="ai-notice">
+                <span>✨</span> You can manually edit the content below, or check "Re-generate AI Content" to rewrite them based on the current product name, category, and brand.
+              </div>
+              
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="regenerate_ai" name="regenerate_ai" />
+                <label for="regenerate_ai">Re-generate AI Content on Save</label>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5">{product.description}</textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="meta_title">Meta Title</label>
+                <input type="text" id="meta_title" name="meta_title" value={product.meta_title || ''} />
+              </div>
+
+              <div class="form-group">
+                <label for="meta_description">Meta Description</label>
+                <textarea id="meta_description" name="meta_description" rows="3">{product.meta_description || ''}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div id="message" class="message" style="display: none;"></div>
+            <button type="submit" id="submitBtn" class="submit-btn">
+              <span class="btn-text">Save Changes</span>
+              <div class="spinner" style="display: none;"></div>
+            </button>
+          </div>
+        </form>
+      ) : (
+        <div class="error-state">
+          <p>Please provide a valid Product ID in the URL to edit a product.</p>
+          <a href="/admin/products" class="back-btn">View All Products</a>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <script define:vars={{ categoryDataStr, brandsDataStr, productDataStr }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!productDataStr || productDataStr === '{}') return;
+
+      const categories = JSON.parse(categoryDataStr);
+      const brandsData = JSON.parse(brandsDataStr);
+      const product = JSON.parse(productDataStr);
+
+      const catSelect = document.getElementById('category');
+      const subcatSelect = document.getElementById('subcategory');
+      const subsubSelect = document.getElementById('subsubcategory');
+      const brandSelect = document.getElementById('brand');
+
+      // Flatten brands
+      let brands = [];
+      Object.values(brandsData).forEach(catBrands => {
+        catBrands.forEach(b => {
+          if (!brands.find(item => item.name === b)) {
+            brands.push({ name: b });
+          }
+        });
+      });
+      brands.sort((a, b) => a.name.localeCompare(b.name));
+
+      function resetSelect(selectElement, defaultText, disable = false) {
+        selectElement.innerHTML = `<option value="">${defaultText}</option>`;
+        selectElement.disabled = disable;
+      }
+
+      // Populate Categories
+      Object.keys(categories).forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat.replace(/_/g, ' ');
+        catSelect.appendChild(option);
+      });
+
+      // Populate brands
+      resetSelect(brandSelect, '-- Select Brand --');
+      brands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand.name;
+        option.textContent = brand.name;
+        brandSelect.appendChild(option);
+      });
+
+      // Event Listeners for cascading dropdowns
+      catSelect.addEventListener('change', () => {
+        const selectedCat = catSelect.value;
+        const subcats = categories[selectedCat] || {};
+        resetSelect(subcatSelect, '-- Select Subcategory --', !selectedCat);
+        resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+
+        if (!selectedCat) return;
+
+        Object.keys(subcats).forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub;
+          opt.textContent = sub.replace(/_/g, ' ');
+          subcatSelect.appendChild(opt);
+        });
+      });
+
+      subcatSelect.addEventListener('change', () => {
+        const selectedCat = catSelect.value;
+        const selectedSub = subcatSelect.value;
+        const subsubs = categories[selectedCat]?.[selectedSub] || {};
+        resetSelect(subsubSelect, '-- Select Sub-subcategory --', !selectedSub);
+
+        if (!selectedSub) return;
+
+        Object.keys(subsubs).forEach(subsub => {
+          const opt = document.createElement('option');
+          opt.value = subsub;
+          opt.textContent = subsub.replace(/_/g, ' ');
+          subsubSelect.appendChild(opt);
+        });
+      });
+
+      // Pre-fill form values
+      brandSelect.value = product.brand || '';
+      
+      if (product.category && categories[product.category]) {
+        catSelect.value = product.category;
+        catSelect.dispatchEvent(new Event('change'));
+
+        if (product.subcategory && categories[product.category][product.subcategory]) {
+          subcatSelect.value = product.subcategory;
+          subcatSelect.dispatchEvent(new Event('change'));
+
+          if (product.subsubcategory && categories[product.category][product.subcategory][product.subsubcategory]) {
+            subsubSelect.value = product.subsubcategory;
+          }
+        }
+      }
+
+      // Form submission
+      const form = document.getElementById('editProductForm');
+      const messageDiv = document.getElementById('message');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const spinner = submitBtn.querySelector('.spinner');
+
+      function showMessage(msg, type) {
+        messageDiv.textContent = msg;
+        messageDiv.className = `message ${type}`;
+        messageDiv.style.display = 'block';
+        
+        if(type === 'success') {
+          setTimeout(() => {
+            messageDiv.style.opacity = '0';
+            setTimeout(() => {
+              messageDiv.style.display = 'none';
+              messageDiv.style.opacity = '1';
+            }, 300);
+          }, 5000);
+        }
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        btnText.textContent = 'Saving...';
+        spinner.style.display = 'block';
+        submitBtn.disabled = true;
+        messageDiv.style.display = 'none';
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        const originalPartNo = data.original_part_no;
+        
+        // Transform images string to array if needed or let API handle it
+        try {
+          const response = await fetch(`/api/product/${originalPartNo}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showMessage('Product updated successfully!', 'success');
+            
+            // If they opted to regenerate AI, the backend will return the new content
+            if (data.regenerate_ai === 'on' && result.product) {
+              document.getElementById('description').value = result.product.description || '';
+              document.getElementById('meta_title').value = result.product.meta_title || '';
+              document.getElementById('meta_description').value = result.product.meta_description || '';
+              document.getElementById('regenerate_ai').checked = false; // reset checkbox
+            }
+          } else {
+            showMessage(result.error || 'Failed to update product', 'error');
+          }
+        } catch (error) {
+          showMessage('Network error. Please try again.', 'error');
+        } finally {
+          btnText.textContent = 'Save Changes';
+          spinner.style.display = 'none';
+          submitBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</AdminLayout>
+
+<style is:global>
+  /* Use the exact same styles as add-product.astro */
+  :root {
+    --bg-dark: #0d0f14;
+    --glass-bg: rgba(22, 26, 35, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --accent-gold: #c5a028;
+    --accent-glow: rgba(197, 160, 40, 0.4);
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --input-bg: rgba(15, 17, 23, 0.8);
+    --error: #ef4444;
+    --success: #10b981;
+  }
+
+  .admin-wrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .admin-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .admin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .admin-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+  }
+
+  .view-link {
+    display: inline-block;
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--accent-gold);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    transition: all 0.2s;
+  }
+  .view-link:hover {
+    background: rgba(197, 160, 40, 0.1);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  .form-column h2 {
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #e2e8f0;
+  }
+
+  .required {
+    color: var(--error);
+  }
+
+  .readonly-input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #6b7280 !important;
+    cursor: not-allowed;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+
+  select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .ai-notice {
+    background: rgba(197, 160, 40, 0.1);
+    border: 1px solid rgba(197, 160, 40, 0.2);
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #fde68a;
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .checkbox-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+  }
+
+  .checkbox-group label {
+    margin: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--accent-gold);
+    cursor: pointer;
+  }
+
+  .form-actions {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, var(--accent-gold), #eab308);
+    color: #000;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 250px;
+    box-shadow: 0 10px 20px -5px var(--accent-glow);
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px -5px var(--accent-glow);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0,0,0,0.3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .message {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    transition: opacity 0.3s ease;
+  }
+
+  .message.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  .message.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+
+  .error-state {
+    text-align: center;
+    padding: 3rem;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+</style>

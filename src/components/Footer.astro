@@ -14,8 +14,13 @@ const quickLinks = [
     <div class="footer-grid">
       <!-- Brand -->
       <div class="footer-brand">
-        <a href="/" class="footer-logo">
-          <span class="logo-text">PENIEL<span>HARDWARES</span></span>
+        <a href="/" class="footer-logo-link" data-astro-prefetch="hover">
+          <img 
+            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
+            alt="Peniel Hardwares Logo"
+            class="footer-logo-img"
+          />
+          <span class="footer-logo-text">Peniel Hardwares</span>
         </a>
         <p class="brand-desc">
           Quality hardware, electrical, plumbing & sanitary solutions since 1995.
@@ -115,25 +120,25 @@ const quickLinks = [
   }
 
   /* Brand column */
-  .footer-logo {
-    display: inline-block;
+  .footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
     text-decoration: none;
     margin-bottom: 1rem;
   }
-  .logo-text {
-    font-size: 1.8rem;
-    font-weight: 800;
+  .footer-logo-img {
+    height: 2.5rem;
+    width: auto;
+  }
+  .footer-logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
     letter-spacing: -0.5px;
     background: linear-gradient(135deg, #ffffff, var(--accent-gold));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-  }
-  .logo-text span {
-    background: none;
-    color: var(--accent-gold);
-    -webkit-background-clip: unset;
-    background-clip: unset;
   }
   .brand-desc {
     color: var(--text-secondary);

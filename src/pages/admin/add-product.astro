@@ -1,0 +1,327 @@
+---
+import Layout from '../../components/Layout.astro';
+import rawCategories from '../../data/categories.json';
+import brandsData from '../../data/brands.json';
+
+// Filter out the "Brands" key from categories (it's not a product category)
+const { Brands, ...productCategories } = rawCategories;
+---
+
+<Layout title="Add Product | Admin">
+  <div class="admin-container">
+    <h1>➕ Add New Product</h1>
+    <p class="subtitle">AI will generate description, meta tags & slug automatically</p>
+
+    <form id="productForm" class="product-form">
+      <div class="form-group">
+        <label>Part Number *</label>
+        <input type="text" id="part_no" required placeholder="e.g., ZZ00926">
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="category" required></select>
+      </div>
+      <div class="form-group">
+        <label>Subcategory *</label>
+        <select id="subcategory" required disabled></select>
+      </div>
+      <div class="form-group">
+        <label>Sub‑subcategory *</label>
+        <select id="subsubcategory" required disabled></select>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <input type="text" id="type" placeholder="e.g., PIPE MOUNT">
+      </div>
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" id="product_name" required>
+      </div>
+      <div class="form-group">
+        <label>Brand *</label>
+        <select id="brand" required></select>
+      </div>
+      <div class="form-group">
+        <label>Image URLs (comma separated)</label>
+        <input type="text" id="images" placeholder="https://..., https://...">
+      </div>
+      <div class="form-group">
+        <label>Variant Name (optional)</label>
+        <input type="text" id="variant_name">
+      </div>
+      <div class="form-group">
+        <label>MRP (₹) *</label>
+        <input type="number" id="mrp" step="0.01" required>
+      </div>
+      <div class="form-group ai-preview">
+        <label>🤖 AI Generated Description</label>
+        <textarea id="description" rows="3" readonly placeholder="Will be generated on submit"></textarea>
+      </div>
+      <div class="form-group ai-preview">
+        <label>🤖 AI Generated Meta Title</label>
+        <input type="text" id="meta_title" readonly>
+      </div>
+      <div class="form-group ai-preview">
+        <label>🤖 AI Generated Meta Description</label>
+        <textarea id="meta_description" rows="2" readonly></textarea>
+      </div>
+      <div class="form-group ai-preview">
+        <label>🤖 Auto Slug</label>
+        <input type="text" id="slug" readonly>
+      </div>
+      <button type="submit" class="submit-btn">✨ Generate AI & Save Product</button>
+    </form>
+    <div id="message" class="message"></div>
+  </div>
+
+  <!-- Embed filtered categories and brands -->
+  <script id="categories-data" type="application/json">
+    {JSON.stringify(productCategories)}
+  </script>
+  <script id="brands-data" type="application/json">
+    {JSON.stringify(brandsData)}
+  </script>
+
+  <script lang="Js">
+    document.addEventListener('DOMContentLoaded', () => {
+      function getJSONFromScript(id) {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        try {
+          return JSON.parse(el.textContent);
+        } catch (e) {
+          console.error(`Failed to parse ${id}:`, e);
+          return null;
+        }
+      }
+
+      const categories = getJSONFromScript('categories-data');
+      const brands = getJSONFromScript('brands-data');
+
+      console.log('Categories loaded:', categories);
+      console.log('Brands loaded:', brands ? brands.length : 0);
+
+      const catSelect = document.getElementById('category');
+      const subcatSelect = document.getElementById('subcategory');
+      const subsubSelect = document.getElementById('subsubcategory');
+      const brandSelect = document.getElementById('brand');
+
+      // Populate categories
+      if (categories && catSelect) {
+        const catNames = Object.keys(categories);
+        catNames.forEach(cat => {
+          const option = document.createElement('option');
+          option.value = cat;
+          option.textContent = cat;
+          catSelect.appendChild(option);
+        });
+      }
+
+      // Populate brands
+      if (brands && brandSelect && brands.length) {
+        brands.forEach(brand => {
+          const option = document.createElement('option');
+          option.value = brand.name;
+          option.textContent = brand.name;
+          brandSelect.appendChild(option);
+        });
+      }
+
+      // Category change -> subcategory
+      catSelect.addEventListener('change', () => {
+        const selectedCat = catSelect.value;
+        const subcats = categories[selectedCat] || {};
+        subcatSelect.innerHTML = '<option value="">-- Select Subcategory --</option>';
+        subsubSelect.innerHTML = '<option value="">-- Select Sub‑subcategory --</option>';
+        subcatSelect.disabled = false;
+        subsubSelect.disabled = true;
+
+        Object.keys(subcats).forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub;
+          opt.textContent = sub;
+          subcatSelect.appendChild(opt);
+        });
+      });
+
+      // Subcategory change -> subsubcategory
+      subcatSelect.addEventListener('change', () => {
+        const selectedCat = catSelect.value;
+        const selectedSub = subcatSelect.value;
+        const subsubs = categories[selectedCat]?.[selectedSub] || {};
+        subsubSelect.innerHTML = '<option value="">-- Select Sub‑subcategory --</option>';
+        subsubSelect.disabled = false;
+
+        Object.keys(subsubs).forEach(subsub => {
+          const opt = document.createElement('option');
+          opt.value = subsub;
+          opt.textContent = subsub;
+          subsubSelect.appendChild(opt);
+        });
+      });
+
+      // Form submission
+      const form = document.getElementById('productForm');
+      const messageDiv = document.getElementById('message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        messageDiv.style.display = 'none';
+        messageDiv.className = 'message';
+
+        const payload = {
+          part_no: document.getElementById('part_no').value,
+          category: document.getElementById('category').value,
+          subcategory: document.getElementById('subcategory').value,
+          subsubcategory: document.getElementById('subsubcategory').value,
+          type: document.getElementById('type').value,
+          product_name: document.getElementById('product_name').value,
+          brand: document.getElementById('brand').value,
+          images: document.getElementById('images').value,
+          variant_name: document.getElementById('variant_name').value,
+          mrp: document.getElementById('mrp').value,
+        };
+
+        if (!payload.part_no || !payload.category || !payload.subcategory || !payload.subsubcategory || !payload.product_name || !payload.brand || !payload.mrp) {
+          messageDiv.textContent = '❌ Please fill all required fields (*)';
+          messageDiv.classList.add('error');
+          messageDiv.style.display = 'block';
+          return;
+        }
+
+        const btn = form.querySelector('.submit-btn');
+        const originalText = btn.textContent;
+        btn.textContent = '⏳ Generating AI & Saving...';
+        btn.disabled = true;
+
+        try {
+          const response = await fetch('/.netlify/functions/add-product', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            document.getElementById('description').value = result.product.description;
+            document.getElementById('meta_title').value = result.product.meta_title;
+            document.getElementById('meta_description').value = result.product.meta_description;
+            document.getElementById('slug').value = result.product.slug;
+
+            messageDiv.textContent = '✅ Product saved successfully!';
+            messageDiv.classList.add('success');
+            messageDiv.style.display = 'block';
+            // Clear manual fields (keep category/brand selections)
+            document.getElementById('part_no').value = '';
+            document.getElementById('product_name').value = '';
+            document.getElementById('type').value = '';
+            document.getElementById('images').value = '';
+            document.getElementById('variant_name').value = '';
+            document.getElementById('mrp').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('meta_title').value = '';
+            document.getElementById('meta_description').value = '';
+            document.getElementById('slug').value = '';
+          } else {
+            messageDiv.textContent = `❌ Error: ${result.error || 'Unknown error'}`;
+            messageDiv.classList.add('error');
+            messageDiv.style.display = 'block';
+          }
+        } catch (err) {
+          messageDiv.textContent = `❌ Network error: ${err.message}`;
+          messageDiv.classList.add('error');
+          messageDiv.style.display = 'block';
+        } finally {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }
+      });
+    });
+  </script>
+</Layout>
+
+<style is:global>
+  .admin-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #1e1e2a;
+    border-radius: 24px;
+    color: #e0e0e0;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ffb347;
+  }
+  .subtitle {
+    margin-bottom: 2rem;
+    opacity: 0.8;
+  }
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  input, select, textarea {
+    background: #2a2a35;
+    border: 1px solid #3a3a45;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: white;
+    font-size: 1rem;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ffb347;
+  }
+  .ai-preview {
+    background: #252530;
+    padding: 0.8rem;
+    border-radius: 16px;
+  }
+  .ai-preview textarea, .ai-preview input {
+    background: #1a1a22;
+  }
+  .submit-btn {
+    background: #ffb347;
+    color: #1a1a2a;
+    font-weight: bold;
+    padding: 1rem;
+    border: none;
+    border-radius: 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 1rem;
+  }
+  .submit-btn:hover {
+    background: #ffaa33;
+    transform: scale(1.02);
+  }
+  .message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    display: none;
+  }
+  .message.success {
+    background: #2e7d32;
+    display: block;
+  }
+  .message.error {
+    background: #c62828;
+    display: block;
+  }
+</style>

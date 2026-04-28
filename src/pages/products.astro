@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard.astro';
 import { fetchAllProducts } from '../lib/products';
 
 interface Product {
-  id: string;
+  id?: string;
   part_no: string;
   sku: string;
   category: string;
@@ -950,7 +950,7 @@ const productsPerPage = 12;
     grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
-    min-height: 260px;
+    min-height: 390px;
     background: #0b1018;
     border: 1px solid rgba(232, 186, 72, 0.34);
     border-radius: 1rem;
@@ -1130,17 +1130,17 @@ const productsPerPage = 12;
     .featured-product-card {
       grid-column: span 2;
       flex-direction: row;
+      min-height: clamp(390px, 34vw, 460px);
     }
 
     .featured-variant-1 {
       flex-direction: row-reverse;
-      min-height: 250px;
     }
 
     .featured-variant-2 {
       grid-column: 1 / -1;
       flex-direction: row-reverse;
-      min-height: 220px;
+      min-height: clamp(340px, 26vw, 420px);
     }
 
     .featured-content {
@@ -1169,17 +1169,17 @@ const productsPerPage = 12;
     .featured-image-wrapper {
       width: 42%;
       height: auto;
-      min-height: 300px;
+      min-height: 100%;
     }
 
     .featured-variant-1 .featured-image-wrapper {
       width: 44%;
-      min-height: 250px;
+      min-height: 100%;
     }
 
     .featured-variant-2 .featured-image-wrapper {
       width: 34%;
-      min-height: 220px;
+      min-height: 100%;
     }
 
     .featured-variant-2 .featured-content {

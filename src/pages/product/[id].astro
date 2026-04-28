@@ -1,8 +1,10 @@
 ---
 // src/pages/product/[id].astro
 import Layout from '../../components/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
 import { getBrandAsset } from '../../lib/brands';
 import {
+  fetchAllProducts,
   fetchProductByRouteParam,
   getAllProductSlugs,
   getProductUrl,
@@ -70,11 +72,36 @@ if (routeParam !== product.routeParam) {
 const absoluteCanonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
 const absoluteImageUrl = product.image || undefined;
 const brandAsset = getBrandAsset(product.brand);
+const productImages = Array.from(new Set(
+  (product.images?.length ? product.images : [product.image]).filter(Boolean)
+));
 const productCategoryTrail = [
   product.category,
   product.subcategory,
   product.subsubcategory,
 ].filter(Boolean).map(cleanName).join(' > ');
+const allProducts = await fetchAllProducts();
+const relatedProducts = allProducts
+  .filter(relatedProduct => {
+    if (relatedProduct.routeParam === product.routeParam || relatedProduct.id === product.id) return false;
+
+    if (product.subsubcategory) {
+      return relatedProduct.subsubcategory === product.subsubcategory;
+    }
+
+    return relatedProduct.subcategory === product.subcategory;
+  })
+  .map(relatedProduct => {
+    let score = 0;
+
+    if (relatedProduct.brand && relatedProduct.brand === product.brand) score += 2;
+    if (relatedProduct.type && relatedProduct.type === product.type) score += 1;
+
+    return { product: relatedProduct, score };
+  })
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 8)
+  .map(item => item.product);
 
 const productSchema = {
   '@context': 'https://schema.org',
@@ -83,7 +110,7 @@ const productSchema = {
   description: product.meta_description || product.description,
   sku: product.sku || undefined,
   mpn: product.part_no || undefined,
-  image: absoluteImageUrl ? [absoluteImageUrl] : undefined,
+  image: productImages.length ? productImages : (absoluteImageUrl ? [absoluteImageUrl] : undefined),
   category: productCategoryTrail || undefined,
   brand: product.brand ? {
     '@type': 'Brand',
@@ -112,8 +139,27 @@ const productSchema = {
   <div class="product-detail-container">
     <div class="product-detail">
       <div class="product-gallery">
-        {product.image ? (
-          <img src={product.image} alt={product.name} class="product-detail-image" />
+        {productImages.length > 0 ? (
+          <>
+            <div class="product-main-image-shell">
+              <img src={productImages[0]} alt={product.name} class="product-detail-image" id="product-main-image" />
+            </div>
+            {productImages.length > 1 && (
+              <div class="product-thumbnail-strip" aria-label="Product images">
+                {productImages.map((image, index) => (
+                  <button
+                    type="button"
+                    class:list={['product-thumbnail-button', { active: index === 0 }]}
+                    data-product-image={image}
+                    aria-label={`Show image ${index + 1}`}
+                    aria-pressed={index === 0 ? 'true' : 'false'}
+                  >
+                    <img src={image} alt={`${product.name} image ${index + 1}`} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div class="no-image">No image available</div>
         )}
@@ -174,7 +220,49 @@ const productSchema = {
         <button class="button add-to-cart">Enquire Now</button>
       </div>
     </div>
+
+    {relatedProducts.length > 0 && (
+      <section class="related-products-section" aria-labelledby="related-products-title">
+        <div class="related-products-heading">
+          <span>Related Products</span>
+          <h2 id="related-products-title">You may also love</h2>
+        </div>
+        <div class="related-products-grid">
+          {relatedProducts.map(relatedProduct => (
+            <ProductCard product={relatedProduct} />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
+
+  <script>
+    const productGallery = document.querySelector('.product-gallery');
+    const mainImage = document.getElementById('product-main-image');
+
+    if (productGallery instanceof HTMLElement && mainImage instanceof HTMLImageElement) {
+      const thumbnailButtons = Array.from(
+        productGallery.querySelectorAll('.product-thumbnail-button')
+      );
+
+      thumbnailButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          if (!(button instanceof HTMLButtonElement)) return;
+
+          const nextImage = button.dataset.productImage;
+          if (!nextImage) return;
+
+          mainImage.src = nextImage;
+
+          thumbnailButtons.forEach(item => {
+            const isActive = item === button;
+            item.classList.toggle('active', isActive);
+            item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          });
+        });
+      });
+    }
+  </script>
 </Layout>
 
 <style is:global>
@@ -215,6 +303,9 @@ const productSchema = {
   }
   .product-gallery {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
     padding: clamp(0.8rem, 1.6vw, 1.1rem);
     background: linear-gradient(145deg, var(--neo-surface-high), var(--neo-surface-low));
     border-radius: 27px;
@@ -231,6 +322,10 @@ const productSchema = {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 28%, rgba(10, 15, 24, 0.16));
     pointer-events: none;
   }
+  .product-main-image-shell {
+    position: relative;
+    z-index: 1;
+  }
   .product-detail-image {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -239,6 +334,44 @@ const productSchema = {
     object-fit: contain;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.02);
+  }
+  .product-thumbnail-strip {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+    gap: 0.65rem;
+  }
+  .product-thumbnail-button {
+    aspect-ratio: 1 / 1;
+    padding: 0.35rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow:
+      inset 5px 5px 12px rgba(7, 10, 17, 0.3),
+      inset -5px -5px 12px rgba(103, 124, 161, 0.08);
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .product-thumbnail-button:hover,
+  .product-thumbnail-button.active {
+    transform: translateY(-1px);
+    border-color: rgba(197, 160, 40, 0.44);
+    box-shadow:
+      inset 5px 5px 12px rgba(7, 10, 17, 0.24),
+      inset -5px -5px 12px rgba(103, 124, 161, 0.1),
+      0 0 0 1px rgba(197, 160, 40, 0.12);
+  }
+  .product-thumbnail-button img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
   }
   .no-image {
     aspect-ratio: 1 / 1;
@@ -430,6 +563,41 @@ const productSchema = {
       14px 14px 26px rgba(7, 10, 17, 0.42),
       -10px -10px 20px rgba(255, 231, 160, 0.18);
   }
+  .related-products-section {
+    margin-top: 3rem;
+  }
+  .related-products-heading {
+    margin-bottom: 1.4rem;
+  }
+  .related-products-heading span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .related-products-heading h2 {
+    color: var(--accent-gold);
+    font-size: clamp(1.6rem, 3vw, 2.15rem);
+    line-height: 1.15;
+  }
+  .related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  @media (min-width: 768px) {
+    .related-products-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .related-products-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
   @media (max-width: 767px) {
     .product-detail {
       border-radius: 28px;
@@ -450,6 +618,10 @@ const productSchema = {
     .product-brand-logo-shell {
       width: 100%;
       min-width: 0;
+    }
+
+    .related-products-grid {
+      gap: 1rem;
     }
   }
 </style>

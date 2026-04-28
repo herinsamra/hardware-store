@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 import { fileURLToPath } from 'url';
 
 const astroPrerenderEntrypoint = fileURLToPath(
@@ -11,10 +11,8 @@ const astroLegacyEntrypoint = fileURLToPath(
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://your-site-url.com', // Replace with your actual site URL
-  output: 'static',   // keep static for Netlify/Vercel
-  adapter: node({
-    mode: 'standalone',
-  }),
+  output: 'hybrid',   // Use hybrid for mostly static pages + SSR endpoints
+  adapter: netlify(),
   prefetch: {
     defaultStrategy: 'viewport',
   },

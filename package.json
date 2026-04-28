@@ -12,10 +12,10 @@
     "preview": "astro preview",
     "start": "npm run dev",
     "astro": "astro",
-     "merge-products": "node scripts/merge-products.js"
+    "merge-products": "node scripts/merge-products.js"
   },
   "dependencies": {
-    "@astrojs/node": "^10.0.4",
+    "@astrojs/netlify": "^7.0.8",
     "@google/generative-ai": "^0.24.1",
     "astro": "^6.1.4",
     "autoprefixer": "^10.4.27",

@@ -25,12 +25,15 @@
     "product_name": " MINI GLASIS LED WALL LIGHT INV",
     "description": "Upgrade your outdoor lighting with the Mini Glasis LED Wall Light 12W, designed for modern gate and wall applications. This compact yet powerful fixture emits a bright cool white light, ensuring enhanced visibility and security around entrances, gates, and exterior walls. Built with durable materials, it is weather-resistant and ideal for long-term outdoor use. Its sleek design blends seamlessly with contemporary architecture while providing energy-efficient illumination.",
     "brand": "Inventaa",
-    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165469/FrontImageMiniGlasisCool_um0tpb.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165469/Front_Image_Box_zm6r81.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165468/MiniGlassis-01_dv2hxd.webp",
-    "mrp": 2079,
-    "slug": "mini-glasis-led-wall-light-12w-gate-light-cool-white",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165469/FrontImageMiniGlasisCool_um0tpb.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165469/Front_Image_Box_zm6r81.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1776165468/MiniGlassis-01_dv2hxd.webp",
+    "mrp": "2079",
+    "slug": "mini-glasis-led-wall-light-inv",
     "meta_title": "Mini Glasis LED Wall Light 12W Gate Light Cool White | Outdoor LED Light",
     "meta_description": "Buy Mini Glasis LED Wall Light 12W for gates and outdoor walls. Energy-efficient cool white lighting with durable, weather-resistant design for modern homes.",
-    "sku": "12C-WS101"
+    "sku": "12C-WS101",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": ""
   },
   {
     "part_no": "ZZ00932",
@@ -111,7 +114,9 @@
     "slug": "7403-s7-slimz-1-mod-10amps-bell-push-switch-with-indicator",
     "meta_title": "Lisha 7403 S7 SLIMZ 1 MOD 10amps BELL PUSH SWITCH with INDICATOR – Premium Switches",
     "meta_description": "7403 S7 SLIMZ 1 MOD 10amps BELL PUSH SWITCH with INDICATOR by Lisha: SEO‑friendly, high‑performance Switches for modern installations.",
-    "variant_name": "BELL PUSH SWITCH"
+    "variant_name": "BELL PUSH SWITCH",
+    "is_featured": "true",
+    "slogan": ""
   },
   {
     "part_no": "ZZ02645",

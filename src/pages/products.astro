@@ -24,6 +24,8 @@ interface Product {
   url: string;
   meta_title: string;
   meta_description: string;
+  is_featured?: boolean | string;
+  slogan?: string;
 }
 
 const allProducts: Product[] = await fetchAllProducts();
@@ -156,16 +158,16 @@ const productsPerPage = 12;
       return parseInt(seedStr, 10);
     };
 
-    let currentSeed = getSeed();
-    const seededRandom = () => {
-      currentSeed = (currentSeed * 9301 + 49297) % 233280;
-      return currentSeed / 233280;
-    };
-
-    const shuffleArray = (array) => {
+    const shuffleArray = (array, seed = getSeed()) => {
       const newArray = [...array];
+      let currentSeed = seed;
+      const nextRandom = () => {
+        currentSeed = (currentSeed * 9301 + 49297) % 233280;
+        return currentSeed / 233280;
+      };
+
       for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(seededRandom() * (i + 1));
+        const j = Math.floor(nextRandom() * (i + 1));
         [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
       }
       return newArray;
@@ -433,10 +435,23 @@ const productsPerPage = 12;
       return null;
     };
 
-    const createFeaturedCard = (product) => {
+    const isFeaturedProduct = product => {
+      const value = product?.is_featured;
+      return value === true || String(value || '').toLowerCase() === 'true';
+    };
+
+    const getFeaturedProduct = (featuredProducts, usedFeaturedKeys) => {
+      if (!featuredProducts.length) return null;
+
+      const freshPick = featuredProducts.find(product => !usedFeaturedKeys.has(productKey(product)));
+      return freshPick || featuredProducts[usedFeaturedKeys.size % featuredProducts.length];
+    };
+
+    const createFeaturedCard = (product, variantIndex = 0) => {
+      const variant = variantIndex % 3;
       const card = document.createElement('a');
       card.href = product.url || `/product/${product.id}`;
-      card.className = 'featured-product-card group';
+      card.className = `featured-product-card featured-variant-${variant} group`;
       card.setAttribute('data-astro-prefetch', '');
 
       const contentWrapper = document.createElement('div');
@@ -444,8 +459,13 @@ const productsPerPage = 12;
 
       const badge = document.createElement('span');
       badge.className = 'featured-badge';
-      badge.innerHTML = '✦ Featured';
+      badge.textContent = 'Featured Pick';
       contentWrapper.appendChild(badge);
+
+      const kicker = document.createElement('p');
+      kicker.className = 'featured-kicker';
+      kicker.textContent = [product.brand, cleanName(product.category)].filter(Boolean).join(' / ');
+      contentWrapper.appendChild(kicker);
 
       const slogan = document.createElement('h3');
       slogan.className = 'featured-slogan';
@@ -457,10 +477,21 @@ const productsPerPage = 12;
       name.textContent = product.name;
       contentWrapper.appendChild(name);
 
+      const details = document.createElement('div');
+      details.className = 'featured-details';
+
+      if (Number.isFinite(Number(product.price))) {
+        const price = document.createElement('span');
+        price.className = 'featured-price';
+        price.textContent = `MRP: Rs. ${formatPrice(product.price)}`;
+        details.appendChild(price);
+      }
+
       const action = document.createElement('span');
       action.className = 'featured-action';
-      action.textContent = 'Shop Now →';
-      contentWrapper.appendChild(action);
+      action.textContent = variant === 1 ? 'Explore' : variant === 2 ? 'See details' : 'View product';
+      details.appendChild(action);
+      contentWrapper.appendChild(details);
 
       const imageWrapper = document.createElement('div');
       imageWrapper.className = 'featured-image-wrapper';
@@ -616,27 +647,35 @@ const productsPerPage = 12;
 
       if (paginatedProducts.length > 0) {
         let itemsRendered = 0;
-        let featuredAvailable = structureFilteredProducts.filter(p => p.is_featured === 'true' || p.is_featured === true);
-        
-        // Shuffle featured products consistently using the seeded randomizer
-        const shuffledFeatured = shuffleArray(featuredAvailable);
-        let featuredIndex = 0;
+        const shuffledFeatured = shuffleArray(
+          structureFilteredProducts.filter(isFeaturedProduct),
+          getSeed() + currentPage + state.search.length
+        );
+        const usedFeaturedKeys = new Set();
+
+        const injectFeatured = () => {
+          const featuredProduct = getFeaturedProduct(shuffledFeatured, usedFeaturedKeys);
+          if (!featuredProduct) return false;
+
+          const variantIndex = usedFeaturedKeys.size;
+          usedFeaturedKeys.add(productKey(featuredProduct));
+          gridEl.appendChild(createFeaturedCard(featuredProduct, variantIndex));
+          return true;
+        };
 
         paginatedProducts.forEach((product) => {
-          // Inject a featured product every 5 items
-          if (itemsRendered > 0 && itemsRendered % 5 === 0 && featuredIndex < shuffledFeatured.length) {
-            let fp = shuffledFeatured[featuredIndex];
-            // Make sure we don't duplicate the product right next to itself
-            if (fp.part_no !== product.part_no) {
-              gridEl.appendChild(createFeaturedCard(fp));
-              featuredIndex++;
-            }
+          if (itemsRendered > 0 && itemsRendered % 4 === 0) {
+            injectFeatured();
           }
 
           const matchInfo = searchData.matchMap.get(productKey(product)) || {};
           gridEl.appendChild(createProductCard(product, matchInfo));
           itemsRendered++;
         });
+
+        if (itemsRendered > 0 && itemsRendered < 5) {
+          injectFeatured();
+        }
 
         noResultsEl.hidden = true;
         gridEl.hidden = false;
@@ -855,6 +894,7 @@ const productsPerPage = 12;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    align-items: start;
   }
 
   @media (min-width: 768px) {
@@ -910,24 +950,48 @@ const productsPerPage = 12;
     grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, rgba(20, 24, 33, 0.9), rgba(10, 12, 16, 0.95));
-    border: 1px solid rgba(197, 160, 40, 0.3);
-    border-radius: 1.5rem;
+    min-height: 260px;
+    background: #0b1018;
+    border: 1px solid rgba(232, 186, 72, 0.34);
+    border-radius: 1rem;
     overflow: hidden;
     text-decoration: none;
     position: relative;
-    box-shadow: 0 10px 30px -10px rgba(197, 160, 40, 0.15);
+    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
+  .featured-product-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 64px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .featured-variant-0 {
+    background: linear-gradient(115deg, #08101a 0%, #182335 58%, #123c42 100%);
+  }
+
+  .featured-variant-1 {
+    background: linear-gradient(180deg, #141017 0%, #261b25 56%, #3a2232 100%);
+    border-color: rgba(244, 114, 182, 0.34);
+  }
+
+  .featured-variant-2 {
+    background: linear-gradient(180deg, #11170f 0%, #1f2b1c 58%, #293414 100%);
+    border-color: rgba(163, 230, 53, 0.28);
+  }
+
   .featured-product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px -10px rgba(197, 160, 40, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 26px 52px -26px rgba(0, 0, 0, 0.95), 0 16px 34px -26px rgba(232, 186, 72, 0.7);
     border-color: rgba(197, 160, 40, 0.6);
   }
 
   .featured-content {
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -937,22 +1001,51 @@ const productsPerPage = 12;
 
   .featured-badge {
     align-self: flex-start;
-    background: linear-gradient(135deg, var(--accent-gold), #eab308);
-    color: #000;
-    font-size: 0.75rem;
+    background: rgba(232, 186, 72, 0.14);
+    border: 1px solid rgba(232, 186, 72, 0.45);
+    color: #f8d978;
+    font-size: 0.68rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 0.32rem 0.65rem;
     border-radius: 999px;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 10px rgba(197, 160, 40, 0.3);
+    margin-bottom: 0.8rem;
+  }
+
+  .featured-variant-1 .featured-badge {
+    background: rgba(244, 114, 182, 0.14);
+    border-color: rgba(244, 114, 182, 0.38);
+    color: #f9a8d4;
+  }
+
+  .featured-variant-2 .featured-badge {
+    background: rgba(163, 230, 53, 0.12);
+    border-color: rgba(163, 230, 53, 0.34);
+    color: #d9f99d;
+  }
+
+  .featured-kicker {
+    margin: 0 0 0.5rem;
+    color: #67e8f9;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .featured-variant-1 .featured-kicker {
+    color: #f9a8d4;
+  }
+
+  .featured-variant-2 .featured-kicker {
+    color: #bef264;
   }
 
   .featured-slogan {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.12;
     color: #fff;
     margin: 0 0 0.5rem 0;
     text-wrap: balance;
@@ -964,27 +1057,61 @@ const productsPerPage = 12;
     margin: 0 0 1.5rem 0;
   }
 
+  .featured-details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+
+  .featured-price {
+    color: #0a0c10;
+    background: #f8d978;
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
+  .featured-variant-1 .featured-price {
+    background: #f9a8d4;
+  }
+
+  .featured-variant-2 .featured-price {
+    background: #d9f99d;
+  }
+
   .featured-action {
     display: inline-flex;
     align-items: center;
-    color: var(--accent-gold);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: gap 0.2s;
+    color: #d9fbff;
+    border: 1px solid rgba(103, 232, 249, 0.42);
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    font-weight: 700;
+    font-size: 0.86rem;
   }
 
-  .featured-product-card:hover .featured-action {
-    gap: 0.5rem;
+  .featured-variant-1 .featured-action {
+    color: #ffe4f1;
+    border-color: rgba(244, 114, 182, 0.4);
+  }
+
+  .featured-variant-2 .featured-action {
+    color: #eefccc;
+    border-color: rgba(163, 230, 53, 0.34);
   }
 
   .featured-image-wrapper {
     position: relative;
     width: 100%;
     height: 250px;
-    background: radial-gradient(circle at center, rgba(197, 160, 40, 0.1) 0%, transparent 70%);
+    background: rgba(255, 255, 255, 0.045);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
   }
 
   .featured-image {
@@ -1004,18 +1131,61 @@ const productsPerPage = 12;
       grid-column: span 2;
       flex-direction: row;
     }
+
+    .featured-variant-1 {
+      flex-direction: row-reverse;
+      min-height: 250px;
+    }
+
+    .featured-variant-2 {
+      grid-column: 1 / -1;
+      flex-direction: row-reverse;
+      min-height: 220px;
+    }
+
     .featured-content {
-      width: 55%;
-      padding: 3rem;
+      width: 58%;
+      padding: 2rem;
     }
+
+    .featured-variant-1 .featured-content {
+      width: 56%;
+      padding: 1.6rem;
+    }
+
     .featured-slogan {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
+
+    .featured-variant-1 .featured-slogan {
+      font-size: 1.55rem;
+    }
+
+    .featured-variant-2 .featured-slogan {
+      font-size: 2.35rem;
+      max-width: 720px;
+    }
+
     .featured-image-wrapper {
-      width: 45%;
+      width: 42%;
       height: auto;
       min-height: 300px;
     }
+
+    .featured-variant-1 .featured-image-wrapper {
+      width: 44%;
+      min-height: 250px;
+    }
+
+    .featured-variant-2 .featured-image-wrapper {
+      width: 34%;
+      min-height: 220px;
+    }
+
+    .featured-variant-2 .featured-content {
+      width: 66%;
+    }
+
     .featured-image {
       padding: 2rem;
     }

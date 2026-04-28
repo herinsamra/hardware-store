@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/netlify": "^7.0.8",
     "@google/generative-ai": "^0.24.1",
+    "@whatwg-node/node-fetch": "^0.8.5",
     "astro": "^6.1.4",
     "autoprefixer": "^10.4.27",
     "fuse.js": "^7.3.0",
@@ -25,6 +26,7 @@
     "openai": "^6.34.0",
     "postcss": "^8.5.9",
     "tailwindcss": "^3.4.19",
+    "tslib": "^2.8.1",
     "xlsx": "^0.18.5"
   }
 }

@@ -25,7 +25,7 @@ async function generateAI(productName, category, subcategory, brand, type) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
   }
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
 - the exact product name and brand,

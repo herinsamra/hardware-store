@@ -11,7 +11,7 @@ const astroLegacyEntrypoint = fileURLToPath(
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://your-site-url.com', // Replace with your actual site URL
-  output: 'hybrid',   // Use hybrid for mostly static pages + SSR endpoints
+  output: 'static',   // Use static, mostly static pages + SSR endpoints
   adapter: netlify(),
   prefetch: {
     defaultStrategy: 'viewport',

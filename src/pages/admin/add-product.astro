@@ -109,6 +109,15 @@ const { Brands, ...productCategories } = rawCategories;
               </div>
             </div>
 
+            <div class="input-group featured-toggle">
+              <label class="checkbox-label" for="is_featured">
+                <input type="checkbox" id="is_featured">
+                <span class="custom-checkbox"></span>
+                Feature this product? <span class="badge new-badge">NEW</span>
+              </label>
+              <p class="hint">Featured products will get a special AI slogan and show up as ads in listings.</p>
+            </div>
+
             <!-- AI Preview Area -->
             <div class="ai-preview-section">
               <div class="ai-header">
@@ -135,6 +144,11 @@ const { Brands, ...productCategories } = rawCategories;
               <div class="ai-field">
                 <label>Generated Slug</label>
                 <input type="text" id="slug" readonly placeholder="...">
+              </div>
+
+              <div class="ai-field slogan-field" id="sloganPreview" style="display: none;">
+                <label>Featured Slogan</label>
+                <input type="text" id="slogan" readonly placeholder="Captivating slogan will appear here...">
               </div>
             </div>
           </div>
@@ -301,6 +315,7 @@ const { Brands, ...productCategories } = rawCategories;
           images: document.getElementById('images').value,
           variant_name: document.getElementById('variant_name').value,
           mrp: document.getElementById('mrp').value,
+          is_featured: document.getElementById('is_featured').checked,
         };
 
         if (!payload.part_no || !payload.category || !payload.subcategory || !payload.subsubcategory || !payload.product_name || !payload.brand || !payload.mrp) {
@@ -324,6 +339,10 @@ const { Brands, ...productCategories } = rawCategories;
             document.getElementById('meta_title').value = result.product.meta_title;
             document.getElementById('meta_description').value = result.product.meta_description;
             document.getElementById('slug').value = result.product.slug;
+            if (result.product.slogan) {
+              document.getElementById('slogan').value = result.product.slogan;
+              document.getElementById('sloganPreview').style.display = 'block';
+            }
 
             showMessage('✨ Product saved successfully to Excel & JSON!', 'success');
             
@@ -346,6 +365,13 @@ const { Brands, ...productCategories } = rawCategories;
           submitBtn.classList.remove('loading');
         }
       });
+      const isFeaturedCb = document.getElementById('is_featured');
+      const sloganPreview = document.getElementById('sloganPreview');
+      if (isFeaturedCb) {
+        isFeaturedCb.addEventListener('change', (e) => {
+          sloganPreview.style.display = e.target.checked ? 'block' : 'none';
+        });
+      }
     });
   </script>
 </AdminLayout>
@@ -670,5 +696,68 @@ const { Brands, ...productCategories } = rawCategories;
     background: rgba(239, 68, 68, 0.1);
     color: #f87171;
     border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+
+  .featured-toggle {
+    background: linear-gradient(135deg, rgba(197, 160, 40, 0.1), rgba(197, 160, 40, 0.02));
+    border: 1px solid rgba(197, 160, 40, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+  }
+
+  .checkbox-label input {
+    width: auto;
+    display: none;
+  }
+
+  .custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .checkbox-label input:checked + .custom-checkbox {
+    background: var(--accent);
+  }
+
+  .checkbox-label input:checked + .custom-checkbox::after {
+    content: "✓";
+    position: absolute;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .new-badge {
+    background: #ef4444;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+
+  .hint {
+    margin: 0 0 0 32px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
   }
 </style>

@@ -19,13 +19,16 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
-async function generateAI(productName, category, subcategory, brand, type) {
+async function generateAI(productName, category, subcategory, brand, type, isFeatured) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
   }
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
+  const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
 
   const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
 - the exact product name and brand,
@@ -34,9 +37,9 @@ async function generateAI(productName, category, subcategory, brand, type) {
 - a subtle invitation to the buyer.
 Also create:
 1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
-2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.
+2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.${featuredInstruction}
 
-Use ONLY valid JSON with the keys "description", "meta_title", and "meta_description". No extra text.
+Use ONLY valid JSON with the keys ${jsonKeys}. No extra text.
 
 Product: ${productName}
 Category: ${category} > ${subcategory}
@@ -56,7 +59,8 @@ Type: ${type || 'standard'}
     return {
       description: "",
       meta_title: "",
-      meta_description: ""
+      meta_description: "",
+      slogan: ""
     };
   }
 }
@@ -101,18 +105,23 @@ export async function PUT({ params, request }) {
     let newMetaTitle = updateData.meta_title || currentProduct.meta_title;
     let newMetaDesc = updateData.meta_description || currentProduct.meta_description;
 
+    let newSlogan = updateData.slogan !== undefined ? updateData.slogan : currentProduct.slogan;
+    const isFeatured = updateData.is_featured === true || updateData.is_featured === 'true' || updateData.is_featured === 'on';
+
     if (updateData.regenerate_ai === 'on') {
       const ai = await generateAI(
         updateData.product_name || currentProduct.product_name,
         updateData.category || currentProduct.category,
         updateData.subcategory || currentProduct.subcategory,
         updateData.brand || currentProduct.brand,
-        updateData.type || currentProduct.type
+        updateData.type || currentProduct.type,
+        isFeatured
       );
       
       if (ai.description) newDescription = ai.description;
       if (ai.meta_title) newMetaTitle = ai.meta_title;
       if (ai.meta_description) newMetaDesc = ai.meta_description;
+      if (isFeatured && ai.slogan) newSlogan = ai.slogan;
     }
 
     const newSlug = updateData.product_name ? slugify(updateData.product_name) : currentProduct.slug;
@@ -133,6 +142,8 @@ export async function PUT({ params, request }) {
       slug: newSlug,
       meta_title: newMetaTitle,
       meta_description: newMetaDesc,
+      is_featured: isFeatured ? 'true' : 'false',
+      slogan: newSlogan || '',
     };
 
     if (updateData.sku !== undefined) {

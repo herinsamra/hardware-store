@@ -19,13 +19,16 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
-async function generateAI(productName, subsubcategory, brand, type) {
+async function generateAI(productName, subsubcategory, brand, type, isFeatured) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
   }
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+  const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
+  const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
 
   const prompt = `You are a premium hardware copywriter. Write a concise, SEO‑friendly product description (max 620 characters) that focuses on the sub‑sub‑category (${subsubcategory}) and highlights:
 - Exact product name and brand
@@ -35,9 +38,9 @@ async function generateAI(productName, subsubcategory, brand, type) {
 
 Also create:
 1️⃣ A meta title (≤60 characters) blending brand and product name.
-2️⃣ A meta description (≤160 characters) that is SEO‑optimized.
+2️⃣ A meta description (≤160 characters) that is SEO‑optimized.${featuredInstruction}
 
-Output ONLY valid JSON with keys "description", "meta_title", "meta_description".
+Output ONLY valid JSON with keys ${jsonKeys}.
 
 Product: ${productName}
 Sub‑sub‑category: ${subsubcategory}
@@ -57,7 +60,8 @@ Type: ${type || 'standard'}
     return {
       description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance.`,
       meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
-      meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`
+      meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`,
+      slogan: isFeatured ? `Experience the best ${productName} today!` : ''
     };
   }
 }
@@ -83,7 +87,8 @@ export async function POST({ request }) {
       productInput.product_name,
       productInput.subsubcategory,
       productInput.brand,
-      productInput.type
+      productInput.type,
+      productInput.is_featured === true || productInput.is_featured === 'true'
     );
 
     const slug = slugify(productInput.product_name);
@@ -103,6 +108,8 @@ export async function POST({ request }) {
       slug: slug,
       meta_title: ai.meta_title,
       meta_description: ai.meta_description,
+      is_featured: productInput.is_featured === true || productInput.is_featured === 'true' ? 'true' : 'false',
+      slogan: ai.slogan || '',
       // Include SKU only if provided explicitly
       ...(productInput.sku ? { sku: productInput.sku } : {}),
     };

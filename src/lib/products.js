@@ -59,6 +59,8 @@ export function loadProductsFromExcel() {
       url: routeParam ? `/product/${routeParam}` : '/products',
       meta_title: row.meta_title || '',
       meta_description: row.meta_description || '',
+      is_featured: row.is_featured || false,
+      slogan: row.slogan || '',
     };
   });
 

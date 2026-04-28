@@ -108,6 +108,11 @@ const productDataStr = JSON.stringify(product || {});
                 <input type="text" id="variant_name" name="variant_name" placeholder="e.g. Large, 12W" value={product.variant_name || ''} />
               </div>
 
+              <div class="form-group checkbox-group" style="margin-top: 1.5rem; border-color: rgba(197, 160, 40, 0.4); background: rgba(197, 160, 40, 0.05);">
+                <input type="checkbox" id="is_featured" name="is_featured" checked={product.is_featured === 'true' || product.is_featured === true} />
+                <label for="is_featured" style="color: var(--accent-gold); font-weight: 600;">⭐ Feature this product?</label>
+              </div>
+
               <h2>AI Generated Content</h2>
               <div class="ai-notice">
                 <span>✨</span> You can manually edit the content below, or check "Re-generate AI Content" to rewrite them based on the current product name, category, and brand.
@@ -131,6 +136,11 @@ const productDataStr = JSON.stringify(product || {});
               <div class="form-group">
                 <label for="meta_description">Meta Description</label>
                 <textarea id="meta_description" name="meta_description" rows="3">{product.meta_description || ''}</textarea>
+              </div>
+
+              <div class="form-group" id="sloganPreview" style={`display: ${(product.is_featured === 'true' || product.is_featured === true) ? 'flex' : 'none'}`}>
+                <label for="slogan">Featured Slogan</label>
+                <input type="text" id="slogan" name="slogan" placeholder="Catchy AI slogan will appear here..." value={product.slogan || ''} />
               </div>
             </div>
           </div>
@@ -304,6 +314,10 @@ const productDataStr = JSON.stringify(product || {});
               document.getElementById('meta_title').value = result.product.meta_title || '';
               document.getElementById('meta_description').value = result.product.meta_description || '';
               document.getElementById('regenerate_ai').checked = false; // reset checkbox
+              
+              if (result.product.is_featured === 'true' || result.product.is_featured === true) {
+                document.getElementById('slogan').value = result.product.slogan || '';
+              }
             }
           } else {
             showMessage(result.error || 'Failed to update product', 'error');
@@ -316,6 +330,14 @@ const productDataStr = JSON.stringify(product || {});
           submitBtn.disabled = false;
         }
       });
+
+      const isFeaturedCb = document.getElementById('is_featured');
+      const sloganPreview = document.getElementById('sloganPreview');
+      if (isFeaturedCb && sloganPreview) {
+        isFeaturedCb.addEventListener('change', (e) => {
+          sloganPreview.style.display = e.target.checked ? 'flex' : 'none';
+        });
+      }
     });
   </script>
 </AdminLayout>

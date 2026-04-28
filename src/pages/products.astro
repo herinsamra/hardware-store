@@ -433,6 +433,53 @@ const productsPerPage = 12;
       return null;
     };
 
+    const createFeaturedCard = (product) => {
+      const card = document.createElement('a');
+      card.href = product.url || `/product/${product.id}`;
+      card.className = 'featured-product-card group';
+      card.setAttribute('data-astro-prefetch', '');
+
+      const contentWrapper = document.createElement('div');
+      contentWrapper.className = 'featured-content';
+
+      const badge = document.createElement('span');
+      badge.className = 'featured-badge';
+      badge.innerHTML = '✦ Featured';
+      contentWrapper.appendChild(badge);
+
+      const slogan = document.createElement('h3');
+      slogan.className = 'featured-slogan';
+      slogan.textContent = product.slogan || `Discover the exceptional ${product.name}`;
+      contentWrapper.appendChild(slogan);
+
+      const name = document.createElement('p');
+      name.className = 'featured-name';
+      name.textContent = product.name;
+      contentWrapper.appendChild(name);
+
+      const action = document.createElement('span');
+      action.className = 'featured-action';
+      action.textContent = 'Shop Now →';
+      contentWrapper.appendChild(action);
+
+      const imageWrapper = document.createElement('div');
+      imageWrapper.className = 'featured-image-wrapper';
+
+      if (product.image) {
+        const image = document.createElement('img');
+        image.src = product.image;
+        image.alt = product.name;
+        image.className = 'featured-image';
+        image.loading = 'lazy';
+        imageWrapper.appendChild(image);
+      }
+
+      card.appendChild(contentWrapper);
+      card.appendChild(imageWrapper);
+
+      return card;
+    };
+
     const createProductCard = (product, matchInfo = {}) => {
       const card = document.createElement('a');
       card.href = product.url || `/product/${product.id}`;
@@ -568,9 +615,27 @@ const productsPerPage = 12;
       paginationEl.replaceChildren();
 
       if (paginatedProducts.length > 0) {
-        paginatedProducts.forEach(product => {
+        let itemsRendered = 0;
+        let featuredAvailable = structureFilteredProducts.filter(p => p.is_featured === 'true' || p.is_featured === true);
+        
+        // Shuffle featured products consistently using the seeded randomizer
+        const shuffledFeatured = shuffleArray(featuredAvailable);
+        let featuredIndex = 0;
+
+        paginatedProducts.forEach((product) => {
+          // Inject a featured product every 5 items
+          if (itemsRendered > 0 && itemsRendered % 5 === 0 && featuredIndex < shuffledFeatured.length) {
+            let fp = shuffledFeatured[featuredIndex];
+            // Make sure we don't duplicate the product right next to itself
+            if (fp.part_no !== product.part_no) {
+              gridEl.appendChild(createFeaturedCard(fp));
+              featuredIndex++;
+            }
+          }
+
           const matchInfo = searchData.matchMap.get(productKey(product)) || {};
           gridEl.appendChild(createProductCard(product, matchInfo));
+          itemsRendered++;
         });
 
         noResultsEl.hidden = true;
@@ -838,5 +903,121 @@ const productsPerPage = 12;
     background: var(--accent-gold);
     color: #0a0c10;
     border-color: var(--accent-gold);
+  }
+
+  /* Featured Product Ad Styles */
+  .featured-product-card {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, rgba(20, 24, 33, 0.9), rgba(10, 12, 16, 0.95));
+    border: 1px solid rgba(197, 160, 40, 0.3);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 10px 30px -10px rgba(197, 160, 40, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .featured-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(197, 160, 40, 0.3);
+    border-color: rgba(197, 160, 40, 0.6);
+  }
+
+  .featured-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    flex: 1;
+  }
+
+  .featured-badge {
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--accent-gold), #eab308);
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(197, 160, 40, 0.3);
+  }
+
+  .featured-slogan {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    text-wrap: balance;
+  }
+
+  .featured-name {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .featured-action {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent-gold);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: gap 0.2s;
+  }
+
+  .featured-product-card:hover .featured-action {
+    gap: 0.5rem;
+  }
+
+  .featured-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: radial-gradient(circle at center, rgba(197, 160, 40, 0.1) 0%, transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.5rem;
+    transition: transform 0.5s ease;
+  }
+
+  .featured-product-card:hover .featured-image {
+    transform: scale(1.05);
+  }
+
+  @media (min-width: 768px) {
+    .featured-product-card {
+      grid-column: span 2;
+      flex-direction: row;
+    }
+    .featured-content {
+      width: 55%;
+      padding: 3rem;
+    }
+    .featured-slogan {
+      font-size: 2.2rem;
+    }
+    .featured-image-wrapper {
+      width: 45%;
+      height: auto;
+      min-height: 300px;
+    }
+    .featured-image {
+      padding: 2rem;
+    }
   }
 </style>

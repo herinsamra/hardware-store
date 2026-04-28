@@ -19,7 +19,7 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
-async function generateAI(productName, category, subcategory, brand, type) {
+async function generateAI(productName, subsubcategory, brand, type) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
@@ -27,19 +27,20 @@ async function generateAI(productName, category, subcategory, brand, type) {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
-- the exact product name and brand,
-- its distinctive color, finish, and any unique features,
-- the ideal use‑case or space where it shines,
-- a subtle invitation to the buyer.
-Also create:
-1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
-2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.
+  const prompt = `You are a premium hardware copywriter. Write a concise, SEO‑friendly product description (max 620 characters) that focuses on the sub‑sub‑category (${subsubcategory}) and highlights:
+- Exact product name and brand
+- Distinctive features and finish
+- Ideal use‑case or setting
+- A subtle invitation to the buyer
 
-Use ONLY valid JSON with the keys "description", "meta_title", and "meta_description". No extra text.
+Also create:
+1️⃣ A meta title (≤60 characters) blending brand and product name.
+2️⃣ A meta description (≤160 characters) that is SEO‑optimized.
+
+Output ONLY valid JSON with keys "description", "meta_title", "meta_description".
 
 Product: ${productName}
-Category: ${category} > ${subcategory}
+Sub‑sub‑category: ${subsubcategory}
 Brand: ${brand}
 Type: ${type || 'standard'}
 `;
@@ -54,9 +55,9 @@ Type: ${type || 'standard'}
     console.error('AI Generation Error:', error);
     // Return default values if AI fails
     return {
-      description: `Premium ${productName} from ${brand}. Enhance your setup with this high-quality hardware component.`,
-      meta_title: `${productName} - ${brand} | Premium Hardware`,
-      meta_description: `Discover the ${productName} by ${brand}. High performance and reliability for your needs.`
+      description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance.`,
+      meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
+      meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`
     };
   }
 }
@@ -80,8 +81,7 @@ export async function POST({ request }) {
     // Generate AI content
     const ai = await generateAI(
       productInput.product_name,
-      productInput.category,
-      productInput.subcategory,
+      productInput.subsubcategory,
       productInput.brand,
       productInput.type
     );

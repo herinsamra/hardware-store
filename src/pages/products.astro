@@ -147,13 +147,39 @@ const productsPerPage = 12;
       'description',
     ];
 
-    const structureFilteredProducts = allProducts.filter(product => {
+    const getSeed = () => {
+      let seedStr = sessionStorage.getItem('productShuffleSeed');
+      if (!seedStr) {
+        seedStr = Math.floor(Math.random() * 1000000).toString();
+        sessionStorage.setItem('productShuffleSeed', seedStr);
+      }
+      return parseInt(seedStr, 10);
+    };
+
+    let currentSeed = getSeed();
+    const seededRandom = () => {
+      currentSeed = (currentSeed * 9301 + 49297) % 233280;
+      return currentSeed / 233280;
+    };
+
+    const shuffleArray = (array) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(seededRandom() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
+
+    const rawFilteredProducts = allProducts.filter(product => {
       if (filters.category && product.category !== filters.category) return false;
       if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
       if (filters.subsub && product.subsubcategory !== filters.subsub) return false;
       if (filters.brand && product.brand !== filters.brand) return false;
       return true;
     });
+
+    const structureFilteredProducts = shuffleArray(rawFilteredProducts);
 
     const fuse = new Fuse(structureFilteredProducts, {
       includeScore: true,

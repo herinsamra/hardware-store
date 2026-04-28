@@ -5,6 +5,17 @@ import AdminLayout from '../../components/AdminLayout.astro';
 import { fetchAllProducts } from '../../lib/products';
 
 const allProducts = await fetchAllProducts();
+
+const category = Astro.url.searchParams.get('category');
+const subcategory = Astro.url.searchParams.get('subcategory');
+const subsub = Astro.url.searchParams.get('subsub');
+
+const filteredProducts = allProducts.filter(product => {
+  if (category && product.category !== category) return false;
+  if (subcategory && product.subcategory !== subcategory) return false;
+  if (subsub && product.subsubcategory !== subsub) return false;
+  return true;
+});
 ---
 
 <AdminLayout title="Products Management | Peniel Admin">
@@ -40,7 +51,7 @@ const allProducts = await fetchAllProducts();
           </tr>
         </thead>
         <tbody id="tableBody">
-          {allProducts.map(product => (
+          {filteredProducts.map(product => (
             <tr class="product-row" data-search={`${product.product_name || product.name} ${product.brand} ${product.part_no}`.toLowerCase()}>
               <td class="img-cell">
                 {product.image ? (

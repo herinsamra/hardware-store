@@ -447,6 +447,29 @@ const productsPerPage = 12;
       return freshPick || featuredProducts[usedFeaturedKeys.size % featuredProducts.length];
     };
 
+    const getCreativeSlogan = (product) => {
+      if (product.slogan) return product.slogan;
+      const name = (product.name || '').toLowerCase();
+      const category = (product.category || '').toLowerCase();
+      
+      if (name.includes('fan') || category.includes('fan')) return `Beat the summer heat with this powerful ${product.name}!`;
+      if (name.includes('pump') || category.includes('pump')) return `Reliable performance you can trust. Upgrade to ${product.name}.`;
+      if (name.includes('cable') || category.includes('cable')) return `Seamless connectivity starts here with ${product.brand || 'premium'} cables.`;
+      if (name.includes('switch') || category.includes('switch')) return `Modernize your space with elegant ${product.brand || 'new'} switches.`;
+      if (name.includes('light') || category.includes('light')) return `Brighten up your world with energy-efficient ${product.name}.`;
+      
+      const slogans = [
+        `Experience the ultimate quality with ${product.name}.`,
+        `Don't miss out on this premium ${cleanName(product.category) || 'product'}!`,
+        `Upgrade your toolkit with the best-in-class ${product.name}.`,
+        `Exceptional performance meets stunning design.`,
+        `Our top pick for professionals.`
+      ];
+      let hash = 0;
+      for(let i=0; i<name.length; i++) hash += name.charCodeAt(i);
+      return slogans[hash % slogans.length];
+    };
+
     const createFeaturedCard = (product, variantIndex = 0) => {
       const variant = variantIndex % 3;
       const card = document.createElement('a');
@@ -469,7 +492,7 @@ const productsPerPage = 12;
 
       const slogan = document.createElement('h3');
       slogan.className = 'featured-slogan';
-      slogan.textContent = product.slogan || `Discover the exceptional ${product.name}`;
+      slogan.textContent = getCreativeSlogan(product);
       contentWrapper.appendChild(slogan);
 
       const name = document.createElement('p');
@@ -483,7 +506,7 @@ const productsPerPage = 12;
       if (Number.isFinite(Number(product.price))) {
         const price = document.createElement('span');
         price.className = 'featured-price';
-        price.textContent = `MRP: Rs. ${formatPrice(product.price)}`;
+        price.textContent = `MRP: ₹${formatPrice(product.price)}`;
         details.appendChild(price);
       }
 
@@ -507,6 +530,99 @@ const productsPerPage = 12;
 
       card.appendChild(contentWrapper);
       card.appendChild(imageWrapper);
+
+      if (variant === 0) {
+        const strip = document.createElement('div');
+        strip.className = 'featured-accent featured-marquee-strip';
+        strip.setAttribute('aria-hidden', 'true');
+
+        const track = document.createElement('div');
+        track.className = 'featured-marquee-track';
+
+        const phrase = ` SUPER SALE • BEST OFFER • PREMIUM PICK • `;
+        [0, 1].forEach(() => {
+          const text = document.createElement('span');
+          text.textContent = phrase.repeat(4);
+          track.appendChild(text);
+        });
+
+        strip.appendChild(track);
+        card.appendChild(strip);
+      } else if (variant === 1) {
+        const accent = document.createElement('div');
+        accent.className = 'featured-accent featured-edge-accent';
+        accent.setAttribute('aria-hidden', 'true');
+
+        const frame = document.createElement('div');
+        frame.className = 'featured-edge-frame';
+
+        const labelWrapper = document.createElement('div');
+        labelWrapper.className = 'featured-edge-label-wrapper';
+        
+        const label = document.createElement('span');
+        label.className = 'featured-edge-label';
+        label.textContent = 'SUPER SALE';
+        
+        labelWrapper.appendChild(label);
+        accent.appendChild(frame);
+        accent.appendChild(labelWrapper);
+        card.appendChild(accent);
+      } else if (variant === 2) {
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const key = String(productKey(product) || `featured-${variantIndex}`).replace(/[^a-z0-9_-]/gi, '-');
+        const pathId = `featured-seal-${key}-${variantIndex}`;
+
+        const seal = document.createElementNS(svgNS, 'svg');
+        seal.classList.add('featured-accent', 'featured-seal');
+        seal.setAttribute('viewBox', '0 0 150 150');
+        seal.setAttribute('aria-hidden', 'true');
+
+        const defs = document.createElementNS(svgNS, 'defs');
+        const path = document.createElementNS(svgNS, 'path');
+        path.setAttribute('id', pathId);
+        path.setAttribute('d', 'M 75, 75 m -50, 0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0');
+        defs.appendChild(path);
+
+        const circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute('cx', '75');
+        circle.setAttribute('cy', '75');
+        circle.setAttribute('r', '38');
+        circle.setAttribute('class', 'featured-seal-core');
+
+        const rotatingGroup = document.createElementNS(svgNS, 'g');
+        rotatingGroup.setAttribute('class', 'featured-seal-rotating');
+        
+        const text = document.createElementNS(svgNS, 'text');
+        text.setAttribute('class', 'featured-seal-text');
+        const textPath = document.createElementNS(svgNS, 'textPath');
+        textPath.setAttribute('href', `#${pathId}`);
+        textPath.textContent = 'SALE • SALE • SALE • SALE • SALE • SALE • ';
+        text.appendChild(textPath);
+        
+        rotatingGroup.appendChild(text);
+
+        const center = document.createElementNS(svgNS, 'text');
+        center.setAttribute('x', '75');
+        center.setAttribute('y', '73');
+        center.setAttribute('text-anchor', 'middle');
+        center.setAttribute('class', 'featured-seal-mark');
+        center.textContent = 'BEST';
+        
+        const center2 = document.createElementNS(svgNS, 'text');
+        center2.setAttribute('x', '75');
+        center2.setAttribute('y', '92');
+        center2.setAttribute('text-anchor', 'middle');
+        center2.setAttribute('class', 'featured-seal-mark-sub');
+        center2.textContent = 'OFFER';
+
+        seal.appendChild(defs);
+        seal.appendChild(circle);
+        seal.appendChild(rotatingGroup);
+        seal.appendChild(center);
+        seal.appendChild(center2);
+
+        card.appendChild(seal);
+      }
 
       return card;
     };
@@ -894,7 +1010,7 @@ const productsPerPage = 12;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   @media (min-width: 768px) {
@@ -982,6 +1098,139 @@ const productsPerPage = 12;
   .featured-variant-2 {
     background: linear-gradient(180deg, #11170f 0%, #1f2b1c 58%, #293414 100%);
     border-color: rgba(163, 230, 53, 0.28);
+  }
+
+  /* Variant Accents */
+  .featured-accent {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* Variant 0: Marquee */
+  .featured-marquee-strip {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    height: 2.4rem;
+    overflow: hidden;
+    background: #f1df40;
+    color: #0a0c10;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .featured-marquee-track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    align-items: center;
+    animation: featured-marquee 12s linear infinite;
+  }
+
+  .featured-marquee-track span {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes featured-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Variant 1: Animated Border */
+  .featured-edge-accent {
+    inset: 0;
+    z-index: 10;
+    border-radius: 1rem;
+    pointer-events: none;
+  }
+  
+  .featured-edge-frame {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 3px;
+    background: conic-gradient(from 0deg, transparent 0deg, #f9a8d4 90deg, transparent 180deg, #bef264 270deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: featured-edge-spin 4s linear infinite;
+  }
+
+  .featured-edge-label-wrapper {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+  }
+
+  .featured-edge-label {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    background: #f1df40;
+    color: #0a0c10;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  @keyframes featured-edge-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Variant 2: Rotating Seal */
+  .featured-seal {
+    right: -1rem;
+    top: -1rem; 
+    z-index: 5;
+    width: 140px;
+    height: 140px;
+    color: #f1df40;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.4));
+  }
+
+  .featured-seal-core {
+    fill: #0a0c10;
+    stroke: #f1df40;
+    stroke-width: 2;
+  }
+
+  .featured-seal-rotating {
+    transform-origin: 75px 75px;
+    animation: featured-seal-rotate 10s linear infinite;
+  }
+
+  .featured-seal-text {
+    fill: currentColor;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 3px;
+  }
+
+  .featured-seal-mark {
+    fill: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+  
+  .featured-seal-mark-sub {
+    fill: #f1df40;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  @keyframes featured-seal-rotate {
+    to { transform: rotate(360deg); }
   }
 
   .featured-product-card:hover {
@@ -1106,8 +1355,8 @@ const productsPerPage = 12;
   .featured-image-wrapper {
     position: relative;
     width: 100%;
-    height: 250px;
-    background: rgba(255, 255, 255, 0.045);
+    height: 280px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.12), transparent 70%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1118,12 +1367,15 @@ const productsPerPage = 12;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 1.5rem;
-    transition: transform 0.5s ease;
+    padding: 0.5rem;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+    transform: scale(1.15);
+    transition: transform 0.5s ease, filter 0.5s ease;
   }
 
   .featured-product-card:hover .featured-image {
-    transform: scale(1.05);
+    transform: scale(1.25);
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
   }
 
   @media (min-width: 768px) {
@@ -1144,17 +1396,34 @@ const productsPerPage = 12;
     }
 
     .featured-content {
-      width: 58%;
-      padding: 2rem;
+      width: 60%;
+      padding: 2.5rem;
+      margin-right: -15%;
+      z-index: 3;
+      background: linear-gradient(90deg, rgba(11, 16, 24, 0.95) 45%, rgba(11, 16, 24, 0.6) 75%, transparent);
+      border-radius: 1rem 0 0 1rem;
     }
 
     .featured-variant-1 .featured-content {
-      width: 56%;
-      padding: 1.6rem;
+      width: 60%;
+      padding: 2rem;
+      margin-right: 0;
+      margin-left: -15%;
+      background: linear-gradient(270deg, rgba(20, 16, 23, 0.95) 45%, rgba(20, 16, 23, 0.6) 75%, transparent);
+      border-radius: 0 1rem 1rem 0;
+    }
+
+    .featured-variant-2 .featured-content {
+      width: 65%;
+      margin-right: 0;
+      margin-left: -15%;
+      background: linear-gradient(270deg, rgba(17, 23, 15, 0.95) 45%, rgba(17, 23, 15, 0.6) 75%, transparent);
+      border-radius: 0 1rem 1rem 0;
     }
 
     .featured-slogan {
       font-size: 2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
     .featured-variant-1 .featured-slogan {
@@ -1167,27 +1436,23 @@ const productsPerPage = 12;
     }
 
     .featured-image-wrapper {
-      width: 42%;
+      width: 55%;
       height: auto;
       min-height: 100%;
     }
 
     .featured-variant-1 .featured-image-wrapper {
-      width: 44%;
+      width: 55%;
       min-height: 100%;
     }
 
     .featured-variant-2 .featured-image-wrapper {
-      width: 34%;
+      width: 50%;
       min-height: 100%;
     }
 
-    .featured-variant-2 .featured-content {
-      width: 66%;
-    }
-
     .featured-image {
-      padding: 2rem;
+      padding: 1rem;
     }
   }
 </style>

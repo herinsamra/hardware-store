@@ -103,6 +103,7 @@ export async function POST({ request }) {
       description: ai.description,
       brand: productInput.brand,
       images: productInput.images || '',
+      video_url: productInput.video_url || '',
       variant_name: productInput.variant_name || '',
       mrp: productInput.mrp.toString(),
       slug: slug,

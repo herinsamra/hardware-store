@@ -79,6 +79,14 @@ const { Brands, ...productCategories } = rawCategories;
                 <div class="focus-border"></div>
               </div>
             </div>
+
+            <div class="input-group full-width">
+              <label for="video_url">Video URL <span class="optional">(optional for featured banner)</span></label>
+              <div class="input-wrapper">
+                <input type="text" id="video_url" placeholder="https://res.cloudinary.com/.../video.mp4" autocomplete="off">
+                <div class="focus-border"></div>
+              </div>
+            </div>
           </div>
 
           <!-- Classification -->
@@ -313,6 +321,7 @@ const { Brands, ...productCategories } = rawCategories;
           product_name: document.getElementById('product_name').value,
           brand: document.getElementById('brand').value,
           images: document.getElementById('images').value,
+          video_url: document.getElementById('video_url').value,
           variant_name: document.getElementById('variant_name').value,
           mrp: document.getElementById('mrp').value,
           is_featured: document.getElementById('is_featured').checked,
@@ -351,6 +360,7 @@ const { Brands, ...productCategories } = rawCategories;
             document.getElementById('product_name').value = '';
             document.getElementById('type').value = '';
             document.getElementById('images').value = '';
+            document.getElementById('video_url').value = '';
             document.getElementById('variant_name').value = '';
             document.getElementById('mrp').value = '';
             

@@ -18,7 +18,7 @@ const navLinks = [
       <div class="logo-center">
         <a href="/" class="logo-link" data-astro-prefetch="hover">
           <img 
-            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1776066120/only_logo_1_rinmrp.png" 
+            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1777383768/logo_ph_l5xqqw.png" 
             alt="Peniel Hardwares Logo"
             class="logo-img"
           />
@@ -103,6 +103,17 @@ const navLinks = [
     height: 2.5rem;
     width: auto;
     transition: height 0.3s ease;
+    animation: subtleGlow 3s infinite alternate;
+  }
+  @keyframes subtleGlow {
+    0% {
+      -webkit-filter: drop-shadow(0 0 10px rgba(172, 148, 34, 0.9)) drop-shadow(0 0 2px rgba(172, 148, 34, 1));
+      filter: drop-shadow(0 0 10px rgba(172, 148, 34, 0.9)) drop-shadow(0 0 2px rgba(172, 148, 34, 1));
+    }
+    100% {
+      -webkit-filter: drop-shadow(0 0 25px rgba(227, 193, 24, 1)) drop-shadow(0 0 8px rgba(227, 193, 24, 1));
+      filter: drop-shadow(0 0 25px rgba(227, 193, 24, 1)) drop-shadow(0 0 8px rgba(227, 193, 24, 1));
+    }
   }
   .site-header .logo-img {
     height: 2.15rem;

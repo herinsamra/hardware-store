@@ -61,6 +61,7 @@ export function loadProductsFromExcel() {
       meta_description: row.meta_description || '',
       is_featured: row.is_featured || false,
       slogan: row.slogan || '',
+      video_url: row.video_url || '',
     };
   });
 

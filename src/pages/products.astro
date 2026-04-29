@@ -26,6 +26,7 @@ interface Product {
   meta_description: string;
   is_featured?: boolean | string;
   slogan?: string;
+  video_url?: string;
 }
 
 const allProducts: Product[] = await fetchAllProducts();
@@ -440,6 +441,11 @@ const productsPerPage = 12;
       return value === true || String(value || '').toLowerCase() === 'true';
     };
 
+    const getVideoUrl = product => {
+      const url = product?.video_url;
+      return typeof url === 'string' ? url.trim() : '';
+    };
+
     const getFeaturedProduct = (featuredProducts, usedFeaturedKeys) => {
       if (!featuredProducts.length) return null;
 
@@ -471,7 +477,14 @@ const productsPerPage = 12;
     };
 
     const createFeaturedCard = (product, variantIndex = 0) => {
-      const variant = variantIndex % 3;
+      const videoUrl = getVideoUrl(product);
+      let variant = variantIndex % 4;
+      if (videoUrl) {
+        variant = 3;
+      } else if (variant === 3) {
+        variant = 1;
+      }
+      
       const card = document.createElement('a');
       card.href = product.url || `/product/${product.id}`;
       card.className = `featured-product-card featured-variant-${variant} group`;
@@ -480,30 +493,32 @@ const productsPerPage = 12;
       const contentWrapper = document.createElement('div');
       contentWrapper.className = 'featured-content';
 
-      const badge = document.createElement('span');
-      badge.className = 'featured-badge';
-      badge.textContent = 'Featured Pick';
-      contentWrapper.appendChild(badge);
+      if (variant !== 3) {
+        const badge = document.createElement('span');
+        badge.className = 'featured-badge';
+        badge.textContent = 'Featured Pick';
+        contentWrapper.appendChild(badge);
 
-      const kicker = document.createElement('p');
-      kicker.className = 'featured-kicker';
-      kicker.textContent = [product.brand, cleanName(product.category)].filter(Boolean).join(' / ');
-      contentWrapper.appendChild(kicker);
+        const kicker = document.createElement('p');
+        kicker.className = 'featured-kicker';
+        kicker.textContent = [product.brand, cleanName(product.category)].filter(Boolean).join(' / ');
+        contentWrapper.appendChild(kicker);
 
-      const slogan = document.createElement('h3');
-      slogan.className = 'featured-slogan';
-      slogan.textContent = getCreativeSlogan(product);
-      contentWrapper.appendChild(slogan);
+        const slogan = document.createElement('h3');
+        slogan.className = 'featured-slogan';
+        slogan.textContent = getCreativeSlogan(product);
+        contentWrapper.appendChild(slogan);
 
-      const name = document.createElement('p');
-      name.className = 'featured-name';
-      name.textContent = product.name;
-      contentWrapper.appendChild(name);
+        const name = document.createElement('p');
+        name.className = 'featured-name';
+        name.textContent = product.name;
+        contentWrapper.appendChild(name);
+      }
 
       const details = document.createElement('div');
       details.className = 'featured-details';
 
-      if (Number.isFinite(Number(product.price))) {
+      if (variant !== 3 && Number.isFinite(Number(product.price))) {
         const price = document.createElement('span');
         price.className = 'featured-price';
         price.textContent = `MRP: ₹${formatPrice(product.price)}`;
@@ -519,7 +534,23 @@ const productsPerPage = 12;
       const imageWrapper = document.createElement('div');
       imageWrapper.className = 'featured-image-wrapper';
 
-      if (product.image) {
+      if (variant === 3 && videoUrl) {
+        const video = document.createElement('video');
+        video.src = videoUrl;
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        video.className = 'featured-video';
+        imageWrapper.appendChild(video);
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'featured-video-overlay';
+        imageWrapper.appendChild(overlay);
+      } else if (product.image) {
         const image = document.createElement('img');
         image.src = product.image;
         image.alt = product.name;
@@ -680,10 +711,12 @@ const productsPerPage = 12;
         info.appendChild(matchLine);
       }
 
-      const price = document.createElement('div');
-      price.className = 'product-price';
-      price.textContent = `MRP: ₹${formatPrice(product.price)}`;
-      info.appendChild(price);
+      if (product.price && Number(product.price) > 0) {
+        const price = document.createElement('div');
+        price.className = 'product-price';
+        price.textContent = `MRP: ₹${formatPrice(product.price)}`;
+        info.appendChild(price);
+      }
 
       const category = document.createElement('div');
       category.className = 'product-category';
@@ -1010,7 +1043,7 @@ const productsPerPage = 12;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    align-items: stretch;
+    align-items: start;
   }
 
   @media (min-width: 768px) {
@@ -1455,4 +1488,82 @@ const productsPerPage = 12;
       padding: 1rem;
     }
   }
-</style>
+
+  /* Variant 3 Specific Video Background Styles */
+  .featured-variant-3 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-variant-3 .featured-image-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: #000;
+  }
+
+  .featured-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0.8;
+  }
+
+  .featured-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
+    z-index: 2;
+  }
+
+  .featured-variant-3 .featured-content {
+    background: transparent !important;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    margin: 0; /* Override any desktop margins */
+    border-radius: 1rem;
+  }
+
+  .featured-variant-3 .featured-badge {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+    align-self: center;
+  }
+
+  .featured-variant-3 .featured-kicker {
+    color: #e2e8f0;
+  }
+
+  .featured-variant-3 .featured-price {
+    background: #fff;
+    color: #000;
+  }
+
+  .featured-variant-3 .featured-action {
+    color: #fff;
+    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+  }
+  
+  .featured-variant-3 .featured-action:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  @media (min-width: 768px) {
+    .featured-variant-3 .featured-slogan {
+      font-size: 3rem;
+      max-width: 800px;
+    }
+  }
+  </style>

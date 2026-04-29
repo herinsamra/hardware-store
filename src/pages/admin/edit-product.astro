@@ -71,6 +71,11 @@ const productDataStr = JSON.stringify(product || {});
                 <label for="images">Image URLs (comma separated)</label>
                 <textarea id="images" name="images" rows="3" placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg">{product.images?.join(', ')}</textarea>
               </div>
+
+              <div class="form-group">
+                <label for="video_url">Video URL (optional for featured banner)</label>
+                <input type="text" id="video_url" name="video_url" placeholder="https://res.cloudinary.com/.../video.mp4" value={product.video_url || ''} />
+              </div>
             </div>
 
             <!-- Right Column: Categorization & Description -->

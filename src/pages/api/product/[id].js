@@ -137,6 +137,7 @@ export async function PUT({ params, request }) {
       description: newDescription,
       brand: updateData.brand || currentProduct.brand,
       images: updateData.images || currentProduct.images || '',
+      video_url: updateData.video_url !== undefined ? updateData.video_url : (currentProduct.video_url || ''),
       variant_name: updateData.variant_name || currentProduct.variant_name || '',
       mrp: updateData.mrp ? updateData.mrp.toString() : currentProduct.mrp,
       slug: newSlug,

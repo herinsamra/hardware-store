@@ -19,7 +19,7 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
-async function generateAI(productName, subsubcategory, brand, type, isFeatured) {
+async function generateAI(productName, subsubcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
@@ -28,13 +28,14 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured) 
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
+  const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
   const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
 
   const prompt = `You are a premium hardware copywriter. Write a concise, SEO‑friendly product description (max 620 characters) that focuses on the sub‑sub‑category (${subsubcategory}) and highlights:
 - Exact product name and brand
 - Distinctive features and finish
 - Ideal use‑case or setting
-- A subtle invitation to the buyer
+- A subtle invitation to the buyer${featuresInstruction}
 
 Also create:
 1️⃣ A meta title (≤60 characters) blending brand and product name.
@@ -88,7 +89,8 @@ export async function POST({ request }) {
       productInput.subsubcategory,
       productInput.brand,
       productInput.type,
-      productInput.is_featured === true || productInput.is_featured === 'true'
+      productInput.is_featured === true || productInput.is_featured === 'true',
+      productInput.custom_features
     );
 
     const slug = slugify(productInput.product_name);
@@ -103,6 +105,7 @@ export async function POST({ request }) {
       description: ai.description,
       brand: productInput.brand,
       images: productInput.images || '',
+      video_url: productInput.video_url || '',
       variant_name: productInput.variant_name || '',
       mrp: productInput.mrp.toString(),
       slug: slug,

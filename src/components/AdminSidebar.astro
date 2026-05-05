@@ -22,6 +22,14 @@ const pathname = Astro.url.pathname;
       <span class="icon">➕</span>
       Add Product
     </a>
+    <a href="/admin/categories" class={`nav-item ${pathname.includes('/admin/categories') ? 'active' : ''}`}>
+      <span class="icon">📁</span>
+      Categories
+    </a>
+    <a href="/admin/brands" class={`nav-item ${pathname.includes('/admin/brands') ? 'active' : ''}`}>
+      <span class="icon">🏷️</span>
+      Brands
+    </a>
   </nav>
 
   <div class="sidebar-footer">

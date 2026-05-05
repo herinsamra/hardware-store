@@ -1,0 +1,364 @@
+---
+import AdminLayout from '../../components/AdminLayout.astro';
+---
+
+<AdminLayout title="Manage Categories | Admin">
+  <div class="admin-wrapper">
+    <div class="glass-container">
+      <header class="admin-header">
+        <div class="title-wrapper">
+          <div class="icon-box">📁</div>
+          <h1>Manage Categories</h1>
+        </div>
+        <p class="subtitle">Organize your product hierarchy</p>
+      </header>
+
+      <div id="main-content" style="display: block;">
+        <div class="actions-bar">
+          <button id="add-top-cat-btn" class="submit-btn" style="width: auto; padding: 0.8rem 1.5rem;">
+            <span class="btn-text">+ Add Top Category</span>
+          </button>
+        </div>
+
+        <div id="categories-container" class="tree-container">
+          <div class="loading-state">Loading categories...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General Input Modal (Add/Edit) — placed OUTSIDE glass-container so fixed positioning works -->
+  <div id="input-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h2 id="input-modal-title">Category</h2>
+        <button class="close-modal-btn">✕</button>
+      </div>
+      <form id="input-form">
+        <div class="input-group">
+          <label id="input-modal-label">Name <span class="required">*</span></label>
+          <input type="text" id="input_name" required>
+        </div>
+        <div class="form-footer" style="margin-top: 1.5rem;">
+          <button type="submit" class="submit-btn"><span class="btn-text">Save</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal — placed OUTSIDE glass-container so fixed positioning works -->
+  <div id="delete-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h2>Confirm Deletion</h2>
+        <button class="close-modal-btn">✕</button>
+      </div>
+      <div id="delete-warning" style="margin-top: 1rem;"></div>
+      <div id="reassign-section" style="display: none; margin-top: 1rem;">
+        <div class="input-group">
+          <label>Reassign dependent products to (Optional):</label>
+          <input type="text" id="reassign_cat" placeholder="e.g. Uncategorized">
+          <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 0.5rem;">
+            If left blank, products will lose this category association.
+          </p>
+        </div>
+      </div>
+      <div class="form-footer" style="margin-top: 1.5rem; flex-direction: row; gap: 1rem;">
+        <button id="confirm-delete-btn" class="submit-btn" style="background: var(--error);"><span class="btn-text">Delete</span></button>
+        <button class="submit-btn close-modal-btn" type="button" style="background: rgba(255,255,255,0.1); color: white;"><span class="btn-text">Cancel</span></button>
+      </div>
+    </div>
+  </div>
+
+  <style is:global>
+    :root {
+      --bg-color: #0d0f14;
+      --glass-bg: rgba(22, 26, 35, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --accent: #c5a028;
+      --accent-glow: rgba(197, 160, 40, 0.4);
+      --error: #ef4444;
+      --success: #10b981;
+      --input-bg: rgba(15, 17, 23, 0.8);
+    }
+    body { background-color: var(--bg-color); color: var(--text-primary); font-family: 'Inter', -apple-system, sans-serif; }
+    .admin-wrapper { width: 100%; margin: 0 auto; }
+    .glass-container {
+      width: 100%; max-width: 1000px; background: var(--glass-bg); backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); border-radius: 24px; padding: 3rem; margin: 0 auto;
+    }
+    .admin-header { text-align: center; margin-bottom: 2rem; }
+    .title-wrapper { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .icon-box {
+      width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #eab308);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.5rem;
+    }
+    h1 { font-size: 2rem; margin: 0; }
+    .actions-bar { display: flex; justify-content: flex-end; margin-bottom: 2rem; }
+    
+    .tree-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--glass-border); }
+    .tree-node { margin: 0.5rem 0; }
+    .tree-item {
+      display: flex; align-items: center; padding: 0.75rem; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; transition: background 0.2s;
+    }
+    .tree-item:hover { background: rgba(255,255,255,0.08); }
+    .tree-children { margin-left: 2rem; border-left: 1px dashed rgba(255,255,255,0.2); padding-left: 1rem; }
+    
+    .toggle-btn {
+      background: none; border: none; color: var(--accent); font-size: 1.2rem;
+      cursor: pointer; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      margin-right: 0.5rem;
+    }
+    .node-name { flex: 1; font-weight: 500; font-size: 1rem; }
+    .node-actions { display: flex; gap: 0.5rem; opacity: 0; transition: opacity 0.2s; }
+    .tree-item:hover .node-actions { opacity: 1; }
+    .node-actions button {
+      background: none; border: 1px solid var(--glass-border); color: var(--text-secondary);
+      padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+    }
+    .node-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .node-actions .del-btn:hover { border-color: var(--error); color: var(--error); }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 100; }
+    .modal-content { width: 100%; max-width: 500px; padding: 2rem; background: #161a23; border: 1px solid var(--glass-border); border-radius: 16px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .close-modal-btn { background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
+    
+    input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; color: white; }
+    input:focus { outline: none; border-color: var(--accent); }
+    .input-group { margin-bottom: 1rem; }
+    .input-group label { display: block; margin-bottom: 0.5rem; color: #d1d5db; }
+    .submit-btn { width: 100%; padding: 0.875rem; background: linear-gradient(135deg, var(--accent), #d4af37); color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+    
+    .auth-gate { text-align: center; max-width: 400px; margin: 0 auto; padding: 2rem 0; }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      let categoriesData = {};
+      
+      init();
+
+      function init() {
+        fetchCategories();
+      }
+
+      async function fetchCategories() {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = '<div class="loading-state">Loading categories...</div>';
+        try {
+          const res = await fetch('/api/get-categories');
+          if (res.ok) {
+            categoriesData = await res.json();
+            renderTree();
+          } else {
+            container.innerHTML = `<div class="error">Failed to load categories</div>`;
+          }
+        } catch (e) {
+          container.innerHTML = `<div class="error">${e.message}</div>`;
+        }
+      }
+
+      function renderTree() {
+        const container = document.getElementById('categories-container');
+        if (Object.keys(categoriesData).length === 0) {
+          container.innerHTML = '<div>No categories found. Add one!</div>';
+          return;
+        }
+        
+        let html = '';
+        Object.keys(categoriesData).forEach(cat => {
+          if (cat !== 'Brands') {
+            html += generateNodeHTML(cat, categoriesData[cat], [cat], 0);
+          }
+        });
+        container.innerHTML = html;
+        attachTreeListeners();
+      }
+
+      function generateNodeHTML(key, value, path, depth) {
+        const isLeaf = Array.isArray(value);
+        const childrenKeys = !isLeaf && typeof value === 'object' ? Object.keys(value) : [];
+        const hasChildren = childrenKeys.length > 0;
+        const expanded = true; // Default expanded
+        const pathStr = encodeURIComponent(JSON.stringify(path));
+
+        let html = `
+          <div class="tree-node">
+            <div class="tree-item">
+              <button class="toggle-btn" data-target="children-${pathStr}" style="visibility: ${!isLeaf ? 'visible' : 'hidden'}">
+                ${expanded && hasChildren ? '▼' : '▶'}
+              </button>
+              <div class="node-name">${key}</div>
+              <div class="node-actions">
+                ${depth < 2 ? `<button class="add-child-btn" data-path="${pathStr}">+ Add Child</button>` : ''}
+                <button class="edit-btn" data-path="${pathStr}">Edit</button>
+                <button class="del-btn" data-path="${pathStr}">Delete</button>
+              </div>
+            </div>
+        `;
+
+        if (!isLeaf) {
+          html += `<div class="tree-children" id="children-${pathStr}" style="display: ${expanded ? 'block' : 'none'}">`;
+          childrenKeys.forEach(childKey => {
+            html += generateNodeHTML(childKey, value[childKey], [...path, childKey], depth + 1);
+          });
+          html += `</div>`;
+        }
+        html += `</div>`;
+        return html;
+      }
+
+      function attachTreeListeners() {
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const targetId = e.currentTarget.getAttribute('data-target');
+            const target = document.getElementById(targetId);
+            if (target) {
+              const isHidden = target.style.display === 'none';
+              target.style.display = isHidden ? 'block' : 'none';
+              e.currentTarget.textContent = isHidden ? '▼' : '▶';
+            }
+          });
+        });
+
+        document.querySelectorAll('.add-child-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
+            openInputModal('ADD_CHILD', path);
+          });
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
+            openInputModal('EDIT', path);
+          });
+        });
+
+        document.querySelectorAll('.del-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
+            openDeleteModal(path);
+          });
+        });
+      }
+
+      // Modals Logic
+      const inputModal = document.getElementById('input-modal');
+      const inputForm = document.getElementById('input-form');
+      const inputName = document.getElementById('input_name');
+      let currentAction = null;
+      let currentPath = [];
+
+      document.getElementById('add-top-cat-btn').addEventListener('click', () => {
+        openInputModal('ADD_TOP', []);
+      });
+
+      document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          inputModal.style.display = 'none';
+          document.getElementById('delete-modal').style.display = 'none';
+        });
+      });
+
+      function openInputModal(action, path) {
+        currentAction = action;
+        currentPath = path;
+        inputForm.reset();
+        
+        if (action === 'ADD_TOP') {
+          document.getElementById('input-modal-title').textContent = 'Add Top Category';
+        } else if (action === 'ADD_CHILD') {
+          document.getElementById('input-modal-title').textContent = `Add subcategory to ${path[path.length - 1]}`;
+        } else if (action === 'EDIT') {
+          document.getElementById('input-modal-title').textContent = `Edit ${path[path.length - 1]}`;
+          inputName.value = path[path.length - 1];
+        }
+        
+        inputModal.style.display = 'flex';
+      }
+
+      inputForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const val = inputName.value.trim();
+        if (!val) return;
+
+        let payload = {};
+        if (currentAction === 'ADD_TOP') {
+          payload = { action: 'ADD', path: [], name: val };
+        } else if (currentAction === 'ADD_CHILD') {
+          payload = { action: 'ADD', path: currentPath, name: val };
+        } else if (currentAction === 'EDIT') {
+          payload = { action: 'RENAME', path: currentPath, newName: val };
+        }
+
+        try {
+          const res = await fetch('/api/manage-categories', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok) {
+            categoriesData = data.categories;
+            renderTree();
+            inputModal.style.display = 'none';
+          } else {
+            alert(data.error);
+          }
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+
+      // Delete Logic
+      const deleteModal = document.getElementById('delete-modal');
+      const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+      let deleteNeedsReassign = false;
+
+      function openDeleteModal(path) {
+        currentPath = path;
+        deleteNeedsReassign = false;
+        document.getElementById('reassign-section').style.display = 'none';
+        document.getElementById('delete-warning').innerHTML = `<p>Are you sure you want to delete <strong>${path[path.length - 1]}</strong>?</p>`;
+        deleteModal.style.display = 'flex';
+      }
+
+      confirmDeleteBtn.addEventListener('click', async () => {
+        const payload = { action: 'DELETE', path: currentPath };
+        if (deleteNeedsReassign) {
+          const rCat = document.getElementById('reassign_cat').value.trim();
+          if (rCat) payload.reassignTo = rCat;
+          else payload.force = true; // User left it blank, force delete products' association
+        }
+
+        try {
+          const res = await fetch('/api/manage-categories', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.status === 409) {
+            deleteNeedsReassign = true;
+            document.getElementById('delete-warning').innerHTML = `<p style="color:var(--error)">Warning: ${data.dependentProducts.length} product(s) use this category.</p>`;
+            document.getElementById('reassign-section').style.display = 'block';
+          } else if (res.ok) {
+            categoriesData = data.categories;
+            renderTree();
+            deleteModal.style.display = 'none';
+          } else {
+            alert(data.error);
+          }
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+
+    });
+  </script>
+</AdminLayout>

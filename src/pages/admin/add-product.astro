@@ -1,10 +1,5 @@
 ---
 import AdminLayout from '../../components/AdminLayout.astro';
-import rawCategories from '../../data/categories.json';
-import brandsData from '../../data/brands.json';
-
-// Filter out the "Brands" key from categories (it's not a product category)
-const { Brands, ...productCategories } = rawCategories;
 ---
 
 <AdminLayout title="Add Product | Admin">
@@ -192,25 +187,10 @@ const { Brands, ...productCategories } = rawCategories;
     </div>
   </div>
 
-  <!-- Embed filtered categories and brands -->
-  <script id="categories-data" type="application/json" set:html={JSON.stringify(productCategories)}></script>
-  <script id="brands-data" type="application/json" set:html={JSON.stringify(brandsData)}></script>
-
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      function getJSONFromScript(id) {
-        const el = document.getElementById(id);
-        if (!el) return null;
-        try {
-          return JSON.parse(el.textContent);
-        } catch (e) {
-          console.error(`Failed to parse ${id}:`, e);
-          return null;
-        }
-      }
-
-      const categories = getJSONFromScript('categories-data') || {};
-      const brands = getJSONFromScript('brands-data') || [];
+    document.addEventListener('DOMContentLoaded', async () => {
+      let categories = {};
+      let brands = [];
 
       const catSelect = document.getElementById('category');
       const subcatSelect = document.getElementById('subcategory');
@@ -226,11 +206,33 @@ const { Brands, ...productCategories } = rawCategories;
         select.disabled = disabled;
       }
 
-      // Populate categories
-      resetSelect(catSelect, '-- Select Category --');
+      // Populate placeholders initially
+      resetSelect(catSelect, 'Loading Categories...', true);
       resetSelect(subcatSelect, '-- Select Subcategory --', true);
       resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+      resetSelect(brandSelect, 'Loading Brands...', true);
 
+      try {
+        const [catRes, brandRes] = await Promise.all([
+          fetch('/api/get-categories'),
+          fetch('/api/get-brands')
+        ]);
+        
+        if (catRes.ok) {
+          const rawCat = await catRes.json();
+          // Filter out Brands if it exists in categories
+          const { Brands, ...rest } = rawCat;
+          categories = rest;
+        }
+        if (brandRes.ok) {
+          brands = await brandRes.json();
+        }
+      } catch (err) {
+        console.error('Failed to load data', err);
+      }
+
+      // Populate categories
+      resetSelect(catSelect, '-- Select Category --');
       Object.keys(categories).forEach(cat => {
         const option = document.createElement('option');
         option.value = cat;

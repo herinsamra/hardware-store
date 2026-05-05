@@ -1,0 +1,366 @@
+---
+import AdminLayout from '../../components/AdminLayout.astro';
+---
+
+<AdminLayout title="Manage Brands | Admin">
+  <div class="admin-wrapper">
+    <div class="glass-container">
+      <header class="admin-header">
+        <div class="title-wrapper">
+          <div class="icon-box">🏷️</div>
+          <h1>Manage Brands</h1>
+        </div>
+        <p class="subtitle">Add, edit, and manage product brands</p>
+      </header>
+
+      <div id="main-content" style="display: block;">
+        <div class="actions-bar">
+          <button id="add-brand-btn" class="submit-btn" style="width: auto; padding: 0.8rem 1.5rem;">
+            <span class="btn-text">+ Add New Brand</span>
+          </button>
+        </div>
+
+        <div id="brands-container" class="brands-grid">
+          <!-- Brands injected via JS -->
+          <div class="loading-state">Loading brands...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal — placed OUTSIDE glass-container so fixed positioning works -->
+  <div id="brand-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Brand</h2>
+        <button id="close-modal" class="close-btn">✕</button>
+      </div>
+      <form id="brand-form" class="product-form">
+        <input type="hidden" id="original_name" value="">
+        <div class="input-group">
+          <label>Brand Name <span class="required">*</span></label>
+          <input type="text" id="brand_name" required>
+        </div>
+        <div class="input-group">
+          <label>Category <span class="optional">(e.g. Electrical, Plumbing)</span></label>
+          <input type="text" id="brand_category" required>
+        </div>
+        <div class="input-group">
+          <label>Logo Image URL</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="brand_image_url" style="flex: 1;">
+            <button type="button" id="upload_widget" class="button variant-add-btn">Upload</button>
+          </div>
+        </div>
+        <div class="form-footer" style="margin-top: 1.5rem;">
+          <button type="submit" class="submit-btn"><span class="btn-text">Save Brand</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal — placed OUTSIDE glass-container so fixed positioning works -->
+  <div id="delete-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h2>Confirm Deletion</h2>
+        <button id="close-delete-modal" class="close-btn">✕</button>
+      </div>
+      <div id="delete-warning" style="margin-top: 1rem;"></div>
+      <div id="reassign-section" style="display: none; margin-top: 1rem;">
+        <div class="input-group">
+          <label>Reassign dependent products to:</label>
+          <select id="reassign_brand"></select>
+        </div>
+      </div>
+      <div class="form-footer" style="margin-top: 1.5rem; flex-direction: row; gap: 1rem;">
+        <button id="confirm-delete-btn" class="submit-btn" style="background: var(--error);"><span class="btn-text">Delete</span></button>
+        <button id="cancel-delete-btn" class="submit-btn" style="background: rgba(255,255,255,0.1); color: white;"><span class="btn-text">Cancel</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+
+  <style is:global>
+    :root {
+      --bg-color: #0d0f14;
+      --glass-bg: rgba(22, 26, 35, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --accent: #c5a028;
+      --accent-glow: rgba(197, 160, 40, 0.4);
+      --error: #ef4444;
+      --success: #10b981;
+      --input-bg: rgba(15, 17, 23, 0.8);
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+    .admin-wrapper { width: 100%; margin: 0 auto; }
+    .glass-container {
+      width: 100%; max-width: 1000px;
+      background: var(--glass-bg); backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); border-radius: 24px;
+      padding: 3rem; margin: 0 auto;
+    }
+    .admin-header { text-align: center; margin-bottom: 2rem; }
+    .title-wrapper { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .icon-box {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--accent), #eab308);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      color: #000; font-size: 1.5rem; font-weight: bold;
+    }
+    h1 { font-size: 2rem; margin: 0; }
+    .subtitle { color: var(--text-secondary); margin: 0; }
+    
+    .actions-bar { display: flex; justify-content: flex-end; margin-bottom: 2rem; }
+    
+    .brands-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;
+    }
+    .brand-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+      transition: all 0.2s ease;
+    }
+    .brand-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .brand-header { display: flex; align-items: center; gap: 1rem; }
+    .brand-logo { width: 50px; height: 50px; border-radius: 8px; object-fit: contain; background: white; padding: 4px; }
+    .brand-info h3 { margin: 0; font-size: 1.1rem; }
+    .brand-info p { margin: 0; font-size: 0.8rem; color: var(--text-secondary); }
+    .brand-actions { display: flex; gap: 0.5rem; margin-top: auto; }
+    .brand-actions button { flex: 1; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-weight: 500; border: none; }
+    .btn-edit { background: rgba(197, 160, 40, 0.2); color: var(--accent); }
+    .btn-edit:hover { background: var(--accent); color: black; }
+    .btn-delete { background: rgba(239, 68, 68, 0.2); color: var(--error); }
+    .btn-delete:hover { background: var(--error); color: white; }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+      display: flex; align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-content {
+      width: 100%; max-width: 500px; padding: 2rem;
+      background: #161a23; border: 1px solid var(--glass-border); border-radius: 16px;
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .modal-header h2 { margin: 0; font-size: 1.5rem; }
+    .close-btn { background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
+    .close-btn:hover { color: white; }
+
+    input, select {
+      width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border);
+      border-radius: 8px; padding: 0.75rem; color: var(--text-primary); font-family: inherit;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--accent); }
+    .input-group { margin-bottom: 1rem; }
+    .input-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #d1d5db; }
+    
+    .submit-btn {
+      width: 100%; padding: 0.875rem; background: linear-gradient(135deg, var(--accent), #d4af37);
+      color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px var(--accent-glow); }
+
+    .auth-gate { text-align: center; max-width: 400px; margin: 0 auto; padding: 2rem 0; }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      let brands = [];
+      
+      init();
+
+      function init() {
+        fetchBrands();
+      }
+
+      async function fetchBrands() {
+        const container = document.getElementById('brands-container');
+        container.innerHTML = '<div class="loading-state">Loading brands...</div>';
+        try {
+          const res = await fetch('/api/get-brands');
+          if (res.ok) {
+            brands = await res.json();
+            renderBrands();
+          } else {
+            container.innerHTML = `<div class="error">Failed to load brands</div>`;
+          }
+        } catch (e) {
+          container.innerHTML = `<div class="error">${e.message}</div>`;
+        }
+      }
+
+      function renderBrands() {
+        const container = document.getElementById('brands-container');
+        if (brands.length === 0) {
+          container.innerHTML = '<div>No brands found. Add one!</div>';
+          return;
+        }
+        
+        container.innerHTML = brands.map(b => `
+          <div class="brand-card">
+            <div class="brand-header">
+              <img src="${b.imageUrl || 'https://via.placeholder.com/50'}" alt="${b.name}" class="brand-logo">
+              <div class="brand-info">
+                <h3>${b.name}</h3>
+                <p>${b.category}</p>
+              </div>
+            </div>
+            <div class="brand-actions">
+              <button class="btn-edit" onclick="editBrand('${b.name}')">Edit</button>
+              <button class="btn-delete" onclick="deleteBrand('${b.name}')">Delete</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const brandModal = document.getElementById('brand-modal');
+      const brandForm = document.getElementById('brand-form');
+      const modalTitle = document.getElementById('modal-title');
+      const closeBrandModal = document.getElementById('close-modal');
+
+      document.getElementById('add-brand-btn').addEventListener('click', () => {
+        brandForm.reset();
+        document.getElementById('original_name').value = '';
+        modalTitle.textContent = 'Add Brand';
+        brandModal.style.display = 'flex';
+      });
+
+      closeBrandModal.addEventListener('click', () => {
+        brandModal.style.display = 'none';
+      });
+
+      window.editBrand = (name) => {
+        const b = brands.find(br => br.name === name);
+        if (!b) return;
+        document.getElementById('original_name').value = b.name;
+        document.getElementById('brand_name').value = b.name;
+        document.getElementById('brand_category').value = b.category || '';
+        document.getElementById('brand_image_url').value = b.imageUrl || '';
+        modalTitle.textContent = 'Edit Brand';
+        brandModal.style.display = 'flex';
+      };
+
+      brandForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldName = document.getElementById('original_name').value;
+        const brand = {
+          name: document.getElementById('brand_name').value,
+          category: document.getElementById('brand_category').value,
+          imageUrl: document.getElementById('brand_image_url').value
+        };
+
+        const action = oldName ? 'EDIT' : 'ADD';
+        const payload = { action, brand, oldName };
+
+        try {
+          const res = await fetch('/api/manage-brands', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok) {
+            brands = data.brands;
+            renderBrands();
+            brandModal.style.display = 'none';
+          } else {
+            alert(data.error);
+          }
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+
+      // Cloudinary widget
+      document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'upload_widget') {
+          if (typeof cloudinary === 'undefined') {
+            alert("Cloudinary widget failed to load.");
+            return;
+          }
+          cloudinary.createUploadWidget({
+            cloudName: 'dvvpabney', 
+            uploadPreset: 'YOUR_UNSIGNED_UPLOAD_PRESET_HERE', // <--- IMPORTANT: Replace with your actual unsigned preset
+            multiple: false,
+            maxFiles: 1
+          }, (error, result) => { 
+            if (!error && result && result.event === "success") { 
+              document.getElementById('brand_image_url').value = result.info.secure_url;
+            }
+          }).open();
+        }
+      });
+
+      const deleteModal = document.getElementById('delete-modal');
+      const closeDeleteModal = document.getElementById('close-delete-modal');
+      const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+      const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+      const reassignSection = document.getElementById('reassign-section');
+      const deleteWarning = document.getElementById('delete-warning');
+      const reassignSelect = document.getElementById('reassign_brand');
+
+      let deletingBrandName = null;
+      let deleteNeedsReassign = false;
+
+      window.deleteBrand = (name) => {
+        deletingBrandName = name;
+        deleteNeedsReassign = false;
+        reassignSection.style.display = 'none';
+        deleteWarning.innerHTML = `<p>Are you sure you want to delete <strong>${name}</strong>?</p>`;
+        deleteModal.style.display = 'flex';
+      };
+
+      const closeDel = () => { deleteModal.style.display = 'none'; };
+      closeDeleteModal.addEventListener('click', closeDel);
+      cancelDeleteBtn.addEventListener('click', closeDel);
+
+      confirmDeleteBtn.addEventListener('click', async () => {
+        const payload = { action: 'DELETE', name: deletingBrandName };
+        if (deleteNeedsReassign) {
+          payload.reassignTo = reassignSelect.value;
+          if (!payload.reassignTo) return alert('Please select a brand to reassign to');
+        }
+
+        try {
+          const res = await fetch('/api/manage-brands', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          
+          const data = await res.json();
+          if (res.status === 409) {
+            // Dependent products exist
+            deleteNeedsReassign = true;
+            deleteWarning.innerHTML = `<p style="color:var(--error)">Warning: ${data.dependentProducts.length} product(s) use this brand.</p>`;
+            
+            // Populate reassign dropdown
+            reassignSelect.innerHTML = brands
+              .filter(b => b.name !== deletingBrandName)
+              .map(b => `<option value="${b.name}">${b.name}</option>`)
+              .join('');
+            
+            reassignSection.style.display = 'block';
+          } else if (res.ok) {
+            brands = data.brands;
+            renderBrands();
+            deleteModal.style.display = 'none';
+          } else {
+            alert(data.error);
+          }
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    });
+  </script>
+</AdminLayout>

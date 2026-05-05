@@ -25,7 +25,6 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
     throw new Error('GEMINI_API_KEY is not set in environment variables');
   }
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
   const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
@@ -49,22 +48,33 @@ Brand: ${brand}
 Type: ${type || 'standard'}
 `;
 
-  try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    const cleanedText = text.replace(/```json\s*|\s*```/g, '');
-    return JSON.parse(cleanedText);
-  } catch (error) {
-    console.error('AI Generation Error:', error);
-    // Return default values if AI fails
-    return {
-      description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance.`,
-      meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
-      meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`,
-      slogan: isFeatured ? `Experience the best ${productName} today!` : ''
-    };
+  const modelsToTry = ["gemini-1.5-flash", "gemini-2.5-flash", "gemini-1.5-pro"];
+  let lastError = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      const cleanedText = text.replace(/```json\s*|\s*```/g, '');
+      return JSON.parse(cleanedText);
+    } catch (error) {
+      console.warn(`Model ${modelName} failed:`, error.message);
+      lastError = error;
+      // Wait a short delay before trying the next model
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
   }
+
+  console.error('AI Generation Error (All fallback models failed):', lastError);
+  // Return default values if AI fails, but incorporate custom features if provided
+  return {
+    description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance. ${customFeatures ? 'Key features include: ' + customFeatures + '.' : ''}`.trim(),
+    meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
+    meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`,
+    slogan: isFeatured ? `Experience the best ${productName} today!` : ''
+  };
 }
 
 export async function POST({ request }) {

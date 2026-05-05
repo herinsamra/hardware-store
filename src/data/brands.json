@@ -183,5 +183,10 @@
     "name": "Padmashree",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1776512725/unnamed_quj8e9.jpg",
     "category": "Paints"
+  },
+  {
+    "name": "RR SIGNATURE",
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777976291/images_1_-Picsart-BackgroundRemover_wkrwth.png"
   }
 ]

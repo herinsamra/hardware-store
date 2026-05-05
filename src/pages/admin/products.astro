@@ -30,11 +30,15 @@ const filteredProducts = allProducts.filter(product => {
   </div>
 
   <div class="glass-panel">
-    <div class="toolbar">
+    <div class="toolbar" style="display: flex; gap: 1.5rem; align-items: center;">
       <div class="search-box">
         <span class="search-icon">🔍</span>
         <input type="text" id="productSearch" placeholder="Search by name, brand, or part number..." />
       </div>
+      <label class="checkbox-label" for="featuredFilter" style="margin: 0; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+        <input type="checkbox" id="featuredFilter" />
+        ⭐ Featured Only
+      </label>
     </div>
 
     <div class="table-container">
@@ -52,7 +56,7 @@ const filteredProducts = allProducts.filter(product => {
         </thead>
         <tbody id="tableBody">
           {filteredProducts.map(product => (
-            <tr class="product-row" data-search={`${product.product_name || product.name} ${product.brand} ${product.part_no}`.toLowerCase()}>
+            <tr class="product-row" data-search={`${product.product_name || product.name} ${product.brand} ${product.part_no}`.toLowerCase()} data-featured={product.is_featured === 'true' || product.is_featured === true ? 'true' : 'false'}>
               <td class="img-cell">
                 {product.image ? (
                   <img src={product.image} alt={product.name} loading="lazy" />
@@ -61,7 +65,10 @@ const filteredProducts = allProducts.filter(product => {
                 )}
               </td>
               <td class="mono">{product.part_no}</td>
-              <td class="fw-500 name-cell">{product.name}</td>
+              <td class="fw-500 name-cell">
+                {product.name}
+                {(product.is_featured === 'true' || product.is_featured === true) && <span title="Featured Product" style="margin-left:0.5rem; font-size:1.1rem; vertical-align: middle;">⭐</span>}
+              </td>
               <td>{product.brand}</td>
               <td class="text-sm text-muted">
                 {product.category}
@@ -69,6 +76,9 @@ const filteredProducts = allProducts.filter(product => {
               </td>
               <td class="fw-600">₹{product.price.toFixed(2)}</td>
               <td class="actions-col">
+                <button class="icon-btn feature-btn" data-partno={product.part_no} data-featured={product.is_featured === 'true' || product.is_featured === true ? 'true' : 'false'} title={product.is_featured === 'true' || product.is_featured === true ? 'Unfeature Product' : 'Feature Product'}>
+                  {product.is_featured === 'true' || product.is_featured === true ? '⭐' : '☆'}
+                </button>
                 <a href={`/admin/edit-product?id=${product.part_no}`} class="icon-btn edit-btn" title="Edit Product">✏️</a>
                 <button class="icon-btn delete-btn" data-partno={product.part_no} title="Delete Product">🗑️</button>
               </td>
@@ -98,34 +108,96 @@ const filteredProducts = allProducts.filter(product => {
   </div>
 
   <script>
-    // Search functionality
+    // Filter functionality
     const searchInput = document.getElementById('productSearch');
+    const featuredFilter = document.getElementById('featuredFilter');
     const rows = document.querySelectorAll('.product-row');
     const noResults = document.getElementById('noResults');
 
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        const target = e.target;
-        if (!(target instanceof HTMLInputElement)) return;
-        const query = target.value.toLowerCase();
-        let visibleCount = 0;
+    function filterRows() {
+      const query = searchInput ? searchInput.value.toLowerCase() : '';
+      const showFeaturedOnly = featuredFilter ? featuredFilter.checked : false;
+      let visibleCount = 0;
 
-        rows.forEach(row => {
-          if (!(row instanceof HTMLElement)) return;
-          const searchData = row.dataset.search || '';
-          if (searchData.includes(query)) {
-            row.style.display = '';
-            visibleCount++;
-          } else {
-            row.style.display = 'none';
-          }
-        });
+      rows.forEach(row => {
+        if (!(row instanceof HTMLElement)) return;
+        const searchData = row.dataset.search || '';
+        const isFeatured = row.dataset.featured === 'true';
+        
+        const matchesSearch = searchData.includes(query);
+        const matchesFeatured = !showFeaturedOnly || isFeatured;
 
-        if (noResults) {
-          noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        if (matchesSearch && matchesFeatured) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
         }
       });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
     }
+
+    if (searchInput) searchInput.addEventListener('input', filterRows);
+    if (featuredFilter) featuredFilter.addEventListener('change', filterRows);
+
+    // Feature functionality
+    const featureBtns = document.querySelectorAll('.feature-btn');
+    featureBtns.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const target = e.currentTarget;
+        const partNo = target.dataset.partno;
+        const isCurrentlyFeatured = target.dataset.featured === 'true';
+        const willBeFeatured = !isCurrentlyFeatured;
+
+        let regenerateAi = 'off';
+        let customFeatures = '';
+
+        if (willBeFeatured) {
+          const userPrompt = prompt(
+            "You are featuring this product! ⭐\n\nWould you like to regenerate its AI description to include a catchy slogan?\n\n- Enter custom keywords/features below to weave them in.\n- Leave blank and click OK to regenerate without custom keywords.\n- Click Cancel to just feature it WITHOUT regenerating AI."
+          );
+          if (userPrompt !== null) {
+            regenerateAi = 'on';
+            customFeatures = userPrompt;
+          }
+        } else {
+          const confirmUnfeature = confirm("Are you sure you want to unfeature this product?");
+          if (!confirmUnfeature) return;
+        }
+
+        const originalText = target.textContent;
+        target.textContent = '...';
+        target.disabled = true;
+
+        try {
+          const response = await fetch(`/api/product/${partNo}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              is_featured: willBeFeatured,
+              regenerate_ai: regenerateAi,
+              custom_features: customFeatures
+            })
+          });
+
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            const data = await response.json();
+            alert(`Error: ${data.error || 'Failed to update'}`);
+            target.textContent = originalText;
+            target.disabled = false;
+          }
+        } catch (error) {
+          alert('Network error while updating.');
+          target.textContent = originalText;
+          target.disabled = false;
+        }
+      });
+    });
 
     // Delete functionality
     const deleteBtns = document.querySelectorAll('.delete-btn');

@@ -19,7 +19,7 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
-async function generateAI(productName, category, subcategory, brand, type, isFeatured) {
+async function generateAI(productName, category, subcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
@@ -28,13 +28,14 @@ async function generateAI(productName, category, subcategory, brand, type, isFea
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
+  const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
   const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
 
   const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
 - the exact product name and brand,
 - its distinctive color, finish, and any unique features,
 - the ideal use‑case or space where it shines,
-- a subtle invitation to the buyer.
+- a subtle invitation to the buyer.${featuresInstruction}
 Also create:
 1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
 2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.${featuredInstruction}
@@ -115,7 +116,8 @@ export async function PUT({ params, request }) {
         updateData.subcategory || currentProduct.subcategory,
         updateData.brand || currentProduct.brand,
         updateData.type || currentProduct.type,
-        isFeatured
+        isFeatured,
+        updateData.custom_features
       );
       
       if (ai.description) newDescription = ai.description;
@@ -147,6 +149,14 @@ export async function PUT({ params, request }) {
       slogan: newSlogan || '',
     };
 
+    if (updateData.variants !== undefined) {
+      if (updateData.variants && updateData.variants.length > 0) {
+        updatedProduct.variants = JSON.stringify(updateData.variants);
+      } else {
+        updatedProduct.variants = '';
+      }
+    }
+
     if (updateData.sku !== undefined) {
       updatedProduct.sku = updateData.sku;
       if (!updatedProduct.sku) delete updatedProduct.sku;
@@ -162,7 +172,22 @@ export async function PUT({ params, request }) {
     // Update JSON
     const jsonPath = path.join(projectRoot, 'src', 'data', 'products.json');
     if (fs.existsSync(path.dirname(jsonPath))) {
-      fs.writeFileSync(jsonPath, JSON.stringify(existingData, null, 2));
+      const jsonDataToSave = existingData.map(item => {
+        let variantsArray = [];
+        if (item.variants) {
+          try {
+            variantsArray = typeof item.variants === 'string' ? JSON.parse(item.variants) : item.variants;
+          } catch(e) {}
+        }
+        const cleanedItem = { ...item };
+        if (variantsArray && variantsArray.length > 0) {
+          cleanedItem.variants = variantsArray;
+        } else {
+          delete cleanedItem.variants; // Keep clean JSON if no variants
+        }
+        return cleanedItem;
+      });
+      fs.writeFileSync(jsonPath, JSON.stringify(jsonDataToSave, null, 2));
     }
 
     return new Response(JSON.stringify({

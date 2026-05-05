@@ -62,6 +62,14 @@ export function loadProductsFromExcel() {
       is_featured: row.is_featured || false,
       slogan: row.slogan || '',
       video_url: row.video_url || '',
+      variants: (() => {
+        if (!row.variants) return [];
+        if (Array.isArray(row.variants)) return row.variants;
+        try { 
+          const parsed = JSON.parse(row.variants);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch(e) { return []; }
+      })(),
     };
   });
 

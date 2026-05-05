@@ -166,10 +166,42 @@ const productSchema = {
       </div>
       <div class="product-detail-info">
         <h1>{product.name}</h1>
-        {product.variant_name && (
+        {product.variant_name && (!product.variants || product.variants.length === 0) && (
           <div class="variant-badge">Variant: {cleanName(product.variant_name)}</div>
         )}
-        <div class="product-detail-price">MRP: ₹{formatIndianNumber(product.price)}</div>
+        <div class="product-detail-price" id="display-price">MRP: ₹{formatIndianNumber(product.price)}</div>
+        
+        {product.variants && product.variants.length > 0 && (
+          <div class="variants-selector">
+            <h3>Select Option:</h3>
+            <div class="variants-pill-group">
+              <button 
+                type="button" 
+                class="variant-pill active" 
+                data-variant-id="default"
+                data-price={product.price}
+                data-sku={product.sku || ''}
+                data-partno={product.part_no || ''}
+                data-images={productImages.join(',')}
+              >
+                {product.variant_name ? cleanName(product.variant_name) : 'Default'}
+              </button>
+              {product.variants.map((v) => (
+                <button 
+                  type="button" 
+                  class="variant-pill" 
+                  data-variant-id={v.variant_id}
+                  data-price={v.price}
+                  data-sku={v.sku || ''}
+                  data-partno={v.part_no || ''}
+                  data-images={v.images && v.images.length > 0 ? v.images.join(',') : productImages.join(',')}
+                >
+                  {v.variant_id}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         {product.brand && (
           <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="product-brand-card" data-astro-prefetch="hover">
             <div class="product-brand-copy">
@@ -190,8 +222,8 @@ const productSchema = {
             </div>
           </a>
         )}
-        {product.part_no && <p class="part-no">Part No: {product.part_no}</p>}
-        {product.sku && <p class="sku">SKU: {product.sku}</p>}
+        {product.part_no && <p class="part-no" id="display-partno">Part No: {product.part_no}</p>}
+        {product.sku && <p class="sku" id="display-sku">SKU: {product.sku}</p>}
         <div class="product-detail-description">
           <h3>Description</h3>
           <p>{product.description}</p>
@@ -237,29 +269,116 @@ const productSchema = {
   </div>
 
   <script>
+    function formatIndianNumber(num) {
+      const absNum = Math.abs(num);
+      const integerPart = Math.floor(absNum).toString();
+      const decimalPart = num % 1 !== 0 ? '.' + Math.round((num % 1) * 100).toString().padStart(2, '0') : '';
+      if (absNum < 1000) return integerPart + decimalPart;
+      const lastThree = integerPart.slice(-3);
+      const rest = integerPart.slice(0, -3);
+      const restFormatted = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+      const formattedInteger = rest.length > 0 ? `${restFormatted},${lastThree}` : lastThree;
+      return formattedInteger + decimalPart;
+    }
+
     const productGallery = document.querySelector('.product-gallery');
     const mainImage = document.getElementById('product-main-image');
+    let currentThumbnails = [];
 
-    if (productGallery instanceof HTMLElement && mainImage instanceof HTMLImageElement) {
-      const thumbnailButtons = Array.from(
-        productGallery.querySelectorAll('.product-thumbnail-button')
-      );
-
-      thumbnailButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          if (!(button instanceof HTMLButtonElement)) return;
-
-          const nextImage = button.dataset.productImage;
+    function setupGallery() {
+      if (!productGallery || !mainImage) return;
+      currentThumbnails = Array.from(productGallery.querySelectorAll('.product-thumbnail-button'));
+      currentThumbnails.forEach(button => {
+        // remove old listeners by cloning
+        const newBtn = button.cloneNode(true);
+        button.replaceWith(newBtn);
+        newBtn.addEventListener('click', () => {
+          const nextImage = newBtn.dataset.productImage;
           if (!nextImage) return;
-
           mainImage.src = nextImage;
-
-          thumbnailButtons.forEach(item => {
-            const isActive = item === button;
+          Array.from(productGallery.querySelectorAll('.product-thumbnail-button')).forEach(item => {
+            const isActive = item === newBtn;
             item.classList.toggle('active', isActive);
             item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
           });
         });
+      });
+    }
+
+    setupGallery();
+
+    // Variants Logic
+    const variantPills = document.querySelectorAll('.variant-pill');
+    const displayPrice = document.getElementById('display-price');
+    const displaySku = document.getElementById('display-sku');
+    const displayPartNo = document.getElementById('display-partno');
+
+    if (variantPills.length > 0) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialVariantId = urlParams.get('variant');
+
+      function selectVariant(btn, updateUrl = true) {
+        variantPills.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update Price
+        const price = parseFloat(btn.dataset.price);
+        if (!isNaN(price) && displayPrice) {
+          displayPrice.innerHTML = `MRP: ₹${formatIndianNumber(price)}`;
+        }
+
+        // Update SKU & Part No
+        if (displaySku && btn.dataset.sku) displaySku.textContent = `SKU: ${btn.dataset.sku}`;
+        if (displayPartNo && btn.dataset.partno) displayPartNo.textContent = `Part No: ${btn.dataset.partno}`;
+        else if (displayPartNo) displayPartNo.textContent = ''; // hide part no if variant doesn't have it
+
+        // Update Images
+        const imagesStr = btn.dataset.images;
+        if (imagesStr && productGallery) {
+          const images = imagesStr.split(',');
+          if (images.length > 0 && mainImage) {
+            mainImage.src = images[0];
+            
+            // Rebuild thumbnail strip
+            let strip = productGallery.querySelector('.product-thumbnail-strip');
+            if (images.length > 1) {
+              if (!strip) {
+                strip = document.createElement('div');
+                strip.className = 'product-thumbnail-strip';
+                productGallery.appendChild(strip);
+              }
+              strip.innerHTML = images.map((img, i) => `
+                <button type="button" class="product-thumbnail-button ${i === 0 ? 'active' : ''}" data-product-image="${img}">
+                  <img src="${img}" loading="lazy" />
+                </button>
+              `).join('');
+            } else if (strip) {
+              strip.remove();
+            }
+            setupGallery();
+          }
+        }
+
+        // Update URL
+        if (updateUrl) {
+          const variantId = btn.dataset.variantId;
+          const url = new URL(window.location);
+          if (variantId === 'default') {
+            url.searchParams.delete('variant');
+          } else {
+            url.searchParams.set('variant', variantId);
+          }
+          window.history.replaceState({}, '', url);
+        }
+      }
+
+      variantPills.forEach(btn => {
+        btn.addEventListener('click', () => selectVariant(btn));
+        
+        // Pre-select if matches URL
+        if (initialVariantId && btn.dataset.variantId === initialVariantId) {
+          selectVariant(btn, false);
+        }
       });
     }
   </script>
@@ -586,7 +705,7 @@ const productSchema = {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
-    align-items: stretch;
+    align-items: start;
   }
   @media (min-width: 768px) {
     .related-products-grid {
@@ -623,5 +742,46 @@ const productSchema = {
     .related-products-grid {
       gap: 1rem;
     }
+  }
+
+  /* Variants CSS */
+  .variants-selector {
+    margin: 0.5rem 0 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .variants-selector h3 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+  .variants-pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .variant-pill {
+    background: rgba(15, 17, 23, 0.8);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .variant-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .variant-pill.active {
+    background: rgba(197, 160, 40, 0.15);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(197, 160, 40, 0.2);
   }
 </style>

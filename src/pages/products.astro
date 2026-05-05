@@ -659,10 +659,15 @@ const productsPerPage = 12;
     };
 
     const createProductCard = (product, matchInfo = {}) => {
-      const card = document.createElement('a');
-      card.href = product.url || `/product/${product.id}`;
+      const productHref = product.url || `/product/${product.id}`;
+      const card = document.createElement('div');
       card.className = 'product-card group';
+      card.dataset.href = productHref;
       card.setAttribute('data-astro-prefetch', '');
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.card-variant-chip')) return;
+        window.location.href = productHref;
+      });
 
       const imageWrapper = document.createElement('div');
       imageWrapper.className = 'product-image-wrapper';
@@ -692,13 +697,8 @@ const productsPerPage = 12;
       setHighlightedText(name, product.name || 'Unnamed Product', matchInfo.name || []);
       info.appendChild(name);
 
-      if (product.variant_name) {
-        const variant = document.createElement('p');
-        variant.className = 'product-variant';
-        setHighlightedText(variant, product.variant_name, matchInfo.variant_name || []);
-        info.appendChild(variant);
-      }
-
+      // We now show variants as chips instead of a single text line below the name
+      // This matches the new ProductCard.astro behavior
       const matchContext = getMatchContext(product, matchInfo);
       if (matchContext) {
         const matchLine = document.createElement('p');
@@ -716,6 +716,42 @@ const productsPerPage = 12;
         price.className = 'product-price';
         price.textContent = `MRP: ₹${formatPrice(product.price)}`;
         info.appendChild(price);
+      }
+
+      if (product.variants && product.variants.length > 0) {
+        const pillsWrapper = document.createElement('div');
+        pillsWrapper.className = 'card-variant-pills';
+        const productHref = product.url || `/product/${product.id}`;
+
+        if (product.variant_name) {
+          const activeChip = document.createElement('a');
+          activeChip.className = 'card-variant-chip active';
+          activeChip.textContent = cleanName(product.variant_name);
+          activeChip.href = productHref;
+          activeChip.addEventListener('click', e => e.stopPropagation());
+          pillsWrapper.appendChild(activeChip);
+        }
+
+        const visibleVariants = product.variants.slice(0, 4);
+        visibleVariants.forEach(v => {
+          const chip = document.createElement('a');
+          chip.className = 'card-variant-chip';
+          chip.textContent = v.variant_id;
+          chip.href = `${productHref}?variant=${v.variant_id}`;
+          chip.addEventListener('click', e => e.stopPropagation());
+          pillsWrapper.appendChild(chip);
+        });
+
+        if (product.variants.length > 4) {
+          const moreChip = document.createElement('a');
+          moreChip.className = 'card-variant-chip more';
+          moreChip.textContent = '+' + (product.variants.length - 4);
+          moreChip.href = productHref;
+          moreChip.addEventListener('click', e => e.stopPropagation());
+          pillsWrapper.appendChild(moreChip);
+        }
+
+        info.appendChild(pillsWrapper);
       }
 
       const category = document.createElement('div');

@@ -170,6 +170,16 @@ const { Brands, ...productCategories } = rawCategories;
           </div>
         </div>
 
+        <!-- Variants Section -->
+        <div class="variants-section glass-panel">
+          <div class="variants-header">
+            <h3>Product Variants</h3>
+            <button type="button" id="addVariantBtn" class="button variant-add-btn">+ Add Variant</button>
+          </div>
+          <p class="hint">Add variations like sizes, colors, or amperages. If a variant has no image, it inherits the main product's images.</p>
+          <div id="variantsContainer" class="variants-container"></div>
+        </div>
+
         <div class="form-footer">
           <div id="message" class="message"></div>
           <button type="submit" class="submit-btn" id="submitBtn">
@@ -334,6 +344,7 @@ const { Brands, ...productCategories } = rawCategories;
           variant_name: document.getElementById('variant_name').value,
           mrp: document.getElementById('mrp').value,
           is_featured: document.getElementById('is_featured').checked,
+          variants: getVariantsData(),
         };
 
         if (!payload.part_no || !payload.category || !payload.subcategory || !payload.subsubcategory || !payload.product_name || !payload.brand || !payload.mrp) {
@@ -373,6 +384,7 @@ const { Brands, ...productCategories } = rawCategories;
             document.getElementById('custom_features').value = '';
             document.getElementById('variant_name').value = '';
             document.getElementById('mrp').value = '';
+            document.getElementById('variantsContainer').innerHTML = '';
             
             // Scroll to top to see message
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -390,6 +402,57 @@ const { Brands, ...productCategories } = rawCategories;
       if (isFeaturedCb) {
         isFeaturedCb.addEventListener('change', (e) => {
           sloganPreview.style.display = e.target.checked ? 'block' : 'none';
+        });
+      }
+
+      // Variants JS Logic
+      const variantsContainer = document.getElementById('variantsContainer');
+      const addVariantBtn = document.getElementById('addVariantBtn');
+
+      function getVariantsData() {
+        const variantRows = variantsContainer.querySelectorAll('.variant-row');
+        const variants = [];
+        variantRows.forEach(row => {
+          variants.push({
+            variant_id: row.querySelector('.v-id').value,
+            price: parseFloat(row.querySelector('.v-price').value),
+            part_no: row.querySelector('.v-partno').value,
+            sku: row.querySelector('.v-sku').value,
+            images: row.querySelector('.v-images').value.split(',').map(s => s.trim()).filter(Boolean)
+          });
+        });
+        return variants;
+      }
+
+      if (addVariantBtn) {
+        addVariantBtn.addEventListener('click', () => {
+          const row = document.createElement('div');
+          row.className = 'variant-row';
+          row.innerHTML = `
+            <div class="v-group">
+              <label>Variant ID (e.g. 6A) <span class="required">*</span></label>
+              <input type="text" class="v-id" required>
+            </div>
+            <div class="v-group">
+              <label>Price (₹) <span class="required">*</span></label>
+              <input type="number" step="0.01" class="v-price" required>
+            </div>
+            <div class="v-group">
+              <label>Part No</label>
+              <input type="text" class="v-partno">
+            </div>
+            <div class="v-group">
+              <label>SKU</label>
+              <input type="text" class="v-sku">
+            </div>
+            <div class="v-group v-span-full">
+              <label>Images (comma separated)</label>
+              <input type="text" class="v-images">
+            </div>
+            <button type="button" class="remove-variant-btn">✕</button>
+          `;
+          row.querySelector('.remove-variant-btn').addEventListener('click', () => row.remove());
+          variantsContainer.appendChild(row);
         });
       }
     });
@@ -435,6 +498,109 @@ const { Brands, ...productCategories } = rawCategories;
     border-radius: 24px;
     padding: 3rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Variants Styles */
+  .variants-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(15, 17, 23, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+  }
+  .variants-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .variants-header h3 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+  .variant-add-btn {
+    background: rgba(197, 160, 40, 0.15);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .variant-add-btn:hover {
+    background: var(--accent);
+    color: #000;
+  }
+  .variants-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .variant-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    align-items: start;
+    position: relative;
+  }
+  .v-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .v-span-full {
+    grid-column: 1 / -2;
+  }
+  .v-group label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  .v-group input {
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 0.5rem;
+    color: var(--text-primary);
+    width: 100%;
+  }
+  .remove-variant-btn {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-top: 1.5rem;
+  }
+  .remove-variant-btn:hover {
+    background: #ef4444;
+    color: #fff;
+  }
+  @media (max-width: 768px) {
+    .variant-row {
+      grid-template-columns: 1fr;
+    }
+    .v-span-full {
+      grid-column: 1 / -1;
+    }
+    .remove-variant-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      margin-top: 0;
+    }
   }
 
   .admin-header {

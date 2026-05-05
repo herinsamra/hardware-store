@@ -115,6 +115,7 @@ export async function POST({ request }) {
       slogan: ai.slogan || '',
       // Include SKU only if provided explicitly
       ...(productInput.sku ? { sku: productInput.sku } : {}),
+      variants: productInput.variants && productInput.variants.length > 0 ? JSON.stringify(productInput.variants) : ''
     };
 
     // Update Excel file
@@ -157,7 +158,22 @@ export async function POST({ request }) {
     // Also update products.json directly to keep it in sync without needing to run convert-excel.js manually
     const jsonPath = path.join(projectRoot, 'src', 'data', 'products.json');
     if (fs.existsSync(path.dirname(jsonPath))) {
-      fs.writeFileSync(jsonPath, JSON.stringify(existingData, null, 2));
+      const jsonDataToSave = existingData.map(item => {
+        let variantsArray = [];
+        if (item.variants) {
+          try {
+            variantsArray = typeof item.variants === 'string' ? JSON.parse(item.variants) : item.variants;
+          } catch(e) {}
+        }
+        const cleanedItem = { ...item };
+        if (variantsArray && variantsArray.length > 0) {
+          cleanedItem.variants = variantsArray;
+        } else {
+          delete cleanedItem.variants; // Keep clean JSON if no variants
+        }
+        return cleanedItem;
+      });
+      fs.writeFileSync(jsonPath, JSON.stringify(jsonDataToSave, null, 2));
     }
 
     return new Response(JSON.stringify({

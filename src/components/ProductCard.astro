@@ -13,6 +13,7 @@ export interface Props {
     routeParam?: string;
     url?: string;
     variant_name?: string;
+    variants?: { variant_id: string; price: number; sku?: string; part_no?: string; images?: string[] }[];
   };
 }
 
@@ -47,7 +48,7 @@ function formatIndianNumber(num: number): string {
 }
 ---
 
-<a href={productUrl} class="product-card group" data-astro-prefetch>
+<div class="product-card group" data-href={productUrl} data-astro-prefetch>
   <div class="product-image-wrapper">
     {product.image ? (
       <img 
@@ -64,15 +65,37 @@ function formatIndianNumber(num: number): string {
   </div>
   <div class="product-info">
     <h3 class="product-name">{product.name}</h3>
-    {product.variant_name && (
+    {product.variant_name && (!product.variants || product.variants.length === 0) && (
       <p class="product-variant">{cleanName(product.variant_name)}</p>
     )}
     {product.price && Number(product.price) > 0 && (
       <div class="product-price">MRP: ₹{formatIndianNumber(product.price)}</div>
     )}
+    {product.variants && product.variants.length > 0 && (
+      <div class="card-variant-pills">
+        {product.variant_name && (
+          <a href={productUrl} class="card-variant-chip active">{cleanName(product.variant_name)}</a>
+        )}
+        {product.variants.slice(0, 4).map((v) => (
+          <a href={`${productUrl}?variant=${v.variant_id}`} class="card-variant-chip">{v.variant_id}</a>
+        ))}
+        {product.variants.length > 4 && (
+          <a href={productUrl} class="card-variant-chip more">+{product.variants.length - 4}</a>
+        )}
+      </div>
+    )}
     <div class="product-category">{cleanName(product.category)}</div>
   </div>
-</a>
+</div>
+
+<script>
+  document.querySelectorAll('.product-card[data-href]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.card-variant-chip')) return;
+      window.location.href = card.dataset.href;
+    });
+  });
+</script>
 
 <style is:global>
   .product-card {
@@ -90,6 +113,7 @@ function formatIndianNumber(num: number): string {
     text-decoration: none;
     overflow: hidden;
     isolation: isolate;
+    cursor: pointer;
     transition:
       transform 0.28s ease,
       box-shadow 0.28s ease,
@@ -213,5 +237,41 @@ function formatIndianNumber(num: number): string {
     .product-image-wrapper {
       border-radius: 20px;
     }
+  }
+
+  /* Card Variant Pills */
+  .card-variant-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
+  .card-variant-chip {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .card-variant-chip:hover {
+    background: rgba(197, 160, 40, 0.12);
+    border-color: rgba(197, 160, 40, 0.22);
+    color: var(--accent-gold-light);
+  }
+  .card-variant-chip.active {
+    background: rgba(197, 160, 40, 0.12);
+    border-color: rgba(197, 160, 40, 0.22);
+    color: var(--accent-gold-light);
+  }
+  .card-variant-chip.more {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    font-style: italic;
   }
 </style>

@@ -9,6 +9,7 @@ import {
   getAllProductSlugs,
   getProductUrl,
 } from '../../lib/products';
+import EnquireNowModal from '../../components/EnquireNowModal.astro';
 
 export const prerender = true;
 
@@ -249,7 +250,7 @@ const productSchema = {
           {product.subcategory && <span> → {cleanName(product.subcategory)}</span>}
           {product.subsubcategory && <span> → {cleanName(product.subsubcategory)}</span>}
         </div>
-        <button class="button add-to-cart">Enquire Now</button>
+        <EnquireNowModal />
       </div>
     </div>
 

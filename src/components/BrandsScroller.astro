@@ -8,7 +8,7 @@ interface ScrollerBrand {
 
 const typedBrandRows = brandRows as ScrollerBrand[][];
 const getBrandHref = (brand: ScrollerBrand) => `/products?brand=${encodeURIComponent(brand.name)}`;
-const getRowDuration = (rowIndex: number) => (rowIndex % 2 === 0 ? '30s' : '45s');
+const getRowDuration = (rowIndex: number) => (rowIndex % 2 === 0 ? '30s' : '25s');
 const duplicateCount = 4;
 const repeatRow = (row: ScrollerBrand[]) => Array.from({ length: duplicateCount }, () => row).flat();
 ---

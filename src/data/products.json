@@ -188,15 +188,19 @@
     "subcategory": "Wiring_Devices",
     "subsubcategory": "Switches",
     "type": "BELL PUSH SWITCH",
-    "product_name": "7005 S7 2M BELL PUSH SWITCH with INDICATOR GRAPHITE GREY",
+    "product_name": "7005 S7 2M BELL PUSH SWITCH with INDICATOR",
     "description": "Enhance your entrance with the Lisha 7005 S7 2M BELL PUSH SWITCH with INDICATOR GRAPHITE GREY. This premium switch delivers reliable bell push functionality with a clear integrated indicator. Its sleek, contemporary graphite grey finish seamlessly complements modern homes, offices, or commercial spaces. A blend of style and convenience. Elevate your interiors today.",
     "brand": "Lisha",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777352332/lisha-7005-bell-push-240v-modular-switch-282module-29-indicator-1000x1000-Photoroom_x6argw.png",
     "mrp": "349",
-    "slug": "7005-s7-2m-bell-push-switch-with-indicator-graphite-grey",
+    "slug": "7005-s7-2m-bell-push-switch-with-indicator",
     "meta_title": "Lisha 7005 S7 2M Bell Push Switch with Indicator",
     "meta_description": "Upgrade to Lisha's premium 7005 S7 Bell Push Switch. Featuring an integrated indicator & sleek graphite grey finish, it's perfect for modern homes & offices. Enhance your entrance.",
-    "variant_name": "GRAPHITE GREY"
+    "variant_name": "GRAPHITE GREY",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -292,17 +296,18 @@
     "subsubcategory": "Pedestal_Fans",
     "type": "PEDESTAL FAN",
     "product_name": "Turbo Force AC Pedestal Fan",
-    "description": "Premium Turbo Force AC Pedestal Fan by Havells, a top‑quality Pedestal_Fans offering sleek design and reliable performance.",
+    "description": "Durable and efficient motor with WideVolt™ technology (150–265V) for stable performance during voltage fluctuations. Features a 100% copper motor and double ball bearings for smooth, long-lasting operation. Equipped with a thermal overload protector for added safety. Comes with a 2-year guarantee.",
     "brand": "Havells",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777464324/fhacpstgry18_m_1-Photoroom_pbxlor.png",
     "mrp": "15849.99",
     "slug": "turbo-force-ac-pedestal-fan",
     "meta_title": "Havells Turbo Force AC Pedestal Fan – Premium Pedestal_Fans",
-    "meta_description": "Turbo Force AC Pedestal Fan by Havells: SEO‑friendly, high‑performance Pedestal_Fans for modern installations.",
+    "meta_description": "Reliable and efficient motor featuring a WideVolt™ range (150V–265V) for stable performance even during voltage fluctuations. Built with a 100% copper motor and double ball bearings for smooth, long-lasting operation. Includes thermal overload protection for enhanced safety. Comes with a 2-year guarantee.",
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -550,53 +555,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -615,7 +574,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -635,35 +595,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -683,17 +615,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -712,7 +634,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -732,44 +655,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -788,7 +674,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -807,7 +694,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -826,7 +714,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -845,7 +734,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -864,6 +754,7 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   }
 ]

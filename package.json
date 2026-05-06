@@ -11,8 +11,7 @@
     "build": "npm run convert && astro build",
     "preview": "astro preview",
     "start": "npm run dev",
-    "astro": "astro",
-    "merge-products": "node scripts/merge-products.js"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/netlify": "^7.0.8",

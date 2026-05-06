@@ -5,10 +5,42 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import XLSX from 'xlsx';
+import { jsonResponse } from '../../../lib/cacheHeaders.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '../../../../');
+
+// Utility function to sanitize input
+function sanitizeInput(input) {
+  if (typeof input !== 'string') return input;
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove script tags
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '') // Remove iframe tags
+    .replace(/javascript:/gi, '') // Remove javascript:
+    .replace(/data:/gi, '') // Remove data:
+    .trim();
+}
+
+// Validate image URL
+function isValidImageUrl(url) {
+  try {
+    if (!url || typeof url !== 'string') return false;
+    
+    // Check if it's a valid URL format
+    const parsedUrl = new URL(url);
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+    const isCloudinaryOrValidDomain = parsedUrl.hostname.includes('cloudinary.com') || 
+                                     parsedUrl.hostname.includes('res.cloudinary.com') ||
+                                     parsedUrl.hostname.includes('images.unsplash.com') ||
+                                     parsedUrl.hostname.includes('cdn.pixabay.com') ||
+                                     /\.(jpg|jpeg|png|gif|webp|svg|bmp)$/i.test(url);
+                                     
+    return isCloudinaryOrValidDomain;
+  } catch (e) {
+    return false;
+  }
+}
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -71,7 +103,7 @@ export async function PUT({ params, request }) {
   const targetPartNo = params.id;
   
   if (!targetPartNo) {
-    return new Response(JSON.stringify({ error: 'Missing part number in URL' }), { status: 400 });
+    return jsonResponse({ error: 'Missing part number in URL' }, { status: 400 });
   }
 
   try {
@@ -79,13 +111,20 @@ export async function PUT({ params, request }) {
     try {
       updateData = await request.json();
     } catch (e) {
-      return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400 });
+      return jsonResponse({ error: 'Invalid JSON body' }, { status: 400 });
+    }
+
+    // Sanitize all string inputs
+    for (const key in updateData) {
+      if (typeof updateData[key] === 'string') {
+        updateData[key] = sanitizeInput(updateData[key]);
+      }
     }
 
     const excelPath = path.join(projectRoot, 'products.xlsx');
     
     if (!fs.existsSync(excelPath)) {
-      return new Response(JSON.stringify({ error: 'Database (products.xlsx) not found' }), { status: 404 });
+      return jsonResponse({ error: 'Database (products.xlsx) not found' }, { status: 404 });
     }
 
     const workbook = XLSX.readFile(excelPath);
@@ -96,10 +135,46 @@ export async function PUT({ params, request }) {
     const productIndex = existingData.findIndex(row => row.part_no === targetPartNo);
 
     if (productIndex === -1) {
-      return new Response(JSON.stringify({ error: 'Product not found' }), { status: 404 });
+      return jsonResponse({ error: 'Product not found' }, { status: 404 });
     }
 
     const currentProduct = existingData[productIndex];
+
+    // Validate product name length if provided (max 56 chars)
+    if (updateData.product_name && updateData.product_name.length > 56) {
+      return jsonResponse({ error: 'Product name must not exceed 56 characters' }, { status: 400 });
+    }
+
+    // Validate price if provided (must be positive number)
+    if (updateData.mrp !== undefined) {
+      const mrp = parseFloat(updateData.mrp);
+      if (isNaN(mrp) || mrp <= 0) {
+        return jsonResponse({ error: 'MRP must be a positive number' }, { status: 400 });
+      }
+    }
+
+    // Validate image URLs if provided
+    if (updateData.images) {
+      const imageUrls = Array.isArray(updateData.images) 
+        ? updateData.images 
+        : updateData.images.split(',');
+      
+      for (const imageUrl of imageUrls) {
+        const trimmedUrl = imageUrl.trim();
+        if (trimmedUrl && !isValidImageUrl(trimmedUrl)) {
+          return jsonResponse({ error: `Invalid image URL: ${trimmedUrl}` }, { status: 400 });
+        }
+      }
+    }
+
+    // Validate video URL if provided
+    if (updateData.video_url && updateData.video_url.trim()) {
+      try {
+        new URL(updateData.video_url.trim());
+      } catch (e) {
+        return jsonResponse({ error: 'Invalid video URL' }, { status: 400 });
+      }
+    }
 
     // Check if AI needs regeneration
     let newDescription = updateData.description || currentProduct.description;
@@ -190,17 +265,17 @@ export async function PUT({ params, request }) {
       fs.writeFileSync(jsonPath, JSON.stringify(jsonDataToSave, null, 2));
     }
 
-    return new Response(JSON.stringify({
+    return jsonResponse({
       message: 'Product updated successfully',
       product: updatedProduct,
-    }), { status: 200 });
+    }, { status: 200 });
 
   } catch (error) {
     console.error('Update Product Error:', error);
-    return new Response(JSON.stringify({
+    return jsonResponse({
       error: 'Internal server error',
       details: error.message
-    }), { status: 500 });
+    }, { status: 500 });
   }
 }
 
@@ -209,14 +284,14 @@ export async function DELETE({ params }) {
   const targetPartNo = params.id;
   
   if (!targetPartNo) {
-    return new Response(JSON.stringify({ error: 'Missing part number in URL' }), { status: 400 });
+    return jsonResponse({ error: 'Missing part number in URL' }, { status: 400 });
   }
 
   try {
     const excelPath = path.join(projectRoot, 'products.xlsx');
     
     if (!fs.existsSync(excelPath)) {
-      return new Response(JSON.stringify({ error: 'Database (products.xlsx) not found' }), { status: 404 });
+      return jsonResponse({ error: 'Database (products.xlsx) not found' }, { status: 404 });
     }
 
     const workbook = XLSX.readFile(excelPath);
@@ -228,7 +303,7 @@ export async function DELETE({ params }) {
     const newData = existingData.filter(row => row.part_no !== targetPartNo);
 
     if (newData.length === initialLength) {
-      return new Response(JSON.stringify({ error: 'Product not found' }), { status: 404 });
+      return jsonResponse({ error: 'Product not found' }, { status: 404 });
     }
 
     // Save Excel
@@ -242,15 +317,15 @@ export async function DELETE({ params }) {
       fs.writeFileSync(jsonPath, JSON.stringify(newData, null, 2));
     }
 
-    return new Response(JSON.stringify({
+    return jsonResponse({
       message: 'Product deleted successfully'
-    }), { status: 200 });
+    }, { status: 200 });
 
   } catch (error) {
     console.error('Delete Product Error:', error);
-    return new Response(JSON.stringify({
+    return jsonResponse({
       error: 'Internal server error',
       details: error.message
-    }), { status: 500 });
+    }, { status: 500 });
   }
 }

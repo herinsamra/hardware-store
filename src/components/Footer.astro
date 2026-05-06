@@ -16,7 +16,7 @@ const quickLinks = [
       <div class="footer-brand">
         <a href="/" class="footer-logo-link" data-astro-prefetch="hover">
           <img 
-            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1777383768/logo_ph_l5xqqw.png" 
+            src="https://res.cloudinary.com/dthi2vgiz/image/upload/v1778068012/new_logo_ppmggi.png" 
             alt="Peniel Hardwares Logo"
             class="footer-logo-img"
           />
@@ -25,12 +25,12 @@ const quickLinks = [
         <p class="brand-desc">
           Quality hardware, electrical, plumbing & sanitary solutions since 1995.
         </p>
-        <div class="address">
+        <a href="https://maps.app.goo.gl/6sXiWvdgFd1Lo9vo6" target="_blank" class="address">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
           </svg>
           <span>60/1, Rajakkamangalam Rd, opp. SBI Bank, Ramanputhoor Jn, Nagercoil – 629002</span>
-        </div>
+        </a>
       </div>
 
       <!-- Quick Links -->
@@ -163,6 +163,11 @@ const quickLinks = [
     color: var(--text-secondary);
     font-size: 0.85rem;
     line-height: 1.4;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .address:hover {
+    color: var(--accent-gold);
   }
   .address svg {
     flex-shrink: 0;

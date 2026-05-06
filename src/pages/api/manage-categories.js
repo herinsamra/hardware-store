@@ -1,6 +1,7 @@
 export const prerender = false;
 import fs from 'fs';
 import path from 'path';
+import { jsonResponse } from '../../lib/cacheHeaders.js';
 
 async function handleRequest(request) {
   const categoriesPath = path.resolve(process.cwd(), 'src', 'data', 'categories.json');
@@ -11,7 +12,7 @@ async function handleRequest(request) {
     const { action, path: catPath, name, newName, reassignTo, force } = payload;
     
     if (!fs.existsSync(categoriesPath)) {
-      return new Response(JSON.stringify({ error: 'Categories file not found' }), { status: 404 });
+      return jsonResponse({ error: 'Categories file not found' }, { status: 404 });
     }
 
     let categories = JSON.parse(fs.readFileSync(categoriesPath, 'utf8'));
@@ -34,27 +35,27 @@ async function handleRequest(request) {
 
     if (action === 'ADD') {
       if (!catPath || catPath.length === 0) {
-        if (categories[name]) return new Response(JSON.stringify({ error: 'Category already exists' }), { status: 400 });
+        if (categories[name]) return jsonResponse({ error: 'Category already exists' }, { status: 400 });
         categories[name] = {};
         updated = true;
       } else if (catPath.length === 1 || catPath.length === 2) {
         const parent = getNested(categories, catPath);
-        if (!parent) return new Response(JSON.stringify({ error: 'Parent path not found' }), { status: 400 });
-        if (parent[name]) return new Response(JSON.stringify({ error: 'Already exists' }), { status: 400 });
+        if (!parent) return jsonResponse({ error: 'Parent path not found' }, { status: 400 });
+        if (parent[name]) return jsonResponse({ error: 'Already exists' }, { status: 400 });
         parent[name] = catPath.length === 2 ? [] : {};
         updated = true;
       } else {
-        return new Response(JSON.stringify({ error: 'Max depth reached' }), { status: 400 });
+        return jsonResponse({ error: 'Max depth reached' }, { status: 400 });
       }
     } 
     else if (action === 'RENAME') {
-      if (!catPath || catPath.length === 0 || !newName) return new Response(JSON.stringify({ error: 'Invalid parameters' }), { status: 400 });
+      if (!catPath || catPath.length === 0 || !newName) return jsonResponse({ error: 'Invalid parameters' }, { status: 400 });
       const targetName = catPath[catPath.length - 1];
       const parentPath = catPath.slice(0, -1);
       
       let parent = parentPath.length === 0 ? categories : getNested(categories, parentPath);
-      if (!parent || !parent[targetName]) return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 });
-      if (parent[newName]) return new Response(JSON.stringify({ error: 'New name already exists' }), { status: 400 });
+      if (!parent || !parent[targetName]) return jsonResponse({ error: 'Not found' }, { status: 404 });
+      if (parent[newName]) return jsonResponse({ error: 'New name already exists' }, { status: 400 });
       
       const newParent = {};
       for (const key in parent) {
@@ -94,12 +95,12 @@ async function handleRequest(request) {
 
     } 
     else if (action === 'DELETE') {
-      if (!catPath || catPath.length === 0) return new Response(JSON.stringify({ error: 'Invalid parameters' }), { status: 400 });
+      if (!catPath || catPath.length === 0) return jsonResponse({ error: 'Invalid parameters' }, { status: 400 });
       const targetName = catPath[catPath.length - 1];
       const parentPath = catPath.slice(0, -1);
       
       let parent = parentPath.length === 0 ? categories : getNested(categories, parentPath);
-      if (!parent || parent[targetName] === undefined) return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 });
+      if (!parent || parent[targetName] === undefined) return jsonResponse({ error: 'Not found' }, { status: 404 });
       
       const levelKey = catPath.length === 1 ? 'category' : (catPath.length === 2 ? 'subcategory' : 'subsubcategory');
       const dependentProducts = products.filter(p => {
@@ -110,10 +111,10 @@ async function handleRequest(request) {
       });
 
       if (dependentProducts.length > 0 && !force && !reassignTo) {
-        return new Response(JSON.stringify({ 
+        return jsonResponse({ 
           error: 'Dependent products exist',
           dependentProducts: dependentProducts.map(p => ({ sku: p.sku || p.part_no, name: p.product_name }))
-        }), { status: 409 });
+        }, { status: 409 });
       }
 
       if (Array.isArray(parent)) {
@@ -138,7 +139,7 @@ async function handleRequest(request) {
       }
     } 
     else {
-      return new Response(JSON.stringify({ error: 'Unknown action' }), { status: 400 });
+      return jsonResponse({ error: 'Unknown action' }, { status: 400 });
     }
 
     if (updated) {
@@ -148,14 +149,11 @@ async function handleRequest(request) {
       fs.writeFileSync(productsPath, JSON.stringify(products, null, 2), 'utf8');
     }
 
-    return new Response(JSON.stringify({ success: true, categories }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return jsonResponse({ success: true, categories }, { status: 200 });
 
   } catch (error) {
     console.error('manage-categories error:', error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return jsonResponse({ error: error.message }, { status: 500 });
   }
 }
 

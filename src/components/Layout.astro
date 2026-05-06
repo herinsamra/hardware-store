@@ -43,7 +43,7 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
   <meta name="description" content={description}>
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#1a472a">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dthi2vgiz/image/upload/v1778067898/favicon_zncfgk.ico">
   {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
@@ -92,6 +92,39 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
         });
       }
     })();
+    
+    // Image protection script
+    document.addEventListener('DOMContentLoaded', function() {
+      // Disable right-click on images
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        // Prevent context menu on right click
+        img.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+          return false;
+        });
+        
+        // Prevent drag and drop
+        img.addEventListener('dragstart', function(e) {
+          e.preventDefault();
+          return false;
+        });
+        
+        // Optional: Add a visual indicator that protects images
+        img.style.setProperty('-webkit-user-select', 'none');
+        img.style.setProperty('-moz-user-select', 'none');
+        img.style.setProperty('-ms-user-select', 'none');
+        img.style.setProperty('user-select', 'none');
+      });
+      
+      // Global right-click prevention on images (as backup)
+      document.body.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
+          return false;
+        }
+      });
+    });
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
 </body>

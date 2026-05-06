@@ -402,22 +402,22 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
   }
   .brand-chip-logo-shell {
     flex: none;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 5.5rem;
+    height: 5.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.4rem;
-    border-radius: 50%; /* Modern circular logo shell for mobile */
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   .brand-chip-logo {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
-    border-radius: 50%;
+    border-radius: 0.5rem;
   }
   .brand-chip-copy {
     min-width: 0;
@@ -469,7 +469,10 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
       gap: 1rem;
     }
     .brand-chip {
-      flex-direction: row; /* Revert to side-by-side on desktop */
+      display: grid;
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      justify-items: start;
+      justify-content: stretch;
       align-items: center;
       text-align: left;
       padding: 0.8rem 1rem;
@@ -477,17 +480,18 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
       background: rgba(15, 23, 42, 0.5);
     }
     .brand-chip-logo-shell {
-      width: 4rem;
-      height: 4rem;
-      border-radius: 0.85rem; /* Squircle shape on desktop */
+      width: 5.5rem;
+      height: 5.5rem;
+      border-radius: 1rem;
       padding: 0.5rem;
     }
     .brand-chip-logo {
-      border-radius: 0;
+      border-radius: 0.5rem;
     }
     .brand-chip-copy {
       align-items: flex-start;
       gap: 0.25rem;
+      width: 100%;
     }
     .brand-chip-name {
       font-size: 1rem;

@@ -2,8 +2,6 @@
 export const prerender = false;
 // src/pages/admin/edit-product.astro
 import AdminLayout from '../../components/AdminLayout.astro';
-import rawCategories from '../../data/categories.json';
-import brandsData from '../../data/brands.json';
 import { fetchProductById } from '../../lib/products';
 
 const partNo = Astro.url.searchParams.get('id');
@@ -13,11 +11,7 @@ if (partNo && !product) {
   return Astro.redirect('/admin/products');
 }
 
-const { Brands, ...productCategories } = rawCategories;
-
 // Safely serialize data for the client
-const categoryDataStr = JSON.stringify(productCategories);
-const brandsDataStr = JSON.stringify(Brands);
 const productDataStr = JSON.stringify(product || {});
 ---
 
@@ -178,12 +172,12 @@ const productDataStr = JSON.stringify(product || {});
     </div>
   </div>
 
-  <script define:vars={{ categoryDataStr, brandsDataStr, productDataStr }}>
-    document.addEventListener('DOMContentLoaded', () => {
+  <script define:vars={{ productDataStr }}>
+    document.addEventListener('DOMContentLoaded', async () => {
       if (!productDataStr || productDataStr === '{}') return;
 
-      const categories = JSON.parse(categoryDataStr);
-      const brandsData = JSON.parse(brandsDataStr);
+      let categories = {};
+      let brands = [];
       const product = JSON.parse(productDataStr);
 
       const catSelect = document.getElementById('category');
@@ -191,23 +185,38 @@ const productDataStr = JSON.stringify(product || {});
       const subsubSelect = document.getElementById('subsubcategory');
       const brandSelect = document.getElementById('brand');
 
-      // Flatten brands
-      let brands = [];
-      Object.values(brandsData).forEach(catBrands => {
-        catBrands.forEach(b => {
-          if (!brands.find(item => item.name === b)) {
-            brands.push({ name: b });
-          }
-        });
-      });
-      brands.sort((a, b) => a.name.localeCompare(b.name));
-
       function resetSelect(selectElement, defaultText, disable = false) {
         selectElement.innerHTML = `<option value="">${defaultText}</option>`;
         selectElement.disabled = disable;
       }
 
+      resetSelect(catSelect, 'Loading Categories...', true);
+      resetSelect(subcatSelect, '-- Select Subcategory --', true);
+      resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+      resetSelect(brandSelect, 'Loading Brands...', true);
+
+      try {
+        const [catRes, brandRes] = await Promise.all([
+          fetch('/api/get-categories', { cache: 'no-store' }),
+          fetch('/api/get-brands', { cache: 'no-store' })
+        ]);
+
+        if (catRes.ok) {
+          const rawCategories = await catRes.json();
+          const { Brands, ...productCategories } = rawCategories;
+          categories = productCategories;
+        }
+
+        if (brandRes.ok) {
+          brands = await brandRes.json();
+          brands.sort((a, b) => a.name.localeCompare(b.name));
+        }
+      } catch (error) {
+        console.error('Failed to load category or brand data:', error);
+      }
+
       // Populate Categories
+      resetSelect(catSelect, '-- Select Category --');
       Object.keys(categories).forEach(cat => {
         const option = document.createElement('option');
         option.value = cat;
@@ -223,6 +232,13 @@ const productDataStr = JSON.stringify(product || {});
         option.textContent = brand.name;
         brandSelect.appendChild(option);
       });
+
+      if (product.brand && !brands.some(brand => brand.name === product.brand)) {
+        const option = document.createElement('option');
+        option.value = product.brand;
+        option.textContent = product.brand;
+        brandSelect.appendChild(option);
+      }
 
       // Event Listeners for cascading dropdowns
       catSelect.addEventListener('change', () => {

@@ -5,10 +5,42 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import XLSX from 'xlsx';
+import { jsonResponse } from '../../lib/cacheHeaders.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '../../../');
+
+// Utility function to sanitize input
+function sanitizeInput(input) {
+  if (typeof input !== 'string') return input;
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove script tags
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '') // Remove iframe tags
+    .replace(/javascript:/gi, '') // Remove javascript:
+    .replace(/data:/gi, '') // Remove data:
+    .trim();
+}
+
+// Validate image URL
+function isValidImageUrl(url) {
+  try {
+    if (!url || typeof url !== 'string') return false;
+    
+    // Check if it's a valid URL format
+    const parsedUrl = new URL(url);
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+    const isCloudinaryOrValidDomain = parsedUrl.hostname.includes('cloudinary.com') || 
+                                     parsedUrl.hostname.includes('res.cloudinary.com') ||
+                                     parsedUrl.hostname.includes('images.unsplash.com') ||
+                                     parsedUrl.hostname.includes('cdn.pixabay.com') ||
+                                     /\.(jpg|jpeg|png|gif|webp|svg|bmp)$/i.test(url);
+                                     
+    return isCloudinaryOrValidDomain;
+  } catch (e) {
+    return false;
+  }
+}
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -83,15 +115,60 @@ export async function POST({ request }) {
     try {
       productInput = await request.json();
     } catch (e) {
-      return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400 });
+      return jsonResponse({ error: 'Invalid JSON body' }, { status: 400 });
     }
 
+    // Sanitize all string inputs
+    for (const key in productInput) {
+      if (typeof productInput[key] === 'string') {
+        productInput[key] = sanitizeInput(productInput[key]);
+      }
+    }
+
+    // Validate required fields
     const required = ['part_no', 'category', 'subcategory', 'subsubcategory', 'product_name', 'brand', 'mrp'];
     for (let field of required) {
       if (!productInput[field]) {
-        return new Response(JSON.stringify({ error: `Missing ${field}` }), { status: 400 });
+        return jsonResponse({ error: `Missing ${field}` }, { status: 400 });
       }
     }
+
+    // Validate product name length (max 56 chars)
+    if (productInput.product_name && productInput.product_name.length > 56) {
+      return jsonResponse({ error: 'Product name must not exceed 56 characters' }, { status: 400 });
+    }
+
+    // Validate price (must be positive number)
+    const mrp = parseFloat(productInput.mrp);
+    if (isNaN(mrp) || mrp <= 0) {
+      return jsonResponse({ error: 'MRP must be a positive number' }, { status: 400 });
+    }
+
+    // Validate image URLs if provided
+    if (productInput.images) {
+      const imageUrls = Array.isArray(productInput.images) 
+        ? productInput.images 
+        : productInput.images.split(',');
+      
+      for (const imageUrl of imageUrls) {
+        const trimmedUrl = imageUrl.trim();
+        if (trimmedUrl && !isValidImageUrl(trimmedUrl)) {
+          return jsonResponse({ error: `Invalid image URL: ${trimmedUrl}` }, { status: 400 });
+        }
+      }
+    }
+
+    // Validate video URL if provided
+    if (productInput.video_url && productInput.video_url.trim()) {
+      try {
+        new URL(productInput.video_url.trim());
+      } catch (e) {
+        return jsonResponse({ error: 'Invalid video URL' }, { status: 400 });
+      }
+    }
+
+    // Convert part_no to uppercase
+    productInput.part_no = productInput.part_no.toUpperCase();
 
     // Generate AI content
     const ai = await generateAI(
@@ -148,7 +225,7 @@ export async function POST({ request }) {
     // Check if part_no already exists
     const exists = existingData.some(row => row.part_no === newProduct.part_no);
     if (exists) {
-      return new Response(JSON.stringify({ error: 'Product with this part_no already exists' }), { status: 409 });
+      return jsonResponse({ error: 'Product with this part_no already exists' }, { status: 409 });
     }
 
     existingData.push(newProduct);
@@ -186,16 +263,16 @@ export async function POST({ request }) {
       fs.writeFileSync(jsonPath, JSON.stringify(jsonDataToSave, null, 2));
     }
 
-    return new Response(JSON.stringify({
+    return jsonResponse({
       message: 'Product saved successfully',
       product: newProduct,
-    }), { status: 200 });
+    }, { status: 200 });
 
   } catch (error) {
     console.error('Function error:', error);
-    return new Response(JSON.stringify({
+    return jsonResponse({
       error: 'Internal server error',
       details: error.message
-    }), { status: 500 });
+    }, { status: 500 });
   }
 }

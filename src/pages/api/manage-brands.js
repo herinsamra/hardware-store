@@ -1,6 +1,7 @@
 export const prerender = false;
 import fs from 'fs';
 import path from 'path';
+import { jsonResponse } from '../../lib/cacheHeaders.js';
 
 async function handleRequest(request) {
   const brandsPath = path.resolve(process.cwd(), 'src', 'data', 'brands.json');
@@ -11,7 +12,7 @@ async function handleRequest(request) {
     const { action, brand, oldName, reassignTo, force } = payload;
     
     if (!fs.existsSync(brandsPath)) {
-      return new Response(JSON.stringify({ error: 'Brands file not found' }), { status: 404 });
+      return jsonResponse({ error: 'Brands file not found' }, { status: 404 });
     }
 
     let brands = JSON.parse(fs.readFileSync(brandsPath, 'utf8'));
@@ -24,17 +25,17 @@ async function handleRequest(request) {
     let productsUpdated = false;
 
     if (action === 'ADD') {
-      if (!brand || !brand.name) return new Response(JSON.stringify({ error: 'Invalid brand data' }), { status: 400 });
+      if (!brand || !brand.name) return jsonResponse({ error: 'Invalid brand data' }, { status: 400 });
       if (brands.find(b => b.name === brand.name)) {
-        return new Response(JSON.stringify({ error: 'Brand already exists' }), { status: 400 });
+        return jsonResponse({ error: 'Brand already exists' }, { status: 400 });
       }
       brands.push(brand);
       updated = true;
     } 
     else if (action === 'EDIT') {
-      if (!oldName || !brand || !brand.name) return new Response(JSON.stringify({ error: 'Invalid parameters' }), { status: 400 });
+      if (!oldName || !brand || !brand.name) return jsonResponse({ error: 'Invalid parameters' }, { status: 400 });
       const index = brands.findIndex(b => b.name === oldName);
-      if (index === -1) return new Response(JSON.stringify({ error: 'Brand not found' }), { status: 404 });
+      if (index === -1) return jsonResponse({ error: 'Brand not found' }, { status: 404 });
       
       brands[index] = brand;
       updated = true;
@@ -51,18 +52,18 @@ async function handleRequest(request) {
     } 
     else if (action === 'DELETE') {
       const targetName = payload.name;
-      if (!targetName) return new Response(JSON.stringify({ error: 'Invalid parameters' }), { status: 400 });
+      if (!targetName) return jsonResponse({ error: 'Invalid parameters' }, { status: 400 });
       
       const index = brands.findIndex(b => b.name === targetName);
-      if (index === -1) return new Response(JSON.stringify({ error: 'Brand not found' }), { status: 404 });
+      if (index === -1) return jsonResponse({ error: 'Brand not found' }, { status: 404 });
 
       const dependentProducts = products.filter(p => p.brand === targetName);
 
       if (dependentProducts.length > 0 && !force && !reassignTo) {
-        return new Response(JSON.stringify({ 
+        return jsonResponse({ 
           error: 'Dependent products exist',
           dependentProducts: dependentProducts.map(p => ({ sku: p.sku || p.part_no, name: p.product_name }))
-        }), { status: 409 });
+        }, { status: 409 });
       }
 
       brands.splice(index, 1);
@@ -79,7 +80,7 @@ async function handleRequest(request) {
       }
     } 
     else {
-      return new Response(JSON.stringify({ error: 'Unknown action' }), { status: 400 });
+      return jsonResponse({ error: 'Unknown action' }, { status: 400 });
     }
 
     if (updated) {
@@ -89,14 +90,11 @@ async function handleRequest(request) {
       fs.writeFileSync(productsPath, JSON.stringify(products, null, 2), 'utf8');
     }
 
-    return new Response(JSON.stringify({ success: true, brands }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return jsonResponse({ success: true, brands }, { status: 200 });
 
   } catch (error) {
     console.error('manage-brands error:', error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return jsonResponse({ error: error.message }, { status: 500 });
   }
 }
 

@@ -214,8 +214,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       try {
         const [catRes, brandRes] = await Promise.all([
-          fetch('/api/get-categories'),
-          fetch('/api/get-brands')
+          fetch('/api/get-categories', { cache: 'no-store' }),
+          fetch('/api/get-brands', { cache: 'no-store' })
         ]);
         
         if (catRes.ok) {

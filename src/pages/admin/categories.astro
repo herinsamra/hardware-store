@@ -150,7 +150,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
         const container = document.getElementById('categories-container');
         container.innerHTML = '<div class="loading-state">Loading categories...</div>';
         try {
-          const res = await fetch('/api/get-categories');
+          const res = await fetch('/api/get-categories', { cache: 'no-store' });
           if (res.ok) {
             categoriesData = await res.json();
             renderTree();

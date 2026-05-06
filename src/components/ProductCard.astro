@@ -48,17 +48,25 @@ function formatIndianNumber(num: number): string {
 }
 ---
 
-<div class="product-card group" data-href={productUrl} data-astro-prefetch>
+<div 
+  class="product-card group" 
+  data-href={productUrl}
+  data-astro-prefetch
+  role="link"
+  tabindex="0"
+  aria-label={`View ${product.name}${product.variant_name ? `, ${product.variant_name} variant` : ''}`}
+>
   <div class="product-image-wrapper">
     {product.image ? (
       <img 
         src={product.image} 
-        alt={product.name} 
+        alt={`${product.name}${product.variant_name ? ` - ${product.variant_name}` : ''}`}
         class="product-image"
         loading="lazy"
+        decoding="async"
       />
     ) : (
-      <div class="product-image-placeholder">
+      <div class="product-image-placeholder" aria-hidden="true">
         <span>No Image</span>
       </div>
     )}
@@ -69,30 +77,57 @@ function formatIndianNumber(num: number): string {
       <p class="product-variant">{cleanName(product.variant_name)}</p>
     )}
     {product.price && Number(product.price) > 0 && (
-      <div class="product-price">MRP: ₹{formatIndianNumber(product.price)}</div>
+      <div class="product-price" aria-label={`Price: ${formatIndianNumber(product.price)} rupees`}>MRP: ₹{formatIndianNumber(product.price)}</div>
     )}
     {product.variants && product.variants.length > 0 && (
-      <div class="card-variant-pills">
+      <div class="card-variant-pills" role="list" aria-label="Available variants">
         {product.variant_name && (
-          <a href={productUrl} class="card-variant-chip active">{cleanName(product.variant_name)}</a>
+          <a 
+            href={productUrl} 
+            class="card-variant-chip active"
+            role="listitem"
+            aria-label={`${cleanName(product.variant_name)} (currently selected)`}
+            aria-current="true"
+          >{cleanName(product.variant_name)}</a>
         )}
         {product.variants.slice(0, 4).map((v) => (
-          <a href={`${productUrl}?variant=${v.variant_id}`} class="card-variant-chip">{v.variant_id}</a>
+          <a 
+            href={`${productUrl}?variant=${v.variant_id}`} 
+            class="card-variant-chip"
+            role="listitem"
+            aria-label={`Switch to variant ${v.variant_id}`}
+          >{v.variant_id}</a>
         ))}
         {product.variants.length > 4 && (
-          <a href={productUrl} class="card-variant-chip more">+{product.variants.length - 4}</a>
+          <a 
+            href={productUrl} 
+            class="card-variant-chip more"
+            role="listitem"
+            aria-label={`${product.variants.length - 4} more variants available`}
+          >+{product.variants.length - 4}</a>
         )}
       </div>
     )}
-    <div class="product-category">{cleanName(product.category)}</div>
+    <div class="product-category" aria-label={`Category: ${cleanName(product.category)}`}>{cleanName(product.category)}</div>
   </div>
 </div>
 
 <script>
   document.querySelectorAll('.product-card[data-href]').forEach(card => {
+    // Mouse click — skip if user clicked a variant chip
     card.addEventListener('click', (e) => {
       if (e.target.closest('.card-variant-chip')) return;
       window.location.href = card.dataset.href;
+    });
+
+    // Keyboard navigation — Enter or Space activates the card
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!e.target.closest('.card-variant-chip')) {
+          window.location.href = card.dataset.href;
+        }
+      }
     });
   });
 </script>
@@ -118,6 +153,15 @@ function formatIndianNumber(num: number): string {
       transform 0.28s ease,
       box-shadow 0.28s ease,
       border-color 0.28s ease;
+    /* Keyboard focus ring */
+    outline: none;
+  }
+  .product-card:focus-visible {
+    box-shadow:
+      14px 14px 28px var(--neo-shadow-dark),
+      -14px -14px 28px var(--neo-shadow-light),
+      0 0 0 3px var(--accent-gold);
+    border-color: rgba(197, 160, 40, 0.5);
   }
 
   .product-card::before {

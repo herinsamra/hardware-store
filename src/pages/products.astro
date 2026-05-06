@@ -65,7 +65,20 @@ const productsPerPage = 12;
     <h1 class="page-title" id="products-page-title">All Products</h1>
     <p class="product-count" id="product-count">Loading products...</p>
 
-    <div class="product-grid" id="product-grid"></div>
+    <div class="product-grid" id="product-grid">
+      <!-- Skeleton cards shown until JS renders real products -->
+      {Array.from({ length: 12 }).map(() => (
+        <div class="product-card skeleton-card" aria-hidden="true">
+          <div class="product-image-wrapper skeleton-img"></div>
+          <div class="product-info">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-subtitle"></div>
+            <div class="skeleton-line skeleton-price"></div>
+            <div class="skeleton-line skeleton-category"></div>
+          </div>
+        </div>
+      ))}
+    </div>
 
     <div class="no-results" id="no-results" hidden>
       <p>No products found. Try a different filter or search term.</p>
@@ -1602,4 +1615,44 @@ const productsPerPage = 12;
       max-width: 800px;
     }
   }
+
+  /* ===== SKELETON LOADERS ===== */
+  @keyframes skeleton-shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .skeleton-card {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .skeleton-img {
+    background: linear-gradient(
+      90deg,
+      var(--neo-surface-high) 25%,
+      var(--neo-surface-base) 37%,
+      var(--neo-surface-high) 63%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s infinite linear;
+  }
+
+  .skeleton-line {
+    border-radius: 6px;
+    margin-bottom: 0.6rem;
+    background: linear-gradient(
+      90deg,
+      var(--neo-surface-high) 25%,
+      var(--neo-surface-base) 37%,
+      var(--neo-surface-high) 63%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s infinite linear;
+  }
+
+  .skeleton-title  { height: 1rem;  width: 80%; animation-delay: 0.05s; }
+  .skeleton-subtitle { height: 0.8rem; width: 55%; animation-delay: 0.1s; }
+  .skeleton-price  { height: 1.1rem; width: 45%; animation-delay: 0.15s; }
+  .skeleton-category { height: 0.7rem; width: 35%; animation-delay: 0.2s; margin-top: auto; }
   </style>

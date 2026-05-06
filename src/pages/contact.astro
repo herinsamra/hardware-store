@@ -20,7 +20,7 @@ import Layout from '../components/Layout.astro';
           <div class="content__item-imgwrap">
             <div
               class="content__item-img"
-              style="background-image: url('https://res.cloudinary.com/dthi2vgiz/image/upload/v1777987633/2023-07-03_iog4ys.webp?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"
+              style="background-image: url('https://res.cloudinary.com/dthi2vgiz/image/upload/v1777987066/2023-06-23_o4szd5.webp?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"
             ></div>
           </div>
           <h2 class="content__item-title">Visit Our Store</h2>
@@ -81,7 +81,7 @@ import Layout from '../components/Layout.astro';
           <div class="content__item-imgwrap">
             <div
               class="content__item-img"
-              style="background-image: url('https://res.cloudinary.com/dthi2vgiz/image/upload/v1777988550/8436_zl2o3v.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"
+              style="background-image: url('https://res.cloudinary.com/dthi2vgiz/image/upload/v1778148948/f3b80854e20e7c965b40edbb974aff42_erowws.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"
             ></div>
           </div>
           <h2 class="content__item-title">About Us</h2>
@@ -123,10 +123,10 @@ import Layout from '../components/Layout.astro';
 
   body {
     margin: 0;
-    --color-text: #dc6e25;
-    --color-bg: #efded3;
-    --color-link: #000;
-    --color-link-hover: #dc6e25;
+    --color-text: var(--accent-gold, #c5a028);
+    --color-bg: var(--bg-gradient-start, #0f172a);
+    --color-link: var(--accent-gold, #c5a028);
+    --color-link-hover: var(--accent-gold-light, #d4b44a);
     --aspect-ratio: 1/1.5;
     --imgwidthmax: 500px;
     --size-title: 10rem;
@@ -139,12 +139,12 @@ import Layout from '../components/Layout.astro';
   }
 
   .page {
-    --color-text: #f0a35e;
-    --color-bg: #120605;
-    --color-link: #f0a35e;
-    --color-link-hover: #ffcc80;
+    --color-text: var(--accent-gold, #c5a028);
+    --color-bg: var(--bg-gradient-start, #0f172a);
+    --color-link: var(--accent-gold, #c5a028);
+    --color-link-hover: var(--accent-gold-light, #d4b44a);
     --imgwidthmax: 400px;
-    --color-description: #e0c8b0;
+    --color-description: var(--text-secondary, #94a3b8);
     --font-title: "Dancing Script", serif;
     --size-title: 6vw;
   }
@@ -161,27 +161,27 @@ import Layout from '../components/Layout.astro';
     font-size: clamp(2.5rem, 8vw, 4rem) !important;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     letter-spacing: 1px;
-    color: #ffb347 !important;
+    color: var(--accent-gold, #c5a028) !important;
   }
 
   .phone-link,
   .whatsapp-link,
   .map-link,
   .email-link {
-    color: #ffb347;
+    color: var(--accent-gold-light, #d4b44a);
     text-decoration: none;
     font-weight: bold;
     transition: all 0.2s ease;
-    border-bottom: 1px dashed rgba(255, 180, 71, 0.5);
+    border-bottom: 1px dashed rgba(197, 160, 40, 0.5);
   }
 
   .phone-link:hover,
   .whatsapp-link:hover,
   .map-link:hover,
   .email-link:hover {
-    color: #ffdd99;
-    border-bottom-color: #ffdd99;
-    text-shadow: 0 0 5px rgba(255, 180, 71, 0.5);
+    color: #e8d06e;
+    border-bottom-color: #e8d06e;
+    text-shadow: 0 0 5px rgba(197, 160, 40, 0.5);
   }
 
   .closed {
@@ -245,12 +245,12 @@ import Layout from '../components/Layout.astro';
   }
 
   body::-webkit-scrollbar-track {
-    background: #120605;
+    background: var(--bg-gradient-start, #0f172a);
   }
 
   body::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    background: #8d5146;
+    background: var(--accent-gold, #c5a028);
   }
 
   a {
@@ -300,8 +300,8 @@ import Layout from '../components/Layout.astro';
     font-family: "Righteous", cursive;
     font-size: var(--size-title);
     font-weight: 400;
-    color: #ffb347;
-    text-shadow: 0 0 10px rgba(255, 180, 71, 0.3);
+    color: var(--accent-gold, #c5a028);
+    text-shadow: 0 0 10px rgba(197, 160, 40, 0.3);
     padding-right: 80px;
   }
 
@@ -381,13 +381,15 @@ import Layout from '../components/Layout.astro';
   .content__item-title {
     position: relative;
     font-size: var(--size-title);
-    padding: 0 3vw;
-    margin: calc(var(--size-title) * -1 / 2) 0 0 0;
+    padding: 0 3vw 0 clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0 0 0.5rem 0;
     align-self: start;
     line-height: 1;
     font-family: var(--font-title);
     font-weight: var(--font-weight-title);
     will-change: transform;
+    max-width: min(100%, 10ch);
+    overflow-wrap: anywhere;
   }
 
   .credits {
@@ -414,6 +416,7 @@ import Layout from '../components/Layout.astro';
   .content__item--wide:nth-child(even) .content__item-description {
     grid-area: 3 / 1 / 4 / 2;
     justify-self: start;
+    margin-left: clamp(0.75rem, 2vw, 1.5rem);
   }
 
   .content--alternate .content__item:nth-child(even) .content__item-title,
@@ -421,6 +424,7 @@ import Layout from '../components/Layout.astro';
     grid-area: 3 / 2 / 4 / 3;
     justify-self: end;
     width: auto;
+    margin-right: clamp(0.75rem, 2vw, 1.5rem);
   }
 
   .content__item--expand .content__item-description {
@@ -510,9 +514,9 @@ import Layout from '../components/Layout.astro';
       max-width: min(100%, 42rem);
       min-height: clamp(22rem, 34vw, 34rem);
       padding-bottom: 0;
-      border: 1px solid rgba(255, 179, 71, 0.16);
+      border: 1px solid rgba(197, 160, 40, 0.16);
       border-radius: 28px;
-      background: rgba(18, 6, 5, 0.75);
+      background: rgba(15, 23, 42, 0.75);
       box-shadow: 0 28px 60px rgba(0, 0, 0, 0.3);
     }
 
@@ -537,7 +541,7 @@ import Layout from '../components/Layout.astro';
       align-self: end;
       justify-self: start;
       margin: 0;
-      padding: 0;
+      padding: 0 clamp(0.25rem, 0.8vw, 0.5rem) 0 clamp(1.1rem, 2vw, 1.75rem);
       max-width: 8ch;
       font-size: clamp(2.8rem, 3.8vw, 4.75rem) !important;
       line-height: 0.95;
@@ -553,8 +557,8 @@ import Layout from '../components/Layout.astro';
       padding: 1.5rem 1.75rem;
       text-align: left;
       font-size: 1.15rem !important;
-      background: linear-gradient(180deg, rgba(34, 16, 12, 0.92), rgba(18, 6, 5, 0.72));
-      border: 1px solid rgba(255, 179, 71, 0.14);
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.72));
+      border: 1px solid rgba(197, 160, 40, 0.14);
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
       backdrop-filter: blur(12px);
@@ -567,14 +571,28 @@ import Layout from '../components/Layout.astro';
   }
 
   @media screen and (max-width: 40em) {
+    .content__item--expand,
+    .content__item--expand:nth-child(even) {
+      grid-template-columns: 100%;
+      grid-template-rows: auto auto auto;
+    }
+
     .content__item--expand .content__item-imgwrap,
     .content__item--expand:nth-child(even) .content__item-imgwrap {
-      grid-area: 1 / 1 / 3 / 3;
+      grid-area: 2 / 1 / 3 / 2;
+      border: 1px solid rgba(197, 160, 40, 0.16);
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.75);
+      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.26);
+    }
+
+    .content__item-img {
+      border-radius: inherit;
     }
 
     .content__item--expand .content__item-description,
     .content__item--expand:nth-child(even) .content__item-description {
-      grid-area: 3 / 1 / 4 / 3;
+      grid-area: 3 / 1 / 4 / 2;
       padding: 1rem 0;
       width: 100%;
       text-align: left;
@@ -582,7 +600,15 @@ import Layout from '../components/Layout.astro';
 
     .content--alternate .content__item-title,
     .content--alternate .content__item:nth-child(even) .content__item-title {
-      grid-area: 1 / 1 / 4 / 2;
+      grid-area: 1 / 1 / 2 / 2;
+      margin: 0 0 0.75rem 0;
+      padding-inline: 0;
+      max-width: 100%;
+      text-align: center;
+      justify-self: center;
+      overflow-wrap: normal;
+      word-break: normal;
+      transform: none !important;
     }
 
     .content__item-description {

@@ -9,6 +9,15 @@ const allProducts = await fetchAllProducts();
 const category = Astro.url.searchParams.get('category');
 const subcategory = Astro.url.searchParams.get('subcategory');
 const subsub = Astro.url.searchParams.get('subsub');
+const addProductParams = new URLSearchParams();
+
+if (category) addProductParams.set('category', category);
+if (subcategory) addProductParams.set('subcategory', subcategory);
+if (subsub) addProductParams.set('subsub', subsub);
+
+const addProductUrl = addProductParams.toString()
+  ? `/admin/add-product?${addProductParams.toString()}`
+  : '/admin/add-product';
 
 const filteredProducts = allProducts.filter(product => {
   if (category && product.category !== category) return false;
@@ -24,7 +33,7 @@ const filteredProducts = allProducts.filter(product => {
       <h1 class="page-title">All Products</h1>
       <p class="subtitle">Manage, edit, or delete existing products in your inventory.</p>
     </div>
-    <a href="/admin/add-product" class="action-btn primary-btn">
+    <a href={addProductUrl} class="action-btn primary-btn">
       <span class="icon">➕</span> Add New Product
     </a>
   </div>

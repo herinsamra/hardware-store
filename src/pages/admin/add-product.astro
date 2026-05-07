@@ -290,7 +290,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
       const urlParams = new URLSearchParams(window.location.search);
       const preCat = urlParams.get('category');
       const preSub = urlParams.get('subcategory');
-      const preSubSub = urlParams.get('subsub');
+      const preSubSub = urlParams.get('subsub') || urlParams.get('subsubcategory');
 
       if (preCat && categories[preCat]) {
         catSelect.value = preCat;
@@ -411,16 +411,35 @@ import AdminLayout from '../../components/AdminLayout.astro';
       const variantsContainer = document.getElementById('variantsContainer');
       const addVariantBtn = document.getElementById('addVariantBtn');
 
+      function splitImageList(value) {
+        return value.split(',').map(s => s.trim()).filter(Boolean);
+      }
+
+      function getMainProductDefaults() {
+        const images = document.getElementById('images').value.trim();
+
+        return {
+          partNo: document.getElementById('part_no').value.trim(),
+          price: document.getElementById('mrp').value.trim(),
+          images,
+          imageList: splitImageList(images),
+        };
+      }
+
       function getVariantsData() {
         const variantRows = variantsContainer.querySelectorAll('.variant-row');
+        const defaults = getMainProductDefaults();
         const variants = [];
         variantRows.forEach(row => {
+          const priceValue = row.querySelector('.v-price').value.trim() || defaults.price;
+          const imagesValue = row.querySelector('.v-images').value.trim() || defaults.images;
+
           variants.push({
-            variant_id: row.querySelector('.v-id').value,
-            price: parseFloat(row.querySelector('.v-price').value),
-            part_no: row.querySelector('.v-partno').value,
+            variant_id: row.querySelector('.v-id').value.trim(),
+            price: priceValue ? parseFloat(priceValue) : '',
+            part_no: row.querySelector('.v-partno').value.trim() || defaults.partNo,
             sku: row.querySelector('.v-sku').value,
-            images: row.querySelector('.v-images').value.split(',').map(s => s.trim()).filter(Boolean)
+            images: imagesValue ? splitImageList(imagesValue) : defaults.imageList,
           });
         });
         return variants;
@@ -428,6 +447,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       if (addVariantBtn) {
         addVariantBtn.addEventListener('click', () => {
+          const defaults = getMainProductDefaults();
           const row = document.createElement('div');
           row.className = 'variant-row';
           row.innerHTML = `
@@ -453,6 +473,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
             </div>
             <button type="button" class="remove-variant-btn">✕</button>
           `;
+          row.querySelector('.v-price').value = defaults.price;
+          row.querySelector('.v-partno').value = defaults.partNo;
+          row.querySelector('.v-images').value = defaults.images;
           row.querySelector('.remove-variant-btn').addEventListener('click', () => row.remove());
           variantsContainer.appendChild(row);
         });

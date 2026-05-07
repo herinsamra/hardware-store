@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
 import { fileURLToPath } from 'url';
+import { SITE_URL } from './src/lib/seo.js';
 
 const astroPrerenderEntrypoint = fileURLToPath(
   new URL('./node_modules/astro/dist/entrypoints/prerender.js', import.meta.url)
@@ -10,7 +11,7 @@ const astroLegacyEntrypoint = fileURLToPath(
 );
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://your-site-url.com', // Replace with your actual site URL
+  site: SITE_URL,
   output: 'static',   // Use static, mostly static pages + SSR endpoints
   adapter: netlify(),
   prefetch: {

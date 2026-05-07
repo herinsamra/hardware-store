@@ -62,6 +62,12 @@ export function loadProductsFromExcel() {
       is_featured: row.is_featured || false,
       slogan: row.slogan || '',
       video_url: row.video_url || '',
+      quantity: row.quantity ?? row.stock ?? '',
+      availability: row.availability || '',
+      gtin: row.gtin || row.upc || row.ean || '',
+      material: row.material || '',
+      color: row.color || '',
+      size: row.size || '',
       variants: (() => {
         if (!row.variants) return [];
         if (Array.isArray(row.variants)) return row.variants;

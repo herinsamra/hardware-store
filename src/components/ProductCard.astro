@@ -9,6 +9,7 @@ export interface Props {
     price: number;
     image: string;
     category: string;
+    brand?: string;
     slug?: string;
     routeParam?: string;
     url?: string;
@@ -108,7 +109,7 @@ function formatIndianNumber(num: number): string {
         )}
       </div>
     )}
-    <div class="product-category" aria-label={`Category: ${cleanName(product.category)}`}>{cleanName(product.category)}</div>
+    <div class="product-category" aria-label={`Brand: ${cleanName(product.brand || '')}`}>{cleanName(product.brand || product.category)}</div>
   </div>
 </div>
 

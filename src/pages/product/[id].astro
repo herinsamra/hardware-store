@@ -9,6 +9,7 @@ import {
   getAllProductSlugs,
   getProductUrl,
 } from '../../lib/products';
+import { absoluteUrl, formatMerchantPrice } from '../../lib/seo.js';
 import EnquireNowModal from '../../components/EnquireNowModal.astro';
 
 export const prerender = true;
@@ -71,7 +72,7 @@ if (routeParam !== product.routeParam) {
 }
 
 const absoluteCanonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
-const absoluteImageUrl = product.image || undefined;
+const absoluteImageUrl = product.image ? absoluteUrl(product.image) : undefined;
 const brandAsset = getBrandAsset(product.brand);
 const productImages = Array.from(new Set(
   (product.images?.length ? product.images : [product.image]).filter(Boolean)
@@ -111,7 +112,7 @@ const productSchema = {
   description: product.meta_description || product.description,
   sku: product.sku || undefined,
   mpn: product.part_no || undefined,
-  image: productImages.length ? productImages : (absoluteImageUrl ? [absoluteImageUrl] : undefined),
+  image: productImages.length ? productImages.map(image => absoluteUrl(image)) : (absoluteImageUrl ? [absoluteImageUrl] : undefined),
   category: productCategoryTrail || undefined,
   brand: product.brand ? {
     '@type': 'Brand',
@@ -121,8 +122,9 @@ const productSchema = {
   offers: Number.isFinite(product.price) ? {
     '@type': 'Offer',
     priceCurrency: 'INR',
-    price: formatIndianNumber(product.price),
+    price: formatMerchantPrice(product.price),
     availability: 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
     url: absoluteCanonicalUrl,
   } : undefined,
 };

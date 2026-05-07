@@ -188,5 +188,15 @@
     "name": "RR SIGNATURE",
     "category": "Electrical",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777976291/images_1_-Picsart-BackgroundRemover_wkrwth.png"
+  },
+  {
+    "name": "ORIENT",
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151668/images_2_xsugzg.png"
+  },
+  {
+    "name": "REMI",
+    "category": "ELECTRICAL",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778152331/remi_2-600x315h_xkaznt.jpg"
   }
 ]

@@ -29,7 +29,43 @@ interface Product {
   video_url?: string;
 }
 
-const allProducts: Product[] = await fetchAllProducts();
+const baseProducts: Product[] = await fetchAllProducts();
+const allProducts: Product[] = [];
+
+baseProducts.forEach(product => {
+  allProducts.push(product);
+
+  if (product.variants && product.variants.length > 0) {
+    product.variants.forEach(variant => {
+      const variantImage = (variant.images && variant.images.length > 0) ? variant.images[0] : product.image;
+      
+      const siblingVariants = product.variants.filter(v => v.variant_id !== variant.variant_id);
+      if (product.variant_name) {
+        siblingVariants.unshift({
+          variant_id: product.variant_name,
+          price: product.price,
+          part_no: product.part_no,
+          sku: product.sku,
+          images: product.images
+        });
+      }
+
+      allProducts.push({
+        ...product,
+        id: variant.part_no || `${product.id}-${variant.variant_id}`,
+        part_no: variant.part_no || product.part_no,
+        sku: variant.sku || product.sku,
+        variant_name: variant.variant_id,
+        price: variant.price !== undefined ? variant.price : product.price,
+        images: variant.images && variant.images.length > 0 ? variant.images : product.images,
+        image: variantImage,
+        thumbnail: variantImage ? variantImage.replace('/upload/', '/upload/c_fill,w_200,h_200/') : product.thumbnail,
+        url: `${product.url}?variant=${encodeURIComponent(variant.variant_id)}`,
+        variants: siblingVariants
+      });
+    });
+  }
+});
 const productsPerPage = 12;
 ---
 
@@ -750,7 +786,8 @@ const productsPerPage = 12;
           const chip = document.createElement('a');
           chip.className = 'card-variant-chip';
           chip.textContent = v.variant_id;
-          chip.href = `${productHref}?variant=${v.variant_id}`;
+          const baseUrl = productHref.split('?')[0];
+          chip.href = `${baseUrl}?variant=${encodeURIComponent(v.variant_id)}`;
           chip.addEventListener('click', e => e.stopPropagation());
           pillsWrapper.appendChild(chip);
         });
@@ -767,10 +804,11 @@ const productsPerPage = 12;
         info.appendChild(pillsWrapper);
       }
 
-      const category = document.createElement('div');
-      category.className = 'product-category';
-      setHighlightedText(category, product.category || '', matchInfo.category || []);
-      info.appendChild(category);
+      const brand = document.createElement('div');
+      brand.className = 'product-category';
+      brand.setAttribute('aria-label', `Brand: ${cleanName(product.brand || '')}`);
+      setHighlightedText(brand, product.brand || product.category || '', matchInfo.brand || []);
+      info.appendChild(brand);
 
       card.appendChild(imageWrapper);
       card.appendChild(info);

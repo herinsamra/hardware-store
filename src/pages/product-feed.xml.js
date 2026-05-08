@@ -40,6 +40,9 @@ export async function GET() {
         .join(' > ');
       const mpn = cleanText(product.part_no || '');
       const hasProductIdentifier = Boolean(product.gtin || (product.brand && mpn));
+      
+      const additionalImages = product.images?.slice(1, 11).map(img => absoluteUrl(img)) || [];
+      const additionalImageTags = additionalImages.map(img => `          <g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join('\n');
 
       return `        <item>
           <title>${cdata(title)}</title>
@@ -50,10 +53,15 @@ export async function GET() {
           <g:description>${cdata(description)}</g:description>
           <g:link>${escapeXml(link)}</g:link>
           <g:image_link>${escapeXml(image)}</g:image_link>
-          <g:availability>${getAvailability(product)}</g:availability>
+${additionalImageTags ? additionalImageTags + '\n' : ''}          <g:availability>${getAvailability(product)}</g:availability>
           <g:price>${price}</g:price>
           <g:condition>new</g:condition>
-${googleTag('brand', cleanText(product.brand || 'Peniel Hardwares'))}${googleTag('mpn', mpn)}${googleTag('gtin', cleanText(product.gtin))}${googleTag('product_type', productType)}${googleTag('material', cleanText(product.material))}${googleTag('color', cleanText(product.color))}${googleTag('size', cleanText(product.size))}${googleTag('item_group_id', product.variants?.length ? cleanText(product.id) : '')}${hasProductIdentifier ? '' : '          <g:identifier_exists>no</g:identifier_exists>\n'}        </item>`;
+          <g:shipping>
+            <g:country>IN</g:country>
+            <g:service>Standard</g:service>
+            <g:price>0.00 INR</g:price>
+          </g:shipping>
+${googleTag('brand', cleanText(product.brand || 'Peniel Hardwares'))}${googleTag('mpn', mpn)}${googleTag('gtin', cleanText(product.gtin))}${googleTag('product_type', productType)}${googleTag('material', cleanText(product.material))}${googleTag('color', cleanText(product.color))}${googleTag('size', cleanText(product.size))}${googleTag('shipping_weight', product.weight ? `${product.weight} kg` : '')}${googleTag('item_group_id', product.variants?.length ? cleanText(product.id) : '')}${hasProductIdentifier ? '' : '          <g:identifier_exists>no</g:identifier_exists>\n'}        </item>`;
     })
     .join('\n');
 

@@ -189,16 +189,41 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
       const page = document.getElementById('page-wrapper');
       const menuToggle = document.getElementById('menu-toggle');
       const content = document.getElementById('page-content');
+      let savedScroll = 0;
+      
+      function openMenu() {
+        if (!page) return;
+        savedScroll = window.scrollY;
+        page.classList.add('shazam');
+        document.body.classList.add('shazam-open');
+        // After locking, scroll the inner container to where user was
+        const inner = document.getElementById('main-scroll-container');
+        if (inner) {
+          requestAnimationFrame(() => { inner.scrollTop = savedScroll; });
+        }
+      }
+      
+      function closeMenu() {
+        if (!page) return;
+        page.classList.remove('shazam');
+        document.body.classList.remove('shazam-open');
+        // Restore browser scroll position
+        requestAnimationFrame(() => { window.scrollTo(0, savedScroll); });
+      }
       
       if (menuToggle && page) {
         menuToggle.addEventListener('click', () => {
-          page.classList.toggle('shazam');
+          if (page.classList.contains('shazam')) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
         });
       }
       if (content && page) {
         content.addEventListener('click', () => {
           if (page.classList.contains('shazam')) {
-            page.classList.remove('shazam');
+            closeMenu();
           }
         });
       }
@@ -221,28 +246,57 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
     .content_inner { width: 100%; }
 
     @media (max-width: 768px) {
-      html.shazam-layout, html.shazam-layout body {
-        height: 100%;
-        overflow: hidden;
+      /* Base state: allow normal scrolling */
+      html.shazam-layout {
         margin: 0;
         padding: 0;
         background-color: var(--shazam-bg);
       }
-      html.shazam-layout .page {
-        height: 100%;
+      html.shazam-layout body {
+        margin: 0;
+        padding: 0;
         background-color: var(--shazam-bg);
-        position: relative;
       }
+
+      /* ONLY lock scroll when the 3D menu is open */
+      html.shazam-layout body.shazam-open,
+      html.shazam-layout body.shazam-open html {
+        overflow: hidden;
+        height: 100%;
+      }
+
+      html.shazam-layout .page#page-wrapper {
+        position: relative;
+        background-color: var(--shazam-bg);
+        transition: none;
+      }
+
+      /* When menu is open, page becomes fixed viewport */
+      html.shazam-layout body.shazam-open .page#page-wrapper {
+        height: 100%;
+        overflow: hidden;
+      }
+
       .page#page-wrapper .content {
-        height: 200%;
         transform-origin: top left;
         transition: transform .7s var(--shazam-snap);
-        background-color: #0f172a; /* Match the dark theme */
+        background-color: #0f172a;
       }
-      .content_inner {
+
+      /* When menu is open, content uses the 200%/50% trick for rotation */
+      html.shazam-layout body.shazam-open .page#page-wrapper .content {
+        height: 200%;
+      }
+      html.shazam-layout body.shazam-open .content_inner {
         height: 50%;
         overflow-y: auto;
         overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+      }
+
+      /* Normal state: content_inner is just a normal wrapper */
+      .content_inner {
         position: relative;
       }
       

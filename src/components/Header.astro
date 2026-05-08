@@ -1,4 +1,9 @@
 ---
+interface Props {
+  useOldNav?: boolean;
+}
+const { useOldNav = false } = Astro.props;
+
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
@@ -43,26 +48,30 @@ const navLinks = [
     </div>
   </nav>
 
-  <!-- Mobile Hamburger Menu (visible only on mobile) -->
-  <input class="mobile-menu-icon" type="checkbox" id="mobile-menu-icon" name="mobile-menu-icon"/>
-  <label for="mobile-menu-icon" class="mobile-menu-label" aria-label="Toggle menu"></label>
-  <div class="mobile-nav">
-    <ul>
-      {navLinks.map(link => (
-        <li>
-          <a 
-            href={link.href}
-            data-astro-prefetch="hover"
-            class:list={[
-              { 'mobile-active': link.href === '/' ? currentPath === '/' : currentPath === link.href || currentPath.startsWith(link.href + '/') }
-            ]}
-          >
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+  {useOldNav && (
+    <>
+      <!-- Mobile Hamburger Menu (visible only on mobile) -->
+      <input class="mobile-menu-icon" type="checkbox" id="mobile-menu-icon" name="mobile-menu-icon"/>
+      <label for="mobile-menu-icon" class="mobile-menu-label" aria-label="Toggle menu"></label>
+      <div class="mobile-nav">
+        <ul>
+          {navLinks.map(link => (
+            <li>
+              <a 
+                href={link.href}
+                data-astro-prefetch="hover"
+                class:list={[
+                  { 'mobile-active': link.href === '/' ? currentPath === '/' : currentPath === link.href || currentPath.startsWith(link.href + '/') }
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )}
 </header>
 
 <!-- Desktop styles (scoped is fine) -->
@@ -195,9 +204,28 @@ const navLinks = [
       transition: none;
     }
   }
+
+  @media (max-width: 768px) {
+    /* Hide desktop nav links on mobile */
+    .desktop-nav {
+      display: none !important;
+    }
+    /* Reduce spacer since nav links are gone */
+    .site-header {
+      --header-height-expanded: 5rem;
+      --header-height-compact: 4.5rem;
+    }
+    .site-header .logo-center {
+      margin-bottom: 0;
+    }
+    .logo-img { height: 2rem; }
+    .logo-text { font-size: 1.15rem; }
+    .site-header .logo-img { height: 1.85rem; }
+    .site-header .logo-text { font-size: 1.05rem; }
+  }
 </style>
 
-<!-- Mobile styles need is:global because of checkbox sibling selectors -->
+{useOldNav && (
 <style is:global>
   /* ==============================
      MOBILE MENU — Animated Blob
@@ -211,24 +239,6 @@ const navLinks = [
   }
 
   @media (max-width: 768px) {
-    /* Hide desktop nav links on mobile */
-    .desktop-nav {
-      display: none !important;
-    }
-
-    /* Reduce spacer since nav links are gone */
-    .site-header {
-      --header-height-expanded: 5rem !important;
-      --header-height-compact: 4.5rem !important;
-    }
-    .site-header .logo-center {
-      margin-bottom: 0 !important;
-    }
-    .logo-img { height: 2rem !important; }
-    .logo-text { font-size: 1.15rem !important; }
-    .site-header .logo-img { height: 1.85rem !important; }
-    .site-header .logo-text { font-size: 1.05rem !important; }
-
     /* Checkbox hack — hide input offscreen */
     .mobile-menu-icon {
       display: block !important;
@@ -440,17 +450,28 @@ const navLinks = [
     }
   }
 </style>
+)}
+
+
 
 <script is:inline>
   (() => {
     const header = document.querySelector('[data-site-header]');
     if (!(header instanceof HTMLElement)) return;
 
-    let lastScrollY = window.scrollY;
     let ticking = false;
+    let target = window;
+    
+    // Check if main-scroll-container exists (used by the new mobile layout)
+    const scrollContainer = document.getElementById('main-scroll-container');
+    if (scrollContainer && window.innerWidth <= 768) {
+      target = scrollContainer;
+    }
+
+    let lastScrollY = target === window ? window.scrollY : target.scrollTop;
 
     const updateHeader = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = target === window ? window.scrollY : target.scrollTop;
       const delta = currentScrollY - lastScrollY;
 
       // Always remove hidden when at the very top
@@ -474,11 +495,26 @@ const navLinks = [
       ticking = false;
     };
 
-    window.addEventListener('scroll', () => {
+    target.addEventListener('scroll', () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(updateHeader);
     }, { passive: true });
+
+    // Re-evaluate target on resize
+    window.addEventListener('resize', () => {
+      const newTarget = scrollContainer && window.innerWidth <= 768 ? scrollContainer : window;
+      if (newTarget !== target) {
+        target.removeEventListener('scroll', updateHeader);
+        target = newTarget;
+        lastScrollY = target === window ? window.scrollY : target.scrollTop;
+        target.addEventListener('scroll', () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(updateHeader);
+        }, { passive: true });
+      }
+    });
 
     updateHeader();
 

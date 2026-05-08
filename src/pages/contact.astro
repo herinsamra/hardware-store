@@ -2,7 +2,7 @@
 import Layout from '../components/Layout.astro';
 ---
 
-<Layout title="Contact Us | Peniel Hardwares" showFooter={false}>
+<Layout title="Contact Us | Peniel Hardwares" showFooter={false} useOldNav={true}>
   <main class="contact-main">
     <div data-scroll class="page page--layout-2">
       <h1 class="page__title">Connect with Peniel</h1>
@@ -132,7 +132,7 @@ import Layout from '../components/Layout.astro';
     --size-title: 10rem;
     --font-weight-title: 400;
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background-color: transparent;
     font-size: 1.5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

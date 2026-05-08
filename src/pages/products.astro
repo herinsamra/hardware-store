@@ -71,33 +71,6 @@ const productsPerPage = 12;
 
 <Layout title="Products | Peniel Hardwares">
   <div class="products-page">
-    <div class="filter-bar">
-      <form method="get" class="search-form" id="products-search-form">
-        <input type="hidden" name="category" id="search-category" />
-        <input type="hidden" name="subcategory" id="search-subcategory" />
-        <input type="hidden" name="subsub" id="search-subsub" />
-        <input type="hidden" name="brand" id="search-brand" />
-
-        <div class="search-box">
-          <input
-            type="text"
-            name="search"
-            value=""
-            placeholder="Search products..."
-            class="search-input"
-            id="search-input"
-            autocomplete="off"
-            aria-autocomplete="list"
-            aria-controls="search-suggestions"
-            aria-expanded="false"
-          />
-          <div class="search-suggestions" id="search-suggestions" hidden></div>
-        </div>
-
-        <button type="submit" class="search-btn">Search</button>
-      </form>
-    </div>
-
     <h1 class="page-title" id="products-page-title">All Products</h1>
     <p class="product-count" id="product-count">Loading products...</p>
 
@@ -120,7 +93,7 @@ const productsPerPage = 12;
       <p>No products found. Try a different filter or search term.</p>
     </div>
 
-    <div class="pagination" id="pagination"></div>
+    <div id="infinite-scroll-trigger" class="scroll-trigger"></div>
 
     <noscript>
       <p class="product-count">
@@ -158,10 +131,9 @@ const productsPerPage = 12;
     const countEl = document.getElementById('product-count');
     const gridEl = document.getElementById('product-grid');
     const noResultsEl = document.getElementById('no-results');
-    const paginationEl = document.getElementById('pagination');
-    const searchForm = document.getElementById('products-search-form');
-    const searchInput = document.getElementById('search-input');
-    const suggestionsEl = document.getElementById('search-suggestions');
+    const triggerEl = document.getElementById('infinite-scroll-trigger');
+    const searchForm = document.querySelector('.header-search');
+    const searchInput = document.querySelector('.header-search-input');
 
     const params = new URLSearchParams(window.location.search);
     const filters = {
@@ -173,18 +145,8 @@ const productsPerPage = 12;
 
     const state = {
       search: (params.get('search') || '').trim(),
-      page: (() => {
-        const rawPage = parseInt(params.get('page') || '1', 10);
-        return Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
-      })(),
+      page: 1, 
       suggestionsOpen: false,
-    };
-
-    const hiddenFieldMap = {
-      category: document.getElementById('search-category'),
-      subcategory: document.getElementById('search-subcategory'),
-      subsub: document.getElementById('search-subsub'),
-      brand: document.getElementById('search-brand'),
     };
 
     const searchableKeys = [
@@ -257,18 +219,6 @@ const productsPerPage = 12;
       if (searchInput instanceof HTMLInputElement) {
         searchInput.value = state.search;
       }
-
-      Object.entries(hiddenFieldMap).forEach(([key, input]) => {
-        if (!(input instanceof HTMLInputElement)) return;
-
-        if (filters[key]) {
-          input.value = filters[key];
-          input.disabled = false;
-        } else {
-          input.value = '';
-          input.disabled = true;
-        }
-      });
     };
 
     const formatPrice = value => {
@@ -289,7 +239,7 @@ const productsPerPage = 12;
       return formattedInteger;
     };
 
-    const buildPageUrl = (pageNumber = state.page) => {
+    const buildPageUrl = () => {
       const nextParams = new URLSearchParams();
 
       Object.entries(filters).forEach(([key, value]) => {
@@ -299,10 +249,6 @@ const productsPerPage = 12;
 
       if (state.search.trim()) {
         nextParams.set('search', state.search.trim());
-      }
-
-      if (pageNumber > 1) {
-        nextParams.set('page', String(pageNumber));
       }
 
       const query = nextParams.toString();
@@ -410,7 +356,6 @@ const productsPerPage = 12;
         return {
           products: structureFilteredProducts,
           matchMap: new Map(),
-          suggestions: [],
           query: '',
         };
       }
@@ -428,10 +373,6 @@ const productsPerPage = 12;
         return {
           products,
           matchMap,
-          suggestions: products.slice(0, 6).map(product => ({
-            product,
-            matchInfo: matchMap.get(productKey(product)) || {},
-          })),
           query,
         };
       }
@@ -446,25 +387,8 @@ const productsPerPage = 12;
       return {
         products: results.map(result => result.item),
         matchMap,
-        suggestions: results.slice(0, 6).map(result => ({
-          product: result.item,
-          matchInfo: buildMatchInfo(result.matches),
-        })),
         query,
       };
-    };
-
-    const getPaginationPages = (currentPage, totalPages) => {
-      if (totalPages <= 5) {
-        return Array.from({ length: totalPages }, (_, index) => index + 1);
-      }
-
-      if (currentPage <= 3) return [1, 2, 3, 4, 5];
-      if (currentPage >= totalPages - 2) {
-        return Array.from({ length: 5 }, (_, index) => totalPages - 4 + index);
-      }
-
-      return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
     };
 
     const getMatchContext = (product, matchInfo) => {
@@ -816,78 +740,41 @@ const productsPerPage = 12;
       return card;
     };
 
-    const renderSuggestions = searchData => {
-      if (!(suggestionsEl instanceof HTMLDivElement) || !(searchInput instanceof HTMLInputElement)) return;
+    let observer = null;
+    let itemsRendered = 0;
+    let usedFeaturedKeys = new Set();
+    let currentSearchData = null;
 
-      suggestionsEl.replaceChildren();
+    const renderProducts = (replaceHistory = true, append = false) => {
+      if (!titleEl || !countEl || !gridEl || !noResultsEl || !triggerEl) return;
 
-      const shouldShow = state.suggestionsOpen && !!searchData.query;
-      if (!shouldShow) {
-        suggestionsEl.hidden = true;
-        searchInput.setAttribute('aria-expanded', 'false');
-        return;
+      if (!append) {
+        currentSearchData = getSearchData();
+        state.page = 1;
+        itemsRendered = 0;
+        usedFeaturedKeys = new Set();
+        gridEl.replaceChildren();
       }
 
-      if (searchData.suggestions.length === 0) {
-        const empty = document.createElement('div');
-        empty.className = 'search-suggestion-empty';
-        empty.textContent = 'No matching products found.';
-        suggestionsEl.appendChild(empty);
-      } else {
-        searchData.suggestions.forEach(({ product, matchInfo }) => {
-          const suggestion = document.createElement('a');
-          suggestion.href = product.url || `/product/${product.id}`;
-          suggestion.className = 'search-suggestion';
-          suggestion.setAttribute('data-astro-prefetch', '');
-
-          const suggestionName = document.createElement('span');
-          suggestionName.className = 'search-suggestion-name';
-          setHighlightedText(suggestionName, product.name, matchInfo.name || []);
-
-          const suggestionMeta = document.createElement('span');
-          suggestionMeta.className = 'search-suggestion-meta';
-          suggestionMeta.textContent = [cleanName(product.brand), cleanName(product.category)]
-            .filter(Boolean)
-            .join(' / ');
-
-          suggestion.appendChild(suggestionName);
-          suggestion.appendChild(suggestionMeta);
-          suggestionsEl.appendChild(suggestion);
-        });
-      }
-
-      suggestionsEl.hidden = false;
-      searchInput.setAttribute('aria-expanded', 'true');
-    };
-
-    const renderProducts = (replaceHistory = true) => {
-      if (!titleEl || !countEl || !gridEl || !noResultsEl || !paginationEl) return;
-
-      const searchData = getSearchData();
+      const searchData = currentSearchData;
       const filteredProducts = searchData.products;
       const totalProducts = filteredProducts.length;
-      const totalPages = Math.ceil(totalProducts / productsPerPage);
-      const currentPage = totalPages > 0 ? Math.min(state.page, totalPages) : 1;
-      const startIndex = (currentPage - 1) * productsPerPage;
+      
+      const startIndex = (state.page - 1) * productsPerPage;
       const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
       const pageTitle = getPageTitle();
 
-      state.page = currentPage;
-
-      titleEl.textContent = pageTitle;
-      countEl.textContent = `${totalProducts} product${totalProducts !== 1 ? 's' : ''} found`;
-      document.title = `${pageTitle} | Peniel Hardwares`;
-
-      gridEl.replaceChildren();
-      paginationEl.replaceChildren();
+      if (!append) {
+        titleEl.textContent = pageTitle;
+        countEl.textContent = `${totalProducts} product${totalProducts !== 1 ? 's' : ''} found`;
+        document.title = `${pageTitle} | Peniel Hardwares`;
+      }
 
       if (paginatedProducts.length > 0) {
-        let itemsRendered = 0;
         const shuffledFeatured = shuffleArray(
           structureFilteredProducts.filter(isFeaturedProduct),
-          getSeed() + currentPage + state.search.length
+          getSeed() + state.page + state.search.length
         );
-        const usedFeaturedKeys = new Set();
 
         const injectFeatured = () => {
           const featuredProduct = getFeaturedProduct(shuffledFeatured, usedFeaturedKeys);
@@ -909,87 +796,56 @@ const productsPerPage = 12;
           itemsRendered++;
         });
 
-        if (itemsRendered > 0 && itemsRendered < 5) {
+        if (itemsRendered > 0 && itemsRendered < 5 && !append) {
           injectFeatured();
         }
 
         noResultsEl.hidden = true;
         gridEl.hidden = false;
-      } else {
+        
+        // Setup observer for next page
+        if (startIndex + productsPerPage < totalProducts) {
+          triggerEl.hidden = false;
+          setupObserver();
+        } else {
+          triggerEl.hidden = true;
+        }
+
+      } else if (!append) {
         noResultsEl.hidden = false;
         gridEl.hidden = true;
+        triggerEl.hidden = true;
       }
 
-      if (totalPages > 1) {
-        const pages = getPaginationPages(currentPage, totalPages);
+      if (replaceHistory && !append) {
+        window.history.replaceState({}, '', buildPageUrl());
+      }
+    };
 
-        if (currentPage > 1) {
-          const previousLink = document.createElement('a');
-          previousLink.href = buildPageUrl(currentPage - 1);
-          previousLink.textContent = 'Previous';
-          paginationEl.appendChild(previousLink);
+    const setupObserver = () => {
+      if (observer) {
+        observer.disconnect();
+      }
+      observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          state.page++;
+          renderProducts(false, true);
         }
-
-        pages.forEach(pageNumber => {
-          const pageLink = document.createElement('a');
-          pageLink.href = buildPageUrl(pageNumber);
-          pageLink.textContent = String(pageNumber);
-
-          if (pageNumber === currentPage) {
-            pageLink.classList.add('current');
-          }
-
-          paginationEl.appendChild(pageLink);
-        });
-
-        if (currentPage < totalPages) {
-          const nextLink = document.createElement('a');
-          nextLink.href = buildPageUrl(currentPage + 1);
-          nextLink.textContent = 'Next';
-          paginationEl.appendChild(nextLink);
-        }
-      }
-
-      renderSuggestions(searchData);
-
-      if (replaceHistory) {
-        window.history.replaceState({}, '', buildPageUrl(currentPage));
-      }
+      }, { rootMargin: '200px' });
+      observer.observe(triggerEl);
     };
 
     if (searchForm instanceof HTMLFormElement && searchInput instanceof HTMLInputElement) {
       searchInput.addEventListener('input', () => {
-        state.search = searchInput.value.trim();
-        state.page = 1;
-        state.suggestionsOpen = true;
-        renderProducts(true);
-      });
-
-      searchInput.addEventListener('focus', () => {
-        state.suggestionsOpen = true;
-        renderProducts(false);
-      });
-
-      searchInput.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-          state.suggestionsOpen = false;
-          renderProducts(false);
-          searchInput.blur();
-        }
+        state.search = searchInput.value;
+        renderProducts(true, false);
       });
 
       searchForm.addEventListener('submit', event => {
         event.preventDefault();
         state.search = searchInput.value.trim();
-        state.page = 1;
-        state.suggestionsOpen = false;
-        renderProducts(true);
-      });
-
-      document.addEventListener('click', event => {
-        if (searchForm.contains(event.target)) return;
-        state.suggestionsOpen = false;
-        renderProducts(false);
+        renderProducts(true, false);
+        if (typeof gtag === 'function' && state.search) gtag('event', 'search', { search_term: state.search });
       });
     }
 

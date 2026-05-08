@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<script>
+<script is:inline>
     const enquireBtn = document.getElementById('enquireBtn');
     const closeBtn = document.getElementById('closeEnquireBtn');
     const overlay = document.getElementById('enquireOverlay');
@@ -52,6 +52,14 @@
     if (enquireBtn) {
         enquireBtn.addEventListener('click', () => {
             document.body.classList.add('enquire-active');
+            
+            // Track Enquiry Button Click
+            if (typeof gtag === 'function') {
+                gtag('event', 'enquiry_open', {
+                    'event_category': 'Engagement',
+                    'event_label': 'Enquire Now Modal Opened'
+                });
+            }
         });
     }
 
@@ -66,6 +74,26 @@
             document.body.classList.remove('enquire-active');
         });
     }
+
+    // Track Contact Link Clicks
+    document.querySelectorAll('.contact-item, .phone-link, .whatsapp-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const target = e.currentTarget;
+            let label = 'Unknown Contact Link';
+            
+            if (target.classList.contains('phone-link')) label = 'Phone Call';
+            else if (target.classList.contains('whatsapp-link')) label = 'WhatsApp Chat';
+            else if (target.tagName === 'A' && target.href.includes('maps.app.goo.gl')) label = 'Google Maps Directions';
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'contact_click', {
+                    'event_category': 'Engagement',
+                    'event_label': label,
+                    'value': 1
+                });
+            }
+        });
+    });
 </script>
 
 <style>

@@ -48,6 +48,15 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
 <!DOCTYPE html>
 <html lang="en" class:list={[{ 'shazam-layout': !useOldNav }]}>
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8VWMQW9C8"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-P8VWMQW9C8');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
@@ -179,6 +188,38 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
           e.preventDefault();
           return false;
         }
+      });
+    // Track specific link clicks globally
+    document.addEventListener('click', function(e) {
+      if (typeof gtag !== 'function') return;
+
+      const target = e.target.closest('.phone-link, .whatsapp-link, .email-link, .map-link, .product-card');
+      if (!target) return;
+
+      let eventName = 'engagement';
+      let label = target.textContent?.trim() || 'Link';
+      
+      if (target.classList.contains('phone-link')) {
+        eventName = 'contact_click';
+        label = 'Phone Call';
+      } else if (target.classList.contains('whatsapp-link')) {
+        eventName = 'contact_click';
+        label = 'WhatsApp Chat';
+      } else if (target.classList.contains('email-link')) {
+        eventName = 'contact_click';
+        label = 'Email Send';
+      } else if (target.classList.contains('map-link')) {
+        eventName = 'contact_click';
+        label = 'Google Maps Directions';
+      } else if (target.classList.contains('product-card')) {
+        eventName = 'product_view';
+        label = target.querySelector('.product-name')?.textContent || 'Product Card';
+      }
+
+      gtag('event', eventName, {
+        'event_category': 'Global Engagement',
+        'event_label': label,
+        'value': 1
       });
     });
   </script>

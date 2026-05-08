@@ -12,6 +12,8 @@ const navLinks = [
   { href: '/products', label: 'PRODUCTS' },
   { href: '/contact', label: 'CONTACT' },
 ];
+
+const showSearch = currentPath.startsWith('/products') || currentPath.startsWith('/categories');
 ---
 
 <header class="site-header" data-site-header role="banner">
@@ -45,6 +47,19 @@ const navLinks = [
           </a>
         ))}
       </div>
+
+      <!-- Header Search -->
+      {showSearch && (
+        <form action="/products" method="get" class="header-search">
+          <input type="text" name="search" placeholder="Search products..." class="header-search-input" aria-label="Search products" autocomplete="off" />
+          <button type="submit" class="header-search-btn" aria-label="Submit search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
+      )}
     </div>
   </nav>
 
@@ -102,23 +117,55 @@ const navLinks = [
   .site-header.is-hidden .navbar {
     transform: translateY(calc(-100% - 0.75rem));
   }
+  .navbar.is-scrolled {
+    transform: translateY(0) scale(0.98);
+    border-radius: 1.5rem;
+    top: 0.5rem;
+    left: 1rem;
+    right: 1rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    background-color: rgba(15, 23, 42, 0.85);
+  }
+  .site-header.is-hidden .navbar.is-scrolled {
+    transform: translateY(calc(-100% - 2rem)) scale(0.98);
+  }
   .navbar-content {
     max-width: 1280px;
     margin: 0 auto;
     padding: 1rem 1.5rem;
     transition: padding 0.3s ease;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+  @media (max-width: 768px) {
+    .navbar-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+    }
   }
   .site-header .navbar-content {
     padding-top: 0.65rem;
     padding-bottom: 0.75rem;
   }
   .logo-center {
+    justify-self: center;
     text-align: center;
     margin-bottom: 0.75rem;
     transition: margin-bottom 0.3s ease;
   }
+  @media (max-width: 768px) {
+    .logo-center {
+      justify-self: center;
+      margin-bottom: 0;
+    }
+  }
   .site-header .logo-center {
-    margin-bottom: 0.45rem;
+    margin-bottom: 0;
   }
   .logo-link {
     display: inline-flex;
@@ -164,16 +211,67 @@ const navLinks = [
   }
   .nav-links {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 2rem;
     flex-wrap: wrap;
-    border-top: 1px solid var(--border);
-    padding-top: 0.75rem;
     transition: gap 0.3s ease, padding-top 0.3s ease;
   }
   .site-header .nav-links {
     gap: 1.5rem;
-    padding-top: 0.55rem;
+  }
+  .header-search {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+  }
+  @media (max-width: 768px) {
+    .header-search {
+      max-width: 90%;
+      margin: 0 auto;
+      justify-self: center;
+    }
+  }
+  .header-search-input {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    padding: 0.55rem 1rem 0.55rem 2.5rem;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+  .header-search-input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 2px rgba(197, 160, 40, 0.2);
+  }
+  .header-search-btn {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .header-search-input:focus + .header-search-btn,
+  .header-search-btn:hover {
+    color: var(--accent-gold);
+  }
+  .search-icon {
+    width: 16px;
+    height: 16px;
   }
   .nav-link {
     text-decoration: none;
@@ -210,18 +308,18 @@ const navLinks = [
     .desktop-nav {
       display: none !important;
     }
-    /* Reduce spacer since nav links are gone */
+    /* Increase spacer since we have two lines now */
     .site-header {
-      --header-height-expanded: 5rem;
-      --header-height-compact: 4.5rem;
+      --header-height-expanded: 7.5rem;
+      --header-height-compact: 7rem;
     }
     .site-header .logo-center {
       margin-bottom: 0;
     }
-    .logo-img { height: 2rem; }
-    .logo-text { font-size: 1.15rem; }
-    .site-header .logo-img { height: 1.85rem; }
-    .site-header .logo-text { font-size: 1.05rem; }
+    .logo-img { height: 2.25rem; }
+    .logo-text { font-size: 1.4rem; }
+    .site-header .logo-img { height: 2.1rem; }
+    .site-header .logo-text { font-size: 1.3rem; }
   }
 </style>
 
@@ -460,30 +558,45 @@ const navLinks = [
     if (!(header instanceof HTMLElement)) return;
 
     let ticking = false;
-    let target = window;
     
-    // Check if main-scroll-container exists (used by the new mobile layout)
+    // Default to window scroll
     const scrollContainer = document.getElementById('main-scroll-container');
-    if (scrollContainer && window.innerWidth <= 768) {
-      target = scrollContainer;
-    }
+    
+    // In shazam layout, the inner container only scrolls when the menu is OPEN.
+    // However, for normal browsing/animation, we should generally track window scroll
+    // UNLESS the body is locked.
+    const getTarget = () => {
+      if (document.body.classList.contains('shazam-open') && scrollContainer) {
+        return scrollContainer;
+      }
+      return window;
+    };
+    
+    let target = getTarget();
 
-    let lastScrollY = target === window ? window.scrollY : target.scrollTop;
+    let lastScrollY = target === window ? window.pageYOffset : (target.scrollTop || 0);
 
     const updateHeader = () => {
-      const currentScrollY = target === window ? window.scrollY : target.scrollTop;
+      target = getTarget();
+      const currentScrollY = target === window ? window.pageYOffset : (target.scrollTop || 0);
       const delta = currentScrollY - lastScrollY;
 
       // Always remove hidden when at the very top
       if (currentScrollY <= 10) {
         header.classList.remove('is-hidden');
+        header.querySelector('.navbar').classList.remove('is-scrolled');
         lastScrollY = currentScrollY;
         ticking = false;
         return;
       }
 
+      // Add inwards scale when scrolled
+      if (currentScrollY > 50) {
+        header.querySelector('.navbar').classList.add('is-scrolled');
+      }
+
       // Scrolling down → hide
-      if (delta > 5) {
+      if (delta > 5 && currentScrollY > 100) {
         header.classList.add('is-hidden');
       } 
       // Scrolling up → show

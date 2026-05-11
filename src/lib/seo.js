@@ -109,12 +109,6 @@ export function generateLocalBusinessSchema(siteUrl) {
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         opens: '09:00',
         closes: '20:00'
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: 'Sunday',
-        opens: 'Closed',
-        closes: 'Closed'
       }
     ],
     areaServed: 'IN',

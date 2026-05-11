@@ -14,6 +14,7 @@ interface Props {
   showFooter?: boolean;
   useOldNav?: boolean;
   breadcrumbs?: Array<{name: string, url?: string}>; // For breadcrumb schema
+  hideOrgSchema?: boolean; // New prop to prevent redundant schemas
 }
 
 const { 
@@ -26,6 +27,7 @@ const {
   showFooter = true,
   useOldNav = false,
   breadcrumbs,
+  hideOrgSchema = false,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -90,7 +92,7 @@ const breadcrumbSchema = breadcrumbs ?
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
   {/* Organization Schema */}
-  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {!hideOrgSchema && <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />}
   
   {/* Breadcrumb Schema if provided */}
   {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}

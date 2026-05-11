@@ -2,8 +2,8 @@
 import Layout from '../components/Layout.astro';
 import { generateLocalBusinessSchema } from '../lib/seo.js';
 
-// Exportable schema object following schema.org standards for LocalBusiness
-export const organizationSchema = {
+// LocalBusiness schema object for the contact page
+export const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: 'Peniel Hardwares',
@@ -31,12 +31,6 @@ export const organizationSchema = {
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       opens: '09:00',
       closes: '20:00'
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Sunday',
-      opens: 'Closed',
-      closes: 'Closed'
     }
   ],
   areaServed: 'IN',
@@ -46,10 +40,10 @@ export const organizationSchema = {
   description: 'Your one-stop shop for quality hardware, tools, plumbing, electrical, and building materials.'
 };
 
-const localBusinessSchema = organizationSchema;
+// Use the business schema for the page
 ---
 
-<Layout title="Contact Us | Peniel Hardwares" showFooter={false} useOldNav={true} breadcrumbs={[
+<Layout title="Contact Us | Peniel Hardwares" showFooter={false} useOldNav={true} hideOrgSchema={true} breadcrumbs={[
   { name: 'Home', url: '/' },
   { name: 'Contact', url: '/contact' }
 ]}>

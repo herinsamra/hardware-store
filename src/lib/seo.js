@@ -48,12 +48,6 @@ export function generateOrganizationSchema(siteUrl) {
       areaServed: 'IN',
       availableLanguage: 'en'
     },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '09:00',
-      closes: '20:00'
-    },
     email: 'penielhardwares@gmail.com', // Adding email from contact page
     areaServed: 'IN',
     legalName: 'Peniel Hardwares', // Adding legal name

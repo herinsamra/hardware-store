@@ -1226,5 +1226,43 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": ""
+  },
+  {
+    "part_no": "ZZ06673",
+    "category": "Plumbing",
+    "subcategory": "Water_Pumps",
+    "subsubcategory": "Booster_Pumps",
+    "type": "",
+    "product_name": "PERIBOOST 0.5Hp Pressure Pump",
+    "description": "Experience consistent water pressure with the KSB PERIBOOST 0.5Hp Pressure Pump. This sleek Blue, Thermal style Booster Pump is Corded Electric, delivering 2000 Liters Per Hour at 40 Volts (DC). Weighing just 3 Kilograms with durable Rubber construction, it's ideal for residential or light commercial water boosting. Elevate your water system – explore reliable performance today!",
+    "brand": "KSB",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778509782/31cn2GbLxKL_1_-Photoroom_1_br4s6f.png",
+    "mrp": "11000",
+    "slug": "periboost-05hp-pressure-pump",
+    "meta_title": "KSB PERIBOOST 0.5Hp Pressure Pump | Booster Pump",
+    "meta_description": "Boost your water pressure with KSB PERIBOOST 0.5Hp Pressure Pump. Corded Electric, Blue Thermal design, 2000 LPH at 40V DC. Durable Rubber build. Shop now!",
+    "variant_name": "0.5HP",
+    "is_featured": "true",
+    "slogan": "KSB PERIBOOST: Elevate Your Water Pressure, Reliably.",
+    "video_url": ""
+  },
+  {
+    "part_no": "ZZ07173",
+    "category": "Plumbing",
+    "subcategory": "Water_Pumps",
+    "subsubcategory": "Booster_Pumps",
+    "type": "",
+    "product_name": "MULTIBOOST BOOSTER PUMP 1HP 402 Centrifugal Water Pump",
+    "description": "Elevate your water pressure with the KSB MULTIBOOST BOOSTER PUMP KHM 402. This powerful 1HP Centrifugal pump, in a sleek blue finish, delivers an impressive Flow Rate of 840 Liters Per Minute. Crafted from durable Stainless Steel and weighing just 3 Kilograms, it's a reliable Corded Electric solution for consistent water supply. Explore the efficiency and compact design for your home or garden. Upgrade your flow today.",
+    "brand": "KSB",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778510518/multiboost-booster-pump-khm-402-20-ksb-original-imagtbgcyj3hazbq-Photoroom_1_dbwvot.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1778510126/periboost-plus-05-precision-pressure-pump-2220-ksb-original-imagtbfqnm8tkkjx_gsjqv5.webp",
+    "mrp": "31025",
+    "slug": "multiboost-booster-pump-1hp-402-centrifugal-water-pump",
+    "meta_title": "KSB MULTIBOOST KHM 402 Centrifugal Booster Pump",
+    "meta_description": "Experience powerful water pressure with the KSB MULTIBOOST KHM 402, a 1HP Stainless Steel Centrifugal pump. Enjoy 840 LPM flow for home & garden. Compact & efficient.",
+    "variant_name": "1 HP",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": ""
   }
 ]

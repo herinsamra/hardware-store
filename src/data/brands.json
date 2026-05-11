@@ -198,5 +198,10 @@
     "name": "REMI",
     "category": "ELECTRICAL",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778152331/remi_2-600x315h_xkaznt.jpg"
+  },
+  {
+    "name": "KSB",
+    "category": "Plumbing",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778509417/KSB_SVG.svg_rsi8uk.png"
   }
 ]

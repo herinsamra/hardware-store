@@ -123,7 +123,10 @@ const productsPerPage = 12;
 
     const { allProducts, productsPerPage } = JSON.parse(productsPageDataEl.textContent);
 
-    const cleanName = (value = '') => value.replace(/_/g, ' ');
+    const toTitleCase = (str = '') => {
+      return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    };
+    const cleanName = (value = '') => toTitleCase((value || '').replace(/_/g, ' '));
     const normalizeText = value => (value || '').toString().toLowerCase();
     const productKey = product => product.routeParam || product.slug || product.id || product.url || product.name;
 
@@ -543,7 +546,7 @@ const productsPerPage = 12;
         const track = document.createElement('div');
         track.className = 'featured-marquee-track';
 
-        const phrase = ` SUPER SALE • BEST OFFER • PREMIUM PICK • `;
+        const phrase = ` Super Sale • Best Offer • Premium Pick • `;
         [0, 1].forEach(() => {
           const text = document.createElement('span');
           text.textContent = phrase.repeat(4);
@@ -565,7 +568,7 @@ const productsPerPage = 12;
         
         const label = document.createElement('span');
         label.className = 'featured-edge-label';
-        label.textContent = 'SUPER SALE';
+        label.textContent = 'Super Sale';
         
         labelWrapper.appendChild(label);
         accent.appendChild(frame);
@@ -600,7 +603,7 @@ const productsPerPage = 12;
         text.setAttribute('class', 'featured-seal-text');
         const textPath = document.createElementNS(svgNS, 'textPath');
         textPath.setAttribute('href', `#${pathId}`);
-        textPath.textContent = 'SALE • SALE • SALE • SALE • SALE • SALE • ';
+        textPath.textContent = 'Sale • Sale • Sale • Sale • Sale • Sale • ';
         text.appendChild(textPath);
         
         rotatingGroup.appendChild(text);
@@ -610,14 +613,14 @@ const productsPerPage = 12;
         center.setAttribute('y', '73');
         center.setAttribute('text-anchor', 'middle');
         center.setAttribute('class', 'featured-seal-mark');
-        center.textContent = 'BEST';
+        center.textContent = 'Best';
         
         const center2 = document.createElementNS(svgNS, 'text');
         center2.setAttribute('x', '75');
         center2.setAttribute('y', '92');
         center2.setAttribute('text-anchor', 'middle');
         center2.setAttribute('class', 'featured-seal-mark-sub');
-        center2.textContent = 'OFFER';
+        center2.textContent = 'Offer';
 
         seal.appendChild(defs);
         seal.appendChild(circle);
@@ -667,7 +670,7 @@ const productsPerPage = 12;
 
       const name = document.createElement('h3');
       name.className = 'product-name';
-      setHighlightedText(name, product.name || 'Unnamed Product', matchInfo.name || []);
+      setHighlightedText(name, toTitleCase(product.name || 'Unnamed Product'), matchInfo.name || []);
       info.appendChild(name);
 
       // We now show variants as chips instead of a single text line below the name
@@ -1116,7 +1119,7 @@ const productsPerPage = 12;
     font-size: 0.85rem;
     font-weight: 900;
     letter-spacing: 0.16em;
-    text-transform: uppercase;
+    text-transform: capitalize;
     white-space: nowrap;
   }
 
@@ -1160,7 +1163,6 @@ const productsPerPage = 12;
     font-size: 0.85rem;
     font-weight: 900;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
 
@@ -1237,7 +1239,6 @@ const productsPerPage = 12;
     color: #f8d978;
     font-size: 0.68rem;
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 0.08em;
     padding: 0.32rem 0.65rem;
     border-radius: 999px;
@@ -1261,7 +1262,6 @@ const productsPerPage = 12;
     color: #67e8f9;
     font-size: 0.78rem;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 

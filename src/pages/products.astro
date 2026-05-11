@@ -985,8 +985,14 @@ const productsPerPage = 12;
   .product-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    align-items: start;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 360px) {
+    .product-grid {
+      gap: 0.5rem;
+    }
   }
 
   @media (min-width: 768px) {

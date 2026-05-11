@@ -13,11 +13,12 @@ const navLinks = [
   { href: '/contact', label: 'CONTACT' },
 ];
 
+const isHome = currentPath === '/';
 const showSearch = currentPath.startsWith('/products') || currentPath.startsWith('/categories');
 ---
 
 <header class="site-header" data-site-header role="banner">
-  <div class="site-header-spacer" aria-hidden="true"></div>
+  <div class:list={['site-header-spacer', { 'home-spacer': isHome }]} aria-hidden="true"></div>
 
   <nav class="navbar glass-strong" aria-label="Primary">
     <div class="navbar-content">
@@ -99,6 +100,9 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
   }
   .site-header-spacer {
     height: var(--header-height-expanded);
+  }
+  .site-header-spacer.home-spacer {
+    height: 3.8rem; /* Adjust this value to fine-tune the gap */
   }
   .navbar {
     position: fixed;

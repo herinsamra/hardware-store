@@ -111,7 +111,7 @@ const productSchema = {
   name: product.name,
   description: product.meta_description || product.description,
   sku: product.sku || undefined,
-  mpn: product.part_no || undefined,
+  mpn: product.part_no || undefined,  // Using part_no as MPN
   image: productImages.length ? productImages.map(image => absoluteUrl(image)) : (absoluteImageUrl ? [absoluteImageUrl] : undefined),
   category: productCategoryTrail || undefined,
   brand: product.brand ? {
@@ -123,11 +123,62 @@ const productSchema = {
     '@type': 'Offer',
     priceCurrency: 'INR',
     price: formatMerchantPrice(product.price),
-    availability: 'https://schema.org/InStock',
+    availability: product.availability 
+      ? `https://schema.org/${product.availability === 'In Stock' || product.availability.toLowerCase() === 'instock' ? 'InStock' : 'OutOfStock'}`
+      : 'https://schema.org/InStock',
     itemCondition: 'https://schema.org/NewCondition',
     url: absoluteCanonicalUrl,
+    seller: {
+      '@type': 'Organization',
+      name: 'Peniel Hardwares'
+    }
   } : undefined,
+  // Add additional product properties if available
+  gtin: product.gtin || undefined,  // UPC, EAN, ISBN, etc.
+  gtin13: product.gtin && product.gtin.length === 13 ? product.gtin : undefined,
+  gtin8: product.gtin && product.gtin.length === 8 ? product.gtin : undefined,
+  material: product.material || undefined,
+  color: product.color || undefined,
+  size: product.size || undefined,
+  weight: product.quantity ? {
+    '@type': 'QuantitativeValue',
+    value: parseFloat(product.quantity) || undefined,
+    unitText: isNaN(product.quantity) ? product.quantity : undefined // If it's not a number, treat as unit text
+  } : undefined,
+  // Add aggregate rating if available
+  aggregateRating: product.rating ? {
+    '@type': 'AggregateRating',
+    ratingValue: product.rating,
+    reviewCount: product.reviewCount || 0,
+    bestRating: 5,
+    worstRating: 1
+  } : undefined,
+  // Add slogan if available
+  slogan: product.slogan || undefined,
+  // Add video if available
+  video: product.video_url ? {
+    '@type': 'VideoObject',
+    contentUrl: product.video_url,
+    thumbnailUrl: product.thumbnail || product.image,
+    name: `${product.name} - Video`,
+    description: product.description || product.meta_description
+  } : undefined
 };
+
+// Create breadcrumbs for schema
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: product.category, url: `/products?category=${encodeURIComponent(product.category)}` },
+  ...(product.subcategory ? [{ 
+    name: product.subcategory, 
+    url: `/products?category=${encodeURIComponent(product.category)}&subcategory=${encodeURIComponent(product.subcategory)}` 
+  }] : []),
+  ...(product.subsubcategory ? [{ 
+    name: product.subsubcategory, 
+    url: `/products?category=${encodeURIComponent(product.category)}&subcategory=${encodeURIComponent(product.subcategory)}&subsub=${encodeURIComponent(product.subsubcategory)}` 
+  }] : []),
+  { name: product.name, url: canonicalPath }
+];
 ---
 
 <Layout
@@ -136,6 +187,7 @@ const productSchema = {
   canonical={canonicalPath}
   image={product.image}
   openGraphType="product"
+  breadcrumbs={breadcrumbs}
 >
   <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 

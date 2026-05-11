@@ -2,6 +2,7 @@
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import '../styles/global.css';
+import { generateOrganizationSchema, generateBreadcrumbSchema } from '../lib/seo.js';
 
 interface Props {
   title?: string;
@@ -12,6 +13,7 @@ interface Props {
   openGraphType?: string;
   showFooter?: boolean;
   useOldNav?: boolean;
+  breadcrumbs?: Array<{name: string, url?: string}>; // For breadcrumb schema
 }
 
 const { 
@@ -23,6 +25,7 @@ const {
   openGraphType = 'website',
   showFooter = true,
   useOldNav = false,
+  breadcrumbs,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -43,6 +46,13 @@ function resolveMetaUrl(value?: string): string | undefined {
 const canonicalUrl = resolveMetaUrl(canonical || Astro.url.pathname);
 const socialImage = resolveMetaUrl(image);
 const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) ? canonicalUrl : undefined;
+
+// Generate organization schema
+const orgSchema = generateOrganizationSchema(Astro.site?.toString());
+
+// Generate breadcrumb schema if breadcrumbs are provided
+const breadcrumbSchema = breadcrumbs ? 
+  generateBreadcrumbSchema(breadcrumbs, Astro.site?.toString()) : null;
 ---
 
 <!DOCTYPE html>
@@ -78,6 +88,12 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  {/* Organization Schema */}
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  
+  {/* Breadcrumb Schema if provided */}
+  {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 </head>
 <body>
   {!useOldNav ? (
@@ -344,7 +360,7 @@ const absoluteCanonicalUrl = canonicalUrl && /^https?:\/\//i.test(canonicalUrl) 
       .menu_toggle {
         z-index: 900;
         position: fixed;
-        top: 110px; /* Adjusted to be clearly below header */
+        top: 140px; /* Moved down to be clearly below the mobile header */
         left: 0;
         transform: translateX(-50%); /* Pull half off-screen */
         display: flex;

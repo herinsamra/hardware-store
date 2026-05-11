@@ -2,6 +2,7 @@
 import Layout from '../components/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { fetchAllProducts } from '../lib/products';
+import { absoluteUrl } from '../lib/seo.js';
 
 interface Product {
   id?: string;
@@ -67,9 +68,32 @@ baseProducts.forEach(product => {
   }
 });
 const productsPerPage = 12;
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Products Page',
+  description: 'Browse our collection of hardware products',
+  url: Astro.site ? new URL(Astro.request.url, Astro.site).toString() : Astro.request.url,
+  hasPart: allProducts.slice(0, 10).map(product => ({
+    '@type': 'Product',
+    name: product.name,
+    url: absoluteUrl(`/product/${product.routeParam || product.slug}`, Astro.site?.toString())
+  }))
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Products', url: '/products' }
+];
 ---
 
-<Layout title="Products | Peniel Hardwares">
+<Layout 
+  title="Products | Peniel Hardwares"
+  description="Shop quality hardware products from trusted brands."
+  breadcrumbs={breadcrumbs}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
   <div class="products-page">
     <h1 class="page-title" id="products-page-title">All Products</h1>
     <p class="product-count" id="product-count">Loading products...</p>

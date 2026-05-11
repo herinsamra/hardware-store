@@ -23,14 +23,6 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
 
 <Layout title="Categories | Peniel Hardwares">
   <div class="categories-page">
-    <!-- Search Bar -->
-    <div class="search-section">
-      <form action="/products" method="get" class="search-form">
-        <input type="text" name="search" placeholder="Search products..." class="search-input" />
-        <button type="submit" class="search-btn">🔍</button>
-      </form>
-    </div>
-
     <h1 class="page-title">Shop by Category</h1>
 
     <!-- Accordion Categories (mobile friendly) -->
@@ -122,7 +114,7 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
         document.querySelectorAll('.accordion-item').forEach(accordionItem => {
           accordionItem.classList.remove('open');
         });
-        // Close all others (optional – can be omitted)
+        // Close all others (optional â€“ can be omitted)
         document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
         document.querySelectorAll('.accordion-toggle').forEach(toggle => toggle.setAttribute('aria-expanded', 'false'));
         // Toggle current
@@ -134,7 +126,7 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
         }
       });
     });
-    // On desktop (≥768px) we can keep all open by default, but fine.
+    // On desktop (â‰¥768px) we can keep all open by default, but fine.
   </script>
 </Layout>
 
@@ -145,42 +137,7 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     padding: 1rem;
   }
 
-  /* Search */
-  .search-section {
-    margin-bottom: 1.5rem;
-  }
-  .search-form {
-    display: flex;
-    gap: 0.5rem;
-    max-width: 100%;
-  }
-  .search-input {
-    flex: 1;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 2rem;
-    padding: 0.7rem 1rem;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    background-clip: padding-box;
-  }
-  .search-input:focus {
-    outline: none;
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 0 2px rgba(197, 160, 40, 0.25);
-  }
-  .search-btn {
-    background: var(--accent-gold);
-    border: none;
-    border-radius: 2rem;
-    padding: 0.7rem 1.2rem;
-    font-weight: 600;
-    color: #0f172a;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
+
 
   .page-title {
     font-size: 1.8rem;
@@ -400,6 +357,7 @@ function getFilterUrl(category?: string, subcategory?: string, subsub?: string, 
     border-color: rgba(197, 160, 40, 0.4);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(197, 160, 40, 0.1);
   }
+
   .brand-chip-logo-shell {
     flex: none;
     width: 5.5rem;

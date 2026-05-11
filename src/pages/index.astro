@@ -3,13 +3,39 @@ import Layout from '../components/Layout.astro';
 import Hero from '../components/Hero.astro';
 import StackingCards from '../components/StackingCards.astro'; 
 import BrandsScroller from '../components/BrandsScroller.astro'; 
+
+// Define WebSite schema for the homepage
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Peniel Hardwares',
+  description: 'Your one-stop shop for quality hardware, tools, plumbing, electrical, and building materials.',
+  url: Astro.site?.toString() || 'https://penielhardwares.com', // Use actual site URL
+  publisher: {
+    '@type': 'Organization',
+    name: 'Peniel Hardwares',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://res.cloudinary.com/dthi2vgiz/image/upload/v1778067898/favicon_zncfgk.ico'
+    }
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${Astro.site?.toString() || 'https://penielhardwares.com'}/products?search={search_term_string}`,
+    'query-input': 'required name=search_term_string'
+  }
+};
 ---
 
 <Layout 
   title="Hardware Store | Your One-Stop Shop for Quality Hardware"
   description="Shop quality hardware, tools, plumbing, electrical, paints, and sanitary supplies. Trusted brands like Havells, Finolex, Asian Paints, Jaquar, and more."
   isHomePage={true}
+  breadcrumbs={[
+    { name: 'Home', url: '/' }
+  ]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <Hero />
   <StackingCards />  
   <BrandsScroller />

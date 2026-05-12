@@ -74,6 +74,16 @@ if (routeParam !== product.routeParam) {
 const absoluteCanonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
 const absoluteImageUrl = product.image ? absoluteUrl(product.image) : undefined;
 const brandAsset = getBrandAsset(product.brand);
+
+// Random encouraging text near Enquire Now
+const enquiryNudges = [
+  '💰 Better prices available on enquiry!',
+  '📞 Get the best quote — contact us today!',
+  '🏷️ Looking for the best deal? Contact us for discounted pricing.',
+  '🤝 Call us for exclusive bulk & trade pricing!',
+];
+const nudgeHash = [...(product.id || product.name || '')].reduce((acc, c) => acc + c.charCodeAt(0), 0);
+const enquiryNudge = enquiryNudges[nudgeHash % enquiryNudges.length];
 const productImages = Array.from(new Set(
   (product.images?.length ? product.images : [product.image]).filter(Boolean)
 ));
@@ -257,26 +267,28 @@ const breadcrumbs = [
             </div>
           </div>
         )}
-        {product.brand && (
-          <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="product-brand-card" data-astro-prefetch="hover">
-            <div class="product-brand-copy">
-              <span class="product-brand-label">Brand</span>
-              <span class="product-brand-name">{cleanName(product.brand)}</span>
-            </div>
-            <div class="product-brand-logo-shell">
-              {brandAsset ? (
-                <img
-                  src={brandAsset.url}
-                  alt={`${cleanName(product.brand)} logo`}
-                  class="product-brand-logo"
-                  loading="lazy"
-                />
-              ) : (
-                <span class="product-brand-fallback">{cleanName(product.brand)}</span>
-              )}
-            </div>
-          </a>
-        )}
+        <p class="enquiry-nudge">{enquiryNudge}</p>
+        <div class="product-actions-row">
+          <EnquireNowModal />
+          {product.brand && (
+            <a href={getFilterUrl(undefined, undefined, undefined, product.brand)} class="detail-brand-badge-link" data-astro-prefetch="hover" aria-label={`Browse all ${cleanName(product.brand)} products`}>
+              <div class="detail-brand-badge">
+                {brandAsset ? (
+                  <img
+                    src={brandAsset.url}
+                    alt={`${cleanName(product.brand)} logo`}
+                    class="detail-brand-badge-logo"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="detail-brand-badge-fallback">{cleanName(product.brand)}</span>
+                )}
+              </div>
+              <span class="detail-brand-badge-name">{cleanName(product.brand)}</span>
+            </a>
+          )}
+        </div>
+
         {product.part_no && <p class="part-no" id="display-partno">Part No: {product.part_no}</p>}
         {product.sku && <p class="sku" id="display-sku">SKU: {product.sku}</p>}
         <div class="product-detail-description">
@@ -304,7 +316,7 @@ const breadcrumbs = [
           {product.subcategory && <span> → {cleanName(product.subcategory)}</span>}
           {product.subsubcategory && <span> → {cleanName(product.subsubcategory)}</span>}
         </div>
-        <EnquireNowModal />
+
       </div>
     </div>
 
@@ -587,74 +599,198 @@ const breadcrumbs = [
     margin: 0.2rem 0 1rem;
     text-shadow: 0 0 18px rgba(197, 160, 40, 0.16);
   }
-  .product-brand-card {
+  /* ——— Product Actions Row ——— */
+  .product-actions-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 0 0 1rem;
-    padding: 0.95rem 1rem;
-    border-radius: 24px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(10, 16, 27, 0.28));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow:
-      inset 8px 8px 18px rgba(7, 10, 17, 0.26),
-      inset -8px -8px 18px rgba(103, 124, 161, 0.07);
-    text-decoration: none;
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    gap: 2rem;
+    margin: 1.5rem 0 2rem;
+    flex-wrap: nowrap;
   }
-  .product-brand-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(197, 160, 40, 0.18);
-    box-shadow:
-      inset 8px 8px 18px rgba(7, 10, 17, 0.24),
-      inset -8px -8px 18px rgba(103, 124, 161, 0.09),
-      0 12px 28px rgba(0, 0, 0, 0.12);
+
+  .product-actions-row :global(.enquire-wrapper) {
+    margin-top: 0 !important;
   }
-  .product-brand-copy {
+
+  /* Enquiry nudge text */
+  .enquiry-nudge {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--accent-gold-light, #e8d478);
+    margin: 1.5rem 0 0.55rem;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid var(--accent-gold, #c5a028);
+    background: rgba(197, 160, 40, 0.06);
+    border-radius: 0 10px 10px 0;
+    line-height: 1.45;
+    animation: nudge-pulse 3s ease-in-out infinite;
+  }
+  @keyframes nudge-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.72; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .enquiry-nudge { animation: none; }
+  }
+
+  /* ——— Brand Badge (Circular Swinging Seal) ——— */
+  .detail-brand-badge-link {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    min-width: 0;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    width: fit-content;
+    margin: 0;
+    position: relative;
+    padding-top: 28px;
+    animation: detail-badge-swing 4s ease-in-out infinite;
+    transform-origin: 60px -24px;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.4));
+    transition: filter 0.3s ease;
   }
-  .product-brand-label {
-    color: var(--text-secondary);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .detail-brand-badge-link:hover {
+    filter: drop-shadow(0 8px 24px rgba(197,160,40,0.35));
+    animation-play-state: paused;
   }
-  .product-brand-name {
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 600;
+
+  /* The rope / string */
+  .detail-brand-badge-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(197,160,40,0.7), rgba(197,160,40,0.25));
+    border-radius: 1px;
   }
-  .product-brand-logo-shell {
+
+  .detail-brand-badge {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #1e2d48, #14203a);
+    border: 2.5px solid rgba(197, 160, 40, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 110px;
-    min-height: 72px;
-    padding: 0.8rem;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.94);
     box-shadow:
-      8px 8px 18px rgba(7, 10, 17, 0.2),
-      -6px -6px 14px rgba(255, 255, 255, 0.08);
+      0 0 0 5px rgba(197,160,40,0.08),
+      inset 0 3px 10px rgba(0,0,0,0.45),
+      inset 0 -2px 8px rgba(197,160,40,0.12);
+    overflow: hidden;
   }
-  .product-brand-logo {
-    max-width: 100%;
-    max-height: 42px;
-    display: block;
+
+  /* Starburst / seal points */
+  .detail-brand-badge::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    box-shadow:
+      0px -66px rgba(197,160,40,0.22),
+      13px -65px rgba(197,160,40,0.18),
+      25px -61px rgba(197,160,40,0.18),
+      36px -55px rgba(197,160,40,0.18),
+      46px -46px rgba(197,160,40,0.22),
+      55px -36px rgba(197,160,40,0.18),
+      61px -25px rgba(197,160,40,0.18),
+      65px -13px rgba(197,160,40,0.18),
+      66px 0px rgba(197,160,40,0.22),
+      65px 13px rgba(197,160,40,0.18),
+      61px 25px rgba(197,160,40,0.18),
+      55px 36px rgba(197,160,40,0.18),
+      46px 46px rgba(197,160,40,0.22),
+      36px 55px rgba(197,160,40,0.18),
+      25px 61px rgba(197,160,40,0.18),
+      13px 65px rgba(197,160,40,0.18),
+      0px 66px rgba(197,160,40,0.22),
+      -13px 65px rgba(197,160,40,0.18),
+      -25px 61px rgba(197,160,40,0.18),
+      -36px 55px rgba(197,160,40,0.18),
+      -46px 46px rgba(197,160,40,0.22),
+      -55px 36px rgba(197,160,40,0.18),
+      -61px 25px rgba(197,160,40,0.18),
+      -65px 13px rgba(197,160,40,0.18),
+      -66px 0px rgba(197,160,40,0.22),
+      -65px -13px rgba(197,160,40,0.18),
+      -61px -25px rgba(197,160,40,0.18),
+      -55px -36px rgba(197,160,40,0.18),
+      -46px -46px rgba(197,160,40,0.22),
+      -36px -55px rgba(197,160,40,0.18),
+      -25px -61px rgba(197,160,40,0.18),
+      -13px -65px rgba(197,160,40,0.18);
+  }
+
+  /* Subtle gold shimmer ring */
+  .detail-brand-badge::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 1px solid rgba(197,160,40,0.18);
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.1), transparent 60%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .detail-brand-badge-logo {
+    position: relative;
+    z-index: 1;
+    width: 68%;
+    height: 68%;
     object-fit: contain;
+    filter: brightness(1.1) drop-shadow(0 2px 5px rgba(0,0,0,0.35));
+    transition: transform 0.3s ease;
   }
-  .product-brand-fallback {
-    color: #1a2334;
-    font-size: 0.82rem;
+  .detail-brand-badge-link:hover .detail-brand-badge-logo {
+    transform: scale(1.12);
+  }
+
+  .detail-brand-badge-fallback {
+    position: relative;
+    z-index: 1;
+    color: var(--accent-gold-light);
+    font-size: 0.85rem;
     font-weight: 700;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    padding: 0.5rem;
+  }
+
+  .detail-brand-badge-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+  }
+  .detail-brand-badge-link:hover .detail-brand-badge-name {
+    color: var(--accent-gold-light);
+  }
+
+  @keyframes detail-badge-swing {
+    0%   { transform: rotate(5deg); }
+    50%  { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .detail-brand-badge-link {
+      animation: none;
+      transform: rotate(0deg);
+    }
   }
   .part-no, .sku {
     color: var(--text-secondary);
@@ -780,18 +916,61 @@ const breadcrumbs = [
         inset -10px -10px 22px rgba(103, 124, 161, 0.12);
     }
 
+    .product-actions-row {
+      gap: 1rem;
+      justify-content: flex-start;
+      margin: 1rem 0 2.5rem;
+    }
+
+    .detail-brand-badge-link {
+      padding-top: 20px;
+    }
+
     .product-gallery {
       border-radius: 23px;
     }
 
-    .product-brand-card {
-      flex-direction: column;
-      align-items: flex-start;
+    .detail-brand-badge-link {
+      transform-origin: 50px -18px;
     }
-
-    .product-brand-logo-shell {
-      width: 100%;
-      min-width: 0;
+    .detail-brand-badge {
+      width: 100px;
+      height: 100px;
+    }
+    .detail-brand-badge::before {
+      box-shadow:
+        0px -55px rgba(197,160,40,0.2),
+        11px -54px rgba(197,160,40,0.16),
+        21px -51px rgba(197,160,40,0.16),
+        30px -46px rgba(197,160,40,0.16),
+        39px -39px rgba(197,160,40,0.2),
+        46px -30px rgba(197,160,40,0.16),
+        51px -21px rgba(197,160,40,0.16),
+        54px -11px rgba(197,160,40,0.16),
+        55px 0px rgba(197,160,40,0.2),
+        54px 11px rgba(197,160,40,0.16),
+        51px 21px rgba(197,160,40,0.16),
+        46px 30px rgba(197,160,40,0.16),
+        39px 39px rgba(197,160,40,0.2),
+        30px 46px rgba(197,160,40,0.16),
+        21px 51px rgba(197,160,40,0.16),
+        11px 54px rgba(197,160,40,0.16),
+        0px 55px rgba(197,160,40,0.2),
+        -11px 54px rgba(197,160,40,0.16),
+        -21px 51px rgba(197,160,40,0.16),
+        -30px 46px rgba(197,160,40,0.16),
+        -39px 39px rgba(197,160,40,0.2),
+        -46px 30px rgba(197,160,40,0.16),
+        -51px 21px rgba(197,160,40,0.16),
+        -54px 11px rgba(197,160,40,0.16),
+        -55px 0px rgba(197,160,40,0.2),
+        -54px -11px rgba(197,160,40,0.16),
+        -51px -21px rgba(197,160,40,0.16),
+        -46px -30px rgba(197,160,40,0.16),
+        -39px -39px rgba(197,160,40,0.2),
+        -30px -46px rgba(197,160,40,0.16),
+        -21px -51px rgba(197,160,40,0.16),
+        -11px -54px rgba(197,160,40,0.16);
     }
 
     .related-products-grid {

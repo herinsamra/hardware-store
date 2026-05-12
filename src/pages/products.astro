@@ -476,18 +476,33 @@ const breadcrumbs = [
       return slogans[hash % slogans.length];
     };
 
-    const createFeaturedCard = (product, variantIndex = 0) => {
+    const featuredLayouts = [
+      { variant: 2, spanClass: 'featured-span-hero', action: 'See collection' },
+      { variant: 1, spanClass: 'featured-span-wide', action: 'Explore range' },
+      { variant: 0, spanClass: 'featured-span-tall', action: 'View product' },
+    ];
+
+    const featuredIntervals = [6, 5, 7];
+
+    const getFeaturedInsertionPoint = (slotIndex) => {
+      let total = featuredIntervals[0];
+      for (let index = 0; index < slotIndex; index += 1) {
+        total += featuredIntervals[index % featuredIntervals.length];
+      }
+      return total;
+    };
+
+    const createFeaturedCard = (product, slotIndex = 0) => {
       const videoUrl = getVideoUrl(product);
-      let variant = variantIndex % 4;
+      const layout = featuredLayouts[slotIndex % featuredLayouts.length];
+      let variant = layout.variant;
       if (videoUrl) {
         variant = 3;
-      } else if (variant === 3) {
-        variant = 1;
       }
       
       const card = document.createElement('a');
       card.href = product.url || `/product/${product.id}`;
-      card.className = `featured-product-card featured-variant-${variant} group`;
+      card.className = `featured-product-card ${layout.spanClass} featured-variant-${variant} group`;
       card.setAttribute('data-astro-prefetch', '');
 
       const contentWrapper = document.createElement('div');
@@ -527,7 +542,7 @@ const breadcrumbs = [
 
       const action = document.createElement('span');
       action.className = 'featured-action';
-      action.textContent = variant === 1 ? 'Explore' : variant === 2 ? 'See details' : 'View product';
+      action.textContent = variant === 3 ? 'Watch product' : layout.action;
       details.appendChild(action);
       contentWrapper.appendChild(details);
 
@@ -600,8 +615,8 @@ const breadcrumbs = [
         card.appendChild(accent);
       } else if (variant === 2) {
         const svgNS = 'http://www.w3.org/2000/svg';
-        const key = String(productKey(product) || `featured-${variantIndex}`).replace(/[^a-z0-9_-]/gi, '-');
-        const pathId = `featured-seal-${key}-${variantIndex}`;
+        const key = String(productKey(product) || `featured-${slotIndex}`).replace(/[^a-z0-9_-]/gi, '-');
+        const pathId = `featured-seal-${key}-${slotIndex}`;
 
         const seal = document.createElementNS(svgNS, 'svg');
         seal.classList.add('featured-accent', 'featured-seal');
@@ -771,6 +786,7 @@ const breadcrumbs = [
     let itemsRendered = 0;
     let usedFeaturedKeys = new Set();
     let currentSearchData = null;
+    let nextFeaturedAt = getFeaturedInsertionPoint(0);
 
     const renderProducts = (replaceHistory = true, append = false) => {
       if (!titleEl || !countEl || !gridEl || !noResultsEl || !triggerEl) return;
@@ -780,6 +796,7 @@ const breadcrumbs = [
         state.page = 1;
         itemsRendered = 0;
         usedFeaturedKeys = new Set();
+        nextFeaturedAt = getFeaturedInsertionPoint(0);
         gridEl.replaceChildren();
       }
 
@@ -810,11 +827,12 @@ const breadcrumbs = [
           const variantIndex = usedFeaturedKeys.size;
           usedFeaturedKeys.add(productKey(featuredProduct));
           gridEl.appendChild(createFeaturedCard(featuredProduct, variantIndex));
+          nextFeaturedAt = getFeaturedInsertionPoint(usedFeaturedKeys.size);
           return true;
         };
 
         paginatedProducts.forEach((product) => {
-          if (itemsRendered > 0 && itemsRendered % 4 === 0) {
+          if (itemsRendered > 0 && itemsRendered >= nextFeaturedAt) {
             injectFeatured();
           }
 
@@ -823,7 +841,7 @@ const breadcrumbs = [
           itemsRendered++;
         });
 
-        if (itemsRendered > 0 && itemsRendered < 5 && !append) {
+        if (itemsRendered > 0 && itemsRendered < 7 && !append) {
           injectFeatured();
         }
 
@@ -1031,6 +1049,7 @@ const breadcrumbs = [
   @media (min-width: 1024px) {
     .product-grid {
       grid-template-columns: repeat(4, 1fr);
+      grid-auto-flow: dense;
     }
   }
 
@@ -1072,10 +1091,10 @@ const breadcrumbs = [
 
   /* Featured Product Ad Styles */
   .featured-product-card {
-    grid-column: 1 / -1;
+    grid-column: span 2;
     display: flex;
     flex-direction: column;
-    min-height: 390px;
+    min-height: 320px;
     background: #0b1018;
     border: 1px solid rgba(232, 186, 72, 0.34);
     border-radius: 1rem;
@@ -1107,6 +1126,18 @@ const breadcrumbs = [
   .featured-variant-2 {
     background: linear-gradient(180deg, #11170f 0%, #1f2b1c 58%, #293414 100%);
     border-color: rgba(163, 230, 53, 0.28);
+  }
+
+  .featured-span-hero {
+    grid-column: 1 / -1;
+  }
+
+  .featured-span-wide {
+    grid-column: span 2;
+  }
+
+  .featured-span-tall {
+    grid-column: span 2;
   }
 
   /* Variant Accents */
@@ -1361,7 +1392,7 @@ const breadcrumbs = [
   .featured-image-wrapper {
     position: relative;
     width: 100%;
-    height: 280px;
+    min-height: 220px;
     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.12), transparent 70%);
     display: flex;
     align-items: center;
@@ -1388,7 +1419,7 @@ const breadcrumbs = [
     .featured-product-card {
       grid-column: span 2;
       flex-direction: row;
-      min-height: clamp(390px, 34vw, 460px);
+      min-height: clamp(300px, 28vw, 380px);
     }
 
     .featured-variant-1 {
@@ -1398,13 +1429,13 @@ const breadcrumbs = [
     .featured-variant-2 {
       grid-column: 1 / -1;
       flex-direction: row-reverse;
-      min-height: clamp(340px, 26vw, 420px);
+      min-height: clamp(280px, 24vw, 360px);
     }
 
     .featured-content {
       width: 60%;
-      padding: 2.5rem;
-      margin-right: -15%;
+      padding: 2rem;
+      margin-right: -10%;
       z-index: 3;
       background: linear-gradient(90deg, rgba(11, 16, 24, 0.95) 45%, rgba(11, 16, 24, 0.6) 75%, transparent);
       border-radius: 1rem 0 0 1rem;
@@ -1414,7 +1445,7 @@ const breadcrumbs = [
       width: 60%;
       padding: 2rem;
       margin-right: 0;
-      margin-left: -15%;
+      margin-left: -10%;
       background: linear-gradient(270deg, rgba(20, 16, 23, 0.95) 45%, rgba(20, 16, 23, 0.6) 75%, transparent);
       border-radius: 0 1rem 1rem 0;
     }
@@ -1422,7 +1453,7 @@ const breadcrumbs = [
     .featured-variant-2 .featured-content {
       width: 65%;
       margin-right: 0;
-      margin-left: -15%;
+      margin-left: -8%;
       background: linear-gradient(270deg, rgba(17, 23, 15, 0.95) 45%, rgba(17, 23, 15, 0.6) 75%, transparent);
       border-radius: 0 1rem 1rem 0;
     }
@@ -1437,8 +1468,8 @@ const breadcrumbs = [
     }
 
     .featured-variant-2 .featured-slogan {
-      font-size: 2.35rem;
-      max-width: 720px;
+      font-size: 2.15rem;
+      max-width: 640px;
     }
 
     .featured-image-wrapper {
@@ -1459,6 +1490,40 @@ const breadcrumbs = [
 
     .featured-image {
       padding: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-span-tall {
+      grid-column: span 1;
+      flex-direction: column;
+      min-height: clamp(32rem, 48vw, 40rem);
+    }
+
+    .featured-span-tall .featured-content {
+      width: 100%;
+      margin: 0;
+      padding: 1.6rem;
+      background: linear-gradient(180deg, rgba(11, 16, 24, 0.98) 0%, rgba(11, 16, 24, 0.88) 55%, rgba(11, 16, 24, 0.42) 100%);
+      border-radius: 0;
+    }
+
+    .featured-span-tall .featured-image-wrapper {
+      width: 100%;
+      min-height: 17rem;
+      flex: 1;
+    }
+
+    .featured-span-tall .featured-slogan {
+      font-size: 1.55rem;
+    }
+
+    .featured-span-wide {
+      min-height: clamp(18rem, 24vw, 22rem);
+    }
+
+    .featured-span-hero {
+      min-height: clamp(19rem, 22vw, 24rem);
     }
   }
 

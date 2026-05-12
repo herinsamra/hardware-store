@@ -14,7 +14,11 @@ import AdminLayout from '../../components/AdminLayout.astro';
       </header>
 
       <div id="main-content" style="display: block;">
-        <div class="actions-bar">
+        <div class="actions-bar" style="justify-content: space-between; align-items: center; gap: 1rem;">
+          <div class="search-box" style="flex: 1; max-width: 400px; position: relative;">
+            <input type="text" id="brand-search" placeholder="Search brands by name or category..." style="padding-left: 2.5rem;">
+            <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+          </div>
           <button id="add-brand-btn" class="submit-btn" style="width: auto; padding: 0.8rem 1.5rem;">
             <span class="btn-text">+ Add New Brand</span>
           </button>
@@ -180,6 +184,12 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       function init() {
         fetchBrands();
+        
+        // Setup search
+        const searchInput = document.getElementById('brand-search');
+        searchInput.addEventListener('input', (e) => {
+          renderBrands(e.target.value.toLowerCase());
+        });
       }
 
       async function fetchBrands() {
@@ -198,14 +208,23 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
       }
 
-      function renderBrands() {
+      function renderBrands(filter = '') {
         const container = document.getElementById('brands-container');
-        if (brands.length === 0) {
-          container.innerHTML = '<div>No brands found. Add one!</div>';
+        
+        const filteredBrands = brands.filter(b => {
+          const name = (b.name || '').toLowerCase();
+          const category = (b.category || '').toLowerCase();
+          return name.includes(filter) || category.includes(filter);
+        });
+
+        if (filteredBrands.length === 0) {
+          container.innerHTML = filter 
+            ? `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">No brands matching "${filter}"</div>`
+            : '<div>No brands found. Add one!</div>';
           return;
         }
         
-        container.innerHTML = brands.map(b => `
+        container.innerHTML = filteredBrands.map(b => `
           <div class="brand-card">
             <div class="brand-header">
               <img src="${b.imageUrl || 'https://via.placeholder.com/50'}" alt="${b.name}" class="brand-logo">
@@ -270,7 +289,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
           const data = await res.json();
           if (res.ok) {
             brands = data.brands;
-            renderBrands();
+            const searchTerm = document.getElementById('brand-search').value.toLowerCase();
+            renderBrands(searchTerm);
             brandModal.style.display = 'none';
           } else {
             alert(data.error);
@@ -352,7 +372,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
             reassignSection.style.display = 'block';
           } else if (res.ok) {
             brands = data.brands;
-            renderBrands();
+            const searchTerm = document.getElementById('brand-search').value.toLowerCase();
+            renderBrands(searchTerm);
             deleteModal.style.display = 'none';
           } else {
             alert(data.error);

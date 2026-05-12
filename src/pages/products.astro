@@ -448,9 +448,7 @@ const breadcrumbs = [
 
     const getFeaturedProduct = (featuredProducts, usedFeaturedKeys) => {
       if (!featuredProducts.length) return null;
-
-      const freshPick = featuredProducts.find(product => !usedFeaturedKeys.has(productKey(product)));
-      return freshPick || featuredProducts[usedFeaturedKeys.size % featuredProducts.length];
+      return featuredProducts.find(product => !usedFeaturedKeys.has(productKey(product))) || null;
     };
 
     const getCreativeSlogan = (product) => {
@@ -484,11 +482,42 @@ const breadcrumbs = [
 
     const featuredIntervals = [6, 5, 7];
 
-    const getFeaturedInsertionPoint = (slotIndex) => {
+    const getGridColumnCount = () => {
+      if (!(gridEl instanceof HTMLElement)) return 1;
+
+      const templateColumns = window.getComputedStyle(gridEl).gridTemplateColumns;
+      const columnCount = templateColumns
+        .split(' ')
+        .map(value => value.trim())
+        .filter(Boolean).length;
+
+      return columnCount || 1;
+    };
+
+    const getFeaturedSpan = (slotIndex, columnCount) => {
+      if (columnCount < 4) return columnCount;
+
+      const layout = featuredLayouts[slotIndex % featuredLayouts.length];
+      return layout.spanClass === 'featured-span-hero' ? columnCount : 2;
+    };
+
+    const getFeaturedInsertionPoint = (slotIndex, columnCount) => {
       let total = featuredIntervals[0];
       for (let index = 0; index < slotIndex; index += 1) {
         total += featuredIntervals[index % featuredIntervals.length];
       }
+
+      const span = getFeaturedSpan(slotIndex, columnCount);
+      const safeRemainders = new Set([0]);
+
+      if (span < columnCount) {
+        safeRemainders.add(columnCount - span);
+      }
+
+      while (!safeRemainders.has(total % columnCount)) {
+        total += 1;
+      }
+
       return total;
     };
 
@@ -786,7 +815,8 @@ const breadcrumbs = [
     let itemsRendered = 0;
     let usedFeaturedKeys = new Set();
     let currentSearchData = null;
-    let nextFeaturedAt = getFeaturedInsertionPoint(0);
+    let currentGridColumns = getGridColumnCount();
+    let nextFeaturedAt = getFeaturedInsertionPoint(0, currentGridColumns);
 
     const renderProducts = (replaceHistory = true, append = false) => {
       if (!titleEl || !countEl || !gridEl || !noResultsEl || !triggerEl) return;
@@ -796,7 +826,8 @@ const breadcrumbs = [
         state.page = 1;
         itemsRendered = 0;
         usedFeaturedKeys = new Set();
-        nextFeaturedAt = getFeaturedInsertionPoint(0);
+        currentGridColumns = getGridColumnCount();
+        nextFeaturedAt = getFeaturedInsertionPoint(0, currentGridColumns);
         gridEl.replaceChildren();
       }
 
@@ -822,12 +853,15 @@ const breadcrumbs = [
 
         const injectFeatured = () => {
           const featuredProduct = getFeaturedProduct(shuffledFeatured, usedFeaturedKeys);
-          if (!featuredProduct) return false;
+          if (!featuredProduct) {
+            nextFeaturedAt = Number.POSITIVE_INFINITY;
+            return false;
+          }
 
           const variantIndex = usedFeaturedKeys.size;
           usedFeaturedKeys.add(productKey(featuredProduct));
           gridEl.appendChild(createFeaturedCard(featuredProduct, variantIndex));
-          nextFeaturedAt = getFeaturedInsertionPoint(usedFeaturedKeys.size);
+          nextFeaturedAt = getFeaturedInsertionPoint(usedFeaturedKeys.size, currentGridColumns);
           return true;
         };
 
@@ -840,10 +874,6 @@ const breadcrumbs = [
           gridEl.appendChild(createProductCard(product, matchInfo));
           itemsRendered++;
         });
-
-        if (itemsRendered > 0 && itemsRendered < 7 && !append) {
-          injectFeatured();
-        }
 
         noResultsEl.hidden = true;
         gridEl.hidden = false;
@@ -893,6 +923,18 @@ const breadcrumbs = [
         if (typeof gtag === 'function' && state.search) gtag('event', 'search', { search_term: state.search });
       });
     }
+
+    let resizeFrame = 0;
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        const nextColumnCount = getGridColumnCount();
+        if (nextColumnCount !== currentGridColumns) {
+          currentGridColumns = nextColumnCount;
+          renderProducts(false, false);
+        }
+      });
+    });
 
     updateSearchForm();
     renderProducts(false);
@@ -1091,7 +1133,7 @@ const breadcrumbs = [
 
   /* Featured Product Ad Styles */
   .featured-product-card {
-    grid-column: span 2;
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     min-height: 320px;
@@ -1133,11 +1175,11 @@ const breadcrumbs = [
   }
 
   .featured-span-wide {
-    grid-column: span 2;
+    grid-column: 1 / -1;
   }
 
   .featured-span-tall {
-    grid-column: span 2;
+    grid-column: 1 / -1;
   }
 
   /* Variant Accents */
@@ -1417,7 +1459,6 @@ const breadcrumbs = [
 
   @media (min-width: 768px) {
     .featured-product-card {
-      grid-column: span 2;
       flex-direction: row;
       min-height: clamp(300px, 28vw, 380px);
     }
@@ -1494,24 +1535,30 @@ const breadcrumbs = [
   }
 
   @media (min-width: 1024px) {
+    .featured-product-card {
+      grid-column: span 2;
+    }
+
+    .featured-span-hero {
+      grid-column: 1 / -1;
+    }
+
     .featured-span-tall {
-      grid-column: span 1;
-      flex-direction: column;
-      min-height: clamp(32rem, 48vw, 40rem);
+      min-height: clamp(18rem, 24vw, 22rem);
     }
 
     .featured-span-tall .featured-content {
-      width: 100%;
-      margin: 0;
-      padding: 1.6rem;
-      background: linear-gradient(180deg, rgba(11, 16, 24, 0.98) 0%, rgba(11, 16, 24, 0.88) 55%, rgba(11, 16, 24, 0.42) 100%);
-      border-radius: 0;
+      width: 58%;
+      margin-right: -6%;
+      padding: 1.8rem;
+      background: linear-gradient(90deg, rgba(8, 16, 26, 0.97) 28%, rgba(8, 16, 26, 0.72) 68%, transparent 100%);
+      border-radius: 1rem 0 0 1rem;
     }
 
     .featured-span-tall .featured-image-wrapper {
-      width: 100%;
-      min-height: 17rem;
-      flex: 1;
+      width: 48%;
+      min-height: 100%;
+      flex: initial;
     }
 
     .featured-span-tall .featured-slogan {

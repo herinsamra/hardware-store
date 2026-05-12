@@ -624,6 +624,8 @@ const breadcrumbs = [
     border-radius: 0 10px 10px 0;
     line-height: 1.45;
     animation: nudge-pulse 3s ease-in-out infinite;
+    will-change: opacity;
+    contain: content;
   }
   @keyframes nudge-pulse {
     0%, 100% { opacity: 1; }
@@ -648,6 +650,8 @@ const breadcrumbs = [
     transform-origin: 60px -24px;
     filter: drop-shadow(0 6px 18px rgba(0,0,0,0.4));
     transition: filter 0.3s ease;
+    will-change: transform;
+    contain: layout style;
   }
   .detail-brand-badge-link:hover {
     filter: drop-shadow(0 8px 24px rgba(197,160,40,0.35));

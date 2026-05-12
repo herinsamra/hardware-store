@@ -208,7 +208,9 @@ const breadcrumbSchema = breadcrumbs ?
           return false;
         }
       });
-    // Track specific link clicks globally
+    });
+
+    // Track specific link clicks globally (outside DOMContentLoaded for speed)
     document.addEventListener('click', function(e) {
       if (typeof gtag !== 'function') return;
 
@@ -341,6 +343,7 @@ const breadcrumbSchema = breadcrumbs ?
         transform-origin: top left;
         transition: transform .7s var(--shazam-snap);
         background-color: #0f172a;
+        will-change: transform;
       }
 
       /* When menu is open, content uses the 200%/50% trick for rotation */
@@ -363,17 +366,17 @@ const breadcrumbSchema = breadcrumbs ?
       .menu_toggle {
         z-index: 900;
         position: fixed;
-        top: 140px; /* Moved down to be clearly below the mobile header */
+        top: 140px;
         left: 0;
-        transform: translateX(-50%); /* Pull half off-screen */
+        transform: translateX(-50%);
         display: flex;
-        justify-content: flex-end; /* Align icon to visible part */
+        justify-content: flex-end;
         align-items: center;
         padding-right: 10px;
         cursor: pointer;
         width: 60px;
         height: 50px;
-        background-color: rgba(197, 160, 40, 0.5); /* semi transparent gold */
+        background-color: rgba(197, 160, 40, 0.5);
         border-radius: 0 30px 30px 0;
         backdrop-filter: blur(6px);
         animation: side-pulse 3s infinite alternate ease-in-out;
@@ -381,6 +384,8 @@ const breadcrumbSchema = breadcrumbs ?
         border: 1px solid rgba(255,255,255,0.1);
         border-left: none;
         -webkit-tap-highlight-color: transparent;
+        will-change: transform, opacity;
+        contain: layout style;
       }
       
       @keyframes side-pulse {

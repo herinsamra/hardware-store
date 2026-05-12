@@ -77,6 +77,7 @@ body {
   box-shadow: var(--glass-shadow);
   backdrop-filter: blur(20px) saturate(170%);
   -webkit-backdrop-filter: blur(20px) saturate(170%);
+  will-change: transform;
 }
 
 .site-layer {
@@ -109,6 +110,8 @@ body {
     url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
   -webkit-mask-composite: source-in;
   animation: particles-flicker 20s linear infinite;
+  will-change: mask-position, -webkit-mask-position;
+  contain: strict;
 }
 
 .category-card {
@@ -127,4 +130,15 @@ body {
   .particles-bg {
     animation: none;
   }
+}
+
+/* GPU-promote interactive elements so animations don't block clicks */
+button,
+[role="button"],
+.variant-pill,
+.add-to-cart,
+.enquire-wrapper,
+.card-variant-chip {
+  position: relative;
+  z-index: 1;
 }

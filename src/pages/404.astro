@@ -1,0 +1,253 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout title="404 Not Found | Peniel Hardwares" description="The page you are looking for does not exist.">
+  <div class="not-found-wrapper">
+    <div class="error">
+      <div class="number">4</div>
+      <div class="illustration">
+        <div class="circle"></div>
+        <div class="clip">
+          <div class="paper">
+            <div class="face">
+              <div class="eyes">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+              </div>
+              <div class="rosyCheeks rosyCheeks-left"></div>
+              <div class="rosyCheeks rosyCheeks-right"></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="number">4</div>
+    </div>
+
+    <div class="text">Oops. The page you're looking for doesn't exist.</div>
+    <a class="button" href="/">Back Home</a>
+  </div>
+  <div class="by">
+    Illustration based on "Cezan" by <a class="byLink" href="https://dribbble.com/shots/3965778-Cezan-404-Page-Not-Found" target="_blank" rel="noopener noreferrer">Masoud Ardestani</a>
+  </div>
+</Layout>
+
+<style>
+  .not-found-wrapper {
+    /* 
+      We use 10px base font size for the wrapper so that em units 
+      behave exactly like the original rem units (which assumed html 62.5%)
+    */
+    font-size: 10px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2em;
+    position: relative;
+    z-index: 10;
+  }
+
+  .error {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .number {
+    font-weight: 900;
+    font-size: 15em;
+    line-height: 1;
+    color: var(--accent-gold);
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .illustration {
+    position: relative;
+    width: 12.2em;
+    margin: 0 2.1em;
+    height: 15em;
+  }
+
+  .circle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 12.2em;
+    height: 11.4em;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  }
+
+  .clip {
+    position: absolute;
+    bottom: 0.3em;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    width: 12.5em;
+    height: 13em;
+    border-radius: 0 0 50% 50%;
+  }
+
+  .paper {
+    position: absolute;
+    bottom: -0.3em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 9.2em;
+    height: 12.4em;
+    border: 0.3em solid var(--accent-gold);
+    background-color: var(--bg-primary);
+    border-radius: 0.8em;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  }
+
+
+
+  .paper::before {
+    content: '';
+    position: absolute;
+    top: -0.7em;
+    right: -0.7em;
+    width: 1.4em;
+    height: 1em;
+    background-color: var(--bg-primary);
+    border-bottom: 0.3em solid var(--accent-gold);
+    transform: rotate(45deg);
+    z-index: 2;
+  }
+
+  .face {
+    position: relative;
+    margin-top: 2.3em;
+    z-index: 3;
+  }
+
+  .eyes {
+    position: absolute;
+    top: 0;
+    left: 2.4em;
+    width: 4.6em;
+    height: 0.8em;
+  }
+
+  .eye {
+    position: absolute;
+    bottom: 0;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: var(--accent-gold);
+    animation: eye-blink 4s infinite ease-in-out;
+    box-shadow: 0 0 8px rgba(197, 160, 40, 0.4);
+  }
+  .eye-left { left: 0; }
+  .eye-right { right: 0; }
+
+  @keyframes eye-blink {
+    0% { height: 0.8em; }
+    50% { height: 0.8em; }
+    52% { height: 0.1em; }
+    54% { height: 0.8em; }
+    100% { height: 0.8em; }
+  }
+
+  .rosyCheeks {
+    position: absolute;
+    top: 1.6em;
+    width: 1em;
+    height: 0.2em;
+    border-radius: 50%;
+    background-color: #fdabaf;
+    opacity: 0.7;
+  }
+  .rosyCheeks-left { left: 1.4em; }
+  .rosyCheeks-right { right: 1.4em; }
+
+  .mouth {
+    position: absolute;
+    top: 3.1em;
+    left: 50%;
+    width: 1.6em;
+    height: 0.2em;
+    border-radius: 0.1em;
+    transform: translateX(-50%);
+    background-color: var(--accent-gold);
+    box-shadow: 0 0 5px rgba(197, 160, 40, 0.3);
+  }
+
+  .text {
+    margin-top: 4em;
+    font-weight: 500;
+    font-size: 1.8em;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .button {
+    margin-top: 3em;
+    padding: 1em 2.5em;
+    font-size: 1.5em;
+    color: #0b1018;
+    font-weight: 800;
+    background-color: var(--accent-gold);
+    border-radius: 3em;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px -10px rgba(197, 160, 40, 0.5);
+  }
+
+  .button:hover {
+    background-color: var(--accent-gold-light);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -10px rgba(197, 160, 40, 0.7);
+  }
+
+  .by {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-align: center;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .by:hover {
+    opacity: 1;
+  }
+
+  .byLink {
+    color: var(--accent-gold);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.3s;
+  }
+
+  .byLink:hover {
+    text-decoration-color: var(--accent-gold);
+  }
+
+  @media (max-width: 600px) {
+    .not-found-wrapper {
+      font-size: 7px; /* Scales down the entire illustration and text proportionally */
+    }
+    
+    .button {
+      font-size: 1.8em;
+    }
+  }
+</style>

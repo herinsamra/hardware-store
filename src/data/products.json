@@ -201,7 +201,8 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -307,7 +308,8 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -555,53 +557,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -620,7 +576,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -640,35 +597,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -688,17 +617,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -717,7 +636,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -737,44 +657,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -793,7 +676,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -812,7 +696,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -831,7 +716,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -850,7 +736,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -869,7 +756,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07017",
@@ -888,7 +776,8 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03476",
@@ -908,18 +797,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "Brown gold",
-        "price": 3149,
-        "part_no": "zz03476",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
   },
   {
     "part_no": "ZZ06337",
@@ -938,7 +816,8 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03477",
@@ -958,19 +837,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "KD WHITE",
-        "price": 3699,
-        "part_no": "zz03477",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
   },
   {
     "part_no": "ZZ06569",
@@ -989,7 +856,8 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07096",
@@ -1008,7 +876,8 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03734",
@@ -1028,22 +897,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "100MM",
-        "price": 1755,
-        "part_no": "ZZ03733",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
   },
   {
     "part_no": "ZZ06576",
@@ -1062,7 +916,8 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03478",
@@ -1082,17 +937,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "OPAL WHITE",
-        "price": 3519,
-        "part_no": "ZZ03478",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
   },
   {
     "part_no": "ZZ06494",
@@ -1111,7 +956,8 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1130,7 +976,8 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1149,7 +996,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1168,7 +1016,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1187,7 +1036,8 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1206,7 +1056,8 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1225,7 +1076,8 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1244,7 +1096,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Elevate Your Water Pressure, Reliably.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1263,7 +1116,8 @@
     "variant_name": "1 HP",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1282,7 +1136,8 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1301,7 +1156,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1320,7 +1176,8 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1332,13 +1189,14 @@
     "description": "Experience robust reliability with the Lakshmi 1 hp Centrifugal Monoblock Pump. Engineered for efficiency, its durable cast iron body and corrosion-resistant finish ensure smooth, long-lasting operation. Perfect for domestic water supply, small farm irrigation, or garden needs. Upgrade to Lakshmi and discover dependable performance for your daily water demands.",
     "brand": "Lakshmi",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778586614/1-hp-lakshmi-centrifugal-monoblock-pump-015-Photoroom_yubsa9.png",
-    "video_url": "",
-    "variant_name": "1.0hp",
     "mrp": "7900",
     "slug": "1-hp-centrifugal-monoblock-pump",
     "meta_title": "Lakshmi 1 hp Monoblock Pump - Reliable Water Solutions",
     "meta_description": "Explore Lakshmi's 1 hp Centrifugal Monoblock Pump. Engineered for reliable water supply in homes, farms, & gardens. Durable, efficient, & corrosion-resistant. Upgrade your system today!",
+    "variant_name": "1.0hp",
     "is_featured": "false",
-    "slogan": ""
+    "slogan": "",
+    "video_url": "",
+    "variants": ""
   }
 ]

@@ -576,20 +576,15 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
     };
 
     let lastScrollY = getScrollY();
-    let accumulatedDown = 0;
-    let accumulatedUp = 0;
 
     const updateHeader = () => {
-      const currentScrollY = getScrollY();
-      const delta = currentScrollY - lastScrollY;
+      const currentScrollY = Math.max(0, getScrollY());
 
       // 1. Always show and reset at the very top
       if (currentScrollY <= 10) {
         header.classList.remove('is-hidden');
         if (navbar) navbar.classList.remove('is-scrolled');
         lastScrollY = currentScrollY;
-        accumulatedDown = 0;
-        accumulatedUp = 0;
         ticking = false;
         return;
       }
@@ -603,22 +598,26 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
         }
       }
 
-      // Accumulate scroll distance
-      if (delta > 0) {
-        accumulatedDown += delta;
-        accumulatedUp = 0; // Reset up accumulation
-      } else if (delta < 0) {
-        accumulatedUp += Math.abs(delta);
-        accumulatedDown = 0; // Reset down accumulation
-      }
-
       // 3. Auto-hide on scroll down, show on scroll up
-      if (accumulatedDown > 15 && currentScrollY > 120) {
-        header.classList.add('is-hidden');
-        accumulatedDown = 0; // Prevent constant triggering
-      } else if (accumulatedUp > 15) {
+      if (currentScrollY < lastScrollY) {
+        // Scrolling up
         header.classList.remove('is-hidden');
-        accumulatedUp = 0;
+      } else if (currentScrollY > lastScrollY && currentScrollY > 120) {
+        // Scrolling down
+        header.classList.add('is-hidden');
+
+        // Show header if at the bottom of the page
+        let scrollHeight = document.documentElement.scrollHeight;
+        let clientHeight = window.innerHeight;
+        
+        if (document.body.classList.contains('shazam-open') && scrollContainer) {
+          scrollHeight = scrollContainer.scrollHeight;
+          clientHeight = scrollContainer.clientHeight;
+        }
+
+        if (currentScrollY + clientHeight >= scrollHeight - 50) {
+          header.classList.remove('is-hidden');
+        }
       }
 
       lastScrollY = currentScrollY;

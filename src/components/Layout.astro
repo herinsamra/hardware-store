@@ -343,12 +343,12 @@ const breadcrumbSchema = breadcrumbs ?
         transform-origin: top left;
         transition: transform .7s var(--shazam-snap);
         background-color: #0f172a;
-        will-change: transform;
       }
 
       /* When menu is open, content uses the 200%/50% trick for rotation */
       html.shazam-layout body.shazam-open .page#page-wrapper .content {
         height: 200%;
+        will-change: transform;
       }
       html.shazam-layout body.shazam-open .content_inner {
         height: 50%;

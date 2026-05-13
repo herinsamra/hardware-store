@@ -77,10 +77,10 @@ const brandAsset = getBrandAsset(product.brand);
 
 // Random encouraging text near Enquire Now
 const enquiryNudges = [
-  '💰 Better prices available on enquiry!',
+  '💸 Better prices available on enquiry!',
   '📞 Get the best quote — contact us today!',
   '🏷️ Looking for the best deal? Contact us for discounted pricing.',
-  '🤝 Call us for exclusive bulk & trade pricing!',
+  '🤝 Call us for exclusive discounts!',
 ];
 const nudgeHash = [...(product.id || product.name || '')].reduce((acc, c) => acc + c.charCodeAt(0), 0);
 const enquiryNudge = enquiryNudges[nudgeHash % enquiryNudges.length];
@@ -542,6 +542,8 @@ const breadcrumbs = [
       transform 0.2s ease,
       border-color 0.2s ease,
       box-shadow 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .product-thumbnail-button:hover,
   .product-thumbnail-button.active {
@@ -572,6 +574,8 @@ const breadcrumbs = [
     display: flex;
     flex-direction: column;
     padding: 0.35rem 0.15rem 0.35rem 0.3rem;
+    position: relative;
+    z-index: 2;
   }
   .product-detail-info h1 {
     font-size: clamp(2rem, 4vw, 3rem);
@@ -606,10 +610,15 @@ const breadcrumbs = [
     gap: 2rem;
     margin: 1.5rem 0 2rem;
     flex-wrap: nowrap;
+    position: relative;
+    z-index: 3;
+    isolation: isolate;
   }
 
   .product-actions-row :global(.enquire-wrapper) {
     margin-top: 0 !important;
+    position: relative;
+    z-index: 2;
   }
 
   /* Enquiry nudge text */
@@ -652,6 +661,8 @@ const breadcrumbs = [
     transition: filter 0.3s ease;
     will-change: transform;
     contain: layout style;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .detail-brand-badge-link:hover {
     filter: drop-shadow(0 8px 24px rgba(197,160,40,0.35));
@@ -846,6 +857,8 @@ const breadcrumbs = [
       color 0.2s ease,
       border-color 0.2s ease,
       background 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .product-meta-tag:hover {
     transform: translateY(-1px);
@@ -1011,6 +1024,10 @@ const breadcrumbs = [
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    position: relative;
+    z-index: 1;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .variant-pill:hover {
     background: rgba(255, 255, 255, 0.1);

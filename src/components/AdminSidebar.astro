@@ -3,42 +3,85 @@
 const pathname = Astro.url.pathname;
 ---
 
-<aside class="admin-sidebar">
+<aside class="admin-sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <button id="sidebarToggle" class="sidebar-toggle" title="Toggle Sidebar">
+      <span class="toggle-icon">☰</span>
+    </button>
+  </div>
+
   <div class="sidebar-header">
     <div class="logo-icon">✦</div>
-    <h2>Peniel Admin</h2>
+    <h2 class="sidebar-text">Peniel Admin</h2>
   </div>
 
   <nav class="sidebar-nav">
-    <a href="/admin" class={`nav-item ${pathname === '/admin' || pathname === '/admin/' ? 'active' : ''}`}>
+    <a href="/admin" class={`nav-item ${pathname === '/admin' || pathname === '/admin/' ? 'active' : ''}`} title="Dashboard">
       <span class="icon">📊</span>
-      Dashboard
+      <span class="sidebar-text">Dashboard</span>
     </a>
-    <a href="/admin/products" class={`nav-item ${pathname.includes('/admin/products') ? 'active' : ''}`}>
+    <a href="/admin/products" class={`nav-item ${pathname.includes('/admin/products') ? 'active' : ''}`} title="All Products">
       <span class="icon">📦</span>
-      All Products
+      <span class="sidebar-text">All Products</span>
     </a>
-    <a href="/admin/add-product" class={`nav-item ${pathname.includes('/admin/add-product') ? 'active' : ''}`}>
+    <a href="/admin/add-product" class={`nav-item ${pathname.includes('/admin/add-product') ? 'active' : ''}`} title="Add Product">
       <span class="icon">➕</span>
-      Add Product
+      <span class="sidebar-text">Add Product</span>
     </a>
-    <a href="/admin/categories" class={`nav-item ${pathname.includes('/admin/categories') ? 'active' : ''}`}>
+    <a href="/admin/categories" class={`nav-item ${pathname.includes('/admin/categories') ? 'active' : ''}`} title="Categories">
       <span class="icon">📁</span>
-      Categories
+      <span class="sidebar-text">Categories</span>
     </a>
-    <a href="/admin/brands" class={`nav-item ${pathname.includes('/admin/brands') ? 'active' : ''}`}>
+    <a href="/admin/brands" class={`nav-item ${pathname.includes('/admin/brands') ? 'active' : ''}`} title="Brands">
       <span class="icon">🏷️</span>
-      Brands
+      <span class="sidebar-text">Brands</span>
     </a>
   </nav>
 
   <div class="sidebar-footer">
-    <a href="/" class="nav-item back-link">
+    <a href="/" class="nav-item back-link" title="Back to Store">
       <span class="icon">←</span>
-      Back to Store
+      <span class="sidebar-text">Back to Store</span>
     </a>
   </div>
 </aside>
+
+<script is:inline>
+  function initSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    const layout = document.querySelector('.admin-layout');
+    
+    if (!sidebar || !toggle) return;
+
+    // Apply saved state immediately
+    const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+    if (isCollapsed) {
+      sidebar.classList.add('collapsed');
+      layout?.classList.add('sidebar-collapsed');
+    } else {
+      sidebar.classList.remove('collapsed');
+      layout?.classList.remove('sidebar-collapsed');
+    }
+
+    // Use a direct onclick to avoid multiple event listener issues
+    toggle.onclick = (e) => {
+      e.preventDefault();
+      const currentlyCollapsed = sidebar.classList.toggle('collapsed');
+      if (layout) {
+        layout.classList.toggle('sidebar-collapsed', currentlyCollapsed);
+      }
+      localStorage.setItem('sidebar-collapsed', currentlyCollapsed);
+    };
+  }
+
+  // Initialize on load
+  initSidebar();
+
+  // Support Astro View Transitions
+  document.addEventListener('astro:after-swap', initSidebar);
+  document.addEventListener('astro:page-load', initSidebar);
+</script>
 
 <style>
   .admin-sidebar {
@@ -46,20 +89,63 @@ const pathname = Astro.url.pathname;
     height: 100vh;
     position: sticky;
     top: 0;
-    background: rgba(13, 15, 20, 0.95);
+    background: rgba(13, 15, 20, 0.98);
     backdrop-filter: blur(20px);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     flex-direction: column;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
     z-index: 50;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .admin-sidebar.collapsed {
+    width: 80px;
+    padding-top: 1.5rem;
+  }
+
+  .sidebar-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    height: 32px;
+  }
+
+  .sidebar-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .collapsed .sidebar-top {
+    justify-content: center;
+  }
+
+  .sidebar-toggle:hover {
+    background: rgba(197, 160, 40, 0.2);
+    border-color: var(--accent);
   }
 
   .sidebar-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .collapsed .sidebar-header {
+    margin-bottom: 2rem;
+    padding-top: 0.5rem;
   }
 
   .logo-icon {
@@ -83,6 +169,26 @@ const pathname = Astro.url.pathname;
     background: linear-gradient(to right, #fff, #cbd5e1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-text {
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+  }
+
+  .collapsed .sidebar-text {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+  }
+
+  .collapsed .sidebar-header {
+    justify-content: center;
+  }
+
+  .collapsed .logo-icon {
+    margin-right: 0;
   }
 
   .sidebar-nav {

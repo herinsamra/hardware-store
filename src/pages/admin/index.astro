@@ -35,16 +35,40 @@ const totalProducts = allProducts.length;
     </div>
   </div>
 
+  <div class="dashboard-toolbar glass-panel">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        id="dashboardSearch" 
+        placeholder="Search for categories, subcategories, or product ranges..." 
+        autocomplete="off"
+      />
+    </div>
+    
+    <nav class="category-nav">
+      {Object.keys(categories).map(catName => (
+        <button class="nav-tab" data-target={`cat-${catName}`}>
+          {catName.replace(/_/g, ' ')}
+        </button>
+      ))}
+    </nav>
+  </div>
+
   <div class="categories-grid">
     {Object.keys(categories).map(catName => {
       const subcats = categories[catName];
       const catCount = getCount(catName);
 
       return (
-        <div class="category-card glass-panel">
+        <div class="category-card glass-panel" id={`cat-${catName}`}>
           <div class="cat-header">
             <h2>{catName.replace(/_/g, ' ')}</h2>
-            <span class="badge count-badge">{catCount}</span>
+            <div class="header-actions">
+              <a href={`/admin/products?category=${encodeURIComponent(catName)}`} class="action-btn view-btn" title="View Products in Category">👁️</a>
+              <a href={`/admin/add-product?category=${encodeURIComponent(catName)}`} class="action-btn add-btn" title="Add Product to Category">➕</a>
+              <span class="badge count-badge">{catCount}</span>
+            </div>
           </div>
 
           <div class="subcategories">
@@ -56,7 +80,11 @@ const totalProducts = allProducts.length;
                 <div class="subcategory-group">
                   <div class="sub-header">
                     <h3>{subName.replace(/_/g, ' ')}</h3>
-                    <span class="badge sub-count">{subCount}</span>
+                    <div class="header-actions">
+                      <a href={`/admin/products?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subName)}`} class="action-btn view-btn" title="View Products in Subcategory">👁️</a>
+                      <a href={`/admin/add-product?category=${encodeURIComponent(catName)}&subcategory=${encodeURIComponent(subName)}`} class="action-btn add-btn" title="Add Product to Subcategory">➕</a>
+                      <span class="badge sub-count">{subCount}</span>
+                    </div>
                   </div>
 
                   <ul class="subsub-list">
@@ -99,6 +127,82 @@ const totalProducts = allProducts.length;
       );
     })}
   </div>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('dashboardSearch');
+      const cards = document.querySelectorAll('.category-card');
+      const navTabs = document.querySelectorAll('.nav-tab');
+
+      // Search Logic
+      searchInput?.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        cards.forEach(card => {
+          let catMatch = card.querySelector('h2').textContent.toLowerCase().includes(query);
+          let subMatch = false;
+          
+          const subGroups = card.querySelectorAll('.subcategory-group');
+          subGroups.forEach(group => {
+            const subTitle = group.querySelector('h3').textContent.toLowerCase();
+            const subsubs = group.querySelectorAll('.subsub-name');
+            
+            let currentSubMatch = subTitle.includes(query);
+            let subsubMatch = false;
+            
+            subsubs.forEach(ss => {
+              if (ss.textContent.toLowerCase().includes(query)) {
+                subsubMatch = true;
+                ss.closest('.subsub-item').style.display = '';
+              } else if (!currentSubMatch) {
+                ss.closest('.subsub-item').style.display = 'none';
+              } else {
+                ss.closest('.subsub-item').style.display = '';
+              }
+            });
+
+            if (currentSubMatch || subsubMatch) {
+              group.style.display = '';
+              subMatch = true;
+            } else {
+              group.style.display = 'none';
+            }
+          });
+
+          if (catMatch || subMatch) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+
+      // Navigation Logic
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetId = tab.getAttribute('data-target');
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const offset = 120; // Account for sticky sidebar/header
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+
+            // Highlight the card briefly
+            targetElement.style.borderColor = 'var(--accent)';
+            targetElement.style.boxShadow = '0 0 30px rgba(197, 160, 40, 0.2)';
+            setTimeout(() => {
+              targetElement.style.borderColor = '';
+              targetElement.style.boxShadow = '';
+            }, 2000);
+          }
+        });
+      });
+    });
+  </script>
 </AdminLayout>
 
 <style>
@@ -106,7 +210,83 @@ const totalProducts = allProducts.length;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .dashboard-toolbar {
+    margin-bottom: 2.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  .category-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+  }
+
+  .nav-tab {
+    background: rgba(197, 160, 40, 0.1);
+    border: 1px solid rgba(197, 160, 40, 0.2);
+    color: #e5e7eb;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    outline: none;
+  }
+
+  .nav-tab:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(197, 160, 40, 0.3);
+  }
+
+  .nav-tab:active {
+    transform: translateY(-1px);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .search-container input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.9rem 1.2rem 0.9rem 3.2rem;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-container input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 4px rgba(197, 160, 40, 0.1);
   }
 
   .page-title {
@@ -150,8 +330,14 @@ const totalProducts = allProducts.length;
 
   .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    transition: all 0.4s ease;
+  }
+
+  :global(.sidebar-collapsed) .categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
   }
 
   .category-card {
@@ -173,6 +359,31 @@ const totalProducts = allProducts.length;
     font-size: 1.5rem;
     margin: 0;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 1rem;
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .action-btn {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.2s;
+    font-size: 1rem;
+    flex-shrink: 0;
   }
 
   .badge {
@@ -205,11 +416,19 @@ const totalProducts = allProducts.length;
     font-size: 1.1rem;
     margin: 0;
     color: #cbd5e1;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 1rem;
   }
 
-  .sub-count {
-    color: #9ca3af;
-    background: rgba(255, 255, 255, 0.05);
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    gap: 1rem;
   }
 
   .subsub-list {

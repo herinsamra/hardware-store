@@ -143,6 +143,7 @@ function formatIndianNumber(num: number): string {
       border-color 0.28s ease;
     outline: none;
     contain: content;
+    -webkit-tap-highlight-color: transparent;
   }
   .product-card:focus-visible {
     box-shadow:
@@ -289,6 +290,8 @@ function formatIndianNumber(num: number): string {
     flex-wrap: wrap;
     gap: 0.35rem;
     margin-bottom: 0.65rem;
+    position: relative;
+    z-index: 1;
   }
   .card-variant-chip {
     padding: 0.2rem 0.55rem;
@@ -302,6 +305,10 @@ function formatIndianNumber(num: number): string {
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    position: relative;
+    z-index: 1;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   @media (max-width: 640px) {

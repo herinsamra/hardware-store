@@ -563,49 +563,46 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
     if (!(header instanceof HTMLElement)) return;
 
     let ticking = false;
-    
-    // Default to window scroll
     const scrollContainer = document.getElementById('main-scroll-container');
-    
-    // In shazam layout, the inner container only scrolls when the menu is OPEN.
-    // However, for normal browsing/animation, we should generally track window scroll
-    // UNLESS the body is locked.
-    const getTarget = () => {
-      if (document.body.classList.contains('shazam-open') && scrollContainer) {
-        return scrollContainer;
-      }
-      return window;
-    };
-    
-    let target = getTarget();
+    const navbar = header.querySelector('.navbar');
 
-    let lastScrollY = target === window ? window.pageYOffset : (target.scrollTop || 0);
+    // Robustly get current scroll position
+    const getScrollY = () => {
+      // If shazam menu is open, we scroll the container
+      if (document.body.classList.contains('shazam-open') && scrollContainer) {
+        return scrollContainer.scrollTop;
+      }
+      return window.scrollY || window.pageYOffset || 0;
+    };
+
+    let lastScrollY = getScrollY();
 
     const updateHeader = () => {
-      target = getTarget();
-      const currentScrollY = target === window ? window.pageYOffset : (target.scrollTop || 0);
+      const currentScrollY = getScrollY();
       const delta = currentScrollY - lastScrollY;
 
-      // Always remove hidden when at the very top
+      // 1. Always show and reset at the very top
       if (currentScrollY <= 10) {
         header.classList.remove('is-hidden');
-        header.querySelector('.navbar').classList.remove('is-scrolled');
+        if (navbar) navbar.classList.remove('is-scrolled');
         lastScrollY = currentScrollY;
         ticking = false;
         return;
       }
 
-      // Add inwards scale when scrolled
-      if (currentScrollY > 50) {
-        header.querySelector('.navbar').classList.add('is-scrolled');
+      // 2. Add 'is-scrolled' styling after some scroll
+      if (navbar) {
+        if (currentScrollY > 50) {
+          navbar.classList.add('is-scrolled');
+        } else {
+          navbar.classList.remove('is-scrolled');
+        }
       }
 
-      // Scrolling down → hide
-      if (delta > 5 && currentScrollY > 100) {
+      // 3. Auto-hide on scroll down, show on scroll up
+      if (delta > 8 && currentScrollY > 120) {
         header.classList.add('is-hidden');
-      } 
-      // Scrolling up → show
-      else if (delta < -5) {
+      } else if (delta < -8) {
         header.classList.remove('is-hidden');
       }
 
@@ -613,27 +610,20 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
       ticking = false;
     };
 
-    target.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(updateHeader);
-    }, { passive: true });
-
-    // Re-evaluate target on resize
-    window.addEventListener('resize', () => {
-      const newTarget = scrollContainer && window.innerWidth <= 768 ? scrollContainer : window;
-      if (newTarget !== target) {
-        target.removeEventListener('scroll', updateHeader);
-        target = newTarget;
-        lastScrollY = target === window ? window.scrollY : target.scrollTop;
-        target.addEventListener('scroll', () => {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(updateHeader);
-        }, { passive: true });
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateHeader);
       }
-    });
+    };
 
+    // Listen on both to be absolutely sure we capture the scroll
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // Initial check
     updateHeader();
 
     // Close mobile menu when a link is clicked

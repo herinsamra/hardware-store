@@ -195,6 +195,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
               <div class="node-name">${key}</div>
               <div class="node-actions">
                 ${depth < 2 ? `<button class="add-child-btn" data-path="${pathStr}">+ Add Child</button>` : ''}
+                <button class="view-products-btn" data-path="${pathStr}">View Products</button>
+                <button class="add-product-btn" data-path="${pathStr}">+ Add Product</button>
                 <button class="edit-btn" data-path="${pathStr}">Edit</button>
                 <button class="del-btn" data-path="${pathStr}">Delete</button>
               </div>
@@ -243,6 +245,28 @@ import AdminLayout from '../../components/AdminLayout.astro';
           btn.addEventListener('click', (e) => {
             const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
             openDeleteModal(path);
+          });
+        });
+
+        document.querySelectorAll('.view-products-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
+            const params = new URLSearchParams();
+            if (path[0]) params.set('category', path[0]);
+            if (path[1]) params.set('subcategory', path[1]);
+            if (path[2]) params.set('subsub', path[2]);
+            window.location.href = `/admin/products?${params.toString()}`;
+          });
+        });
+
+        document.querySelectorAll('.add-product-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const path = JSON.parse(decodeURIComponent(e.currentTarget.getAttribute('data-path')));
+            const params = new URLSearchParams();
+            if (path[0]) params.set('category', path[0]);
+            if (path[1]) params.set('subcategory', path[1]);
+            if (path[2]) params.set('subsub', path[2]);
+            window.location.href = `/admin/add-product?${params.toString()}`;
           });
         });
       }

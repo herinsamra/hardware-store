@@ -1,6 +1,7 @@
 ---
 import Layout from '../components/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
+import EnquireNowModal from '../components/EnquireNowModal.astro';
 import { fetchAllProducts } from '../lib/products';
 import { absoluteUrl } from '../lib/seo.js';
 
@@ -117,7 +118,7 @@ const breadcrumbs = [
       <p>No products found. Try a different filter or search term.</p>
     </div>
 
-    <div id="infinite-scroll-trigger" class="scroll-trigger"></div>
+    <div id="infinite-scroll-trigger" class="scroll-trigger" hidden></div>
 
     <noscript>
       <p class="product-count">
@@ -130,6 +131,8 @@ const breadcrumbs = [
       </div>
     </noscript>
   </div>
+  
+  <EnquireNowModal hideButton={true} />
 
   <script
     id="products-page-data"
@@ -139,6 +142,12 @@ const breadcrumbs = [
 
   <script>
     import Fuse from 'fuse.js';
+
+    // Prevent browser from restoring scroll position to the bottom on refresh/load
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
 
     const productsPageDataEl = document.getElementById('products-page-data');
     if (!(productsPageDataEl instanceof HTMLScriptElement) || !productsPageDataEl.textContent) {
@@ -571,7 +580,7 @@ const breadcrumbs = [
 
       const action = document.createElement('span');
       action.className = 'featured-action';
-      action.textContent = variant === 3 ? 'Watch product' : layout.action;
+      action.textContent = variant === 3 ? 'View Product' : layout.action;
       details.appendChild(action);
       contentWrapper.appendChild(details);
 
@@ -702,6 +711,62 @@ const breadcrumbs = [
       return card;
     };
 
+    const enquireTexts = [
+      "Reach out for special rates and personalized offers.",
+      "Ask us for today’s best price and discounts.",
+      "The smart price isn’t always displayed 😉 Enquire now!.",
+      "Contact us to receive customized pricing and exclusive offers",
+      "Tap to enquire & unlock exclusive pricing not shown on the website!",
+      "Smart buyers always enquire first 😎 Contact us for best pricing"
+    ];
+
+    const createMarqueeAdCard = (slotIndex) => {
+      const card = document.createElement('a');
+      card.href = "#";
+      card.className = `marquee-ad-card enquire-trigger marquee-style-${(slotIndex % 3) + 1}`;
+      card.addEventListener('click', (e) => e.preventDefault());
+
+      const textToPlay = enquireTexts[slotIndex % enquireTexts.length];
+      
+      const wrapper = document.createElement('div');
+      wrapper.className = 'marquee-ad-wrapper';
+
+      const marquee = document.createElement('div');
+      marquee.className = 'marquee-ad-track';
+
+      [0, 1].forEach(() => {
+        const textList = document.createElement('ul');
+        textList.className = 'marquee-ad-content';
+        textList.innerHTML = `<li>${textToPlay.trim()}</li><li class="marquee-bullet">●</li>`.repeat(5);
+        marquee.appendChild(textList);
+      });
+
+      wrapper.appendChild(marquee);
+      card.appendChild(wrapper);
+
+      return card;
+    };
+
+    const createTopMarquee = () => {
+      const card = document.createElement('div');
+      card.className = 'marquee-top-ad';
+      
+      const track = document.createElement('div');
+      track.className = 'marquee-top-track';
+      
+      const text = "🔥 Special Offers: Reach out for today's best price! • Premium Hardware Collection • Looking for the best deal? Contact us today for discounted pricing. • ";
+      
+      [0, 1].forEach(() => {
+        const content = document.createElement('div');
+        content.className = 'marquee-top-content';
+        content.innerHTML = `<span>${text}</span>`.repeat(3);
+        track.appendChild(content);
+      });
+      
+      card.appendChild(track);
+      return card;
+    };
+
     const createProductCard = (product, matchInfo = {}) => {
       const productHref = product.url || `/product/${product.id}`;
       const card = document.createElement('div');
@@ -814,9 +879,11 @@ const breadcrumbs = [
     let observer = null;
     let itemsRendered = 0;
     let usedFeaturedKeys = new Set();
+    let marqueeCount = 0;
     let currentSearchData = null;
     let currentGridColumns = getGridColumnCount();
     let nextFeaturedAt = getFeaturedInsertionPoint(0, currentGridColumns);
+    let nextMarqueeAt = 10;
 
     const renderProducts = (replaceHistory = true, append = false) => {
       if (!titleEl || !countEl || !gridEl || !noResultsEl || !triggerEl) return;
@@ -826,9 +893,12 @@ const breadcrumbs = [
         state.page = 1;
         itemsRendered = 0;
         usedFeaturedKeys = new Set();
+        marqueeCount = 0;
         currentGridColumns = getGridColumnCount();
         nextFeaturedAt = getFeaturedInsertionPoint(0, currentGridColumns);
+        nextMarqueeAt = 10;
         gridEl.replaceChildren();
+        gridEl.appendChild(createTopMarquee());
       }
 
       const searchData = currentSearchData;
@@ -866,6 +936,12 @@ const breadcrumbs = [
         };
 
         paginatedProducts.forEach((product) => {
+          if (itemsRendered > 0 && itemsRendered >= nextMarqueeAt) {
+            gridEl.appendChild(createMarqueeAdCard(marqueeCount));
+            marqueeCount++;
+            nextMarqueeAt += 16;
+          }
+
           if (itemsRendered > 0 && itemsRendered >= nextFeaturedAt) {
             injectFeatured();
           }
@@ -938,6 +1014,13 @@ const breadcrumbs = [
 
     updateSearchForm();
     renderProducts(false);
+    
+    // Final reinforcement to ensure we are at the top after initial render
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      const scrollContainer = document.getElementById('main-scroll-container');
+      if (scrollContainer) scrollContainer.scrollTop = 0;
+    });
   </script>
 </Layout>
 
@@ -1691,4 +1774,178 @@ const breadcrumbs = [
   .skeleton-subtitle { height: 0.8rem; width: 55%; animation-delay: 0.1s; }
   .skeleton-price  { height: 1.1rem; width: 45%; animation-delay: 0.15s; }
   .skeleton-category { height: 0.7rem; width: 35%; animation-delay: 0.2s; margin-top: auto; }
+
+  /* ===== MARQUEE AD STYLES ===== */
+  .marquee-ad-card {
+    grid-column: 1 / -1;
+    position: relative;
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    z-index: 1;
+    height: auto;
+  }
+
+  .marquee-ad-card:hover {
+    transform: translateY(-1px);
+  }
+
+  .marquee-ad-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: none !important;
+    border: none !important;
+    /* Extra aggressive edge fade to hide artifacts */
+    mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  }
+
+  .marquee-ad-track {
+    --gap: 2rem;
+    display: flex;
+    gap: var(--gap);
+    overflow: hidden;
+    user-select: none;
+    width: max-content;
+    padding: 0.3rem 0;
+    color: #f8d978;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  .marquee-style-1 .marquee-ad-track,
+  .marquee-style-2 .marquee-ad-track,
+  .marquee-style-3 .marquee-ad-track {
+    transform: none;
+  }
+
+  .marquee-ad-content {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    justify-content: space-around;
+    min-width: 100%;
+    gap: var(--gap);
+    animation: scroll-ad 30s linear infinite; /* Matched top marquee speed */
+    margin: 0;
+    padding: 0;
+    background: none !important;
+    border: none !important;
+  }
+
+  /* Unified speed for all marquee styles */
+  .marquee-style-2 .marquee-ad-content,
+  .marquee-style-3 .marquee-ad-content {
+    animation-duration: 30s;
+  }
+
+  @keyframes scroll-ad {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  .marquee-ad-content li {
+    list-style: none;
+    line-height: normal;
+    font-size: 0.85rem; /* Matched to top marquee size */
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #f8d978; /* Golden color matching logo */
+    text-shadow: 0 0 10px rgba(248, 217, 120, 0.2);
+  }
+
+  .marquee-bullet {
+    padding: 0 0.5rem;
+    opacity: 0.6;
+    font-size: 0.6rem !important; /* Smaller bullet */
+  }
+
+  @media (max-width: 768px) {
+    .marquee-ad-card {
+      height: auto;
+      margin: 0;
+    }
+    .marquee-ad-track {
+      padding: 0.2rem 0;
+    }
+    .marquee-ad-content li {
+      font-size: 0.7rem; /* Smaller but readable */
+    }
+    .marquee-top-content span {
+      font-size: 0.65rem;
+      padding: 0 0.8rem;
+    }
+  }
+
+  /* Top Marquee Styles */
+  .marquee-top-ad {
+    grid-column: 1 / -1;
+    background: transparent;
+    overflow: hidden;
+    padding: 0.4rem 0; /* Reduced spacing */
+    margin-bottom: 0; /* Removed spacing */
+    position: relative;
+    border: none;
+  }
+  
+  .marquee-top-ad::before,
+  .marquee-top-ad::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .marquee-top-ad::before {
+    left: 0;
+    background: linear-gradient(to right, #0f172a, transparent);
+  }
+  
+  .marquee-top-ad::after {
+    right: 0;
+    background: linear-gradient(to left, #0f172a, transparent);
+  }
+
+  .marquee-top-track {
+    display: flex;
+    width: max-content;
+  }
+  
+  .marquee-top-content {
+    display: flex;
+    animation: marquee-horizontal 30s linear infinite;
+  }
+  
+  .marquee-top-content span {
+    padding: 0 2rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  
+  @keyframes marquee-horizontal {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
   </style>

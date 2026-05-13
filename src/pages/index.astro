@@ -1,6 +1,7 @@
 ---
 import Layout from '../components/Layout.astro';
 import Hero from '../components/Hero.astro';
+import CategoryMarquee from '../components/CategoryMarquee.astro';
 import StackingCards from '../components/StackingCards.astro'; 
 import BrandsScroller from '../components/BrandsScroller.astro'; 
 
@@ -37,6 +38,7 @@ const websiteSchema = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <Hero />
+  <CategoryMarquee />
   <StackingCards />  
   <BrandsScroller />
 </Layout>

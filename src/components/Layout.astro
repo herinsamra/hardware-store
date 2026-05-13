@@ -256,21 +256,39 @@ const breadcrumbSchema = breadcrumbs ?
       function openMenu() {
         if (!page) return;
         savedScroll = window.scrollY;
+        
+        // Lock body precisely at scroll position to prevent jumps
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${savedScroll}px`;
+        document.body.style.width = '100%';
+        
+        // Anchor rotation to the exact scrolled viewport
+        content.style.transformOrigin = `0px ${savedScroll}px`;
+        
         page.classList.add('shazam');
         document.body.classList.add('shazam-open');
-        // After locking, scroll the inner container to where user was
-        const inner = document.getElementById('main-scroll-container');
-        if (inner) {
-          requestAnimationFrame(() => { inner.scrollTop = savedScroll; });
-        }
       }
       
       function closeMenu() {
         if (!page) return;
+        
         page.classList.remove('shazam');
         document.body.classList.remove('shazam-open');
-        // Restore browser scroll position
-        requestAnimationFrame(() => { window.scrollTo(0, savedScroll); });
+        
+        // Remove fixed positioning
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        
+        // Restore exact scroll position
+        window.scrollTo(0, savedScroll);
+        
+        // Clean up origin after animation
+        setTimeout(() => {
+          if (!page.classList.contains('shazam')) {
+            content.style.transformOrigin = '';
+          }
+        }, 700);
       }
       
       if (menuToggle && page) {
@@ -320,42 +338,19 @@ const breadcrumbSchema = breadcrumbs ?
         background-color: var(--shazam-bg);
       }
 
-      /* ONLY lock scroll when the 3D menu is open */
-      html.shazam-layout body.shazam-open,
-      html.shazam-layout body.shazam-open html {
-        overflow: hidden;
-        height: 100%;
-      }
-
       html.shazam-layout .page#page-wrapper {
         position: relative;
         background-color: var(--shazam-bg);
         transition: none;
       }
 
-      /* When menu is open, page becomes fixed viewport */
-      html.shazam-layout body.shazam-open .page#page-wrapper {
-        height: 100%;
-        overflow: hidden;
-      }
-
       .page#page-wrapper .content {
-        transform-origin: top left;
         transition: transform .7s var(--shazam-snap);
         background-color: #0f172a;
       }
-
-      /* When menu is open, content uses the 200%/50% trick for rotation */
-      html.shazam-layout body.shazam-open .page#page-wrapper .content {
-        height: 200%;
+      
+      html.shazam-layout .page.shazam .content {
         will-change: transform;
-      }
-      html.shazam-layout body.shazam-open .content_inner {
-        height: 50%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: contain;
       }
 
       /* Normal state: content_inner is just a normal wrapper */

@@ -625,6 +625,8 @@ const showSearch = currentPath.startsWith('/products') || currentPath.startsWith
     };
 
     const onScroll = () => {
+      if (document.body.classList.contains('shazam-open')) return;
+      
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(updateHeader);

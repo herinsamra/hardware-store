@@ -51,6 +51,24 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
+function getModelCandidates() {
+  const configuredModels =
+    import.meta.env.GEMINI_MODELS ||
+    process.env.GEMINI_MODELS ||
+    import.meta.env.GEMINI_MODEL ||
+    process.env.GEMINI_MODEL ||
+    '';
+
+  const parsedModels = configuredModels
+    .split(',')
+    .map(model => model.trim())
+    .filter(Boolean);
+
+  return parsedModels.length
+    ? [...new Set(parsedModels)]
+    : ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'];
+}
+
 async function generateAI(productName, subsubcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -80,7 +98,7 @@ Brand: ${brand}
 Type: ${type || 'standard'}
 `;
 
-  const modelsToTry = ["gemini-1.5-flash", "gemini-2.5-flash", "gemini-1.5-pro"];
+  const modelsToTry = getModelCandidates();
   let lastError = null;
 
   for (const modelName of modelsToTry) {

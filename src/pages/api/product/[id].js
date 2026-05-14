@@ -51,13 +51,30 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
+function getModelCandidates() {
+  const configuredModels =
+    import.meta.env.GEMINI_MODELS ||
+    process.env.GEMINI_MODELS ||
+    import.meta.env.GEMINI_MODEL ||
+    process.env.GEMINI_MODEL ||
+    '';
+
+  const parsedModels = configuredModels
+    .split(',')
+    .map(model => model.trim())
+    .filter(Boolean);
+
+  return parsedModels.length
+    ? [...new Set(parsedModels)]
+    : ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'];
+}
+
 async function generateAI(productName, category, subcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set in environment variables');
   }
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
   const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
@@ -80,22 +97,31 @@ Brand: ${brand}
 Type: ${type || 'standard'}
 `;
 
-  try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    const cleanedText = text.replace(/```json\s*|\s*```/g, '');
-    return JSON.parse(cleanedText);
-  } catch (error) {
-    console.error('AI Generation Error:', error);
-    // Return empty on failure so we don't accidentally overwrite existing valid text with generic fallback
-    return {
-      description: "",
-      meta_title: "",
-      meta_description: "",
-      slogan: ""
-    };
+  let lastError = null;
+
+  for (const modelName of getModelCandidates()) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      const cleanedText = text.replace(/```json\s*|\s*```/g, '');
+      return JSON.parse(cleanedText);
+    } catch (error) {
+      console.warn(`Model ${modelName} failed:`, error.message);
+      lastError = error;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
   }
+
+  console.error('AI Generation Error (All fallback models failed):', lastError);
+  // Return empty on failure so we don't accidentally overwrite existing valid text with generic fallback
+  return {
+    description: "",
+    meta_title: "",
+    meta_description: "",
+    slogan: ""
+  };
 }
 
 // PUT /api/product/[id] - Update a product

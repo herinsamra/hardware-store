@@ -123,10 +123,13 @@ const filteredProducts = allProducts.filter(product => {
     const rows = document.querySelectorAll('.product-row');
     const noResults = document.getElementById('noResults');
 
+    let scrollTimeout;
+
     function filterRows() {
-      const query = searchInput ? searchInput.value.toLowerCase() : '';
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
       const showFeaturedOnly = featuredFilter ? featuredFilter.checked : false;
       let visibleCount = 0;
+      let firstMatch = null;
 
       rows.forEach(row => {
         if (!(row instanceof HTMLElement)) return;
@@ -139,6 +142,7 @@ const filteredProducts = allProducts.filter(product => {
         if (matchesSearch && matchesFeatured) {
           row.style.display = '';
           visibleCount++;
+          if (!firstMatch) firstMatch = row;
         } else {
           row.style.display = 'none';
         }
@@ -146,6 +150,14 @@ const filteredProducts = allProducts.filter(product => {
 
       if (noResults) {
         noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      // Auto-scroll to first match with a small delay to allow for typing
+      if (firstMatch && query.length > 1) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          firstMatch.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 400);
       }
     }
 

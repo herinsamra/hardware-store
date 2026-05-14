@@ -827,7 +827,7 @@ const breadcrumbs = [
         info.appendChild(price);
       }
 
-      if (product.variants && product.variants.length > 0) {
+      if (product.variant_name || (product.variants && product.variants.length > 0)) {
         const pillsWrapper = document.createElement('div');
         pillsWrapper.className = 'card-variant-pills';
         const productHref = product.url || `/product/${product.id}`;
@@ -841,24 +841,26 @@ const breadcrumbs = [
           pillsWrapper.appendChild(activeChip);
         }
 
-        const visibleVariants = product.variants.slice(0, 4);
-        visibleVariants.forEach(v => {
-          const chip = document.createElement('a');
-          chip.className = 'card-variant-chip';
-          chip.textContent = v.variant_id;
-          const baseUrl = productHref.split('?')[0];
-          chip.href = `${baseUrl}?variant=${encodeURIComponent(v.variant_id)}`;
-          chip.addEventListener('click', e => e.stopPropagation());
-          pillsWrapper.appendChild(chip);
-        });
+        if (product.variants && product.variants.length > 0) {
+          const visibleVariants = product.variants.slice(0, 4);
+          visibleVariants.forEach(v => {
+            const chip = document.createElement('a');
+            chip.className = 'card-variant-chip';
+            chip.textContent = v.variant_id;
+            const baseUrl = productHref.split('?')[0];
+            chip.href = `${baseUrl}?variant=${encodeURIComponent(v.variant_id)}`;
+            chip.addEventListener('click', e => e.stopPropagation());
+            pillsWrapper.appendChild(chip);
+          });
 
-        if (product.variants.length > 4) {
-          const moreChip = document.createElement('a');
-          moreChip.className = 'card-variant-chip more';
-          moreChip.textContent = '+' + (product.variants.length - 4);
-          moreChip.href = productHref;
-          moreChip.addEventListener('click', e => e.stopPropagation());
-          pillsWrapper.appendChild(moreChip);
+          if (product.variants.length > 4) {
+            const moreChip = document.createElement('a');
+            moreChip.className = 'card-variant-chip more';
+            moreChip.textContent = '+' + (product.variants.length - 4);
+            moreChip.href = productHref;
+            moreChip.addEventListener('click', e => e.stopPropagation());
+            pillsWrapper.appendChild(moreChip);
+          }
         }
 
         info.appendChild(pillsWrapper);

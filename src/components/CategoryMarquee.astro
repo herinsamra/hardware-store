@@ -33,34 +33,26 @@ for (let i = marqueeTags.length - 1; i > 0; i--) {
   [marqueeTags[i], marqueeTags[j]] = [marqueeTags[j], marqueeTags[i]];
 }
 
-// Pick a good amount to fill three scrolling rows nicely
-const selectedTags = marqueeTags.slice(0, 60);
+// Pick a good amount to fill scrolling rows nicely
+const selectedTags = marqueeTags.slice(0, 160); // Increased for more rows
+const rowCount = 4; // EDIT THIS NUMBER TO INCREASE/DECREASE ROWS
 ---
 
 <div class="category-marquee-wrapper">
   <div class="tag-scrollers">
-    <div class="tag-scroller">
-      <ul class="tag-list">
-        {selectedTags.slice(0, Math.ceil(selectedTags.length / 3)).map(tag => (
-          <li>
-            <a href={tag.url}>{tag.label}</a>
-          </li>
-        ))}
-      </ul>
-      <ul class="tag-list">
-        {selectedTags.slice(Math.ceil(selectedTags.length / 3), Math.ceil(selectedTags.length / 3) * 2).map(tag => (
-          <li>
-            <a href={tag.url}>{tag.label}</a>
-          </li>
-        ))}
-      </ul>
-      <ul class="tag-list">
-        {selectedTags.slice(Math.ceil(selectedTags.length / 3) * 2).map(tag => (
-          <li>
-            <a href={tag.url}>{tag.label}</a>
-          </li>
-        ))}
-      </ul>
+    <div class="tag-scroller" data-rows={rowCount}>
+      {Array.from({ length: rowCount }).map((_, i) => (
+        <ul class="tag-list">
+          {selectedTags.slice(
+            Math.ceil((selectedTags.length / rowCount) * i),
+            Math.ceil((selectedTags.length / rowCount) * (i + 1))
+          ).map(tag => (
+            <li>
+              <a href={tag.url}>{tag.label}</a>
+            </li>
+          ))}
+        </ul>
+      ))}
     </div>
   </div>
 </div>
@@ -148,8 +140,9 @@ const selectedTags = marqueeTags.slice(0, 60);
     animation: horizontal-scroll var(--duration) var(--direction, normal) linear infinite;
   }
 
-  /* The second row (index 2 in 1-based CSS) scrolls in reverse */
-  .tag-scroller.scrolling .tag-list:nth-child(2) {
+  /* Alternating scroll directions for even rows and ensure last row is reversed */
+  .tag-scroller.scrolling .tag-list:nth-child(even),
+  .tag-scroller.scrolling .tag-list:last-child {
     --direction: reverse;
   }
 
@@ -205,10 +198,33 @@ const selectedTags = marqueeTags.slice(0, 60);
       const tagScroller = document.querySelector(".tag-scroller");
       if (!tagScroller || tagScroller.classList.contains("scrolling")) return;
 
-      // Add scrolling classes and clone elements for infinite scroll
+      const tagLists = tagScroller.querySelectorAll(".tag-list");
+      
+      // 1. Randomize items across all rows on every load
+      const allItems = [];
+      tagLists.forEach(list => {
+        allItems.push(...Array.from(list.children));
+        list.innerHTML = ''; // Clear for redistribution
+      });
+
+      // Shuffle all gathered items
+      for (let i = allItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = allItems[i];
+        allItems[i] = allItems[j];
+        allItems[j] = temp;
+      }
+
+      // Redistribute items evenly back into the rows
+      const itemsPerRow = Math.ceil(allItems.length / tagLists.length);
+      tagLists.forEach((list, i) => {
+        const rowItems = allItems.slice(i * itemsPerRow, (i + 1) * itemsPerRow);
+        rowItems.forEach(item => list.appendChild(item));
+      });
+
+      // 2. Add scrolling classes and clone elements for infinite scroll
       tagScroller.classList.add("scrolling");
       
-      const tagLists = tagScroller.querySelectorAll(".tag-list");
       tagLists.forEach((tagList) => {
         const scrollContent = Array.from(tagList.children);
         
@@ -219,7 +235,7 @@ const selectedTags = marqueeTags.slice(0, 60);
           tagList.appendChild(clonedItem);
         });
         
-        // Calculate speed based on content width (adjust 50 for faster/slower)
+        // Calculate speed based on content width
         const duration = (tagList.clientWidth / 50) + "s";
         tagList.style.setProperty("--duration", duration);
       });

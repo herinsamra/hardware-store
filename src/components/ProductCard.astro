@@ -63,13 +63,10 @@ function formatIndianNumber(num: number): string {
   </div>
   <div class="product-info">
     <h3 class="product-name">{toTitleCase(product.name)}</h3>
-    {product.variant_name && (!product.variants || product.variants.length === 0) && (
-      <p class="product-variant">{cleanName(product.variant_name)}</p>
-    )}
     {product.price && Number(product.price) > 0 && (
       <div class="product-price" aria-label={`Price: ${formatIndianNumber(product.price)} rupees`}>MRP: ₹{formatIndianNumber(product.price)}</div>
     )}
-    {product.variants && product.variants.length > 0 && (
+    {(product.variant_name || (product.variants && product.variants.length > 0)) && (
       <div class="card-variant-pills" role="list" aria-label="Available variants">
         {product.variant_name && (
           <a 
@@ -80,7 +77,7 @@ function formatIndianNumber(num: number): string {
             aria-current="true"
           >{cleanName(product.variant_name)}</a>
         )}
-        {product.variants.slice(0, 4).map((v) => (
+        {product.variants && product.variants.slice(0, 4).map((v) => (
           <a 
             href={`${productUrl}?variant=${v.variant_id}`} 
             class="card-variant-chip"
@@ -88,7 +85,7 @@ function formatIndianNumber(num: number): string {
             aria-label={`Switch to variant ${v.variant_id}`}
           >{v.variant_id}</a>
         ))}
-        {product.variants.length > 4 && (
+        {product.variants && product.variants.length > 4 && (
           <a 
             href={productUrl} 
             class="card-variant-chip more"

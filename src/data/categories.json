@@ -116,10 +116,10 @@
       "Exterior_Matt": []
     },
     "Primers": {
-      "Exterior_Wall_Priners": [],
-      "Interior_Wall_Priners": [],
+      "Exterior_Wall_Primers": [],
+      "Interior_Wall_Primers": [],
       "Wood_Primer": [],
-      "Metal_Priners": []
+      "Metal_Primers": []
     },
     "Putty": {
       "Exterior_Wall_Putty": [],

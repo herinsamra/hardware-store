@@ -412,6 +412,7 @@ const breadcrumbSchema = breadcrumbs ?
         margin: 0;
         padding: 0;
         z-index: 800;
+        pointer-events: none;
       }
       .menu_items li {
         height: 60px;
@@ -462,6 +463,9 @@ const breadcrumbSchema = breadcrumbs ?
       .menu_items a:active .icon { color: var(--shazam-red); }
       
       /* Open State */
+      .page.shazam .menu_items {
+        pointer-events: auto;
+      }
       .page.shazam .content { transform: rotate(-30deg); }
       .page.shazam .menu_open { transform: rotate(-20deg); }
       .page.shazam .menu_close { transform: rotate(0); }

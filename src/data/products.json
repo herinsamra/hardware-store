@@ -201,7 +201,8 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -307,7 +308,8 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -555,53 +557,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -620,7 +576,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -640,35 +597,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -688,17 +617,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -717,7 +636,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -737,44 +657,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -793,7 +676,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -812,7 +696,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -831,7 +716,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -850,7 +736,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -869,7 +756,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07017",
@@ -888,7 +776,8 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03476",
@@ -908,18 +797,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "Brown gold",
-        "price": 3149,
-        "part_no": "zz03476",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
   },
   {
     "part_no": "ZZ06337",
@@ -938,7 +816,8 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03477",
@@ -958,19 +837,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "KD WHITE",
-        "price": 3699,
-        "part_no": "zz03477",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
   },
   {
     "part_no": "ZZ06569",
@@ -989,7 +856,8 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07096",
@@ -1008,7 +876,8 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03734",
@@ -1028,22 +897,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "100MM",
-        "price": 1755,
-        "part_no": "ZZ03733",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
   },
   {
     "part_no": "ZZ06576",
@@ -1062,7 +916,8 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03478",
@@ -1082,17 +937,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "OPAL WHITE",
-        "price": 3519,
-        "part_no": "ZZ03478",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
   },
   {
     "part_no": "ZZ06494",
@@ -1111,7 +956,8 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1130,7 +976,8 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1149,7 +996,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1168,7 +1016,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1187,7 +1036,8 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1206,7 +1056,8 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1225,7 +1076,8 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1234,17 +1086,18 @@
     "subsubcategory": "Booster_Pumps",
     "type": "",
     "product_name": "PERIBOOST 0.5Hp Pressure Pump",
-    "description": "Experience consistent water pressure with the KSB PERIBOOST 0.5Hp Pressure Pump. This sleek Blue, Thermal style Booster Pump is Corded Electric, delivering 2000 Liters Per Hour at 40 Volts (DC). Weighing just 3 Kilograms with durable Rubber construction, it's ideal for residential or light commercial water boosting. Elevate your water system – explore reliable performance today!",
+    "description": "Remember that whisper of a dream, the one where the garden never wilts, where the morning shower is a ritual, not a gamble?  For years, we chased that feeling, sketching, refining, pouring countless hours into creating something that wouldn't just move water, but elevate your daily experience. And then, in a burst of inspired design, the KSB PERIBOOST 0.5Hp Pressure Pump in its signature Midnight Azure.  This isn't just a pump; it's the quiet heartbeat of your home's comfort.  Crafted with a velvety matte finish that resists the elements and whispers of elegance, its unique, whisper-quiet centrifugal technology means you’ll barely know it’s there – just the gentle hum of uninterrupted flow. Imagine it nestled discreetly beside your water tank, powering the gentle cascade of your prized roses or ensuring that perfect, invigorating stream from your showerhead, every single time.  It's for the discerning homeowner who understands that true luxury lies in the seamless, the reliable, the beautifully crafted.  Isn't it time your home felt as effortless as you do?",
     "brand": "KSB",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778509782/31cn2GbLxKL_1_-Photoroom_1_br4s6f.png",
     "mrp": "11000",
     "slug": "periboost-05hp-pressure-pump",
-    "meta_title": "KSB PERIBOOST 0.5Hp Pressure Pump | Booster Pump",
-    "meta_description": "Boost your water pressure with KSB PERIBOOST 0.5Hp Pressure Pump. Corded Electric, Blue Thermal design, 2000 LPH at 40V DC. Durable Rubber build. Shop now!",
+    "meta_title": "KSB PERIBOOST: Midnight Azure Luxury Pump",
+    "meta_description": "Experience seamless water flow with the KSB PERIBOOST 0.5Hp. Whisper-quiet, stunning Midnight Azure finish. Elevate your home's comfort.",
     "variant_name": "0.5HP",
-    "is_featured": "false",
-    "slogan": "KSB PERIBOOST: Elevate Your Water Pressure, Reliably.",
-    "video_url": ""
+    "is_featured": "true",
+    "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1253,17 +1106,18 @@
     "subsubcategory": "Booster_Pumps",
     "type": "",
     "product_name": "MULTIBOOST BOOSTER PUMP 1HP 402 Centrifugal Water Pump",
-    "description": "Elevate your water pressure with the KSB MULTIBOOST BOOSTER PUMP KHM 402. This powerful 1HP Centrifugal pump, in a sleek blue finish, delivers an impressive Flow Rate of 840 Liters Per Minute. Crafted from durable Stainless Steel and weighing just 3 Kilograms, it's a reliable Corded Electric solution for consistent water supply. Explore the efficiency and compact design for your home or garden. Upgrade your flow today.",
+    "description": "In a world where compromise often dictates convenience, imagine a realm where every drop flows with unwavering power and grace. This is the promise of the KSB MULTIBOOST BOOSTER PUMP 1HP 402 Centrifugal Water Pump. Cloaked in a sophisticated Titanium Grey with a deep, matte finish, its sleek silhouette is subtly accented by brushed stainless steel details – a testament to engineering excellence that refuses to sacrifice aesthetics.\n\nCrafted not just to perform, but to elevate, the KSB MULTIBOOST 1HP 402 delivers a symphony of consistent pressure across every faucet, showerhead, and appliance in your grand estate. No more hesitant trickles or sudden drops in a multi-level home; instead, experience the invigorating rush of a rain shower or the robust flow required for a gourmet kitchen’s culinary demands, all while its advanced centrifugal design ensures whisper-quiet operation.\n\nThis isn't merely a pump; it's the unseen heart of a seamless water experience, designed for those who appreciate robust performance and enduring reliability. It shines brightest in luxury residences, boutique hotels, or spa environments where consistent, powerful water delivery is not just desired, but expected. Discover the quiet revolution in water management, and elevate your everyday to an art form. Your journey to unparalleled comfort begins here.",
     "brand": "KSB",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778583501/multiboost-booster-pump-khm-402-20-ksb-original-imagtbgcyj3hazbq-Photoroom_1_s7vkpd.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1778510126/periboost-plus-05-precision-pressure-pump-2220-ksb-original-imagtbfqnm8tkkjx_gsjqv5.webp",
     "mrp": "31025",
     "slug": "multiboost-booster-pump-1hp-402-centrifugal-water-pump",
-    "meta_title": "KSB MULTIBOOST KHM 402 Centrifugal Booster Pump",
-    "meta_description": "Experience powerful water pressure with the KSB MULTIBOOST KHM 402, a 1HP Stainless Steel Centrifugal pump. Enjoy 840 LPM flow for home & garden. Compact & efficient.",
+    "meta_title": "KSB MULTIBOOST: Uninterrupted Luxury Water Flow",
+    "meta_description": "Elevate your home's water experience. The KSB MULTIBOOST BOOSTER PUMP 1HP 402 delivers powerful, whisper-quiet water pressure with sophisticated design. Indulge in luxury.",
     "variant_name": "1 HP",
-    "is_featured": "false",
-    "slogan": "",
-    "video_url": ""
+    "is_featured": "true",
+    "slogan": "Silence The Pump. Amplify The Flow.",
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1280,9 +1134,10 @@
     "meta_title": "Lakshmi 1 HP Openwell Submersible Motor",
     "meta_description": "Get the Lakshmi 1 HP Openwell Submersible Pump for reliable water solutions. Powerful 1 HP, AC-powered, and durable. Perfect for agriculture & homes.",
     "variant_name": "1.0Hp",
-    "is_featured": "true",
+    "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1301,7 +1156,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1318,9 +1174,10 @@
     "meta_title": "Lakshmi 0.5Hp Monoblock Pump | Reliable Water Solutions",
     "meta_description": "Power your water needs with Lakshmi's 0.5Hp Monoblock Pump. Robust, efficient, and corrosion-resistant, it's ideal for domestic, garden, and small farm irrigation. Experience lasting performance.",
     "variant_name": "0.5hp",
-    "is_featured": "true",
+    "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1339,7 +1196,8 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1358,7 +1216,8 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06585",
@@ -1367,17 +1226,18 @@
     "subsubcategory": "Self_Priming_Pumps",
     "type": "",
     "product_name": "Aqua Smarty II Water Pump SelfPriming Regenerative",
-    "description": "Unleash reliable performance with the KSB Aqua Smarty II SelfPriming Regenerative Water Pump. Its robust, compact design ensures quick self-priming, making it ideal for boosting domestic water supply or small-scale irrigation. The powerful, efficient Single Phase motor guarantees consistent pressure and flow. Discover the smart choice for your water needs.",
+    "description": "Imagine a tranquil space where every element works in perfect harmony, especially water – the very essence of life and luxury. Enter the KSB Aqua Smarty II Water Pump SelfPriming Regenerative, not merely a pump, but the silent heartbeat of your most cherished environments.\n\nCrafted with an elegant, resilient anthracite finish and subtle, brushed chrome accents, its robust form belies the sophisticated intelligence within. The 'Smarty II' isn't just a name; it's a promise of effortless precision. Its self-priming capability means instant, reliable flow without a moment's hesitation, while its regenerative design ensures whisper-quiet operation and unparalleled efficiency, maintaining consistent pressure as if by magic.\n\nPicture it nestled discreetly within your sprawling garden estate, effortlessly sustaining a vibrant koi pond, or ensuring a lush, verdant landscape thrives in perfect health. Perhaps it’s the quiet force behind your bespoke irrigation system, bringing water precisely where and when it's needed, transforming the mundane into the magnificent. This is the KSB Aqua Smarty II: engineered not just to move water, but to elevate your entire experience.\n\nAre you ready to redefine what's possible with water in your domain? Discover the seamless performance and profound peace of mind it offers.",
     "brand": "KSB",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778595600/41bOuWY3DnL._SX569_-Photoroom_fqpkv3.png",
     "mrp": "4599.98",
     "slug": "aqua-smarty-ii-water-pump-selfpriming-regenerative",
-    "meta_title": "KSB Aqua Smarty II Water Pump | Self-Priming & Regenerative",
-    "meta_description": "Discover the KSB Aqua Smarty II SelfPriming Regenerative Water Pump. Ideal for reliable domestic water supply & irrigation. Features an efficient Single Phase motor for consistent pressure.",
+    "meta_title": "KSB Aqua Smarty II: Engineered for Effortless Luxury",
+    "meta_description": "Unlock pristine water management with the KSB Aqua Smarty II. This self-priming, regenerative pump delivers silent power and unmatched efficiency for your sophisticated needs.",
     "variant_name": "0.5hp",
-    "is_featured": "false",
-    "slogan": "",
-    "video_url": ""
+    "is_featured": "true",
+    "slogan": "Flow. Power. Perfection. Reimagined.",
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1396,7 +1256,8 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1405,17 +1266,18 @@
     "subsubcategory": "Submersible_Pumps",
     "type": "",
     "product_name": "0.5hp A5/aj5 centrifugal jet pump",
-    "description": "Experience superior borewell water pumping with the Esdee AJ series Power 0.5 HP Phase 1Ph Model A5/AJ5 AF Submersible Pump. Engineered for 50mm and 75mm borewells, its durable cast iron build and Induction Motor Type ensure high efficiency, long life, and easy install. This low cost, durable pump, featuring compact 32X25X25mm dimensions, offers unmatched reliability. Make the smart choice for effortless water solutions.",
+    "description": "Imagine a world where water isn't just a utility, but an ever-present luxury—effortless, abundant, and always at your command. This is the promise of the CRI Pumps 0.5hp A5/aj5 Centrifugal Jet Pump. \n\nFar from a mere piece of hardware, this is the quiet heart of your hydration system, meticulously engineered to perform with unwavering precision. Its robust, high-grade cast iron body, finished in a deep, purposeful gunmetal grey, speaks volumes of the enduring power and industrial elegance housed within. Every curve and connection of its design reflects a dedication to superior functionality, built not just for performance, but for longevity.\n\nCrafted for discerning homeowners, avid gardeners, or tranquil cabin retreats, the A5/aj5 excels where consistent water pressure and reliable delivery are paramount. Picture your garden, vibrant and lush, watered effortlessly by a continuous, strong flow. Envision your home, where every tap, every shower, offers a consistent embrace, free from the frustrations of fluctuating pressure. Whether drawing from a well to sustain a verdant landscape or boosting irrigation for a thriving small farm, this pump transforms potential into tangible abundance, quietly working to perfect your flow.\n\nThis isn't just a pump; it's an investment in serenity, a testament to efficiency, and a gateway to uninterrupted comfort. Discover the CRI Pumps A5/aj5. Where reliability meets refined performance, creating the perfect flow for your world. Your journey to effortless water begins now.",
     "brand": "CRI Pumps",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778596812/cri-0-5hp-a5-aj5-af-32x25x25mm-1ph-pump-772-Photoroom_my41kq.png",
     "mrp": "10975",
     "slug": "05hp-a5aj5-centrifugal-jet-pump",
-    "meta_title": "Esdee 0.5 HP AJ/A5 Submersible Pump for Borewells",
-    "meta_description": "Esdee AJ series 0.5 HP 1Ph Submersible Pump (A5/AJ5 AF). Durable cast iron for 50/75mm borewells. High efficiency, long life & easy install. Get reliable borewell water pumping.",
+    "meta_title": "CRI Pumps A5/aj5: Precision Water Flow, Elevated Living",
+    "meta_description": "Experience effortless water abundance with the CRI Pumps 0.5hp A5/aj5 Centrifugal Jet Pump. Precision-engineered for robust, quiet, and reliable performance in your home or garden.",
     "variant_name": "0.5HP",
-    "is_featured": "false",
-    "slogan": "",
-    "video_url": ""
+    "is_featured": "true",
+    "slogan": "CRI Pumps: Your Flow. Perfected.",
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1434,7 +1296,8 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1453,7 +1316,8 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1472,7 +1336,8 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1492,25 +1357,6 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "1",
-        "price": 170,
-        "part_no": "ZZ07893",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      },
-      {
-        "variant_id": "1.50",
-        "price": 456,
-        "part_no": "ZZ07854",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]"
   }
 ]

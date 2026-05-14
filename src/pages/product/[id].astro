@@ -230,7 +230,18 @@ const breadcrumbs = [
         )}
       </div>
       <div class="product-detail-info">
-        <h1>{product.name}</h1>
+        <div class="product-header-row">
+          <h1>{product.name}</h1>
+          <button 
+            id="share-button" 
+            class="share-button" 
+            aria-label="Share product"
+            data-name={product.name}
+            data-brand={product.brand}
+          >
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+        </div>
         {product.variant_name && (!product.variants || product.variants.length === 0) && (
           <div class="variant-badge">Variant: {cleanName(product.variant_name)}</div>
         )}
@@ -448,6 +459,42 @@ const breadcrumbs = [
         }
       });
     }
+
+    // Share Functionality
+    const shareBtn = document.getElementById('share-button');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const name = shareBtn.dataset.name;
+        const brand = shareBtn.dataset.brand;
+        const shareData = {
+          title: `${name} | ${brand}`,
+          text: `Check out this ${name} from ${brand} on Peniel Hardwares!`,
+          url: window.location.href
+        };
+
+        try {
+          if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+            await navigator.share(shareData);
+          } else {
+            await navigator.clipboard.writeText(window.location.href);
+            const icon = shareBtn.querySelector('i');
+            if (icon) {
+              const originalClass = icon.className;
+              icon.className = 'fa-solid fa-check';
+              shareBtn.classList.add('success');
+              setTimeout(() => {
+                icon.className = originalClass;
+                shareBtn.classList.remove('success');
+              }, 2000);
+            }
+          }
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            console.error('Error sharing:', err);
+          }
+        }
+      });
+    }
   </script>
 </Layout>
 
@@ -577,13 +624,57 @@ const breadcrumbs = [
     position: relative;
     z-index: 2;
   }
+  .product-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
   .product-detail-info h1 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.08;
-    margin-bottom: 0.75rem;
+    margin: 0;
     text-wrap: balance;
+    flex: 1;
+  }
+  .share-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  }
+  .share-button:hover {
+    background: rgba(197, 160, 40, 0.1);
+    border-color: rgba(197, 160, 40, 0.4);
+    color: var(--accent-gold);
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  .share-button.success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+    transform: scale(1.1);
+  }
+  .share-button i {
+    font-size: 1.2rem;
   }
   .variant-badge {
     width: fit-content;

@@ -1,0 +1,208 @@
+---
+import AdminLayout from '../../components/AdminLayout.astro';
+---
+
+<AdminLayout title="Manage Units | Admin">
+  <div class="admin-wrapper">
+    <div class="glass-container">
+      <header class="admin-header">
+        <div class="title-wrapper">
+          <div class="icon-box">⚖️</div>
+          <h1>Manage Units</h1>
+        </div>
+        <p class="subtitle">Define units like meters, pieces, kg, etc.</p>
+      </header>
+
+      <div class="actions-bar">
+        <button id="add-unit-btn" class="submit-btn" style="width: auto; padding: 0.8rem 1.5rem;">
+          <span class="btn-text">+ Add New Unit</span>
+        </button>
+      </div>
+
+      <div id="units-container" class="units-grid">
+        <div class="loading-state">Loading units...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Modal -->
+  <div id="unit-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Unit</h2>
+        <button class="close-modal-btn">✕</button>
+      </div>
+      <form id="unit-form">
+        <div class="input-group">
+          <label>Unit Name <span class="required">*</span></label>
+          <input type="text" id="unit_name" required placeholder="e.g. per meter, pcs">
+        </div>
+        <div class="form-footer" style="margin-top: 1.5rem;">
+          <button type="submit" class="submit-btn"><span class="btn-text">Save Unit</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style is:global>
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .unit-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+    .unit-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .unit-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .unit-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .unit-btn {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+    }
+    .unit-btn.edit:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .unit-btn.delete:hover {
+      border-color: var(--error);
+      color: var(--error);
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      let units = [];
+      const container = document.getElementById('units-container');
+      const modal = document.getElementById('unit-modal');
+      const form = document.getElementById('unit-form');
+      const input = document.getElementById('unit_name');
+      const title = document.getElementById('modal-title');
+      let currentEditName = null;
+
+      async function fetchUnits() {
+        container.innerHTML = '<div class="loading-state">Loading units...</div>';
+        try {
+          const res = await fetch('/api/get-units');
+          units = await res.json();
+          renderUnits();
+        } catch (e) {
+          container.innerHTML = '<div class="error">Error loading units</div>';
+        }
+      }
+
+      function renderUnits() {
+        if (units.length === 0) {
+          container.innerHTML = '<div>No units defined yet.</div>';
+          return;
+        }
+        container.innerHTML = units.map(unit => `
+          <div class="unit-card">
+            <span class="unit-name">${unit}</span>
+            <div class="unit-actions">
+              <button class="unit-btn edit" data-name="${unit}">Edit</button>
+              <button class="unit-btn delete" data-name="${unit}">Delete</button>
+            </div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.edit').forEach(btn => {
+          btn.addEventListener('click', () => {
+            currentEditName = btn.dataset.name;
+            input.value = currentEditName;
+            title.textContent = 'Edit Unit';
+            modal.style.display = 'flex';
+          });
+        });
+
+        document.querySelectorAll('.delete').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm(`Delete unit "${btn.dataset.name}"?`)) return;
+            try {
+              const res = await fetch('/api/manage-units', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: btn.dataset.name })
+              });
+              if (res.ok) {
+                const data = await res.json();
+                units = data.units;
+                renderUnits();
+              }
+            } catch (e) {
+              alert('Error deleting unit');
+            }
+          });
+        });
+      }
+
+      document.getElementById('add-unit-btn').addEventListener('click', () => {
+        currentEditName = null;
+        input.value = '';
+        title.textContent = 'Add Unit';
+        modal.style.display = 'flex';
+      });
+
+      document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', () => modal.style.display = 'none');
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = input.value.trim();
+        if (!name) return;
+
+        const payload = {
+          action: currentEditName ? 'RENAME' : 'ADD',
+          name,
+          oldName: currentEditName
+        };
+
+        try {
+          const res = await fetch('/api/manage-units', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            const data = await res.json();
+            units = data.units;
+            renderUnits();
+            modal.style.display = 'none';
+          }
+        } catch (e) {
+          alert('Error saving unit');
+        }
+      });
+
+      fetchUnits();
+    });
+  </script>
+</AdminLayout>

@@ -29,7 +29,6 @@ function isValidImageUrl(url) {
     
     // Check if it's a valid URL format
     const parsedUrl = new URL(url);
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
     const isCloudinaryOrValidDomain = parsedUrl.hostname.includes('cloudinary.com') || 
                                      parsedUrl.hostname.includes('res.cloudinary.com') ||
                                      parsedUrl.hostname.includes('images.unsplash.com') ||
@@ -214,11 +213,11 @@ export async function POST({ request }) {
       variant_name: productInput.variant_name || '',
       mrp: productInput.mrp.toString(),
       slug: slug,
+      unit: productInput.unit || '',
       meta_title: ai.meta_title,
       meta_description: ai.meta_description,
       is_featured: productInput.is_featured === true || productInput.is_featured === 'true' ? 'true' : 'false',
       slogan: ai.slogan || '',
-      // Include SKU only if provided explicitly
       ...(productInput.sku ? { sku: productInput.sku } : {}),
       variants: productInput.variants && productInput.variants.length > 0 ? JSON.stringify(productInput.variants) : ''
     };

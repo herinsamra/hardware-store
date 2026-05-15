@@ -244,6 +244,7 @@ export async function PUT({ params, request }) {
       variant_name: updateData.variant_name || currentProduct.variant_name || '',
       mrp: updateData.mrp ? updateData.mrp.toString() : currentProduct.mrp,
       slug: newSlug,
+      unit: updateData.unit !== undefined ? updateData.unit : (currentProduct.unit || ''),
       meta_title: newMetaTitle,
       meta_description: newMetaDesc,
       is_featured: isFeatured ? 'true' : 'false',

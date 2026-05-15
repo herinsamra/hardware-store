@@ -36,6 +36,10 @@ const pathname = Astro.url.pathname;
       <span class="icon">🏷️</span>
       <span class="sidebar-text">Brands</span>
     </a>
+    <a href="/admin/units" class={`nav-item ${pathname.includes('/admin/units') ? 'active' : ''}`} title="Product Units">
+      <span class="icon">📏</span>
+      <span class="sidebar-text">Product Units</span>
+    </a>
   </nav>
 
   <div class="sidebar-footer">

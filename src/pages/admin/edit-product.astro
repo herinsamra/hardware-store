@@ -60,6 +60,16 @@ const productDataStr = JSON.stringify(product || {});
                 <label for="mrp">MRP (₹) <span class="required">*</span></label>
                 <input type="number" id="mrp" name="mrp" step="0.01" required placeholder="0.00" value={product.price} />
               </div>
+
+              <div class="form-group">
+                <label for="unit">Unit <span class="optional">(optional)</span></label>
+                <div class="input-wrapper unit-flex">
+                  <select id="unit" name="unit">
+                    <option value="">-- No Unit --</option>
+                  </select>
+                  <a href="/admin/units" class="manage-btn" title="Manage Units">⚙️</a>
+                </div>
+              </div>
               
               <div class="form-group">
                 <label for="images">Image URLs (comma separated)</label>
@@ -194,13 +204,16 @@ const productDataStr = JSON.stringify(product || {});
       resetSelect(subcatSelect, '-- Select Subcategory --', true);
       resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
       resetSelect(brandSelect, 'Loading Brands...', true);
+      const unitSelect = document.getElementById('unit');
+      if (unitSelect) resetSelect(unitSelect, 'Loading Units...', true);
 
       try {
-        const [catRes, brandRes] = await Promise.all([
-          fetch('/api/get-categories', { cache: 'no-store' }),
-          fetch('/api/get-brands', { cache: 'no-store' })
+        const [catRes, brandRes, unitRes] = await Promise.all([
+          fetch('/api/get-categories', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/get-brands', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/get-units', { cache: 'no-store' }).catch(() => ({ ok: false }))
         ]);
-
+        
         if (catRes.ok) {
           const rawCategories = await catRes.json();
           const { Brands, ...productCategories } = rawCategories;
@@ -211,33 +224,52 @@ const productDataStr = JSON.stringify(product || {});
           brands = await brandRes.json();
           brands.sort((a, b) => a.name.localeCompare(b.name));
         }
-      } catch (error) {
-        console.error('Failed to load category or brand data:', error);
-      }
 
-      // Populate Categories
-      resetSelect(catSelect, '-- Select Category --');
-      Object.keys(categories).forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat.replace(/_/g, ' ');
-        catSelect.appendChild(option);
-      });
+        // Always reset and enable Brand select
+        resetSelect(brandSelect, '-- Select Brand --');
+        brands.forEach(brand => {
+          const option = document.createElement('option');
+          option.value = brand.name;
+          option.textContent = brand.name;
+          brandSelect.appendChild(option);
+        });
 
-      // Populate brands
-      resetSelect(brandSelect, '-- Select Brand --');
-      brands.forEach(brand => {
-        const option = document.createElement('option');
-        option.value = brand.name;
-        option.textContent = brand.name;
-        brandSelect.appendChild(option);
-      });
+        // Add current product brand if it's not in the list
+        if (product.brand && !brands.some(brand => brand.name === product.brand)) {
+          const option = document.createElement('option');
+          option.value = product.brand;
+          option.textContent = product.brand;
+          brandSelect.appendChild(option);
+        }
 
-      if (product.brand && !brands.some(brand => brand.name === product.brand)) {
-        const option = document.createElement('option');
-        option.value = product.brand;
-        option.textContent = product.brand;
-        brandSelect.appendChild(option);
+        // Always reset and enable Category select
+        resetSelect(catSelect, '-- Select Category --');
+        Object.keys(categories).forEach(cat => {
+          const option = document.createElement('option');
+          option.value = cat;
+          option.textContent = cat.replace(/_/g, ' ');
+          catSelect.appendChild(option);
+        });
+
+        // Always reset and enable Unit select
+        if (unitSelect) {
+          resetSelect(unitSelect, '-- No Unit --');
+          if (unitRes.ok) {
+            const units = await unitRes.json();
+            units.forEach(unit => {
+              const option = document.createElement('option');
+              option.value = unit;
+              option.textContent = unit;
+              unitSelect.appendChild(option);
+            });
+          }
+          unitSelect.value = product.unit || '';
+        }
+      } catch (err) {
+        console.error('Failed to load data', err);
+        resetSelect(catSelect, '-- Error Loading Categories --');
+        resetSelect(brandSelect, '-- Error Loading Brands --');
+        if (unitSelect) resetSelect(unitSelect, '-- Error Loading Units --');
       }
 
       // Event Listeners for cascading dropdowns
@@ -814,6 +846,33 @@ const productDataStr = JSON.stringify(product || {});
   .remove-variant-btn:hover {
     background: #ef4444;
     color: #fff;
+  }
+
+  .unit-flex {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .unit-flex select {
+    flex: 1;
+  }
+  .manage-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+  }
+  .manage-btn:hover {
+    background: rgba(197, 160, 40, 0.15);
+    border-color: var(--accent-gold);
+    transform: scale(1.05);
   }
   @media (max-width: 768px) {
     .variant-row {

@@ -54,6 +54,7 @@ export function loadProductsFromExcel() {
       thumbnail: image ? image.replace('/upload/', '/upload/c_fill,w_200,h_200/') : '',
       variant_name: row.variant_name || '',
       price: parseFloat(row.mrp),
+      unit: row.unit || '',
       slug,
       routeParam,
       url: routeParam ? `/product/${routeParam}` : '/products',

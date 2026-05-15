@@ -27,6 +27,7 @@ interface Product {
   meta_title: string;
   meta_description: string;
   is_featured?: boolean | string;
+  unit?: string;
   slogan?: string;
   video_url?: string;
 }
@@ -868,8 +869,6 @@ const breadcrumbs = [
       setHighlightedText(name, toTitleCase(product.name || 'Unnamed Product'), matchInfo.name || []);
       info.appendChild(name);
 
-      // We now show variants as chips instead of a single text line below the name
-      // This matches the new ProductCard.astro behavior
       const matchContext = getMatchContext(product, matchInfo);
       if (matchContext) {
         const matchLine = document.createElement('p');
@@ -886,13 +885,18 @@ const breadcrumbs = [
         const price = document.createElement('div');
         price.className = 'product-price';
         price.textContent = `MRP: ₹${formatPrice(product.price)}`;
+        if (product.unit) {
+          const unitSpan = document.createElement('span');
+          unitSpan.className = 'price-unit';
+          unitSpan.textContent = ` / ${product.unit}`;
+          price.appendChild(unitSpan);
+        }
         info.appendChild(price);
       }
 
       if (product.variant_name || (product.variants && product.variants.length > 0)) {
         const pillsWrapper = document.createElement('div');
         pillsWrapper.className = 'card-variant-pills';
-        const productHref = product.url || `/product/${product.id}`;
 
         if (product.variant_name) {
           const activeChip = document.createElement('a');

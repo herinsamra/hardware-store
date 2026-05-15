@@ -67,6 +67,17 @@ import AdminLayout from '../../components/AdminLayout.astro';
               </div>
             </div>
 
+            <div class="input-group">
+              <label for="unit">Unit <span class="optional">(optional, e.g. per meter)</span></label>
+              <div class="input-wrapper unit-flex">
+                <select id="unit">
+                  <option value="">-- No Unit --</option>
+                </select>
+                <a href="/admin/units" class="manage-btn" title="Manage Units">⚙️</a>
+                <div class="focus-border"></div>
+              </div>
+            </div>
+
             <div class="input-group full-width">
               <label for="images">Image URLs <span class="optional">(comma separated)</span></label>
               <div class="input-wrapper">
@@ -211,44 +222,65 @@ import AdminLayout from '../../components/AdminLayout.astro';
       resetSelect(subcatSelect, '-- Select Subcategory --', true);
       resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
       resetSelect(brandSelect, 'Loading Brands...', true);
+      const unitSelect = document.getElementById('unit');
+      if (unitSelect) resetSelect(unitSelect, 'Loading Units...', true);
 
       try {
-        const [catRes, brandRes] = await Promise.all([
-          fetch('/api/get-categories', { cache: 'no-store' }),
-          fetch('/api/get-brands', { cache: 'no-store' })
+        const [catRes, brandRes, unitRes] = await Promise.all([
+          fetch('/api/get-categories', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/get-brands', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/get-units', { cache: 'no-store' }).catch(() => ({ ok: false }))
         ]);
         
         if (catRes.ok) {
           const rawCat = await catRes.json();
-          // Filter out Brands if it exists in categories
           const { Brands, ...rest } = rawCat;
           categories = rest;
         }
+
         if (brandRes.ok) {
           brands = await brandRes.json();
         }
+
+        // Always reset and enable Brand select
+        resetSelect(brandSelect, '-- Select Brand --');
+        if (brands.length) {
+          brands.forEach(brand => {
+            const option = document.createElement('option');
+            option.value = brand.name;
+            option.textContent = brand.name;
+            brandSelect.appendChild(option);
+          });
+        }
+
+        // Always reset and enable Category select
+        resetSelect(catSelect, '-- Select Category --');
+        Object.keys(categories).forEach(cat => {
+          const option = document.createElement('option');
+          option.value = cat;
+          option.textContent = cat.replace(/_/g, ' ');
+          catSelect.appendChild(option);
+        });
+
+        // Always reset and enable Unit select
+        if (unitSelect) {
+          resetSelect(unitSelect, '-- No Unit --');
+          if (unitRes.ok) {
+            const units = await unitRes.json();
+            units.forEach(unit => {
+              const option = document.createElement('option');
+              option.value = unit;
+              option.textContent = unit;
+              unitSelect.appendChild(option);
+            });
+          }
+        }
       } catch (err) {
         console.error('Failed to load data', err);
-      }
-
-      // Populate categories
-      resetSelect(catSelect, '-- Select Category --');
-      Object.keys(categories).forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        catSelect.appendChild(option);
-      });
-
-      // Populate brands
-      resetSelect(brandSelect, '-- Select Brand --');
-      if (brands.length) {
-        brands.forEach(brand => {
-          const option = document.createElement('option');
-          option.value = brand.name;
-          option.textContent = brand.name;
-          brandSelect.appendChild(option);
-        });
+        // Ensure they are enabled even on error
+        resetSelect(catSelect, '-- Error Loading Categories --');
+        resetSelect(brandSelect, '-- Error Loading Brands --');
+        if (unitSelect) resetSelect(unitSelect, '-- Error Loading Units --');
       }
 
 
@@ -264,7 +296,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
         Object.keys(subcats).forEach(sub => {
           const opt = document.createElement('option');
           opt.value = sub;
-          opt.textContent = sub;
+          opt.textContent = sub.replace(/_/g, ' ');
           subcatSelect.appendChild(opt);
         });
       });
@@ -281,7 +313,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
         Object.keys(subsubs).forEach(subsub => {
           const opt = document.createElement('option');
           opt.value = subsub;
-          opt.textContent = subsub;
+          opt.textContent = subsub.replace(/_/g, ' ');
           subsubSelect.appendChild(opt);
         });
       });
@@ -345,6 +377,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
           custom_features: document.getElementById('custom_features').value,
           variant_name: document.getElementById('variant_name').value,
           mrp: document.getElementById('mrp').value,
+          unit: document.getElementById('unit').value,
           is_featured: document.getElementById('is_featured').checked,
           variants: getVariantsData(),
         };
@@ -386,6 +419,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
             document.getElementById('custom_features').value = '';
             document.getElementById('variant_name').value = '';
             document.getElementById('mrp').value = '';
+            document.getElementById('unit').value = '';
             document.getElementById('variantsContainer').innerHTML = '';
             
             // Scroll to top to see message
@@ -612,6 +646,33 @@ import AdminLayout from '../../components/AdminLayout.astro';
   .remove-variant-btn:hover {
     background: #ef4444;
     color: #fff;
+  }
+
+  .unit-flex {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .unit-flex select {
+    flex: 1;
+  }
+  .manage-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+  }
+  .manage-btn:hover {
+    background: rgba(197, 160, 40, 0.15);
+    border-color: var(--accent);
+    transform: scale(1.05);
   }
   @media (max-width: 768px) {
     .variant-row {

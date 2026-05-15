@@ -133,6 +133,15 @@ const productSchema = {
     '@type': 'Offer',
     priceCurrency: 'INR',
     price: formatMerchantPrice(product.price),
+    priceSpecification: product.unit ? {
+      '@type': 'UnitPriceSpecification',
+      price: formatMerchantPrice(product.price),
+      priceCurrency: 'INR',
+      referenceQuantity: {
+        '@type': 'QuantitativeValue',
+        unitText: product.unit
+      }
+    } : undefined,
     availability: product.availability 
       ? `https://schema.org/${product.availability === 'In Stock' || product.availability.toLowerCase() === 'instock' ? 'InStock' : 'OutOfStock'}`
       : 'https://schema.org/InStock',
@@ -245,7 +254,10 @@ const breadcrumbs = [
         {product.variant_name && (!product.variants || product.variants.length === 0) && (
           <div class="variant-badge">Variant: {cleanName(product.variant_name)}</div>
         )}
-        <div class="product-detail-price" id="display-price">MRP: ₹{formatIndianNumber(product.price)}</div>
+        <div class="product-detail-price" id="display-price">
+          MRP: ₹{formatIndianNumber(product.price)}
+          {product.unit && <span class="detail-price-unit" id="display-unit"> / {product.unit}</span>}
+        </div>
         
         {product.variants && product.variants.length > 0 && (
           <div class="variants-selector">
@@ -388,6 +400,7 @@ const breadcrumbs = [
     // Variants Logic
     const variantPills = document.querySelectorAll('.variant-pill');
     const displayPrice = document.getElementById('display-price');
+    const displayUnit = document.getElementById('display-unit');
     const displaySku = document.getElementById('display-sku');
     const displayPartNo = document.getElementById('display-partno');
 
@@ -402,7 +415,8 @@ const breadcrumbs = [
         // Update Price
         const price = parseFloat(btn.dataset.price);
         if (!isNaN(price) && displayPrice) {
-          displayPrice.innerHTML = `MRP: ₹${formatIndianNumber(price)}`;
+          const unitHtml = displayUnit ? displayUnit.outerHTML : '';
+          displayPrice.innerHTML = `MRP: ₹${formatIndianNumber(price)}${unitHtml}`;
         }
 
         // Update SKU & Part No
@@ -693,6 +707,14 @@ const breadcrumbs = [
     color: var(--accent-gold);
     margin: 0.2rem 0 1rem;
     text-shadow: 0 0 18px rgba(197, 160, 40, 0.16);
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .detail-price-unit {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
   }
   /* ——— Product Actions Row ——— */
   .product-actions-row {

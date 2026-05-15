@@ -97,6 +97,32 @@ const breadcrumbs = [
 >
   <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
   <div class="products-page">
+    <svg class="featured-svg-filters" style="position: absolute; width: 0; height: 0; pointer-events: none;">
+      <defs>
+        <filter id="turbulent-displace" colorInterpolationFilters="sRGB" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="10" result="noise1" seed="1" />
+          <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+            <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+          </feOffset>
+          <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="10" result="noise2" seed="1" />
+          <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+            <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" calcMode="linear" />
+          </feOffset>
+          <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="10" result="noise1" seed="2" />
+          <feOffset in="noise1" dx="0" dy="0" result="offsetNoise3">
+            <animate attributeName="dx" values="490; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+          </feOffset>
+          <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="10" result="noise2" seed="2" />
+          <feOffset in="noise2" dx="0" dy="0" result="offsetNoise4">
+            <animate attributeName="dx" values="0; -490" dur="6s" repeatCount="indefinite" calcMode="linear" />
+          </feOffset>
+          <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+          <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+          <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+          <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale="45" xChannelSelector="R" yChannelSelector="B" />
+        </filter>
+      </defs>
+    </svg>
     <h1 class="page-title" id="products-page-title">All Products</h1>
     <p class="product-count" id="product-count">Loading products...</p>
 
@@ -759,16 +785,38 @@ const breadcrumbs = [
         imageWrapper.appendChild(accent);
       } else if (variant === 6) {
         const accent = document.createElement('div');
-        accent.className = 'featured-accent featured-luxe-accent';
+        accent.className = 'featured-accent featured-electric-accent';
 
-        const glow = document.createElement('div');
-        glow.className = 'featured-luxe-glow';
-        accent.appendChild(glow);
+        const effect = document.createElement('div');
+        effect.className = 'featured-electric-effect';
 
-        const halo = document.createElement('div');
-        halo.className = 'featured-luxe-halo';
-        accent.appendChild(halo);
-        imageWrapper.appendChild(accent);
+        const borderOuter = document.createElement('div');
+        borderOuter.className = 'electric-border-outer';
+        const mainCard = document.createElement('div');
+        mainCard.className = 'electric-main-card';
+        borderOuter.appendChild(mainCard);
+
+        const glow1 = document.createElement('div');
+        glow1.className = 'electric-glow-layer-1';
+        const glow2 = document.createElement('div');
+        glow2.className = 'electric-glow-layer-2';
+
+        const overlay1 = document.createElement('div');
+        overlay1.className = 'electric-overlay-1';
+        const overlay2 = document.createElement('div');
+        overlay2.className = 'electric-overlay-2';
+        const backgroundGlow = document.createElement('div');
+        backgroundGlow.className = 'electric-background-glow';
+
+        effect.appendChild(borderOuter);
+        effect.appendChild(glow1);
+        effect.appendChild(glow2);
+        effect.appendChild(overlay1);
+        effect.appendChild(overlay2);
+        effect.appendChild(backgroundGlow);
+        
+        accent.appendChild(effect);
+        card.appendChild(accent);
       }
 
       return card;
@@ -1333,8 +1381,10 @@ const breadcrumbs = [
   }
 
   .featured-variant-6 {
-    background: linear-gradient(125deg, #110f0d 0%, #2a211a 46%, #6a4a27 100%);
-    border-color: rgba(251, 191, 36, 0.32);
+    background: radial-gradient(circle at 70% 30%, #1a1408 0%, #020305 70%) !important;
+    border: none;
+    --electric-border-color: #f8d978;
+    overflow: visible !important;
   }
 
   .featured-span-hero {
@@ -1633,66 +1683,81 @@ const breadcrumbs = [
     }
   }
 
-  /* Variant 6: Luxe Spotlight */
-  .featured-luxe-accent {
+  /* Variant 6: Electric Border */
+  .featured-electric-accent {
     inset: 0;
     z-index: 0;
   }
 
-  .featured-luxe-glow {
+  .featured-electric-effect {
     position: absolute;
-    right: -2rem;
-    top: 50%;
-    width: 20rem;
-    height: 20rem;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(253, 224, 71, 0.2) 0%, rgba(245, 158, 11, 0.14) 28%, transparent 68%);
-    filter: blur(18px);
-    animation: featured-luxe-breathe 6s ease-in-out infinite;
+    inset: 0;
+    padding: 2px;
+    pointer-events: none;
   }
 
-  .featured-luxe-halo {
+  .electric-border-outer {
     position: absolute;
-    right: 1.6rem;
-    top: 50%;
-    width: 13rem;
-    height: 13rem;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    border: 1px solid rgba(253, 230, 138, 0.3);
-    box-shadow:
-      inset 0 0 0 0.9rem rgba(255, 255, 255, 0.03),
-      0 0 0 0.35rem rgba(245, 158, 11, 0.05);
-    overflow: hidden;
+    inset: 4px;
+    border: 1px solid rgba(197, 160, 40, 0.3);
+    border-radius: 0.85rem;
   }
 
-  .featured-luxe-halo::before,
-  .featured-luxe-halo::after {
-    content: "";
+  .electric-main-card {
     position: absolute;
-    inset: 0.95rem;
-    border-radius: 50%;
-    border: 1px solid rgba(253, 230, 138, 0.18);
+    inset: -14px;
+    width: calc(100% + 28px);
+    height: calc(100% + 28px);
+    border-radius: 1.2rem;
+    border: 4px solid var(--electric-border-color);
+    filter: url(#turbulent-displace) drop-shadow(0 0 12px rgba(248, 217, 120, 0.4));
+    opacity: 0.9;
   }
 
-  .featured-luxe-halo::after {
-    inset: 2rem;
-    border-style: dashed;
-    border-color: rgba(255, 251, 235, 0.22);
-    animation: featured-spin 14s linear infinite;
+  .electric-glow-layer-1 {
+    position: absolute;
+    inset: 2px;
+    border: 1.5px solid rgba(197, 160, 40, 0.4);
+    border-radius: 0.9rem;
+    filter: blur(1px);
   }
 
-  @keyframes featured-luxe-breathe {
-    0%, 100% {
-      transform: translateY(-50%) scale(0.95);
-      opacity: 0.7;
-    }
+  .electric-glow-layer-2 {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    filter: blur(3px);
+  }
 
-    50% {
-      transform: translateY(-50%) scale(1.04);
-      opacity: 1;
-    }
+  .electric-overlay-1,
+  .electric-overlay-2 {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    mix-blend-mode: overlay;
+    transform: scale(1.05);
+    filter: blur(12px);
+    background: linear-gradient(-30deg, rgba(255, 255, 255, 0.4), transparent 30%, transparent 70%, rgba(255, 255, 255, 0.4));
+  }
+
+  .electric-overlay-1 {
+    opacity: 0.8;
+  }
+
+  .electric-overlay-2 {
+    opacity: 0.3;
+  }
+
+  .electric-background-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    filter: blur(24px);
+    transform: scale(1.1);
+    opacity: 0.2;
+    z-index: -1;
+    background: radial-gradient(circle at center, var(--electric-border-color), transparent 70%);
   }
 
   .featured-product-card:hover {
@@ -1712,8 +1777,9 @@ const breadcrumbs = [
   }
 
   .featured-variant-6:hover {
-    border-color: rgba(251, 191, 36, 0.58);
-    box-shadow: 0 26px 52px -26px rgba(0, 0, 0, 0.95), 0 16px 34px -26px rgba(251, 191, 36, 0.62);
+    box-shadow: 
+      0 26px 52px -26px rgba(0, 0, 0, 0.95), 
+      0 0 30px rgba(197, 160, 40, 0.25);
   }
 
   .featured-content {
@@ -1763,8 +1829,8 @@ const breadcrumbs = [
   }
 
   .featured-variant-6 .featured-badge {
-    background: rgba(251, 191, 36, 0.14);
-    border-color: rgba(253, 230, 138, 0.34);
+    background: transparent;
+    border-color: rgba(248, 217, 120, 0.5);
     color: #fde68a;
   }
 
@@ -1927,9 +1993,8 @@ const breadcrumbs = [
   }
 
   .featured-variant-6 .featured-image-wrapper {
-    background:
-      radial-gradient(circle at 62% 32%, rgba(251, 191, 36, 0.2), transparent 55%),
-      linear-gradient(135deg, rgba(29, 20, 14, 0.88), rgba(180, 83, 9, 0.12));
+    background: transparent !important;
+    border-radius: 1rem;
   }
 
   .featured-image {
@@ -1950,11 +2015,12 @@ const breadcrumbs = [
   }
 
   .featured-variant-6 .featured-image {
-    transform: scale(1.02) translateX(0);
+    transform: scale(1.15) translateY(-5px);
+    filter: drop-shadow(0 30px 40px rgba(0,0,0,0.65));
   }
 
   .featured-variant-6:hover .featured-image {
-    transform: scale(1.1) translateX(0);
+    transform: scale(1.22) translateY(-10px);
   }
 
   .featured-variant-4 .featured-content,
@@ -1981,19 +2047,8 @@ const breadcrumbs = [
     min-height: 11rem;
   }
 
-  .featured-variant-6 .featured-luxe-glow {
-    width: 15rem;
-    height: 15rem;
-    right: -3.2rem;
-    opacity: 0.72;
-  }
-
-  .featured-variant-6 .featured-luxe-halo {
-    width: 9.5rem;
-    height: 9.5rem;
-    right: -0.9rem;
-    opacity: 0.55;
-  }
+  /* Cleaned up old Luxe styles */
+  /* Variant 6 styling cleanup complete */
 
   .featured-variant-5 .featured-orbit-halo {
     opacity: 0.7;
@@ -2074,8 +2129,8 @@ const breadcrumbs = [
     .featured-variant-6 .featured-content {
       width: 60%;
       margin-right: -4%;
-      background: linear-gradient(90deg, rgba(13, 20, 24, 0.96) 34%, rgba(13, 20, 24, 0.54) 72%, transparent);
-      border-radius: 1rem 0 0 1rem;
+      background: transparent !important;
+      border-radius: 1rem;
     }
 
     .featured-slogan {

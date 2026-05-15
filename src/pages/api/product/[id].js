@@ -249,6 +249,9 @@ export async function PUT({ params, request }) {
       meta_description: newMetaDesc,
       is_featured: isFeatured ? 'true' : 'false',
       slogan: newSlogan || '',
+      featured_link: updateData.featured_link !== undefined ? sanitizeInput(updateData.featured_link) : (currentProduct.featured_link || ''),
+      featured_link_type: updateData.featured_link_type !== undefined ? sanitizeInput(updateData.featured_link_type) : (currentProduct.featured_link_type || 'product'),
+      featured_button_text: updateData.featured_button_text !== undefined ? sanitizeInput(updateData.featured_button_text) : (currentProduct.featured_button_text || ''),
     };
 
     if (updateData.variants !== undefined) {

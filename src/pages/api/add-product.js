@@ -218,6 +218,9 @@ export async function POST({ request }) {
       meta_description: ai.meta_description,
       is_featured: productInput.is_featured === true || productInput.is_featured === 'true' ? 'true' : 'false',
       slogan: ai.slogan || '',
+      featured_link: sanitizeInput(productInput.featured_link) || '',
+      featured_link_type: sanitizeInput(productInput.featured_link_type) || 'product',
+      featured_button_text: sanitizeInput(productInput.featured_button_text) || '',
       ...(productInput.sku ? { sku: productInput.sku } : {}),
       variants: productInput.variants && productInput.variants.length > 0 ? JSON.stringify(productInput.variants) : ''
     };

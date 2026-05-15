@@ -287,8 +287,12 @@
     "meta_description": "Upgrade to the Havells PERSONAL COOLER VELO 36L. Enjoy powerful, long-lasting personal cooling with its 36L capacity and sleek design. Perfect for home or office.",
     "variant_name": "36L",
     "is_featured": "true",
-    "slogan": "Havells VELO: Your Personal Oasis of Cool.",
-    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4"
+    "slogan": "",
+    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ04277",
@@ -1358,7 +1362,11 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ06585",
@@ -1513,5 +1521,51 @@
       }
     ],
     "unit": "meters"
+  },
+  {
+    "part_no": "ZZ01708",
+    "category": "Plumbing",
+    "subcategory": "Manhole_Covers",
+    "subsubcategory": "Pupa_Heavy_Duty_Man_Hole_Cover",
+    "type": "",
+    "product_name": "Manhole cover grey frp",
+    "description": "Introducing the Pupa Manhole Cover Grey FRP, your ultimate Pupa_Heavy_Duty_Man_Hole_Cover solution. Engineered for resilience, it offers a robust 5Ton Weight Bearing Capacity. Made with Poly Resign Glass Fiber, its durable grey FRP finish ensures longevity and blends seamlessly into commercial or industrial environments. Upgrade to Pupa's superior protection. Secure your infrastructure confidently.",
+    "brand": "Pupa",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778847235/fHiaN72jVTzhTTdzquvF0193XE_dyjlms.avif",
+    "mrp": "4170",
+    "slug": "manhole-cover-grey-frp",
+    "meta_title": "Pupa Heavy-Duty Manhole Cover Grey FRP | 5-Ton Capacity",
+    "meta_description": "Upgrade to the Pupa Heavy-Duty Manhole Cover Grey FRP. Boasting a 5-Ton Weight Bearing Capacity, it's Made with Poly Resign Glass Fiber for extreme durability. Ideal for commercial & industrial use.",
+    "variant_name": "25x25",
+    "is_featured": "true",
+    "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
+    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "PUPA FRP MANHOLES"
+  },
+  {
+    "part_no": "ZZ01869",
+    "category": "Plumbing",
+    "subcategory": "PP_R_Fittings",
+    "subsubcategory": "Prince",
+    "type": "",
+    "product_name": "Brass fta elbow greenfit pn25",
+    "description": "Experience Prince quality. The Prince Brass FTA Elbow Greenfit PN25 ensures robust, leak-proof connections. Crafted from premium brass with a high-pressure PN25 rating, its Greenfit design guarantees lasting performance for critical water systems. Trust Prince for precision and durability. Elevate your plumbing solutions today.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778852660/prince-greenfit-pprc-brass-elbow-Photoroom_okwp4b.png",
+    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
+    "variant_name": "32mm",
+    "mrp": "255",
+    "slug": "brass-fta-elbow-greenfit-pn25",
+    "unit": "",
+    "meta_title": "Prince Brass FTA Elbow Greenfit PN25 - Premium Quality",
+    "meta_description": "Discover the Prince Brass FTA Elbow Greenfit PN25. Engineered for high-pressure water systems, its durable brass construction and PN25 rating ensure secure, lasting connections. Upgrade your plumbing with Prince.",
+    "is_featured": "true",
+    "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "View PP-R fittings"
   }
 ]

@@ -147,9 +147,67 @@ const productDataStr = JSON.stringify(product || {});
                 <textarea id="meta_description" name="meta_description" rows="3">{product.meta_description || ''}</textarea>
               </div>
 
-              <div class="form-group" id="sloganPreview" style={`display: ${(product.is_featured === 'true' || product.is_featured === true) ? 'flex' : 'none'}`}>
-                <label for="slogan">Featured Slogan</label>
-                <input type="text" id="slogan" name="slogan" placeholder="Catchy AI slogan will appear here..." value={product.slogan || ''} />
+              <div id="featuredSettings" style={`display: ${(product.is_featured === 'true' || product.is_featured === true) ? 'block' : 'none'}; margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px dashed var(--accent-glow);`}>
+                <div class="form-group">
+                  <label for="slogan">Featured Slogan (AI Generated)</label>
+                  <input type="text" id="slogan" name="slogan" placeholder="Catchy AI slogan..." value={product.slogan || ''} />
+                </div>
+                
+                <div class="form-group">
+                  <label style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.8rem; display: block;">Link Destination</label>
+                  <div class="destination-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem;">
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="product" checked={!product.featured_link_type || product.featured_link_type === 'product'} />
+                      <div class="dest-card">
+                        <span class="icon">📦</span>
+                        <span class="label">Product Page</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="category" checked={product.featured_link_type === 'category'} />
+                      <div class="dest-card">
+                        <span class="icon">📁</span>
+                        <span class="label">Category</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="subcategory" checked={product.featured_link_type === 'subcategory'} />
+                      <div class="dest-card">
+                        <span class="icon">📂</span>
+                        <span class="label">Subcategory</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="subsubcategory" checked={product.featured_link_type === 'subsubcategory'} />
+                      <div class="dest-card">
+                        <span class="icon">📂</span>
+                        <span class="label">Sub-subcat</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="brand" checked={product.featured_link_type === 'brand'} />
+                      <div class="dest-card">
+                        <span class="icon">🏷️</span>
+                        <span class="label">Brand Page</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label for="featured_link">Manual URL (Advanced Override)</label>
+                  <input type="text" id="featured_link" name="featured_link" placeholder="Leave empty to use selection above" value={product.featured_link || ''} />
+                </div>
+
+                <div class="form-group">
+                  <label for="featured_button_text">Button Text (Optional)</label>
+                  <input type="text" id="featured_button_text" name="featured_button_text" placeholder="e.g. View Collection" value={product.featured_button_text || ''} />
+                  <small style="margin-top: 0.25rem; opacity: 0.7;">e.g. "View Collection", "Shop Now", etc.</small>
+                </div>
               </div>
             </div>
           </div>
@@ -397,10 +455,10 @@ const productDataStr = JSON.stringify(product || {});
       });
 
       const isFeaturedCb = document.getElementById('is_featured');
-      const sloganPreview = document.getElementById('sloganPreview');
-      if (isFeaturedCb && sloganPreview) {
+      const featuredSettings = document.getElementById('featuredSettings');
+      if (isFeaturedCb && featuredSettings) {
         isFeaturedCb.addEventListener('change', (e) => {
-          sloganPreview.style.display = e.target.checked ? 'flex' : 'none';
+          featuredSettings.style.display = e.target.checked ? 'block' : 'none';
         });
       }
 
@@ -887,5 +945,44 @@ const productDataStr = JSON.stringify(product || {});
       right: 0.5rem;
       margin-top: 0;
     }
+  }
+
+  .dest-option {
+    cursor: pointer;
+  }
+  .dest-option input {
+    display: none;
+  }
+  .dest-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .dest-card .icon {
+    font-size: 1.5rem;
+  }
+  .dest-card .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .dest-option input:checked + .dest-card {
+    background: rgba(197, 160, 40, 0.1);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(197, 160, 40, 0.2);
+  }
+  .dest-option input:checked + .dest-card .label {
+    color: var(--accent-gold);
+  }
+  .dest-option:hover .dest-card {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
   }
 </style>

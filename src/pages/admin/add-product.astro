@@ -140,6 +140,70 @@ import AdminLayout from '../../components/AdminLayout.astro';
               <p class="hint">Featured products will get a special AI slogan and show up as ads in listings.</p>
             </div>
 
+            <div id="featuredSettings" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: rgba(197, 160, 40, 0.05); border-radius: 16px; border: 1px dashed rgba(197, 160, 40, 0.3);">
+                <div class="input-group">
+                  <label style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.8rem; display: block;">Link Destination</label>
+                  <div class="destination-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem;">
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="product" checked />
+                      <div class="dest-card">
+                        <span class="icon">📦</span>
+                        <span class="label">Product Page</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="category" />
+                      <div class="dest-card">
+                        <span class="icon">📁</span>
+                        <span class="label">Category</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="subcategory" />
+                      <div class="dest-card">
+                        <span class="icon">📂</span>
+                        <span class="label">Subcategory</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="subsubcategory" />
+                      <div class="dest-card">
+                        <span class="icon">📂</span>
+                        <span class="label">Sub-subcat</span>
+                      </div>
+                    </label>
+
+                    <label class="dest-option">
+                      <input type="radio" name="featured_link_type" value="brand" />
+                      <div class="dest-card">
+                        <span class="icon">🏷️</span>
+                        <span class="label">Brand Page</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 1.5rem;">
+                  <label for="featured_link" style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; display: block;">Manual URL Override (Optional)</label>
+                  <div class="input-wrapper">
+                    <input type="text" id="featured_link" placeholder="Leave empty to use selection above">
+                    <div class="focus-border"></div>
+                  </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 1rem;">
+                  <label for="featured_button_text" style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; display: block;">Button Text (Optional)</label>
+                  <div class="input-wrapper">
+                    <input type="text" id="featured_button_text" placeholder="e.g. View Collection">
+                    <div class="focus-border"></div>
+                  </div>
+                  <p class="hint">e.g. "View Collection", "Shop Now", etc.</p>
+                </div>
+            </div>
+
             <!-- AI Preview Area -->
             <div class="ai-preview-section">
               <div class="ai-header">
@@ -188,11 +252,16 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
         <div class="form-footer">
           <div id="message" class="message"></div>
-          <button type="submit" class="submit-btn" id="submitBtn">
-            <span class="btn-text">Generate AI & Save Product</span>
-            <span class="btn-icon">→</span>
-            <div class="btn-loader"></div>
-          </button>
+          <div class="footer-actions">
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span class="btn-text">Generate AI & Save Product</span>
+              <span class="btn-icon">→</span>
+              <div class="btn-loader"></div>
+            </button>
+            <button type="button" id="addAnotherBtn" class="add-another-btn" style="display: none;">
+              <span class="btn-text">+ Add New Product (Same Category)</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -379,6 +448,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
           mrp: document.getElementById('mrp').value,
           unit: document.getElementById('unit').value,
           is_featured: document.getElementById('is_featured').checked,
+          featured_link: document.getElementById('featured_link').value,
+          featured_link_type: document.querySelector('input[name="featured_link_type"]:checked')?.value || 'product',
+          featured_button_text: document.getElementById('featured_button_text').value,
           variants: getVariantsData(),
         };
 
@@ -410,17 +482,11 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
             showMessage('✨ Product saved successfully to Excel & JSON!', 'success');
             
-            // Clear manual fields (keep category/brand selections)
-            document.getElementById('part_no').value = '';
-            document.getElementById('product_name').value = '';
-            document.getElementById('type').value = '';
-            document.getElementById('images').value = '';
-            document.getElementById('video_url').value = '';
-            document.getElementById('custom_features').value = '';
-            document.getElementById('variant_name').value = '';
-            document.getElementById('mrp').value = '';
-            document.getElementById('unit').value = '';
-            document.getElementById('variantsContainer').innerHTML = '';
+            // Show the "Add Another" button and change save button text
+            const addAnotherBtn = document.getElementById('addAnotherBtn');
+            if (addAnotherBtn) addAnotherBtn.style.display = 'flex';
+            submitBtn.querySelector('.btn-text').textContent = 'Product Saved!';
+            submitBtn.classList.remove('loading');
             
             // Scroll to top to see message
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -434,10 +500,10 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
       });
       const isFeaturedCb = document.getElementById('is_featured');
-      const sloganPreview = document.getElementById('sloganPreview');
-      if (isFeaturedCb) {
+      const featuredSettings = document.getElementById('featuredSettings');
+      if (isFeaturedCb && featuredSettings) {
         isFeaturedCb.addEventListener('change', (e) => {
-          sloganPreview.style.display = e.target.checked ? 'block' : 'none';
+          featuredSettings.style.display = e.target.checked ? 'block' : 'none';
         });
       }
 
@@ -514,6 +580,34 @@ import AdminLayout from '../../components/AdminLayout.astro';
           variantsContainer.appendChild(row);
         });
       }
+
+      // Add Another Logic
+      const addAnotherBtn = document.getElementById('addAnotherBtn');
+      if (addAnotherBtn) {
+        addAnotherBtn.addEventListener('click', () => {
+          // Clear unique fields
+          ['part_no', 'product_name', 'type', 'images', 'video_url', 'custom_features', 'variant_name', 'mrp', 'unit', 'featured_link', 'featured_button_text', 'description', 'meta_title', 'meta_description', 'slug', 'slogan'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+          });
+          
+          document.getElementById('variantsContainer').innerHTML = '';
+          document.getElementById('sloganPreview').style.display = 'none';
+          document.getElementById('is_featured').checked = false;
+          document.getElementById('featuredSettings').style.display = 'none';
+          
+          // Reset UI
+          addAnotherBtn.style.display = 'none';
+          submitBtn.querySelector('.btn-text').textContent = 'Generate AI & Save Product';
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+          messageDiv.style.display = 'none';
+          
+          // Scroll to the top of the form area
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          document.getElementById('part_no').focus();
+        });
+      }
     });
   </script>
 </AdminLayout>
@@ -557,6 +651,46 @@ import AdminLayout from '../../components/AdminLayout.astro';
     border-radius: 24px;
     padding: 3rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .form-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (min-width: 640px) {
+    .footer-actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .add-another-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-another-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
   }
 
   /* Variants Styles */
@@ -970,6 +1104,46 @@ import AdminLayout from '../../components/AdminLayout.astro';
     border: 1px solid rgba(239, 68, 68, 0.2);
   }
 
+  .form-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (min-width: 640px) {
+    .footer-actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .add-another-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-another-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
   .featured-toggle {
     background: linear-gradient(135deg, rgba(197, 160, 40, 0.1), rgba(197, 160, 40, 0.02));
     border: 1px solid rgba(197, 160, 40, 0.2);
@@ -1031,5 +1205,44 @@ import AdminLayout from '../../components/AdminLayout.astro';
     margin: 0 0 0 32px;
     font-size: 0.85rem;
     color: var(--text-secondary);
+  }
+
+  .dest-option {
+    cursor: pointer;
+  }
+  .dest-option input {
+    display: none;
+  }
+  .dest-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .dest-card .icon {
+    font-size: 1.5rem;
+  }
+  .dest-card .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  .dest-option input:checked + .dest-card {
+    background: rgba(197, 160, 40, 0.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(197, 160, 40, 0.2);
+  }
+  .dest-option input:checked + .dest-card .label {
+    color: var(--accent);
+  }
+  .dest-option:hover .dest-card {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
   }
 </style>

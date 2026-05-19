@@ -1,4 +1,5 @@
 import { fetchAllProducts } from '../lib/products.js';
+import { getLocalInventoryDefaults } from '../lib/localInventory.js';
 import { absoluteUrl, cdata, escapeXml, formatMerchantPrice, SITE_URL } from '../lib/seo.js';
 
 export const prerender = true;
@@ -7,14 +8,9 @@ function cleanText(value = '') {
   return String(value).replace(/\s+/g, ' ').trim();
 }
 
-function getAvailability(product) {
-  if (product.availability) return cleanText(product.availability).toLowerCase();
-  if (product.quantity === '' || product.quantity === undefined || product.quantity === null) return 'in stock';
-
-  const quantity = Number(product.quantity);
-  if (Number.isFinite(quantity)) return quantity > 0 ? 'in stock' : 'out of stock';
-
-  return 'in stock';
+function getAvailability() {
+  const { availability } = getLocalInventoryDefaults();
+  return availability;
 }
 
 function googleTag(name, value) {
@@ -24,6 +20,7 @@ function googleTag(name, value) {
 
 export async function GET() {
   const products = await fetchAllProducts();
+  const { storeCode, quantity } = getLocalInventoryDefaults();
 
   const feedItems = products
     .filter(product => product.routeParam && product.image && formatMerchantPrice(product.price))
@@ -53,7 +50,9 @@ export async function GET() {
           <g:description>${cdata(description)}</g:description>
           <g:link>${escapeXml(link)}</g:link>
           <g:image_link>${escapeXml(image)}</g:image_link>
-${additionalImageTags ? additionalImageTags + '\n' : ''}          <g:availability>${getAvailability(product)}</g:availability>
+${additionalImageTags ? additionalImageTags + '\n' : ''}          <g:availability>${getAvailability()}</g:availability>
+          <g:store_code>${escapeXml(storeCode)}</g:store_code>
+          <g:quantity>${quantity}</g:quantity>
           <g:price>${price}</g:price>
           <g:condition>new</g:condition>
           <g:shipping>

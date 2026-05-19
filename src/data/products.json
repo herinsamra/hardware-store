@@ -201,7 +201,8 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -289,6 +290,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -311,7 +313,8 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -320,7 +323,7 @@
     "subsubcategory": "Ceiling_Fans",
     "type": "decorative fan",
     "product_name": "Havells 1200 mm Enticer Hues Ceiling Fan",
-    "description": "Introducing the Havells 1200 mm Enticer Hues Ceiling Fan. This decorative ceiling fan delivers powerful airflow with a vibrant, elegant finish. Perfect for adding a stylish touch to modern living rooms, bedrooms, or any space needing a blend of comfort and aesthetic appeal. Discover sophisticated cooling.",
+    "description": "Introducing the Havells 1200 mm Enticer Hues Ceiling Fan. This decorative ceiling fan delivers powerful airflow with a vibrant, elegant finish. Perfect for adding a stylish touch to modern living rooms, bedrooms, or any space needing a blend of comfort and aesthetic appeal. Discover sophisticated cooling. \nNo of blades: 3",
     "brand": "Havells",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777465178/41STeNaJIkL._SX569_-Photoroom_qfpoue.png",
     "mrp": "7170",
@@ -330,7 +333,12 @@
     "variant_name": "Dust Resistant, Silver, 1200mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ06700",
@@ -339,7 +347,7 @@
     "subsubcategory": "Ceiling_Fans",
     "type": "SPEED FAN",
     "product_name": "Enticer Hues Decorative High Speed Ceiling Fan",
-    "description": "Elevate your space with the Havells Enticer Hues 1200mm Decorative Gold Ceiling Fan. Experience dust-resistant, high-speed performance and High Power in Low Voltage (HPLV) technology. This premium ceiling fan adds elegance and powerful airflow, ensuring superior comfort in any room. Discover the Enticer Hues difference and transform your home today.",
+    "description": "Elevate your space with the Havells Enticer Hues 1200mm Decorative Gold Ceiling Fan. Experience dust-resistant, high-speed performance and High Power in Low Voltage (HPLV) technology. This premium ceiling fan adds elegance and powerful airflow, ensuring superior comfort in any room. Discover the Enticer Hues difference and transform your home today.\nNo of blades:3",
     "brand": "Havells",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777464580/717AHsDmDZL._SX569_-Photoroom_baxvtw.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777464631/71JmPnTjSYL._SX569__kbyv7b.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777464684/71Dj6RdDp7L._SX569__jfy4jl.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777464715/81-Al5ULrvL._SX569__kkqghu.jpg",
     "mrp": "7704.98",
@@ -349,7 +357,12 @@
     "variant_name": "1200MM, GOLD",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ04228",
@@ -358,17 +371,22 @@
     "subsubcategory": "Ceiling_Fans",
     "type": "DECORATIVE HIGH SPEED FAN",
     "product_name": "Enticer Decorative Dust Resistant High Speed Ceiling Fan",
-    "description": "Premium  Havells Enticer 1200mm Decorative, Dust Resistant, High Power in Low Voltage (HPLV)High Speed Ceiling Fan by Havells, a top‑quality Ceiling_Fans offering sleek design and reliable performance.",
+    "description": "Premium  Havells Enticer 1200mm Decorative, Dust Resistant, High Power in Low Voltage (HPLV)High Speed Ceiling Fan by Havells, a top‑quality Ceiling_Fans offering sleek design and reliable performance.\nNo of blades:3",
     "brand": "Havells",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777468647/61Y3u4FNzeL._SX569_-Photoroom_uubonh.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777468694/71jitVSrVZL._SL1500__xx6zrz.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777468696/71_KGnyjsEL._SX569__rik9cf.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777468696/71Zi4dItMLL._SX569__t16lns.jpg",
     "mrp": "7170",
     "slug": "enticer-decorative-dust-resistant-high-speed-ceiling-fan",
     "meta_title": "Havells  Havells Enticer 1200mm Decorative, Dust Resistant, High Power in Low Voltage (HPLV)High Speed Ceiling Fan – Premium Ceiling_Fans",
-    "meta_description": " Havells Enticer 1200mm Decorative, Dust Resistant, High Power in Low Voltage (HPLV)High Speed Ceiling Fan by Havells: SEO‑friendly, high‑performance Ceiling_Fans for modern installations.",
+    "meta_description": "Havells Enticer 1200mm Decorative, Dust Resistant, High Power in Low Voltage (HPLV)High Speed Ceiling Fan by Havells: SEO‑friendly, high‑performance Ceiling_Fans for modern installations.",
     "variant_name": "Bronze Cola Chrome,1200mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ06484",
@@ -377,7 +395,7 @@
     "subsubcategory": "Ceiling_Fans",
     "type": "DECORATION FAN",
     "product_name": "Enticer Premium Design Ceiling Fan",
-    "description": "Elevate your living & bedroom with the Havells Enticer Premium Design 1200 mm Ceiling Fan. Experience superior High Air Delivery & Hi Speed performance from wider blades and a 100% copper winding motor. Its stunning metallic Rose Gold finish adds elegance, while dust resistance ensures lasting beauty. Discover the perfect blend of style and comfort for your home.",
+    "description": "Elevate your living & bedroom with the Havells Enticer Premium Design 1200 mm Ceiling Fan. Experience superior High Air Delivery & Hi Speed performance from wider blades and a 100% copper winding motor. Its stunning metallic Rose Gold finish adds elegance, while dust resistance ensures lasting beauty. Discover the perfect blend of style and comfort for your home.\nNo of blades:3",
     "brand": "Havells",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777470529/51PVLMUDlOL._SX569_-Photoroom_co97m1.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777470562/71sBSXLVMDL._SL1500__phf2tt.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777470601/71_HI-pmeKL._SL1500__iibzpe.jpg",
     "mrp": "5458.99",
@@ -387,7 +405,12 @@
     "variant_name": "ROSE GOLD, 1200mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ04229",
@@ -395,18 +418,23 @@
     "subcategory": "Fans",
     "subsubcategory": "Ceiling_Fans",
     "type": "DECORATIVE FAN",
-    "product_name": "Enticer Premium Design 1200mm Ceiling Fan Espresso Brown Copper",
-    "description": "Premium Enticer Premium Design 1200mm Ceiling Fan Espresso Brown Copper by Havells, a top‑quality Ceiling_Fans offering sleek design and reliable performance.",
+    "product_name": "Enticer Premium Design 1200mm Fan Espresso Brown Copper",
+    "description": "Premium Enticer Premium Design 1200mm Ceiling Fan Espresso Brown Copper by Havells, a top‑quality Ceiling_Fans offering sleek design and reliable performance.\nNo of blades:3",
     "brand": "Havells",
-    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777471063/51RDQlTwjTL._SX569_-Photoroom_sk3rki.png,https://res.cloudinary.com/dthi2vgiz/image/upload/v1777471499/715TihdFfxL._SX569__w0n5ki.jpg",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777471063/51RDQlTwjTL._SX569_-Photoroom_sk3rki.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777471499/715TihdFfxL._SX569__w0n5ki.jpg",
     "mrp": "4834.66",
-    "slug": "enticer-premium-design-1200mm-ceiling-fan-espresso-brown-copper",
+    "slug": "enticer-premium-design-1200mm-fan-espresso-brown-copper",
     "meta_title": "Havells Enticer Premium Design 1200mm Ceiling Fan Espresso Brown Copper – Premium Ceiling_Fans",
     "meta_description": "Enticer Premium Design 1200mm Ceiling Fan Espresso Brown Copper by Havells: SEO‑friendly, high‑performance Ceiling_Fans for modern installations.",
     "variant_name": "1200mm, Espresso Brown Copper",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ04227",
@@ -415,9 +443,9 @@
     "subsubcategory": "Ceiling_Fans",
     "type": "decoration fan",
     "product_name": "Enticer 1200mm Ceiling Fan",
-    "description": "Elevate your home's aesthetics with the Havells Enticer 1200mm Ceiling Fan. More than just airflow, this exquisite decoration fan boasts a premium finish and elegant design. Ideal for living rooms, bedrooms, or any space desiring a sophisticated touch. Experience the perfect blend of style and superior comfort. Isn't it time your home truly shined?",
+    "description": "Elevate your home's aesthetics with the Havells Enticer 1200mm Ceiling Fan. More than just airflow, this exquisite decoration fan boasts a premium finish and elegant design. Ideal for living rooms, bedrooms, or any space desiring a sophisticated touch. Experience the perfect blend of style and superior comfort. Isn't it time your home truly shined?\nNo of blades:3",
     "brand": "Havells",
-    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/510ghn5SxrL._SX569_-Photoroom_raj6vt.png,https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/61RGkL7i_L._SX569_-Photoroom_n5812x.png,https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/61EqRnyGpYL._SX569__r6nc9j.jpg",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/510ghn5SxrL._SX569_-Photoroom_raj6vt.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/61RGkL7i_L._SX569_-Photoroom_n5812x.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1777627156/61EqRnyGpYL._SX569__r6nc9j.jpg",
     "mrp": "7705",
     "slug": "enticer-1200mm-ceiling-fan",
     "meta_title": "Havells Enticer 1200mm Ceiling Fan | Premium Style",
@@ -425,7 +453,12 @@
     "variant_name": "Beige Copper",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   },
   {
     "part_no": "ZZ04226",
@@ -559,53 +592,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -624,7 +611,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -644,35 +632,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -692,17 +652,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -721,7 +671,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -741,44 +692,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -797,7 +711,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -816,7 +731,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -835,7 +751,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -854,7 +771,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -873,7 +791,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07017",
@@ -892,7 +811,8 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03476",
@@ -912,18 +832,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "Brown gold",
-        "price": 3149,
-        "part_no": "zz03476",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
   },
   {
     "part_no": "ZZ06337",
@@ -942,7 +851,8 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03477",
@@ -962,19 +872,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "KD WHITE",
-        "price": 3699,
-        "part_no": "zz03477",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
   },
   {
     "part_no": "ZZ06569",
@@ -993,7 +891,8 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07096",
@@ -1012,7 +911,8 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03734",
@@ -1032,22 +932,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "100MM",
-        "price": 1755,
-        "part_no": "ZZ03733",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
   },
   {
     "part_no": "ZZ06576",
@@ -1066,7 +951,8 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03478",
@@ -1086,17 +972,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "OPAL WHITE",
-        "price": 3519,
-        "part_no": "ZZ03478",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
   },
   {
     "part_no": "ZZ06494",
@@ -1115,7 +991,8 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1134,7 +1011,8 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1153,7 +1031,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1172,7 +1051,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1191,7 +1071,8 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1210,7 +1091,8 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1229,7 +1111,8 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1248,7 +1131,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1267,7 +1151,8 @@
     "variant_name": "1 HP",
     "is_featured": "true",
     "slogan": "Silence The Pump. Amplify The Flow.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1286,7 +1171,8 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1305,7 +1191,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1324,7 +1211,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1343,7 +1231,8 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1363,6 +1252,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1385,7 +1275,8 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Flow. Power. Perfection. Reimagined.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1404,7 +1295,8 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1423,7 +1315,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "CRI Pumps: Your Flow. Perfected.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1442,7 +1335,8 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1461,7 +1355,8 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1480,7 +1375,8 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1500,26 +1396,7 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "1",
-        "price": 170,
-        "part_no": "ZZ07893",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      },
-      {
-        "variant_id": "1.50",
-        "price": 456,
-        "part_no": "ZZ07854",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]",
     "unit": "meters"
   },
   {
@@ -1540,6 +1417,7 @@
     "is_featured": "true",
     "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1555,15 +1433,16 @@
     "description": "Experience Prince quality. The Prince Brass FTA Elbow Greenfit PN25 ensures robust, leak-proof connections. Crafted from premium brass with a high-pressure PN25 rating, its Greenfit design guarantees lasting performance for critical water systems. Trust Prince for precision and durability. Elevate your plumbing solutions today.",
     "brand": "Prince",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778852660/prince-greenfit-pprc-brass-elbow-Photoroom_okwp4b.png",
-    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
-    "variant_name": "32mm",
     "mrp": "255",
     "slug": "brass-fta-elbow-greenfit-pn25",
-    "unit": "",
     "meta_title": "Prince Brass FTA Elbow Greenfit PN25 - Premium Quality",
     "meta_description": "Discover the Prince Brass FTA Elbow Greenfit PN25. Engineered for high-pressure water systems, its durable brass construction and PN25 rating ensure secure, lasting connections. Upgrade your plumbing with Prince.",
+    "variant_name": "32mm",
     "is_featured": "true",
     "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
+    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
+    "variants": "",
+    "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
     "featured_button_text": "View PP-R fittings"

@@ -7,8 +7,9 @@
   },
   "scripts": {
     "convert": "node scripts/convert-excel.js",
+    "local-feed": "node scripts/generate-local-inventory-feed.js",
     "dev": "npm run convert && astro dev",
-    "build": "npm run convert && astro build",
+    "build": "npm run convert && npm run local-feed && astro build",
     "preview": "astro preview",
     "start": "npm run dev",
     "astro": "astro"

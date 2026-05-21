@@ -213,5 +213,15 @@
     "name": "Sintex",
     "category": "Plumbing",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778767238/images_4_-Photoroom_vowqkh.png"
+  },
+  {
+    "name": "Aizer",
+    "category": "Plumbing",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779964030/logo-aizar_eas8mx.png"
+  },
+  {
+    "name": "Yale",
+    "category": "Hardwares",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779966790/Yale_Logo_Primary_RGB_hfs4im.png"
   }
 ]

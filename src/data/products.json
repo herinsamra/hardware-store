@@ -201,8 +201,7 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ02632",
@@ -290,7 +289,6 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -313,8 +311,7 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04231",
@@ -334,7 +331,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -358,7 +354,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -382,7 +377,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -406,7 +400,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -430,7 +423,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -454,7 +446,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -592,7 +583,53 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "10A",
+        "price": 254,
+        "part_no": "ZZ06314",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
+        ]
+      },
+      {
+        "variant_id": "16A",
+        "price": 254,
+        "part_no": "ZZ01100",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
+        ]
+      },
+      {
+        "variant_id": "20A",
+        "price": 254,
+        "part_no": "ZZ01432",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
+        ]
+      },
+      {
+        "variant_id": "25A",
+        "price": 254,
+        "part_no": "ZZ01628",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
+        ]
+      },
+      {
+        "variant_id": "32A",
+        "price": 390,
+        "part_no": "ZZ01843",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ07660",
@@ -611,8 +648,7 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06306",
@@ -632,7 +668,35 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "16A",
+        "price": 1280,
+        "part_no": "ZZ01091",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
+        ]
+      },
+      {
+        "variant_id": "40A",
+        "price": 2014,
+        "part_no": "ZZ02190",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
+        ]
+      },
+      {
+        "variant_id": "63A",
+        "price": 2014,
+        "part_no": "ZZ02430",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ02198",
@@ -652,7 +716,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "63A",
+        "price": 3150,
+        "part_no": "ZZ02440",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ02431",
@@ -671,8 +745,7 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08228",
@@ -692,7 +765,44 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "16A",
+        "price": 856,
+        "part_no": "ZZ08229",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
+        ]
+      },
+      {
+        "variant_id": "20A",
+        "price": 877,
+        "part_no": "ZZ08230",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
+        ]
+      },
+      {
+        "variant_id": "25A",
+        "price": 877,
+        "part_no": "ZZ08231",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
+        ]
+      },
+      {
+        "variant_id": "32A",
+        "price": 877,
+        "part_no": "ZZ08135",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ01340",
@@ -711,8 +821,7 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07571",
@@ -731,8 +840,7 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07457",
@@ -751,8 +859,7 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04283",
@@ -771,8 +878,7 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04287",
@@ -791,8 +897,7 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07017",
@@ -811,8 +916,7 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03476",
@@ -832,7 +936,18 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "Brown gold",
+        "price": 3149,
+        "part_no": "zz03476",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06337",
@@ -851,8 +966,7 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03477",
@@ -872,7 +986,19 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "KD WHITE",
+        "price": 3699,
+        "part_no": "zz03477",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06569",
@@ -891,8 +1017,7 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07096",
@@ -911,8 +1036,7 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03734",
@@ -932,7 +1056,22 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "100MM",
+        "price": 1755,
+        "part_no": "ZZ03733",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06576",
@@ -951,8 +1090,7 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03478",
@@ -972,7 +1110,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "OPAL WHITE",
+        "price": 3519,
+        "part_no": "ZZ03478",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06494",
@@ -991,8 +1139,7 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1011,8 +1158,7 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1031,8 +1177,7 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1051,8 +1196,7 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1071,8 +1215,7 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1091,8 +1234,7 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1111,8 +1253,7 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1131,8 +1272,7 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1151,8 +1291,7 @@
     "variant_name": "1 HP",
     "is_featured": "true",
     "slogan": "Silence The Pump. Amplify The Flow.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1171,8 +1310,7 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1191,8 +1329,7 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1211,8 +1348,7 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1231,8 +1367,7 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1252,7 +1387,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1275,8 +1409,7 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Flow. Power. Perfection. Reimagined.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1295,8 +1428,7 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1315,8 +1447,7 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "CRI Pumps: Your Flow. Perfected.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1335,8 +1466,7 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1355,8 +1485,7 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1375,8 +1504,7 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1396,7 +1524,26 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "1",
+        "price": 170,
+        "part_no": "ZZ07893",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
+        ]
+      },
+      {
+        "variant_id": "1.50",
+        "price": 456,
+        "part_no": "ZZ07854",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
+        ]
+      }
+    ],
     "unit": "meters"
   },
   {
@@ -1417,7 +1564,6 @@
     "is_featured": "true",
     "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1441,10 +1587,285 @@
     "is_featured": "true",
     "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
     "featured_button_text": "View PP-R fittings"
+  },
+  {
+    "part_no": "ZZ07172",
+    "category": "Plumbing",
+    "subcategory": "Water_Pumps",
+    "subsubcategory": "Submersible_Pumps",
+    "type": "",
+    "product_name": "AGRIBLOC Centrifugal Monobloc Pumpset",
+    "description": "Experience robust water supply with the KSB AGRIBLOC Centrifugal Monobloc Pumpset, engineered for demanding submersible applications. This high-performance unit features a pump size up to 80x80 mm, capacity up to 920 lpm, and a powerful head up to 38 meters. Delivering up to 1.5 kW (2HP), it runs at 2900 rpm with CSR starting, perfect for clear water at ambient temperatures. Ideal for domestic water supply (buildings, apartments), fountains, industries, gardens & greenhouses. Achieve reliable, efficient water flow. Discover KSB's performance.",
+    "brand": "KSB",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779274416/agribloc-Photoroom_zirksl.png",
+    "mrp": "7385.01",
+    "slug": "agribloc-centrifugal-monobloc-pumpset",
+    "meta_title": "KSB AGRIBLOC Centrifugal Monobloc Pump - Water Power",
+    "meta_description": "KSB AGRIBLOC Centrifugal Monobloc Pumpset delivers up to 920 lpm, 38m head, 1.5kW (2HP). Ideal for domestic water, fountains, industries & gardens. Efficient 2900 rpm performance.",
+    "variant_name": "0.5hp",
+    "is_featured": "true",
+    "slogan": "KSB: Unleash Power, Command Water.",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06593",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "703 MAVELI single bowl sink",
+    "description": "Elevate your kitchen with the Prince 703 MAVELI single bowl sink. Made from high-quality Material Stainless steel, this sink boasts a sophisticated Color Silver finish. Its generous Size 610X460 makes it perfect for any modern kitchen, offering both durability and sleek style. Explore the Prince MAVELI and create your ideal culinary workspace.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779275143/1603451853_fyvhu3.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779275143/spec_703_Maveli_ozmg0r.jpg",
+    "mrp": "7500",
+    "slug": "703-maveli-single-bowl-sink",
+    "meta_title": "Prince 703 MAVELI Single Bowl Stainless Steel Sink",
+    "meta_description": "Discover the Prince 703 MAVELI single bowl kitchen sink. Crafted from durable stainless steel in a sleek silver finish (610x460), it's perfect for modern kitchens. Upgrade today!",
+    "variant_name": "610X460",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06596",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "HG 5345 Single Bowl Sink",
+    "description": "Upgrade your kitchen with the Prince HG 5345 Single Bowl Sink. Crafted from durable stainless steel in a sleek silver color, this 21x18 inch sink offers exceptional quality and timeless style. Perfect for busy households and gourmet kitchens, its robust construction handles daily demands with ease. Discover superior functionality for your culinary space.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779280639/hg5345-Photoroom_xr5wtq.png",
+    "mrp": "8250",
+    "slug": "hg-5345-single-bowl-sink",
+    "meta_title": "Prince HG 5345 Single Bowl Sink - Stainless Steel",
+    "meta_description": "Shop the Prince HG 5345 Single Bowl Sink. Features premium stainless steel material, silver color, and a 21x18 inch size. Ideal for any kitchen.",
+    "variant_name": "21x18",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06157",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "PG 5007 / SMART sink",
+    "description": "Introducing the Prince PG 5007 / SMART sink – your ultimate Kitchen Sink upgrade. Expertly crafted from premium Material Stainless steel with a sleek Color Silver finish. This impressive 1100x485 Size sink boasts a versatile Double Bowl design, complete with an Integrated Vegetable Basket and Drain Board (Veg BI with DB) for effortless food prep and cleanup. Ideal for any modern kitchen. Experience seamless functionality; transform your space today.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779281074/1601364397-Photoroom_yhtyef.png",
+    "mrp": "17400",
+    "slug": "pg-5007-smart-sink",
+    "meta_title": "Prince PG 5007 / SMART Sink - Stainless Steel Kitchen Sink",
+    "meta_description": "Upgrade your kitchen with the Prince PG 5007 / SMART sink. Premium Silver Stainless steel, 1100x485 Double Bowl design with Integrated Veg Basket & Drain Board. Perfect for modern homes. Shop today!",
+    "variant_name": "43x19x10",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06594",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "Venus 18x16 kitchen sink",
+    "description": "Elevate your culinary space with the Prince Venus 18x16 Kitchen Sink. Crafted from robust AISI 304 Grade Stainless Steel with 8% Nickel, this silver sink boasts a unique Glossy Matt finish. Its impressive Thickness: 80mm ensures lasting durability. Featuring an Overall Size: 24 x 24 inch and a generous Bowl size: 20 x 20 x 10 inch, it's perfect for modern kitchens. Prince sinks have perfect 90° corners, ensuring easy installation and a sleek look. Discover premium quality for your home.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779281469/31AZqcFUpbL-Photoroom_lxfsvb.png",
+    "mrp": "5899.99",
+    "slug": "venus-18x16-kitchen-sink",
+    "meta_title": "Prince Venus 18x16 Kitchen Sink | AISI 304 Steel",
+    "meta_description": "Upgrade your kitchen with the Prince Venus 18x16 Kitchen Sink. Crafted from AISI 304 Stainless Steel (8% Nickel) with a unique Glossy Matt finish. Enjoy easy installation & lasting quality.",
+    "variant_name": "18x16",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06595",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "SR2008 H 24X18 Kitchen Sink",
+    "description": "Elevate your kitchen with the Prince SR2008 H 24x18 Stainless Steel Kitchen Sink. This durable, standard-mount sink boasts a pristine brushed finish, perfect for busy home chefs and entertaining spaces. Experience lasting quality and timeless style. Discover your perfect kitchen centerpiece.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779281813/SR-2008_1_sxvcb4.png",
+    "mrp": "3740",
+    "slug": "sr2008-h-24x18-kitchen-sink",
+    "meta_title": "Prince SR2008 H 24x18 Kitchen Sink - Stainless Steel",
+    "meta_description": "Shop the Prince SR2008 H 24x18 Stainless Steel Kitchen Sink. Durable, brushed finish, standard mount for any home kitchen. Upgrade your space today!",
+    "variant_name": "24x18",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ06592",
+    "category": "Sanitary_Ware",
+    "subcategory": "Basins",
+    "subsubcategory": "Kitchen_Sinks",
+    "type": "",
+    "product_name": "Manjil 701 40x20 sink",
+    "description": "Elevate your kitchen with the Prince Manjil 701, a premium Single Bowl with DB 40x20 stainless steel sink. Its brushed finish and standard design offer exceptional durability, perfect for busy home chefs and modern kitchens. Discover lasting quality and style.",
+    "brand": "Prince",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779282136/1601533354_1_-Photoroom_fsnjwo.png",
+    "mrp": "9789.99",
+    "slug": "manjil-701-40x20-sink",
+    "meta_title": "Prince Manjil 701 Kitchen Sink | Single Bowl",
+    "meta_description": "Discover the Prince Manjil 701, a durable Single Bowl with DB 40x20 stainless steel kitchen sink. Ideal for modern homes seeking quality and style. Shop now!",
+    "variant_name": "40x20",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ08277",
+    "category": "Plumbing",
+    "subcategory": "Tanks",
+    "subsubcategory": "Other_Tanks",
+    "type": "",
+    "product_name": "50L HDPE WATER DISPENSER TANK",
+    "description": "Experience pristine water storage with the Anchor 50L HDPE Water Dispenser Tank. Engineered from durable, food-grade HDPE, its innovative 3 LAYER construction ensures optimal protection. The secure THREADED LID seals freshness, while integrated ANTIMICROBIAL properties actively prevent contamination, guaranteeing NO ALGAE growth. Perfect for homes, offices, or emergency preparedness, this tank delivers clean water, every time. Upgrade your hydration—discover Aizar quality.",
+    "brand": "Aizer",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779963674/WhatsApp_Image_2026-05-28_at_1.45.44_PM-Photoroom_yvcbl8.png",
+    "mrp": "1450",
+    "slug": "50l-hdpe-water-dispenser-tank",
+    "meta_title": "Aizar 50L HDPE Water Tank | Pristine Water Storage",
+    "meta_description": "Store pristine water with Aizar's 50L HDPE Water Dispenser Tank. Featuring 3 LAYER, threaded lid, and antimicrobial design for no algae. Ideal for home, office, or emergency.",
+    "variant_name": "50L WHITE",
+    "is_featured": "true",
+    "slogan": "Aizar: Drink Purer. Store Smarter.",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "0001",
+    "category": "Hardwares",
+    "subcategory": "Handles_and_Knobs",
+    "subsubcategory": "Brass_Handles",
+    "type": "",
+    "product_name": "ABSR Finish Brass Door Knocker",
+    "description": "Elevate your entryway with the Aceline ABSR Finish Brass Door Knocker (Model No 1352001400). This Type of Product Door Knocker, crafted from durable Material Brass with a premium Finish Type ABSR, offers superior Corrosion Resistance and Type RKS Resistance. Measuring 180x111x70 mm, its elegant design enhances any home, ensuring a lasting first impression. Package Contains Door Knocker with Screws for easy installation. Discover enduring style.",
+    "brand": "Aceline",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779964494/WhatsApp_Image_2026-05-28_at_4.04.04_PM-Photoroom_obpzi1.png",
+    "mrp": "5250",
+    "slug": "absr-finish-brass-door-knocker",
+    "meta_title": "Aceline ABSR Brass Door Knocker | Premium Entryway",
+    "meta_description": "Enhance your home's entryway with Aceline's ABSR Finish Brass Door Knocker. Model 1352001400 offers superior corrosion and RKS resistance. Durable brass, easy install.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Knock with Style. Choose Aceline Brass.",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "002",
+    "category": "Hardwares",
+    "subcategory": "Handles_and_Knobs",
+    "subsubcategory": "Brass_Handles",
+    "type": "",
+    "product_name": "Old School ABSR Finish Brass Door Knocker",
+    "description": "Elevate your entry with the Aceline Old School ABSR Finish Brass Door Knocker. This Type of Product Door Knocker (Model No 1342001400), measuring 196x100x35 mm and weighing 460 g, exudes vintage charm. Crafted from durable Material Brass, its unique Finish Type ABSR ensures timeless appeal and Resistance Corrosion Resistance. The Package Contains Door Knocker with Screws for effortless installation. Perfect for classic homes in your Brass Handles collection. Discover enduring quality.",
+    "brand": "Aceline",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779964535/WhatsApp_Image_2026-05-28_at_4.04.04_PM_1_-Photoroom_q102o8.png",
+    "mrp": "1730.01",
+    "slug": "old-school-absr-finish-brass-door-knocker",
+    "meta_title": "Aceline Old School ABSR Brass Door Knocker",
+    "meta_description": "Discover the Aceline Old School ABSR Brass Door Knocker (Model 1342001400). Durable, corrosion-resistant brass with a unique ABSR finish. Perfect for classic homes. Shop premium Brass Handles.",
+    "variant_name": "absr finish",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "0003",
+    "category": "Hardwares",
+    "subcategory": "Handles_and_Knobs",
+    "subsubcategory": "Brass_Handles",
+    "type": "",
+    "product_name": "Two Face ABSR Finish Brass Door Knocker",
+    "description": "Elevate your entryway with the Aceline Two Face Door Knocker.  Crafted from premium Brass, its striking ABSR Finish offers exceptional Corrosion Resistance.  Measuring 130x110x40 mm, this Type Two Face knocker (Model No 1337001400, Weight 720 g) is perfect for grand entrances.  Package Contains: Door Knocker with Screws. Discover timeless elegance for your home.",
+    "brand": "Aceline",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779966155/HAR.DOO.627922083_1732103976303-Photoroom_iaduub.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779965420/Palermo_CH_5_533x_viiozd.webp",
+    "mrp": "1599",
+    "slug": "two-face-absr-finish-brass-door-knocker",
+    "meta_title": "Aceline Two Face Brass Door Knocker | ABSR Finish",
+    "meta_description": "Shop the Aceline Two Face Brass Door Knocker (Model No 1337001400). Features ABSR Finish, Corrosion Resistance, and premium Brass. Perfect for elegant entrances. Includes screws.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
+  },
+  {
+    "part_no": "ZZ07442",
+    "category": "Hardwares",
+    "subcategory": "Locks_and_Latches",
+    "subsubcategory": "Door_Locks",
+    "type": "",
+    "product_name": "Smart lock YDME50 NXT BR biometric with handle",
+    "description": "Upgrade your door with the Yale YDME 50 NxT Smart Lock, featuring a stylish painted Brown finish. This biometric door lock offers 4-in-1 keyless access: fingerprint, PIN code, RFID card, and manual override key. Experience rapid, one-touch Smart Fingerprint Technology, Guest PIN & Time-Bound Codes, plus advanced security with Intrusion Alert and Low Battery Alert. Emergency USB Power Supply ensures access even if batteries drain. Ideal for homes & offices. Free installation included. Discover unparalleled security.",
+    "brand": "Yale",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967013/YDME50NxTBrown-4_1100x_yp4odw.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967013/YDME50NxTBrown-6_1100x_jcxdr0.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967013/YDME50NxTBrown-5_1100x_mtfc3t.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967013/YDME50NxTBrown-9_1100x_cochje.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967012/YDME50NxTBrown-7_1100x_iri9e4.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967012/YDME50NxTBrown-7_1100x_iri9e4.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779967012/YDME50NxTBrown-12_1100x_nmlpad.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779964654/WhatsApp_Image_2026-05-28_at_4.04.07_PM-Photoroom_loc941.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1779964617/WhatsApp_Image_2026-05-28_at_4.04.06_PM_1_-Photoroom_1_dkndbu.png",
+    "mrp": "17998.99",
+    "slug": "smart-lock-ydme50-nxt-br-biometric-with-handle",
+    "meta_title": "Yale YDME 50 NxT Smart Lock - Brown Biometric Door Lock",
+    "meta_description": "Secure your home or office with the Yale YDME 50 NxT Smart Lock. Enjoy 4-in-1 keyless access: fingerprint, PIN, RFID, key. Features Smart Fingerprint Technology, intrusion alert & free installation.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Yale NxT: Smart Access. Unmatched Security. Peace of Mind.",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   }
 ]

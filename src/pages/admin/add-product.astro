@@ -216,6 +216,11 @@ import AdminLayout from '../../components/AdminLayout.astro';
                 <label>Description</label>
                 <textarea id="description" rows="3" readonly placeholder="Waiting for generation..."></textarea>
               </div>
+
+              <div class="ai-field">
+                <label>Highlighted Features</label>
+                <textarea id="key_features" rows="4" readonly placeholder="Catchy feature bullets will appear here..."></textarea>
+              </div>
               
               <div class="ai-field">
                 <label>Meta Title</label>
@@ -472,6 +477,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
           if (response.ok) {
             document.getElementById('description').value = result.product.description;
+            const features = result.product.key_features ? JSON.parse(result.product.key_features) : [];
+            document.getElementById('key_features').value = features.map(feature => `- ${feature}`).join('\n');
             document.getElementById('meta_title').value = result.product.meta_title;
             document.getElementById('meta_description').value = result.product.meta_description;
             document.getElementById('slug').value = result.product.slug;
@@ -586,7 +593,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
       if (addAnotherBtn) {
         addAnotherBtn.addEventListener('click', () => {
           // Clear unique fields
-          ['part_no', 'product_name', 'type', 'images', 'video_url', 'custom_features', 'variant_name', 'mrp', 'unit', 'featured_link', 'featured_button_text', 'description', 'meta_title', 'meta_description', 'slug', 'slogan'].forEach(id => {
+          ['part_no', 'product_name', 'type', 'images', 'video_url', 'custom_features', 'variant_name', 'mrp', 'unit', 'featured_link', 'featured_button_text', 'description', 'key_features', 'meta_title', 'meta_description', 'slug', 'slogan'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
           });

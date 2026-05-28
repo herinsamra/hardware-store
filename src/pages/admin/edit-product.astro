@@ -138,6 +138,12 @@ const productDataStr = JSON.stringify(product || {});
               </div>
 
               <div class="form-group">
+                <label for="key_features">Highlighted Features</label>
+                <textarea id="key_features" name="key_features" rows="5" placeholder="One catchy feature per line">{product.key_features?.map(feature => `- ${feature}`).join('\n') || ''}</textarea>
+                <small>These show as highlighted bullet points on the product page.</small>
+              </div>
+
+              <div class="form-group">
                 <label for="meta_title">Meta Title</label>
                 <input type="text" id="meta_title" name="meta_title" value={product.meta_title || ''} />
               </div>
@@ -434,6 +440,8 @@ const productDataStr = JSON.stringify(product || {});
             // If they opted to regenerate AI, the backend will return the new content
             if (data.regenerate_ai === 'on' && result.product) {
               document.getElementById('description').value = result.product.description || '';
+              const regeneratedFeatures = result.product.key_features ? JSON.parse(result.product.key_features) : [];
+              document.getElementById('key_features').value = regeneratedFeatures.map(feature => `- ${feature}`).join('\n');
               document.getElementById('meta_title').value = result.product.meta_title || '';
               document.getElementById('meta_description').value = result.product.meta_description || '';
               document.getElementById('regenerate_ai').checked = false; // reset checkbox

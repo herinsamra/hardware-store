@@ -68,6 +68,28 @@ function getModelCandidates() {
     : ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'];
 }
 
+function normalizeFeatureList(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map(item => String(item || '').trim())
+      .filter(Boolean)
+      .slice(0, 5);
+  }
+
+  if (typeof value !== 'string' || !value.trim()) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return normalizeFeatureList(parsed);
+  } catch (e) {}
+
+  return value
+    .split(/\r?\n|,/)
+    .map(item => item.replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '').trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
 async function generateAI(productName, subsubcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -76,8 +98,8 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
-  const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
-  const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
+  const featuresInstruction = customFeatures ? `\n- Use these exact keywords/features where relevant, especially in the feature bullets: "${customFeatures}"` : '';
+  const jsonKeys = isFeatured ? '"description", "features", "meta_title", "meta_description", "slogan"' : '"description", "features", "meta_title", "meta_description"';
 
   const prompt = `You are a premium hardware copywriter. Write a concise, SEO‑friendly product description (max 620 characters) that focuses on the sub‑sub‑category (${subsubcategory}) and highlights:
 - Exact product name and brand
@@ -86,6 +108,7 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
 - A subtle invitation to the buyer${featuresInstruction}
 
 Also create:
+0. 4 to 5 catchy feature bullets in a JSON array named "features". Each bullet must be short, benefit-led, and easy to notice at a glance.
 1️⃣ A meta title (≤60 characters) blending brand and product name.
 2️⃣ A meta description (≤160 characters) that is SEO‑optimized.${featuredInstruction}
 
@@ -122,6 +145,9 @@ Type: ${type || 'standard'}
     description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance. ${customFeatures ? 'Key features include: ' + customFeatures + '.' : ''}`.trim(),
     meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
     meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`,
+    features: normalizeFeatureList(customFeatures).length
+      ? normalizeFeatureList(customFeatures)
+      : ['Reliable daily performance', 'Clean premium finish', 'Built for practical spaces', 'Easy upgrade choice'],
     slogan: isFeatured ? `Experience the best ${productName} today!` : ''
   };
 }
@@ -207,6 +233,7 @@ export async function POST({ request }) {
       type: productInput.type || '',
       product_name: productInput.product_name,
       description: ai.description,
+      key_features: JSON.stringify(normalizeFeatureList(ai.features)),
       brand: productInput.brand,
       images: productInput.images || '',
       video_url: productInput.video_url || '',

@@ -28,6 +28,26 @@ export function getProductUrl(product) {
   return routeParam ? `/product/${routeParam}` : '/products';
 }
 
+function normalizeFeatureList(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map(item => String(item || '').trim())
+      .filter(Boolean);
+  }
+
+  if (typeof value !== 'string' || !value.trim()) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return normalizeFeatureList(parsed);
+  } catch (e) {}
+
+  return value
+    .split(/\r?\n|,/)
+    .map(item => item.replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '').trim())
+    .filter(Boolean);
+}
+
 export function loadProductsFromExcel() {
 
   const products = productsData.map(row => {
@@ -48,6 +68,7 @@ export function loadProductsFromExcel() {
       type: row.type || '',
       name: row.product_name,
       description: row.description || '',
+      key_features: normalizeFeatureList(row.key_features),
       brand: row.brand || '',
       images,
       image,

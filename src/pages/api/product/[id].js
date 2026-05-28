@@ -69,6 +69,28 @@ function getModelCandidates() {
     : ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'];
 }
 
+function normalizeFeatureList(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map(item => String(item || '').trim())
+      .filter(Boolean)
+      .slice(0, 5);
+  }
+
+  if (typeof value !== 'string' || !value.trim()) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return normalizeFeatureList(parsed);
+  } catch (e) {}
+
+  return value
+    .split(/\r?\n|,/)
+    .map(item => item.replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '').trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
 async function generateAI(productName, category, subcategory, brand, type, isFeatured, customFeatures) {
   const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -77,8 +99,8 @@ async function generateAI(productName, category, subcategory, brand, type, isFea
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
-  const featuresInstruction = customFeatures ? `\n- Intelligently weave these exact keywords/features into the description naturally: "${customFeatures}"` : '';
-  const jsonKeys = isFeatured ? '"description", "meta_title", "meta_description", "slogan"' : '"description", "meta_title", "meta_description"';
+  const featuresInstruction = customFeatures ? `\n- Use these exact keywords/features where relevant, especially in the feature bullets: "${customFeatures}"` : '';
+  const jsonKeys = isFeatured ? '"description", "features", "meta_title", "meta_description", "slogan"' : '"description", "features", "meta_title", "meta_description"';
 
   const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
 - the exact product name and brand,
@@ -86,6 +108,7 @@ async function generateAI(productName, category, subcategory, brand, type, isFea
 - the ideal use‑case or space where it shines,
 - a subtle invitation to the buyer.${featuresInstruction}
 Also create:
+0. 4 to 5 catchy feature bullets in a JSON array named "features". Each bullet must be short, benefit-led, and easy to notice at a glance.
 1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
 2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.${featuredInstruction}
 
@@ -118,6 +141,7 @@ Type: ${type || 'standard'}
   // Return empty on failure so we don't accidentally overwrite existing valid text with generic fallback
   return {
     description: "",
+    features: [],
     meta_title: "",
     meta_description: "",
     slogan: ""
@@ -204,6 +228,9 @@ export async function PUT({ params, request }) {
 
     // Check if AI needs regeneration
     let newDescription = updateData.description || currentProduct.description;
+    let newKeyFeatures = updateData.key_features !== undefined
+      ? normalizeFeatureList(updateData.key_features)
+      : normalizeFeatureList(currentProduct.key_features);
     let newMetaTitle = updateData.meta_title || currentProduct.meta_title;
     let newMetaDesc = updateData.meta_description || currentProduct.meta_description;
 
@@ -222,6 +249,7 @@ export async function PUT({ params, request }) {
       );
       
       if (ai.description) newDescription = ai.description;
+      if (ai.features) newKeyFeatures = normalizeFeatureList(ai.features);
       if (ai.meta_title) newMetaTitle = ai.meta_title;
       if (ai.meta_description) newMetaDesc = ai.meta_description;
       if (isFeatured && ai.slogan) newSlogan = ai.slogan;
@@ -238,6 +266,7 @@ export async function PUT({ params, request }) {
       type: updateData.type || currentProduct.type || '',
       product_name: updateData.product_name || currentProduct.product_name,
       description: newDescription,
+      key_features: JSON.stringify(newKeyFeatures),
       brand: updateData.brand || currentProduct.brand,
       images: updateData.images || currentProduct.images || '',
       video_url: updateData.video_url !== undefined ? updateData.video_url : (currentProduct.video_url || ''),

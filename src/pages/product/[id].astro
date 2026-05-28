@@ -114,6 +114,7 @@ const relatedProducts = allProducts
   .sort((a, b) => b.score - a.score)
   .slice(0, 8)
   .map(item => item.product);
+const keyFeatures = Array.isArray(product.key_features) ? product.key_features : [];
 
 const productSchema = {
   '@context': 'https://schema.org',
@@ -317,6 +318,16 @@ const breadcrumbs = [
         <div class="product-detail-description">
           <h3>Description</h3>
           <p>{product.description}</p>
+          {keyFeatures.length > 0 && (
+            <div class="product-feature-highlights" aria-label="Product highlights">
+              <h4>Why it stands out</h4>
+              <ul>
+                {keyFeatures.map((feature) => (
+                  <li>{feature}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <div class="product-meta">
           <a href={getFilterUrl(product.category)} class="product-meta-tag" data-astro-prefetch="hover">
@@ -943,6 +954,55 @@ const breadcrumbs = [
   .product-detail-description p {
     color: var(--text-secondary);
     line-height: 1.6;
+  }
+  .product-feature-highlights {
+    margin-top: 1rem;
+  }
+  .product-feature-highlights h4 {
+    margin: 0 0 0.75rem;
+    font-size: 0.92rem;
+    color: var(--accent-gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+  .product-feature-highlights ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .product-feature-highlights li {
+    position: relative;
+    min-height: 52px;
+    padding: 0.78rem 0.85rem 0.78rem 2.25rem;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(197, 160, 40, 0.16), rgba(255, 255, 255, 0.035));
+    border: 1px solid rgba(197, 160, 40, 0.2);
+    color: var(--text-primary);
+    font-size: 0.92rem;
+    font-weight: 650;
+    line-height: 1.35;
+    box-shadow:
+      inset 5px 5px 12px rgba(7, 10, 17, 0.22),
+      0 8px 20px rgba(0, 0, 0, 0.14);
+  }
+  .product-feature-highlights li::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 0.95rem;
+    width: 0.64rem;
+    height: 0.64rem;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    box-shadow: 0 0 14px rgba(197, 160, 40, 0.5);
+  }
+  @media (max-width: 560px) {
+    .product-feature-highlights ul {
+      grid-template-columns: 1fr;
+    }
   }
   .product-meta {
     display: flex;

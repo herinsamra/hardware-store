@@ -69,9 +69,15 @@ function getModelCandidates() {
 }
 
 function normalizeFeatureList(value) {
+  const cleanFeatureLabel = item => String(item || '')
+    .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
+    .split(':')[0]
+    .trim()
+    .replace(/[.]+$/, '');
+
   if (Array.isArray(value)) {
     return value
-      .map(item => String(item || '').trim())
+      .map(cleanFeatureLabel)
       .filter(Boolean)
       .slice(0, 5);
   }
@@ -85,7 +91,7 @@ function normalizeFeatureList(value) {
 
   return value
     .split(/\r?\n|,/)
-    .map(item => item.replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '').trim())
+    .map(cleanFeatureLabel)
     .filter(Boolean)
     .slice(0, 5);
 }
@@ -108,7 +114,7 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
 - A subtle invitation to the buyer${featuresInstruction}
 
 Also create:
-0. 4 to 5 catchy feature bullets in a JSON array named "features". Each bullet must be short, benefit-led, and easy to notice at a glance.
+0. 4 to 5 catchy feature labels in a JSON array named "features". Each item must be only the point/title, not an explanation. Use 2 to 5 words. Do not use colons, full sentences, or text after the point.
 1️⃣ A meta title (≤60 characters) blending brand and product name.
 2️⃣ A meta description (≤160 characters) that is SEO‑optimized.${featuredInstruction}
 

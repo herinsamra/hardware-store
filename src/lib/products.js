@@ -29,9 +29,15 @@ export function getProductUrl(product) {
 }
 
 function normalizeFeatureList(value) {
+  const cleanFeatureLabel = item => String(item || '')
+    .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
+    .split(':')[0]
+    .trim()
+    .replace(/[.]+$/, '');
+
   if (Array.isArray(value)) {
     return value
-      .map(item => String(item || '').trim())
+      .map(cleanFeatureLabel)
       .filter(Boolean);
   }
 
@@ -44,7 +50,7 @@ function normalizeFeatureList(value) {
 
   return value
     .split(/\r?\n|,/)
-    .map(item => item.replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '').trim())
+    .map(cleanFeatureLabel)
     .filter(Boolean);
 }
 

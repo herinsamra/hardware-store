@@ -201,7 +201,8 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -289,6 +290,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -311,7 +313,8 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -331,6 +334,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -354,6 +358,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -377,6 +382,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -400,6 +406,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -423,6 +430,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -446,6 +454,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -583,53 +592,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -648,7 +611,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -668,35 +632,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -716,17 +652,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -745,7 +671,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -765,44 +692,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -821,7 +711,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -840,7 +731,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -859,7 +751,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -878,7 +771,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -897,7 +791,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07017",
@@ -916,7 +811,8 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03476",
@@ -936,18 +832,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "Brown gold",
-        "price": 3149,
-        "part_no": "zz03476",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
   },
   {
     "part_no": "ZZ06337",
@@ -966,7 +851,8 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03477",
@@ -986,19 +872,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "KD WHITE",
-        "price": 3699,
-        "part_no": "zz03477",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
   },
   {
     "part_no": "ZZ06569",
@@ -1017,7 +891,8 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07096",
@@ -1036,7 +911,8 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03734",
@@ -1056,22 +932,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "100MM",
-        "price": 1755,
-        "part_no": "ZZ03733",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
   },
   {
     "part_no": "ZZ06576",
@@ -1090,7 +951,8 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03478",
@@ -1110,17 +972,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "OPAL WHITE",
-        "price": 3519,
-        "part_no": "ZZ03478",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
   },
   {
     "part_no": "ZZ06494",
@@ -1139,7 +991,8 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1158,7 +1011,8 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1177,7 +1031,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1196,7 +1051,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1215,7 +1071,8 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1234,7 +1091,8 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1253,7 +1111,8 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1272,7 +1131,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1291,7 +1151,8 @@
     "variant_name": "1 HP",
     "is_featured": "true",
     "slogan": "Silence The Pump. Amplify The Flow.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1310,7 +1171,8 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1329,7 +1191,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1348,7 +1211,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1367,7 +1231,8 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1387,6 +1252,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1409,7 +1275,8 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Flow. Power. Perfection. Reimagined.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1428,7 +1295,8 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1447,7 +1315,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "CRI Pumps: Your Flow. Perfected.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1466,7 +1335,8 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1485,7 +1355,8 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1504,7 +1375,8 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1524,26 +1396,7 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "1",
-        "price": 170,
-        "part_no": "ZZ07893",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      },
-      {
-        "variant_id": "1.50",
-        "price": 456,
-        "part_no": "ZZ07854",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]",
     "unit": "meters"
   },
   {
@@ -1564,6 +1417,7 @@
     "is_featured": "true",
     "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1587,6 +1441,7 @@
     "is_featured": "true",
     "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1610,6 +1465,7 @@
     "is_featured": "true",
     "slogan": "KSB: Unleash Power, Command Water.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1633,6 +1489,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1656,6 +1513,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1679,6 +1537,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1702,6 +1561,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1725,6 +1585,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1748,6 +1609,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1771,6 +1633,7 @@
     "is_featured": "true",
     "slogan": "Aizar: Drink Purer. Store Smarter.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1794,6 +1657,7 @@
     "is_featured": "true",
     "slogan": "Knock with Style. Choose Aceline Brass.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1817,6 +1681,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1840,6 +1705,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1863,6 +1729,7 @@
     "is_featured": "true",
     "slogan": "Yale NxT: Smart Access. Unmatched Security. Peace of Mind.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1886,6 +1753,7 @@
     "is_featured": "true",
     "slogan": "Parryware CLARET: Your Bathtub's Timeless Chrome Upgrade.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subcategory",
@@ -1910,6 +1778,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1934,6 +1803,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1958,6 +1828,7 @@
     "is_featured": "true",
     "slogan": "V-Guard Crystal: Uninterrupted Power. Uncompromised Entertainment.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1982,10 +1853,186 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
     "featured_button_text": "",
-    "key_features": "[\"[object Object]\",\"[object Object]\",\"[object Object]\",\"[object Object]\",\"[object Object]\"]"
+    "key_features": "[\"Brand: V-Guard\",\"Model: VGS 50\",\"Cabinet Material: ABS\",\"Input Range: 135-280 VAC\",\"Time Delay: 2-4 Minutes\",\"Appliance Capacity: Refrigerator up to 450 L\"]"
+  },
+  {
+    "part_no": "ZZ05907",
+    "category": "Electrical",
+    "subcategory": "General",
+    "subsubcategory": "Stabilizers",
+    "type": "",
+    "product_name": "VG 50 2 Amps Voltage Stabilizer For Refrigerator",
+    "description": "V-Guard VG 50 2 Amps Voltage Stabilizer: Protect your refrigerator (up to 300L/2 Amps). Features short circuit, overload & overvoltage protection. ABS cabinet, 3 min time delay. Ideal for your kitchen. Invest in peace of mind.",
+    "brand": "V-Guard",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780397859/268684_0_bhfokj_ba0q0y.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1780397884/268684_1_wnelyv_rtcdqf.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1780397994/copy_of_268684_15_tpdnvl_phiuyf.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1780398086/copy_of_268684_13_iuugmc_1_krl9ii.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1780398120/copy_of_268684_12_hwtw61_bizw75.webp,https://res.cloudinary.com/dthi2vgiz/image/upload/v1780398154/copy_of_268684_11_fkulvs_fpc4th.webp",
+    "mrp": "2090.02",
+    "slug": "vg-50-2-amps-voltage-stabilizer-for-refrigerator",
+    "meta_title": "V-Guard VG 50 2 Amps Voltage Stabilizer for Fridge",
+    "meta_description": "Ensure refrigerator safety with V-Guard VG 50 2 Amps Voltage Stabilizer. Protects against surges, overloads, and short circuits. 60-month warranty. Ideal for fridges up to 300L.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: V-Guard\",\"Model: VG 50\",\"Capacity: 2 Amps\",\"Protection: Short Circuit, Overload, Over Voltage\",\"Cabinet Material: ABS\"]"
+  },
+  {
+    "part_no": "ZZ04821",
+    "category": "Electrical",
+    "subcategory": "General",
+    "subsubcategory": "Stabilizers",
+    "type": "",
+    "product_name": "Mini Crystal stabilizer For LED TV Up To 32\"",
+    "description": "Safeguard your entertainment with the V-Guard Mini Crystal Stabilizer for LED TV Up To 32\". This essential stabilizer offers superior line noise & spike protection, generator compatibility, and high voltage cutoff, ensuring uninterrupted viewing. Featuring primary switching technology, wide input range performance, built-in thermal overload protection, and output voltage correction without break, it's designed for peak performance. A mains turn-on delay further shields your TV. Don't compromise on TV longevity; explore ultimate protection today.",
+    "brand": "V-Guard",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780398776/51RNP0HiCWL._SL1200__aitvww.avif",
+    "mrp": "2090",
+    "slug": "mini-crystal-stabilizer-for-led-tv-up-to-32",
+    "meta_title": "V-Guard Mini Crystal Stabilizer for LED TV Up To 32\"",
+    "meta_description": "Protect your LED TV (up to 32\") with the V-Guard Mini Crystal Stabilizer. Ensure stable power, guarding against spikes, line noise, and high voltage. Generator compatible for uninterrupted viewing.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: V-Guard\",\"Model: Mini Crystal\",\"Application: LED TV up to 32 in\",\"Protection: Line Noise and Spike\",\"Technology: Primary Switching\",\"Safety: Thermal Overload Protection\"]"
+  },
+  {
+    "part_no": "ZZ06736",
+    "category": "Electrical",
+    "subcategory": "General",
+    "subsubcategory": "Stabilizers",
+    "type": "",
+    "product_name": "VAPC 03 PRESSURE CONTROLLER Wired Sensor Security System",
+    "description": "Optimize your home's water supply with the V-Guard VAPC 03 PRESSURE CONTROLLER Wired Sensor Security System. This smart stabilizer kit precisely monitors pressure and flow, automatically controlling your pump (0.5hp - 1hp / up to 1.1KW) based on tap usage. Its compact 20x16x14 cm blue and grey design seamlessly integrates, ensuring stable and efficient water delivery. Discover enhanced water management for your household.",
+    "brand": "V-Guard",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780399076/31M5jlh7HxL_fl0eod.png",
+    "mrp": "3299.99",
+    "slug": "vapc-03-pressure-controller-wired-sensor-security-system",
+    "meta_title": "V-Guard VAPC 03 Pressure Controller",
+    "meta_description": "V-Guard VAPC 03 Pressure Controller & Stabilizer for home pumps (0.5-1hp / 1.1KW). Monitors pressure, controls flow. Compact blue/grey design. Optimize your water system.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: V-Guard\",\"Model: VAPC 03\",\"Product Type: Pressure Controller\",\"Sensor Type: Wired\",\"Pump Support: 0.5 HP to 1 HP\",\"Dimensions: 20 x 16 x 14 cm\"]"
+  },
+  {
+    "part_no": "68780000210",
+    "category": "Paints",
+    "subcategory": "Putty",
+    "subsubcategory": "Water_Proof_Wall_Putty",
+    "type": "",
+    "product_name": "SmartCare Putty Boost 1L",
+    "description": "Asian Paints SmartCare Putty Boost 1L is a PCE-based integral additive for waterproof wall putty. This innovative solution significantly enhances putty workability, increases POT life, and reduces drying shrinkage by up to 50% for superior crack resistance. Boosts compressive strength for robust, lasting walls. Elevate your surface preparation with SmartCare.",
+    "brand": "Asian Paints",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403115/smartcare-putty-boost-asian-paints_nunw5k.png",
+    "mrp": "135",
+    "slug": "smartcare-putty-boost-1l",
+    "meta_title": "Asian Paints SmartCare Putty Boost 1L",
+    "meta_description": "Asian Paints SmartCare Putty Boost 1L enhances waterproof wall putty. Get 50% reduced shrinkage, increased strength & workability. Ideal for crack-resistant, durable walls.",
+    "variant_name": "1L",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Type: PCE-based Additive\",\"Form: Liquid\",\"Capacity: 1L\",\"Feature: Enhanced Workability\",\"Feature: 50% Reduced Shrinkage\"]"
+  },
+  {
+    "part_no": "56100801315",
+    "category": "Paints",
+    "subcategory": "Water_Proofing",
+    "subsubcategory": "Roof_&_Terraces",
+    "type": "",
+    "product_name": "SmartCare Damp Block 2k Prime",
+    "description": "Asian Paints SmartCare Damp Block 2k Prime offers ultimate wall waterproofing. This two-component acrylic polymer-modified cementitious coating ensures superior protection against dampness & unmatched hydrostatic pressure from both positive & negative sides. Ideal for interior/exterior walls, its off-white powder form covers 0.70-0.74 sq.m/kg (2 coats) with excellent bonding. Secure lasting wall defense for your home.",
+    "brand": "Asian Paints",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403526/ADH.WAT.105406145_1668179555071_r5lcxg.avif",
+    "mrp": "2542",
+    "slug": "smartcare-damp-block-2k-prime",
+    "meta_title": "Asian Paints SmartCare Damp Block 2k Prime - Wall Waterproofing",
+    "meta_description": "Protect your walls with Asian Paints SmartCare Damp Block 2k Prime. A high-performance two-component coating for superior wall waterproofing & damp protection. Resists hydrostatic pressure.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Product Type: Two-component coating\",\"Material: Acrylic polymer-modified cementitious\",\"Application: Positive & negative side waterproofing\",\"Coverage Area: 0.70 - 0.74 sq.m/kg (2 coats)\",\"Item Form: Powder\"]"
+  },
+  {
+    "part_no": "56320959320",
+    "category": "Paints",
+    "subcategory": "Water_Proofing",
+    "subsubcategory": "Interior_&_Exterior_Wall",
+    "type": "",
+    "product_name": "CLASSIC WHITE DAMPSHEATH INTERIOR 20 LTR",
+    "description": "Asian Paints Classic White SmartCare Damp Sheath Interior 20 Ltr is the premier waterproofing primer for your walls. Specifically formulated for interior use, it prevents surface dampness and offers a 3-year waterproofing warranty (with recommended system). Experience up to 15% increased top coat coverage, superior whiteness, and strong adhesion for a lasting finish. Give your interiors the ultimate protection and vibrancy they deserve.",
+    "brand": "Asian Paints",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png",
+    "mrp": "5125",
+    "slug": "classic-white-dampsheath-interior-20-ltr",
+    "meta_title": "Asian Paints Classic White Damp Sheath Interior 20L",
+    "meta_description": "Protect your interior walls with Asian Paints Classic White SmartCare Damp Sheath Interior 20L. This waterproofing primer prevents dampness, offers a 3-year warranty, and boosts top coat coverage. Get superior whiteness & a lasting finish.",
+    "variant_name": "20L",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "[{\"variant_id\":\"4L\",\"price\":895,\"part_no\":\"56320959240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png\"]}]",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Type: Waterproofing Primer\",\"Capacity: 20 Ltr\",\"Warranty: 3 Year Waterproofing\",\"Application: Interior & Exterior Walls\",\"Finish: Classic White\"]"
+  },
+  {
+    "part_no": "ZZ07214",
+    "category": "Paints",
+    "subcategory": "Water_Proofing",
+    "subsubcategory": "Interior_&_Exterior_Wall",
+    "type": "",
+    "product_name": "PIDIPROOF LW+ SUPER 1 LTR",
+    "description": "Dr. Fixit PIDIPROOF LW+ SUPER 1 LTR: The ultimate integral liquid waterproofing compound for your Interior_&_Exterior_Wall needs. Protect basements, roofs, water tanks, bathrooms & balconies from leaks. Its advanced formula enhances concrete cohesion, combats corrosion & reduces shrinkage. Achieve superior durability & water repellency. Elevate your construction with Dr. Fixit.",
+    "brand": "Dr. Fixit",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780470107/AD.CE.750463_1667897803561_galjki.avif",
+    "mrp": "225.00",
+    "slug": "pidiproof-lw-super-1-ltr",
+    "meta_title": "Dr. Fixit PIDIPROOF LW+ SUPER 1 LTR Waterproofing",
+    "meta_description": "Dr. Fixit PIDIPROOF LW+ SUPER 1 LTR: Liquid waterproofing for interior/exterior walls, basements, roofs, tanks & bathrooms. Enhances durability & combats corrosion. Protect your structures effectively.",
+    "variant_name": "100ml",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Product Name: PIDIPROOF LW+ SUPER\",\"Brand: Dr. Fixit\",\"Quantity: 1 LTR\",\"Type: Liquid Waterproofing Compound\",\"pH Value: 9 to 13\"]"
   }
 ]

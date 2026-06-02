@@ -70,8 +70,21 @@ function getModelCandidates() {
 
 function normalizeFeatureList(value) {
   const explanationPattern = /\b(enjoy|ensures?|offers?|provides?|enhances?|maximi[sz]es?|perfect|superior|effortless|luxurious|peace of mind|assured|lasting|stylish|reliable|premium|easy|modern|comfortable|confidence)\b/i;
+  const stringifySpec = item => {
+    if (!item || typeof item !== 'object') return String(item || '');
+    const entries = Object.entries(item).filter(([, val]) => val !== undefined && val !== null && String(val).trim());
+    if (entries.length === 0) return '';
+    if (entries.length === 1) {
+      const [[key, val]] = entries;
+      return `${key}: ${val}`;
+    }
+    const label = item.name || item.label || item.key || item.spec || item.title;
+    const detail = item.value || item.detail || item.description || item.text;
+    if (label && detail) return `${label}: ${detail}`;
+    return entries.map(([key, val]) => `${key}: ${val}`).join(', ');
+  };
   const cleanFeatureLabel = item => {
-    const cleaned = String(item || '')
+    const cleaned = stringifySpec(item)
       .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
       .trim()
       .replace(/[.]+$/, '');
@@ -123,7 +136,7 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
 - A subtle invitation to the buyer${specificationsInstruction}
 
 Also create:
-0. 4 to 6 technical specification points in a JSON array named "specifications". Use factual product specs only. Prefer concise key-value style like "Material: Brass", "Finish: Chrome", "Mount Type: Wall Mounted", "Size: 600 mm". Do not write benefits, explanations, sales copy, or catchy phrases.
+0. 4 to 6 technical specification points in a JSON array named "specifications". This must be an array of strings, not objects. Use factual product specs only. Prefer concise key-value style like "Material: Brass", "Finish: Chrome", "Mount Type: Wall Mounted", "Size: 600 mm". Do not write benefits, explanations, sales copy, or catchy phrases.
 1️⃣ A meta title (≤60 characters) blending brand and product name.
 2️⃣ A meta description (≤160 characters) that is SEO‑optimized.${featuredInstruction}
 

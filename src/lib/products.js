@@ -30,8 +30,21 @@ export function getProductUrl(product) {
 
 function normalizeFeatureList(value) {
   const explanationPattern = /\b(enjoy|ensures?|offers?|provides?|enhances?|maximi[sz]es?|perfect|superior|effortless|luxurious|peace of mind|assured|lasting|stylish|reliable|premium|easy|modern|comfortable|confidence)\b/i;
+  const stringifySpec = item => {
+    if (!item || typeof item !== 'object') return String(item || '');
+    const entries = Object.entries(item).filter(([, val]) => val !== undefined && val !== null && String(val).trim());
+    if (entries.length === 0) return '';
+    if (entries.length === 1) {
+      const [[key, val]] = entries;
+      return `${key}: ${val}`;
+    }
+    const label = item.name || item.label || item.key || item.spec || item.title;
+    const detail = item.value || item.detail || item.description || item.text;
+    if (label && detail) return `${label}: ${detail}`;
+    return entries.map(([key, val]) => `${key}: ${val}`).join(', ');
+  };
   const cleanFeatureLabel = item => {
-    const cleaned = String(item || '')
+    const cleaned = stringifySpec(item)
       .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
       .trim()
       .replace(/[.]+$/, '');

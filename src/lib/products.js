@@ -29,11 +29,20 @@ export function getProductUrl(product) {
 }
 
 function normalizeFeatureList(value) {
-  const cleanFeatureLabel = item => String(item || '')
-    .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
-    .split(':')[0]
-    .trim()
-    .replace(/[.]+$/, '');
+  const explanationPattern = /\b(enjoy|ensures?|offers?|provides?|enhances?|maximi[sz]es?|perfect|superior|effortless|luxurious|peace of mind|assured|lasting|stylish|reliable|premium|easy|modern|comfortable|confidence)\b/i;
+  const cleanFeatureLabel = item => {
+    const cleaned = String(item || '')
+      .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
+      .trim()
+      .replace(/[.]+$/, '');
+    const colonIndex = cleaned.indexOf(':');
+    if (colonIndex === -1) return cleaned;
+
+    const name = cleaned.slice(0, colonIndex).trim();
+    const detail = cleaned.slice(colonIndex + 1).trim().replace(/[.]+$/, '');
+    if (!detail || detail.length > 48 || explanationPattern.test(detail)) return name;
+    return `${name}: ${detail}`;
+  };
 
   if (Array.isArray(value)) {
     return value

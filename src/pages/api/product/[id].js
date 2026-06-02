@@ -70,11 +70,20 @@ function getModelCandidates() {
 }
 
 function normalizeFeatureList(value) {
-  const cleanFeatureLabel = item => String(item || '')
-    .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
-    .split(':')[0]
-    .trim()
-    .replace(/[.]+$/, '');
+  const explanationPattern = /\b(enjoy|ensures?|offers?|provides?|enhances?|maximi[sz]es?|perfect|superior|effortless|luxurious|peace of mind|assured|lasting|stylish|reliable|premium|easy|modern|comfortable|confidence)\b/i;
+  const cleanFeatureLabel = item => {
+    const cleaned = String(item || '')
+      .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
+      .trim()
+      .replace(/[.]+$/, '');
+    const colonIndex = cleaned.indexOf(':');
+    if (colonIndex === -1) return cleaned;
+
+    const name = cleaned.slice(0, colonIndex).trim();
+    const detail = cleaned.slice(colonIndex + 1).trim().replace(/[.]+$/, '');
+    if (!detail || detail.length > 48 || explanationPattern.test(detail)) return name;
+    return `${name}: ${detail}`;
+  };
 
   if (Array.isArray(value)) {
     return value
@@ -105,16 +114,16 @@ async function generateAI(productName, category, subcategory, brand, type, isFea
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
-  const featuresInstruction = customFeatures ? `\n- Use these exact keywords/features where relevant, especially in the feature bullets: "${customFeatures}"` : '';
-  const jsonKeys = isFeatured ? '"description", "features", "meta_title", "meta_description", "slogan"' : '"description", "features", "meta_title", "meta_description"';
+  const specificationsInstruction = customFeatures ? `\n- Use these provided product details as technical specifications where relevant: "${customFeatures}"` : '';
+  const jsonKeys = isFeatured ? '"description", "specifications", "meta_title", "meta_description", "slogan"' : '"description", "specifications", "meta_title", "meta_description"';
 
   const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
 - the exact product name and brand,
-- its distinctive color, finish, and any unique features,
+- its technical details, finish, size, material, mounting, wattage, capacity, warranty, or other real specifications,
 - the ideal use‑case or space where it shines,
-- a subtle invitation to the buyer.${featuresInstruction}
+- a subtle invitation to the buyer.${specificationsInstruction}
 Also create:
-0. 4 to 5 catchy feature labels in a JSON array named "features". Each item must be only the point/title, not an explanation. Use 2 to 5 words. Do not use colons, full sentences, or text after the point.
+0. 4 to 6 technical specification points in a JSON array named "specifications". Use factual product specs only. Prefer concise key-value style like "Material: Brass", "Finish: Chrome", "Mount Type: Wall Mounted", "Size: 600 mm". Do not write benefits, explanations, sales copy, or catchy phrases.
 1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
 2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.${featuredInstruction}
 
@@ -147,7 +156,7 @@ Type: ${type || 'standard'}
   // Return empty on failure so we don't accidentally overwrite existing valid text with generic fallback
   return {
     description: "",
-    features: [],
+    specifications: [],
     meta_title: "",
     meta_description: "",
     slogan: ""
@@ -255,7 +264,7 @@ export async function PUT({ params, request }) {
       );
       
       if (ai.description) newDescription = ai.description;
-      if (ai.features) newKeyFeatures = normalizeFeatureList(ai.features);
+      if (ai.specifications || ai.features) newKeyFeatures = normalizeFeatureList(ai.specifications || ai.features);
       if (ai.meta_title) newMetaTitle = ai.meta_title;
       if (ai.meta_description) newMetaDesc = ai.meta_description;
       if (isFeatured && ai.slogan) newSlogan = ai.slogan;

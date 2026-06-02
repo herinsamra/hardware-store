@@ -69,11 +69,20 @@ function getModelCandidates() {
 }
 
 function normalizeFeatureList(value) {
-  const cleanFeatureLabel = item => String(item || '')
-    .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
-    .split(':')[0]
-    .trim()
-    .replace(/[.]+$/, '');
+  const explanationPattern = /\b(enjoy|ensures?|offers?|provides?|enhances?|maximi[sz]es?|perfect|superior|effortless|luxurious|peace of mind|assured|lasting|stylish|reliable|premium|easy|modern|comfortable|confidence)\b/i;
+  const cleanFeatureLabel = item => {
+    const cleaned = String(item || '')
+      .replace(/^\s*(?:[-*\u2022]|\d+[.)])\s*/, '')
+      .trim()
+      .replace(/[.]+$/, '');
+    const colonIndex = cleaned.indexOf(':');
+    if (colonIndex === -1) return cleaned;
+
+    const name = cleaned.slice(0, colonIndex).trim();
+    const detail = cleaned.slice(colonIndex + 1).trim().replace(/[.]+$/, '');
+    if (!detail || detail.length > 48 || explanationPattern.test(detail)) return name;
+    return `${name}: ${detail}`;
+  };
 
   if (Array.isArray(value)) {
     return value
@@ -104,17 +113,17 @@ async function generateAI(productName, subsubcategory, brand, type, isFeatured, 
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const featuredInstruction = isFeatured ? '\n3️⃣ A short, extremely catchy, innovative, and compelling ad slogan (max 8 words) to be used in an eye-catching featured product banner.' : '';
-  const featuresInstruction = customFeatures ? `\n- Use these exact keywords/features where relevant, especially in the feature bullets: "${customFeatures}"` : '';
-  const jsonKeys = isFeatured ? '"description", "features", "meta_title", "meta_description", "slogan"' : '"description", "features", "meta_title", "meta_description"';
+  const specificationsInstruction = customFeatures ? `\n- Use these provided product details as technical specifications where relevant: "${customFeatures}"` : '';
+  const jsonKeys = isFeatured ? '"description", "specifications", "meta_title", "meta_description", "slogan"' : '"description", "specifications", "meta_title", "meta_description"';
 
   const prompt = `You are a premium hardware copywriter. Write a concise, SEO‑friendly product description (max 620 characters) that focuses on the sub‑sub‑category (${subsubcategory}) and highlights:
 - Exact product name and brand
-- Distinctive features and finish
+- Technical details, finish, size, material, mounting, wattage, capacity, warranty, or other real specifications
 - Ideal use‑case or setting
-- A subtle invitation to the buyer${featuresInstruction}
+- A subtle invitation to the buyer${specificationsInstruction}
 
 Also create:
-0. 4 to 5 catchy feature labels in a JSON array named "features". Each item must be only the point/title, not an explanation. Use 2 to 5 words. Do not use colons, full sentences, or text after the point.
+0. 4 to 6 technical specification points in a JSON array named "specifications". Use factual product specs only. Prefer concise key-value style like "Material: Brass", "Finish: Chrome", "Mount Type: Wall Mounted", "Size: 600 mm". Do not write benefits, explanations, sales copy, or catchy phrases.
 1️⃣ A meta title (≤60 characters) blending brand and product name.
 2️⃣ A meta description (≤160 characters) that is SEO‑optimized.${featuredInstruction}
 
@@ -146,14 +155,14 @@ Type: ${type || 'standard'}
   }
 
   console.error('AI Generation Error (All fallback models failed):', lastError);
-  // Return default values if AI fails, but incorporate custom features if provided
+  // Return default values if AI fails, but incorporate custom specifications if provided.
   return {
-    description: `Premium ${productName} by ${brand}, a top‑quality ${subsubcategory} offering sleek design and reliable performance. ${customFeatures ? 'Key features include: ' + customFeatures + '.' : ''}`.trim(),
+    description: `Premium ${productName} by ${brand}, a top-quality ${subsubcategory} for practical use. ${customFeatures ? 'Technical specifications: ' + customFeatures + '.' : ''}`.trim(),
     meta_title: `${brand} ${productName} – Premium ${subsubcategory}`,
     meta_description: `${productName} by ${brand}: SEO‑friendly, high‑performance ${subsubcategory} for modern installations.`,
-    features: normalizeFeatureList(customFeatures).length
+    specifications: normalizeFeatureList(customFeatures).length
       ? normalizeFeatureList(customFeatures)
-      : ['Reliable daily performance', 'Clean premium finish', 'Built for practical spaces', 'Easy upgrade choice'],
+      : ['Brand: ' + brand, 'Category: ' + subsubcategory, 'Type: ' + (type || 'Standard')],
     slogan: isFeatured ? `Experience the best ${productName} today!` : ''
   };
 }
@@ -239,7 +248,7 @@ export async function POST({ request }) {
       type: productInput.type || '',
       product_name: productInput.product_name,
       description: ai.description,
-      key_features: JSON.stringify(normalizeFeatureList(ai.features)),
+      key_features: JSON.stringify(normalizeFeatureList(ai.specifications || ai.features)),
       brand: productInput.brand,
       images: productInput.images || '',
       video_url: productInput.video_url || '',

@@ -138,9 +138,9 @@ const productDataStr = JSON.stringify(product || {});
               </div>
 
               <div class="form-group">
-                <label for="key_features">Highlighted Features</label>
-                <textarea id="key_features" name="key_features" rows="5" placeholder="One catchy feature per line">{product.key_features?.map(feature => `- ${feature}`).join('\n') || ''}</textarea>
-                <small>These show as highlighted bullet points on the product page.</small>
+                <label for="key_features">Technical Specifications</label>
+                <textarea id="key_features" name="key_features" rows="5" placeholder="One technical specification per line">{product.key_features?.map(feature => `- ${feature}`).join('\n') || ''}</textarea>
+                <small>These show as technical specification points on the product page.</small>
               </div>
 
               <div class="form-group">

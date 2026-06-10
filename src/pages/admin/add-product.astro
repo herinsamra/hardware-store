@@ -22,9 +22,10 @@ import AdminLayout from '../../components/AdminLayout.astro';
             <div class="input-group">
               <label for="part_no">Part Number <span class="required">*</span></label>
               <div class="input-wrapper">
-                <input type="text" id="part_no" required placeholder="e.g., ZZ00926" autocomplete="off">
+                <input type="text" id="part_no" required placeholder="e.g., ZZ00926" autocomplete="off" aria-describedby="part_no_status">
                 <div class="focus-border"></div>
               </div>
+              <p class="field-status" id="part_no_status" aria-live="polite"></p>
             </div>
 
             <div class="input-group">
@@ -416,6 +417,98 @@ import AdminLayout from '../../components/AdminLayout.astro';
       const form = document.getElementById('productForm');
       const messageDiv = document.getElementById('message');
       const submitBtn = document.getElementById('submitBtn');
+      const partNoInput = document.getElementById('part_no');
+      const partNoStatus = document.getElementById('part_no_status');
+      let partNoCheckTimer = null;
+      let partNoCheckRequestId = 0;
+      let partNoDuplicateExists = false;
+      let partNoCheckPending = false;
+
+      function normalizePartNo(value) {
+        return value.trim().toUpperCase();
+      }
+
+      function setPartNoStatus(message = '', type = '') {
+        if (!partNoStatus) return;
+        partNoStatus.textContent = message;
+        partNoStatus.className = `field-status ${type}`.trim();
+      }
+
+      function updateSubmitAvailability() {
+        if (!submitBtn) return;
+        submitBtn.disabled = partNoDuplicateExists || partNoCheckPending;
+      }
+
+      function resetPartNoCheck() {
+        partNoDuplicateExists = false;
+        partNoCheckPending = false;
+        setPartNoStatus();
+        updateSubmitAvailability();
+      }
+
+      async function checkPartNoAvailability(rawPartNo) {
+        const partNo = normalizePartNo(rawPartNo);
+        const requestId = ++partNoCheckRequestId;
+
+        if (!partNo) {
+          resetPartNoCheck();
+          return;
+        }
+
+        partNoCheckPending = true;
+        partNoDuplicateExists = false;
+        setPartNoStatus('Checking part number...', 'checking');
+        updateSubmitAvailability();
+
+        try {
+          const response = await fetch(`/api/check-part-no?part_no=${encodeURIComponent(partNo)}`, {
+            cache: 'no-store',
+          });
+
+          if (requestId !== partNoCheckRequestId) return;
+
+          if (!response.ok) {
+            throw new Error('Check failed');
+          }
+
+          const result = await response.json();
+          partNoCheckPending = false;
+          partNoDuplicateExists = Boolean(result.exists);
+
+          if (partNoDuplicateExists) {
+            const existingName = result.product?.product_name ? `: ${result.product.product_name}` : '';
+            setPartNoStatus(`This part number already exists${existingName}.`, 'error');
+          } else {
+            setPartNoStatus('Part number is available.', 'success');
+          }
+        } catch (error) {
+          if (requestId !== partNoCheckRequestId) return;
+          partNoCheckPending = false;
+          partNoDuplicateExists = false;
+          setPartNoStatus('Could not check now. Submit will still validate it.', 'warning');
+        } finally {
+          if (requestId === partNoCheckRequestId) updateSubmitAvailability();
+        }
+      }
+
+      if (partNoInput) {
+        partNoInput.addEventListener('input', () => {
+          const normalized = normalizePartNo(partNoInput.value);
+          if (partNoInput.value !== normalized) {
+            partNoInput.value = normalized;
+          }
+
+          window.clearTimeout(partNoCheckTimer);
+          partNoCheckTimer = window.setTimeout(() => {
+            checkPartNoAvailability(partNoInput.value);
+          }, 350);
+        });
+
+        partNoInput.addEventListener('blur', () => {
+          window.clearTimeout(partNoCheckTimer);
+          checkPartNoAvailability(partNoInput.value);
+        });
+      }
 
       function showMessage(msg, type) {
         messageDiv.textContent = msg;
@@ -464,6 +557,18 @@ import AdminLayout from '../../components/AdminLayout.astro';
           return;
         }
 
+        if (partNoCheckPending) {
+          showMessage('Please wait for the part number check to finish.', 'error');
+          partNoInput?.focus();
+          return;
+        }
+
+        if (partNoDuplicateExists) {
+          showMessage('This part number already exists. Please use a different part number.', 'error');
+          partNoInput?.focus();
+          return;
+        }
+
         submitBtn.classList.add('loading');
 
         try {
@@ -498,6 +603,12 @@ import AdminLayout from '../../components/AdminLayout.astro';
             // Scroll to top to see message
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
+            if (response.status === 409) {
+              partNoDuplicateExists = true;
+              setPartNoStatus('This part number already exists.', 'error');
+              updateSubmitAvailability();
+              partNoInput?.focus();
+            }
             showMessage(`Error: ${result.error || 'Unknown error'}`, 'error');
           }
         } catch (err) {
@@ -597,6 +708,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
             const el = document.getElementById(id);
             if (el) el.value = '';
           });
+          resetPartNoCheck();
           
           document.getElementById('variantsContainer').innerHTML = '';
           document.getElementById('sloganPreview').style.display = 'none';
@@ -1046,6 +1158,12 @@ import AdminLayout from '../../components/AdminLayout.astro';
     transform: translateY(1px);
   }
 
+  .submit-btn:disabled {
+    opacity: 0.62;
+    cursor: not-allowed;
+    transform: none;
+  }
+
   .btn-icon {
     transition: transform 0.3s ease;
   }
@@ -1212,6 +1330,26 @@ import AdminLayout from '../../components/AdminLayout.astro';
     margin: 0 0 0 32px;
     font-size: 0.85rem;
     color: var(--text-secondary);
+  }
+
+  .field-status {
+    min-height: 1.15rem;
+    margin: 0.45rem 0 0;
+    font-size: 0.84rem;
+    line-height: 1.35;
+    color: var(--text-secondary);
+  }
+  .field-status.checking {
+    color: #93c5fd;
+  }
+  .field-status.success {
+    color: #34d399;
+  }
+  .field-status.error {
+    color: #f87171;
+  }
+  .field-status.warning {
+    color: #fbbf24;
   }
 
   .dest-option {

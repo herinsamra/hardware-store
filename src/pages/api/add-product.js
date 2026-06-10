@@ -50,6 +50,41 @@ function slugify(text) {
     .replace(/-+$/, '');
 }
 
+function normalizePartNo(value) {
+  return String(value || '').trim().toUpperCase();
+}
+
+function parseVariants(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function findPartNoMatch(rows, partNo) {
+  const normalizedPartNo = normalizePartNo(partNo);
+
+  for (const row of rows) {
+    if (normalizePartNo(row.part_no) === normalizedPartNo) {
+      return { product: row, matchedPartNo: row.part_no, matchType: 'product' };
+    }
+
+    const variant = parseVariants(row.variants)
+      .find(item => normalizePartNo(item?.part_no) === normalizedPartNo);
+
+    if (variant) {
+      return { product: row, matchedPartNo: variant.part_no, matchType: 'variant' };
+    }
+  }
+
+  return null;
+}
+
 function getModelCandidates() {
   const configuredModels =
     import.meta.env.GEMINI_MODELS ||
@@ -239,7 +274,13 @@ export async function POST({ request }) {
     }
 
     // Convert part_no to uppercase
-    productInput.part_no = productInput.part_no.toUpperCase();
+    productInput.part_no = normalizePartNo(productInput.part_no);
+    if (Array.isArray(productInput.variants)) {
+      productInput.variants = productInput.variants.map(variant => ({
+        ...variant,
+        part_no: normalizePartNo(variant.part_no || productInput.part_no)
+      }));
+    }
 
     // Generate AI content
     const ai = await generateAI(
@@ -297,10 +338,21 @@ export async function POST({ request }) {
       sheetName = 'Products';
     }
 
-    // Check if part_no already exists
-    const exists = existingData.some(row => row.part_no === newProduct.part_no);
-    if (exists) {
-      return jsonResponse({ error: 'Product with this part_no already exists' }, { status: 409 });
+    // Check if part_no already exists on a product or variant
+    const existingMatch = findPartNoMatch(existingData, newProduct.part_no);
+    if (existingMatch) {
+      return jsonResponse({
+        error: `Product with this part_no already exists: ${existingMatch.product?.product_name || normalizePartNo(existingMatch.matchedPartNo)}`
+      }, { status: 409 });
+    }
+
+    const duplicateVariant = parseVariants(newProduct.variants)
+      .find(variant => normalizePartNo(variant.part_no) !== newProduct.part_no && findPartNoMatch(existingData, variant.part_no));
+    if (duplicateVariant) {
+      const match = findPartNoMatch(existingData, duplicateVariant.part_no);
+      return jsonResponse({
+        error: `Variant part_no already exists: ${normalizePartNo(duplicateVariant.part_no)} in ${match?.product?.product_name || 'another product'}`
+      }, { status: 409 });
     }
 
     existingData.push(newProduct);

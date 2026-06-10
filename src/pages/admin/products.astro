@@ -25,6 +25,26 @@ const filteredProducts = allProducts.filter(product => {
   if (subsub && product.subsubcategory !== subsub) return false;
   return true;
 });
+
+function getProductSearchText(product) {
+  const variantSearch = Array.isArray(product.variants)
+    ? product.variants
+        .map(variant => [
+          variant?.part_no,
+          variant?.variant_id,
+          variant?.sku,
+        ].filter(Boolean).join(' '))
+        .join(' ')
+    : '';
+
+  return [
+    product.product_name || product.name,
+    product.brand,
+    product.part_no,
+    product.sku,
+    variantSearch,
+  ].filter(Boolean).join(' ').toLowerCase();
+}
 ---
 
 <AdminLayout title="Products Management | Peniel Admin">
@@ -42,7 +62,7 @@ const filteredProducts = allProducts.filter(product => {
     <div class="toolbar" style="display: flex; gap: 1.5rem; align-items: center;">
       <div class="search-box">
         <span class="search-icon">🔍</span>
-        <input type="text" id="productSearch" placeholder="Search by name, brand, or part number..." />
+        <input type="text" id="productSearch" placeholder="Search by name, brand, main or variant part number..." />
       </div>
       <label class="checkbox-label" for="featuredFilter" style="margin: 0; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
         <input type="checkbox" id="featuredFilter" />
@@ -65,7 +85,7 @@ const filteredProducts = allProducts.filter(product => {
         </thead>
         <tbody id="tableBody">
           {filteredProducts.map(product => (
-            <tr class="product-row" data-search={`${product.product_name || product.name} ${product.brand} ${product.part_no}`.toLowerCase()} data-featured={product.is_featured === 'true' || product.is_featured === true ? 'true' : 'false'}>
+            <tr class="product-row" data-search={getProductSearchText(product)} data-featured={product.is_featured === 'true' || product.is_featured === true ? 'true' : 'false'}>
               <td class="img-cell">
                 {product.image ? (
                   <img src={product.image} alt={product.name} loading="lazy" />

@@ -76,6 +76,17 @@ function normalizeFeatureList(value) {
     .filter(Boolean);
 }
 
+export function parseSubsubcategories(value) {
+  if (Array.isArray(value)) {
+    return value.map(item => String(item || '').trim()).filter(Boolean);
+  }
+
+  return String(value || '')
+    .split(',')
+    .map(item => item.trim())
+    .filter(Boolean);
+}
+
 export function loadProductsFromExcel() {
 
   const products = productsData.map(row => {
@@ -84,6 +95,7 @@ export function loadProductsFromExcel() {
     const images = row.images ? row.images.split(',').map(img => img.trim()) : [];
     const image = images[0] || '';
     const routeParam = getProductRouteParam({ id, slug, name: row.product_name });
+    const subsubcategories = parseSubsubcategories(row.subsubcategory);
 
     return {
       // Use part_no as unique ID (fallback to sku if part_no missing)
@@ -92,7 +104,8 @@ export function loadProductsFromExcel() {
       sku: row.sku || '',
       category: row.category,
       subcategory: row.subcategory,
-      subsubcategory: row.subsubcategory,
+      subsubcategory: subsubcategories[0] || '',
+      subsubcategories,
       type: row.type || '',
       name: row.product_name,
       description: row.description || '',

@@ -102,9 +102,9 @@ const productDataStr = JSON.stringify(product || {});
 
               <div class="form-group">
                 <label for="subsubcategory">Sub-subcategory</label>
-                <select id="subsubcategory" name="subsubcategory" disabled>
-                  <option value="">-- Select Sub-subcategory --</option>
-                </select>
+                <div id="subsubcategory" class="checkbox-group-container" style="padding: 0.5rem; background: var(--input-bg); border-radius: 8px; border: 1px solid var(--glass-border); min-height: 48px; max-height: 200px; overflow-y: auto;">
+                  <span class="placeholder-text" style="color: var(--text-muted); opacity: 0.7;">-- Select Sub-subcategory --</span>
+                </div>
               </div>
 
               <div class="form-group">
@@ -264,9 +264,13 @@ const productDataStr = JSON.stringify(product || {});
         selectElement.disabled = disable;
       }
 
+      function resetCheckboxGroup(container, placeholder) {
+        container.innerHTML = `<span class="placeholder-text" style="color: var(--text-muted); opacity: 0.7; padding: 0.5rem; display: block;">${placeholder}</span>`;
+      }
+
       resetSelect(catSelect, 'Loading Categories...', true);
       resetSelect(subcatSelect, '-- Select Subcategory --', true);
-      resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+      resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
       resetSelect(brandSelect, 'Loading Brands...', true);
       const unitSelect = document.getElementById('unit');
       if (unitSelect) resetSelect(unitSelect, 'Loading Units...', true);
@@ -341,7 +345,7 @@ const productDataStr = JSON.stringify(product || {});
         const selectedCat = catSelect.value;
         const subcats = categories[selectedCat] || {};
         resetSelect(subcatSelect, '-- Select Subcategory --', !selectedCat);
-        resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+        resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
 
         if (!selectedCat) return;
 
@@ -357,16 +361,39 @@ const productDataStr = JSON.stringify(product || {});
         const selectedCat = catSelect.value;
         const selectedSub = subcatSelect.value;
         const subsubs = categories[selectedCat]?.[selectedSub] || {};
-        resetSelect(subsubSelect, '-- Select Sub-subcategory --', !selectedSub);
+        resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
 
-        if (!selectedSub) return;
+        if (!selectedSub || Object.keys(subsubs).length === 0) return;
 
+        subsubSelect.innerHTML = '';
         Object.keys(subsubs).forEach(subsub => {
-          const opt = document.createElement('option');
-          opt.value = subsub;
-          opt.textContent = subsub.replace(/_/g, ' ');
-          subsubSelect.appendChild(opt);
+          const label = document.createElement('label');
+          label.className = 'checkbox-label';
+          label.style.display = 'flex';
+          label.style.alignItems = 'center';
+          label.style.padding = '0.5rem';
+          label.style.cursor = 'pointer';
+          label.style.borderBottom = '1px solid var(--glass-border)';
+
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.value = subsub;
+          input.className = 'subsub-checkbox';
+
+          const customCb = document.createElement('div');
+          customCb.className = 'custom-checkbox';
+
+          const textSpan = document.createElement('span');
+          textSpan.textContent = subsub.replace(/_/g, ' ');
+
+          label.appendChild(input);
+          label.appendChild(customCb);
+          label.appendChild(textSpan);
+          subsubSelect.appendChild(label);
         });
+        if (subsubSelect.lastChild) {
+           subsubSelect.lastChild.style.borderBottom = 'none';
+        }
       });
 
       // Pre-fill form values
@@ -380,8 +407,21 @@ const productDataStr = JSON.stringify(product || {});
           subcatSelect.value = product.subcategory;
           subcatSelect.dispatchEvent(new Event('change'));
 
-          if (product.subsubcategory && categories[product.category][product.subcategory][product.subsubcategory]) {
-            subsubSelect.value = product.subsubcategory;
+          if (product.subsubcategories && product.subsubcategories.length > 0) {
+            const checkboxes = subsubSelect.querySelectorAll('.subsub-checkbox');
+            checkboxes.forEach(cb => {
+              if (product.subsubcategories.includes(cb.value)) {
+                cb.checked = true;
+              }
+            });
+          } else if (product.subsubcategory) {
+            const checkboxes = subsubSelect.querySelectorAll('.subsub-checkbox');
+            const preSubSubs = product.subsubcategory.split(',').map(s => s.trim());
+            checkboxes.forEach(cb => {
+              if (preSubSubs.includes(cb.value)) {
+                cb.checked = true;
+              }
+            });
           }
         }
       }
@@ -421,6 +461,9 @@ const productDataStr = JSON.stringify(product || {});
         const data = Object.fromEntries(formData.entries());
         const originalPartNo = data.original_part_no;
         data.variants = getVariantsData();
+        
+        const subsubCheckboxes = Array.from(document.querySelectorAll('.subsub-checkbox:checked')).map(cb => cb.value);
+        data.subsubcategory = subsubCheckboxes.join(', ');
         
         // Transform images string to array if needed or let API handle it
         try {
@@ -953,6 +996,63 @@ const productDataStr = JSON.stringify(product || {});
       right: 0.5rem;
       margin-top: 0;
     }
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+  }
+
+  .checkbox-label input {
+    width: auto;
+    display: none;
+  }
+
+  .checkbox-group-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(197, 160, 40, 0.5); /* Accent gold subtle */
+  }
+
+  .custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--accent-gold);
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .checkbox-label input:checked + .custom-checkbox {
+    background: var(--accent-gold);
+  }
+
+  .checkbox-label input:checked + .custom-checkbox::after {
+    content: "✓";
+    position: absolute;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .dest-option {

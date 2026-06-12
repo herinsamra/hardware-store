@@ -15,7 +15,7 @@ function getCount(cat, sub, subsub) {
   return allProducts.filter(p => {
     if (cat && p.category !== cat) return false;
     if (sub && p.subcategory !== sub) return false;
-    if (subsub && p.subsubcategory !== subsub) return false;
+    if (subsub && !(p.subsubcategories || []).includes(subsub)) return false;
     return true;
   }).length;
 }

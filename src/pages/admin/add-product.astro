@@ -127,7 +127,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
             <div class="input-group">
               <label for="subsubcategory">Sub‑subcategory <span class="required">*</span></label>
               <div class="input-wrapper">
-                <select id="subsubcategory" required disabled></select>
+                <div id="subsubcategory" class="checkbox-group-container" style="padding: 0.5rem; background: var(--input-bg); border-radius: 8px; border: 1px solid var(--glass-border); min-height: 48px; max-height: 200px; overflow-y: auto;">
+                  <span class="placeholder-text" style="color: var(--text-secondary); opacity: 0.7;">-- Select Sub-subcategory --</span>
+                </div>
                 <div class="focus-border"></div>
               </div>
             </div>
@@ -292,10 +294,14 @@ import AdminLayout from '../../components/AdminLayout.astro';
         select.disabled = disabled;
       }
 
+      function resetCheckboxGroup(container, placeholder) {
+        container.innerHTML = `<span class="placeholder-text" style="color: var(--text-secondary); opacity: 0.7; padding: 0.5rem; display: block;">${placeholder}</span>`;
+      }
+
       // Populate placeholders initially
       resetSelect(catSelect, 'Loading Categories...', true);
       resetSelect(subcatSelect, '-- Select Subcategory --', true);
-      resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+      resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
       resetSelect(brandSelect, 'Loading Brands...', true);
       const unitSelect = document.getElementById('unit');
       if (unitSelect) resetSelect(unitSelect, 'Loading Units...', true);
@@ -364,7 +370,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
         const selectedCat = catSelect.value;
         const subcats = categories[selectedCat] || {};
         resetSelect(subcatSelect, '-- Select Subcategory --', !selectedCat);
-        resetSelect(subsubSelect, '-- Select Sub-subcategory --', true);
+        resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
 
         if (!selectedCat) return;
 
@@ -381,16 +387,41 @@ import AdminLayout from '../../components/AdminLayout.astro';
         const selectedCat = catSelect.value;
         const selectedSub = subcatSelect.value;
         const subsubs = categories[selectedCat]?.[selectedSub] || {};
-        resetSelect(subsubSelect, '-- Select Sub-subcategory --', !selectedSub);
+        
+        if (!selectedSub || Object.keys(subsubs).length === 0) {
+          resetCheckboxGroup(subsubSelect, '-- Select Sub-subcategory --');
+          return;
+        }
 
-        if (!selectedSub) return;
-
+        subsubSelect.innerHTML = '';
         Object.keys(subsubs).forEach(subsub => {
-          const opt = document.createElement('option');
-          opt.value = subsub;
-          opt.textContent = subsub.replace(/_/g, ' ');
-          subsubSelect.appendChild(opt);
+          const label = document.createElement('label');
+          label.className = 'checkbox-label';
+          label.style.display = 'flex';
+          label.style.alignItems = 'center';
+          label.style.padding = '0.5rem';
+          label.style.cursor = 'pointer';
+          label.style.borderBottom = '1px solid var(--glass-border)';
+
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.value = subsub;
+          input.className = 'subsub-checkbox';
+
+          const customCb = document.createElement('div');
+          customCb.className = 'custom-checkbox';
+
+          const textSpan = document.createElement('span');
+          textSpan.textContent = subsub.replace(/_/g, ' ');
+
+          label.appendChild(input);
+          label.appendChild(customCb);
+          label.appendChild(textSpan);
+          subsubSelect.appendChild(label);
         });
+        if (subsubSelect.lastChild) {
+           subsubSelect.lastChild.style.borderBottom = 'none';
+        }
       });
 
       // Populate from URL Parameters
@@ -407,8 +438,14 @@ import AdminLayout from '../../components/AdminLayout.astro';
           subcatSelect.value = preSub;
           subcatSelect.dispatchEvent(new Event('change'));
 
-          if (preSubSub && categories[preCat][preSub][preSubSub]) {
-            subsubSelect.value = preSubSub;
+          if (preSubSub) {
+            const preSubSubs = preSubSub.split(',').map(s => s.trim());
+            const checkboxes = subsubSelect.querySelectorAll('.subsub-checkbox');
+            checkboxes.forEach(cb => {
+              if (preSubSubs.includes(cb.value)) {
+                cb.checked = true;
+              }
+            });
           }
         }
       }
@@ -531,11 +568,14 @@ import AdminLayout from '../../components/AdminLayout.astro';
         e.preventDefault();
         messageDiv.style.display = 'none';
 
+        const subsubCheckboxes = Array.from(document.querySelectorAll('.subsub-checkbox:checked')).map(cb => cb.value);
+        const subsubValue = subsubCheckboxes.join(', ');
+
         const payload = {
           part_no: document.getElementById('part_no').value,
           category: document.getElementById('category').value,
           subcategory: document.getElementById('subcategory').value,
-          subsubcategory: document.getElementById('subsubcategory').value,
+          subsubcategory: subsubValue,
           type: document.getElementById('type').value,
           product_name: document.getElementById('product_name').value,
           brand: document.getElementById('brand').value,
@@ -1291,6 +1331,24 @@ import AdminLayout from '../../components/AdminLayout.astro';
   .checkbox-label input {
     width: auto;
     display: none;
+  }
+
+  .checkbox-group-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+  }
+  
+  .checkbox-group-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(197, 160, 40, 0.5); /* Accent gold subtle */
   }
 
   .custom-checkbox {

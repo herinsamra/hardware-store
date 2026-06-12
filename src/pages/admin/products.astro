@@ -22,7 +22,7 @@ const addProductUrl = addProductParams.toString()
 const filteredProducts = allProducts.filter(product => {
   if (category && product.category !== category) return false;
   if (subcategory && product.subcategory !== subcategory) return false;
-  if (subsub && product.subsubcategory !== subsub) return false;
+  if (subsub && !(product.subsubcategories || []).includes(subsub)) return false;
   return true;
 });
 

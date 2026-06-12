@@ -226,7 +226,7 @@ const breadcrumbs = [
     const rawFilteredProducts = allProducts.filter(product => {
       if (filters.category && product.category !== filters.category) return false;
       if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
-      if (filters.subsub && product.subsubcategory !== filters.subsub) return false;
+      if (filters.subsub && !(product.subsubcategories || []).includes(filters.subsub)) return false;
       if (filters.brand && product.brand !== filters.brand) return false;
       return true;
     });

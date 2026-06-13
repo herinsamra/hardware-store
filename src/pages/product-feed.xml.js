@@ -54,6 +54,8 @@ ${additionalImageTags ? additionalImageTags + '\n' : ''}          <g:availabilit
           <g:store_code>${escapeXml(storeCode)}</g:store_code>
           <g:quantity>${quantity}</g:quantity>
           <g:price>${price}</g:price>
+          <g:excluded_destination>Shopping_ads</g:excluded_destination>
+          <g:excluded_destination>Free_listings</g:excluded_destination>
           <g:condition>new</g:condition>
           <g:shipping>
             <g:country>IN</g:country>

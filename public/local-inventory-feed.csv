@@ -1,4 +1,4 @@
-id,store_code,availability,quantity,price
+itemid,store code,availability,quantity,price
 10C-231,01311594006648815184,in_stock,10,712.00 INR
 12C-WS101,01311594006648815184,in_stock,10,2079.00 INR
 12C 245,01311594006648815184,in_stock,10,1484.00 INR

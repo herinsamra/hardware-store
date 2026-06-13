@@ -26,7 +26,7 @@ function csvCell(value = '') {
 try {
   const products = await fetchAllProducts();
   const { storeCode, availability, quantity } = getLocalInventoryDefaults();
-  const rows = [['id', 'store_code', 'availability', 'quantity', 'price']];
+  const rows = [['itemid', 'store code', 'availability', 'quantity', 'price']];
 
   for (const product of products) {
     const id = getMerchantId(product);

@@ -2534,5 +2534,30 @@
     "featured_link_type": "product",
     "featured_button_text": "",
     "key_features": "[\"Brand: Pupa\",\"Product Name: EUROPEAN MARVEL KS 1022 18X16X8\",\"Material\",\"Finish: Satin Brushed\",\"Dimensions: 18\\\"L x 16\\\"W x 8\\\"D\"]"
+  },
+  {
+    "part_no": "ZZ04619",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "9W led bulb adore plus",
+    "description": "Illuminate your space with the Havells 9W LED Bulb Adore Plus. This standard type LED bulb offers brilliant, energy-efficient lighting, perfect for homes, offices, or any general lighting application. Featuring a durable polycarbonate body and opal finish, it ensures uniform light distribution. Enjoy long-lasting performance and a 2-year warranty. Upgrade to superior illumination today.",
+    "brand": "Havells",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791784385/71fYnykDpNL._SL1500-Photoroom_desoxy.png",
+    "mrp": "150",
+    "slug": "9w-led-bulb-adore-plus",
+    "meta_title": "Havells 9W LED Bulb Adore Plus | Energy Efficient Lighting",
+    "meta_description": "Discover the Havells 9W LED Bulb Adore Plus for energy-efficient, long-lasting illumination. Perfect for homes & offices. Upgrade your lighting with Havells quality. Shop now!",
+    "variant_name": "white",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "pieces",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 9W\",\"Bulb Type: Standard LED\",\"Body Material: Polycarbonate\",\"Finish: Opal White\",\"Warranty: 2 Years\"]"
   }
 ]

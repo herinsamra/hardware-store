@@ -201,8 +201,7 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ02632",
@@ -290,7 +289,6 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -313,8 +311,7 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04231",
@@ -334,7 +331,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -358,7 +354,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -382,7 +377,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -406,7 +400,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -430,7 +423,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -454,7 +446,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -592,7 +583,53 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "10A",
+        "price": 254,
+        "part_no": "ZZ06314",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
+        ]
+      },
+      {
+        "variant_id": "16A",
+        "price": 254,
+        "part_no": "ZZ01100",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
+        ]
+      },
+      {
+        "variant_id": "20A",
+        "price": 254,
+        "part_no": "ZZ01432",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
+        ]
+      },
+      {
+        "variant_id": "25A",
+        "price": 254,
+        "part_no": "ZZ01628",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
+        ]
+      },
+      {
+        "variant_id": "32A",
+        "price": 390,
+        "part_no": "ZZ01843",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ07660",
@@ -611,8 +648,7 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06306",
@@ -632,7 +668,35 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "16A",
+        "price": 1280,
+        "part_no": "ZZ01091",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
+        ]
+      },
+      {
+        "variant_id": "40A",
+        "price": 2014,
+        "part_no": "ZZ02190",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
+        ]
+      },
+      {
+        "variant_id": "63A",
+        "price": 2014,
+        "part_no": "ZZ02430",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ02198",
@@ -652,7 +716,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "63A",
+        "price": 3150,
+        "part_no": "ZZ02440",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ02431",
@@ -671,8 +745,7 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08228",
@@ -692,7 +765,44 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "16A",
+        "price": 856,
+        "part_no": "ZZ08229",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
+        ]
+      },
+      {
+        "variant_id": "20A",
+        "price": 877,
+        "part_no": "ZZ08230",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
+        ]
+      },
+      {
+        "variant_id": "25A",
+        "price": 877,
+        "part_no": "ZZ08231",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
+        ]
+      },
+      {
+        "variant_id": "32A",
+        "price": 877,
+        "part_no": "ZZ08135",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ01340",
@@ -711,8 +821,7 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07571",
@@ -731,8 +840,7 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07457",
@@ -751,8 +859,7 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04283",
@@ -771,8 +878,7 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04287",
@@ -791,8 +897,7 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07017",
@@ -811,8 +916,7 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03476",
@@ -832,7 +936,18 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "Brown gold",
+        "price": 3149,
+        "part_no": "zz03476",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06337",
@@ -851,8 +966,7 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03477",
@@ -872,7 +986,19 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "KD WHITE",
+        "price": 3699,
+        "part_no": "zz03477",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06569",
@@ -891,8 +1017,7 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07096",
@@ -911,8 +1036,7 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03734",
@@ -932,7 +1056,22 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
+    "variants": [
+      {
+        "variant_id": "100MM",
+        "price": 1755,
+        "part_no": "ZZ03733",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06576",
@@ -951,8 +1090,7 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03478",
@@ -972,7 +1110,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
+    "variants": [
+      {
+        "variant_id": "OPAL WHITE",
+        "price": 3519,
+        "part_no": "ZZ03478",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
+        ]
+      }
+    ]
   },
   {
     "part_no": "ZZ06494",
@@ -991,8 +1139,7 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1011,8 +1158,7 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1031,8 +1177,7 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1051,8 +1196,7 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1071,8 +1215,7 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1091,8 +1234,7 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1111,8 +1253,7 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1131,8 +1272,7 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1151,8 +1291,7 @@
     "variant_name": "1 HP",
     "is_featured": "true",
     "slogan": "Silence The Pump. Amplify The Flow.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1171,8 +1310,7 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1191,8 +1329,7 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1211,8 +1348,7 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1231,8 +1367,7 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1252,7 +1387,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1275,8 +1409,7 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Flow. Power. Perfection. Reimagined.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1295,8 +1428,7 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1315,8 +1447,7 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "CRI Pumps: Your Flow. Perfected.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1335,8 +1466,7 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1355,8 +1485,7 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1375,8 +1504,7 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": "",
-    "variants": ""
+    "video_url": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1396,7 +1524,26 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "1",
+        "price": 170,
+        "part_no": "ZZ07893",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
+        ]
+      },
+      {
+        "variant_id": "1.50",
+        "price": 456,
+        "part_no": "ZZ07854",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
+        ]
+      }
+    ],
     "unit": "meters"
   },
   {
@@ -1417,7 +1564,6 @@
     "is_featured": "true",
     "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1441,7 +1587,6 @@
     "is_featured": "true",
     "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1465,7 +1610,6 @@
     "is_featured": "true",
     "slogan": "KSB: Unleash Power, Command Water.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1489,7 +1633,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1513,7 +1656,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1537,7 +1679,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1561,7 +1702,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1585,7 +1725,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1609,7 +1748,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1633,7 +1771,6 @@
     "is_featured": "true",
     "slogan": "Aizar: Drink Purer. Store Smarter.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1657,7 +1794,6 @@
     "is_featured": "true",
     "slogan": "Knock with Style. Choose Aceline Brass.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1681,7 +1817,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1705,7 +1840,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1729,7 +1863,6 @@
     "is_featured": "true",
     "slogan": "Yale NxT: Smart Access. Unmatched Security. Peace of Mind.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1753,7 +1886,6 @@
     "is_featured": "true",
     "slogan": "Parryware CLARET: Your Bathtub's Timeless Chrome Upgrade.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subcategory",
@@ -1778,7 +1910,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1803,7 +1934,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1828,7 +1958,6 @@
     "is_featured": "true",
     "slogan": "V-Guard Crystal: Uninterrupted Power. Uncompromised Entertainment.",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1853,7 +1982,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1878,7 +2006,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1903,7 +2030,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1928,7 +2054,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1953,7 +2078,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1978,7 +2102,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"3kg\",\"price\":593,\"part_no\":\"56100801231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403526/ADH.WAT.105406145_1668179555071_r5lcxg.avif\"]}]",
+    "variants": [
+      {
+        "variant_id": "3kg",
+        "price": 593,
+        "part_no": "56100801231",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403526/ADH.WAT.105406145_1668179555071_r5lcxg.avif"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2003,7 +2137,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"4L\",\"price\":895,\"part_no\":\"56320959240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "4L",
+        "price": 895,
+        "part_no": "56320959240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2028,7 +2172,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"5L\",\"price\":1000,\"part_no\":\"ZZ07214\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780472338/ADH.WAT.34408374_1710934539797_wrazfz.avif\"]}]",
+    "variants": [
+      {
+        "variant_id": "5L",
+        "price": 1000,
+        "part_no": "ZZ07214",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780472338/ADH.WAT.34408374_1710934539797_wrazfz.avif"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2053,7 +2207,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2078,7 +2231,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"4L\",\"price\":2450,\"part_no\":\"1B720000240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781069865/Smartcare-Hydfroloc-Xtreme_fko9aq.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "4L",
+        "price": 2450,
+        "part_no": "1B720000240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781069865/Smartcare-Hydfroloc-Xtreme_fko9aq.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2103,7 +2266,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"4L\",\"price\":1875,\"part_no\":\"10480427240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "4L",
+        "price": 1875,
+        "part_no": "10480427240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2128,7 +2301,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2153,7 +2325,35 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"1L\",\"price\":354,\"part_no\":\"56260908210\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]},{\"variant_id\":\"20L\",\"price\":5485,\"part_no\":\"56260908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]},{\"variant_id\":\"4L\",\"price\":1196,\"part_no\":\"56260908240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]}]",
+    "variants": [
+      {
+        "variant_id": "1L",
+        "price": 354,
+        "part_no": "56260908210",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
+        ]
+      },
+      {
+        "variant_id": "20L",
+        "price": 5485,
+        "part_no": "56260908320",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
+        ]
+      },
+      {
+        "variant_id": "4L",
+        "price": 1196,
+        "part_no": "56260908240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2178,7 +2378,26 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"200ML\",\"price\":95,\"part_no\":\"56770908120\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png\"]},{\"variant_id\":\"500ML\",\"price\":175,\"part_no\":\"56770908150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "200ML",
+        "price": 95,
+        "part_no": "56770908120",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png"
+        ]
+      },
+      {
+        "variant_id": "500ML",
+        "price": 175,
+        "part_no": "56770908150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2203,7 +2422,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"900gm\",\"price\":411,\"part_no\":\"10500929212\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781074021/51R-2xOcUzL._SY445_-Photoroom_1_nfce2y.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "900gm",
+        "price": 411,
+        "part_no": "10500929212",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781074021/51R-2xOcUzL._SY445_-Photoroom_1_nfce2y.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2228,7 +2457,35 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"4L\",\"price\":1692,\"part_no\":\"10480908240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]},{\"variant_id\":\"10L\",\"price\":3525,\"part_no\":\"10480908310\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]},{\"variant_id\":\"20L\",\"price\":7840,\"part_no\":\"10480908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "4L",
+        "price": 1692,
+        "part_no": "10480908240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
+        ]
+      },
+      {
+        "variant_id": "10L",
+        "price": 3525,
+        "part_no": "10480908310",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
+        ]
+      },
+      {
+        "variant_id": "20L",
+        "price": 7840,
+        "part_no": "10480908320",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2253,7 +2510,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"20L\",\"price\":10237,\"part_no\":\"56980908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781075292/Damp-Proof-Ultra-Updated_j4lqxr.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "20L",
+        "price": 10237,
+        "part_no": "56980908320",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781075292/Damp-Proof-Ultra-Updated_j4lqxr.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2278,7 +2545,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":325,\"part_no\":\"56580801150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 325,
+        "part_no": "56580801150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2303,7 +2580,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":265,\"part_no\":\"56580W06150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 265,
+        "part_no": "56580W06150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2328,7 +2615,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":197,\"part_no\":\"56580403150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 197,
+        "part_no": "56580403150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2353,7 +2650,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":295,\"part_no\":\"56580912150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 295,
+        "part_no": "56580912150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2378,7 +2685,26 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"4L\",\"price\":1475,\"part_no\":\"56580413240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]},{\"variant_id\":\"500ML\",\"price\":215,\"part_no\":\"56580413150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "4L",
+        "price": 1475,
+        "part_no": "56580413240",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      },
+      {
+        "variant_id": "500ML",
+        "price": 215,
+        "part_no": "56580413150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2403,7 +2729,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":175,\"part_no\":\"56580119150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 175,
+        "part_no": "56580119150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2428,7 +2764,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":255,\"part_no\":\"56580121150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 255,
+        "part_no": "56580121150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2453,7 +2799,17 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "[{\"variant_id\":\"500ML\",\"price\":235,\"part_no\":\"56580616150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
+    "variants": [
+      {
+        "variant_id": "500ML",
+        "price": 235,
+        "part_no": "56580616150",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
+        ]
+      }
+    ],
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2478,7 +2834,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2503,7 +2858,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2528,7 +2882,6 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2553,11 +2906,146 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": "",
     "unit": "pieces",
     "featured_link": "",
     "featured_link_type": "product",
     "featured_button_text": "",
     "key_features": "[\"Wattage: 9W\",\"Bulb Type: Standard LED\",\"Body Material: Polycarbonate\",\"Finish: Opal White\",\"Warranty: 2 Years\"]"
+  },
+  {
+    "part_no": "ZZO5001",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "12W leb bulb comfy vizon",
+    "description": "Illuminate your space with the Havells 12W LED BULB ADORE COMFY VIZON. Delivering a bright 1080 LM at 6500K, this energy-efficient LED bulb provides crisp, daylight-like illumination perfect for homes, offices, and commercial settings. Experience long-lasting performance and superior clarity. Upgrade your lighting today and discover the difference.",
+    "brand": "Havells",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791786059/images_1_-Photoroom_lkeg4m.png",
+    "mrp": "280",
+    "slug": "12w-leb-bulb-comfy-vizon",
+    "meta_title": "Havells 12W LED BULB ADORE COMFY VIZON | Bright 6500K",
+    "meta_description": "Discover Havells 12W LED BULB ADORE COMFY VIZON. Get bright 1080 LM, 6500K daylight-like illumination. Energy-efficient LED for home & office. Shop now for superior lighting solutions.",
+    "variant_name": "white",
+    "is_featured": "true",
+    "slogan": "Havells Vizon: Your World, Clearly Lit.",
+    "video_url": "",
+    "unit": "pieces",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Product Name: Havells 12W LED BULB ADORE COMFY VIZON\",\"Type: LED Bulb\",\"Wattage: 12W\",\"Luminous Flux: 1080 LM\",\"Color Temperature: 6500K\"]"
+  },
+  {
+    "part_no": "ZZ04617",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "23W LED BULB ADORE",
+    "description": "Illuminate your spaces with the Havells 23W LED BULB ADORE. This B22 bulb delivers a powerful 2415 lumens of crisp 6500K cool daylight, perfect for bright general illumination in homes, offices, or commercial settings. Its energy-efficient design ensures long-lasting performance. Upgrade your lighting for superior clarity and efficiency. Explore the difference!",
+    "brand": "Havells",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791786399/711-_NHzHQL._AC_UF894_1000_QL80_-Photoroom_yzfu6w.png",
+    "mrp": "500",
+    "slug": "23w-led-bulb-adore",
+    "meta_title": "Havells ADORE 23W B22 LED Bulb | 6500K Cool White",
+    "meta_description": "Discover the Havells ADORE 23W B22 LED Bulb. Get 2415 lumens of crisp 6500K cool daylight for energy-efficient, brilliant illumination in any space. Shop LED bulbs.",
+    "variant_name": "white",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Havells\",\"Product Name: ADORE LED Bulb\",\"Wattage: 23W\",\"Base Type: B22\",\"Luminous Flux: 2415 LM\"]"
+  },
+  {
+    "part_no": "ZZ08008",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "30W LED ADORE JUMBO bulb",
+    "description": "Illuminate large spaces brilliantly with the Havells 30W LED ADORE JUMBO bulb. This standard LED bulb delivers a powerful 3150 lm of Cool Day Light at 6500K. Experience energy-efficient, high-performance illumination. Model: LHLDDDBNK5R30. Upgrade your lighting today!",
+    "brand": "Havells",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png,https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg",
+    "mrp": "750",
+    "slug": "30w-led-adore-jumbo-bulb",
+    "meta_title": "Havells 30W LED ADORE JUMBO Bulb - Cool Day Light 6500K",
+    "meta_description": "Discover the Havells 30W LED ADORE JUMBO bulb. Get powerful 3150 lm Cool Day Light at 6500K for large spaces. Energy-efficient, long-lasting LED illumination. Shop now!",
+    "variant_name": "white",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": [
+      {
+        "variant_id": "40W",
+        "price": 1000,
+        "part_no": "ZZ08006",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787264/61-aIz1o01L._SL1200_-Photoroom_xnfp25.png"
+        ]
+      },
+      {
+        "variant_id": "50W",
+        "price": 1350,
+        "part_no": "ZZ08007",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png"
+        ]
+      },
+      {
+        "variant_id": "60W",
+        "price": 1499,
+        "part_no": "ZZ08009",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg"
+        ]
+      },
+      {
+        "variant_id": "70W",
+        "price": 1699,
+        "part_no": "ZZ08010",
+        "sku": "",
+        "images": [
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png",
+          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg"
+        ]
+      }
+    ],
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Havells\",\"Product Type: LED Bulb\",\"Wattage: 30W\",\"Luminous Flux: 3150 lm\",\"Color Temperature: 6500K\"]"
+  },
+  {
+    "part_no": "ZZ01469",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "50W LED BATTEN LEDVANCE",
+    "description": "Illuminate your space with the LEDVANCE OSRAM 50W LED Batten. This white aluminum batten delivers a brilliant 5000 Lm at 6500K, ideal for workshops, garages, or retail areas. Experience powerful, energy-efficient LED lighting. Discover superior brightness for your needs.",
+    "key_features": "[\"Brand: LEDVANCE OSRAM\",\"Wattage: 50W\",\"Lumen Output: 5000 Lm\",\"Color Temperature: 6500K\",\"Material: Aluminum\"]",
+    "brand": "OSRAM",
+    "images": "https://res.cloudinary.com/k7wxgxbp/image/upload/v1791791575/osram-ledvance-50w-led-batten-Photoroom.png",
+    "video_url": "",
+    "variant_name": "",
+    "mrp": "1400.00",
+    "slug": "50w-led-batten-ledvance",
+    "unit": "",
+    "meta_title": "LEDVANCE OSRAM 50W LED Batten Light - 6500K",
+    "meta_description": "Upgrade to the LEDVANCE OSRAM 50W LED Batten for powerful, energy-efficient lighting. Enjoy 5000 lumens of crisp 6500K light. Perfect for workshops & commercial spaces.",
+    "is_featured": "false",
+    "slogan": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": ""
   }
 ]

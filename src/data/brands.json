@@ -218,5 +218,10 @@
     "name": "Yale",
     "category": "Hardwares",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1779966790/Yale_Logo_Primary_RGB_hfs4im.png"
+  },
+  {
+    "name": "OSRAM",
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/k7wxgxbp/image/upload/v1791791311/Osram-Logo-1979.png"
   }
 ]

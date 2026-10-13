@@ -201,7 +201,8 @@
     "variant_name": "GRAPHITE GREY",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02632",
@@ -289,6 +290,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1777448175/InShot_20260429_130209480_nojv2d.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -311,7 +313,8 @@
     "variant_name": "450mm",
     "is_featured": "true",
     "slogan": "Experience the best Turbo Force AC Pedestal Fan today!",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04231",
@@ -331,6 +334,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -354,6 +358,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -377,6 +382,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -400,6 +406,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -423,6 +430,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -446,6 +454,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -583,53 +592,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "10A",
-        "price": 254,
-        "part_no": "ZZ06314",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png"
-        ]
-      },
-      {
-        "variant_id": "16A",
-        "price": 254,
-        "part_no": "ZZ01100",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 254,
-        "part_no": "ZZ01432",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 254,
-        "part_no": "ZZ01628",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 390,
-        "part_no": "ZZ01843",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"10A\",\"price\":254,\"part_no\":\"ZZ06314\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893036/whatsapp-image-2024-09-13-at-5-06-07-pm-2-500x500-Photoroom_cr501x.png\"]},{\"variant_id\":\"16A\",\"price\":254,\"part_no\":\"ZZ01100\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777892974/b16-500x500-Photoroom_w3qrrd.png\"]},{\"variant_id\":\"20A\",\"price\":254,\"part_no\":\"ZZ01432\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893143/legrand-rx3-20a-single-pole-mcb-Photoroom_kmj6kv.png\"]},{\"variant_id\":\"25A\",\"price\":254,\"part_no\":\"ZZ01628\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777893226/rx3-sp-25-a-500x500-Photoroom_rljjpj.png\"]},{\"variant_id\":\"32A\",\"price\":390,\"part_no\":\"ZZ01843\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777896665/legrand-rx3-single-pole-32-a-b-curve-mcb-1-Photoroom_jwm89g.png\"]}]"
   },
   {
     "part_no": "ZZ07660",
@@ -648,7 +611,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06306",
@@ -668,35 +632,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 1280,
-        "part_no": "ZZ01091",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png"
-        ]
-      },
-      {
-        "variant_id": "40A",
-        "price": 2014,
-        "part_no": "ZZ02190",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png"
-        ]
-      },
-      {
-        "variant_id": "63A",
-        "price": 2014,
-        "part_no": "ZZ02430",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":1280,\"part_no\":\"ZZ01091\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899122/419873-LEGRAND-1000-Photoroom_jblq2f.png\"]},{\"variant_id\":\"40A\",\"price\":2014,\"part_no\":\"ZZ02190\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899332/LG-419877-WEB-R-Photoroom_mpmkol.png\"]},{\"variant_id\":\"63A\",\"price\":2014,\"part_no\":\"ZZ02430\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777899503/61g--sguK_L._SY445_-Photoroom_apykfu.png\"]}]"
   },
   {
     "part_no": "ZZ02198",
@@ -716,17 +652,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "63A",
-        "price": 3150,
-        "part_no": "ZZ02440",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"63A\",\"price\":3150,\"part_no\":\"ZZ02440\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777901871/71HowsGQeLL-Photoroom_zzsefg.png\"]}]"
   },
   {
     "part_no": "ZZ02431",
@@ -745,7 +671,8 @@
     "variant_name": "63A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08228",
@@ -765,44 +692,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "16A",
-        "price": 856,
-        "part_no": "ZZ08229",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png"
-        ]
-      },
-      {
-        "variant_id": "20A",
-        "price": 877,
-        "part_no": "ZZ08230",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png"
-        ]
-      },
-      {
-        "variant_id": "25A",
-        "price": 877,
-        "part_no": "ZZ08231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png"
-        ]
-      },
-      {
-        "variant_id": "32A",
-        "price": 877,
-        "part_no": "ZZ08135",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"16A\",\"price\":856,\"part_no\":\"ZZ08229\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904260/WhatsApp_Image_2026-05-04_at_7.33.11_PM-Photoroom_lenex2.png\"]},{\"variant_id\":\"20A\",\"price\":877,\"part_no\":\"ZZ08230\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904633/WhatsApp_Image_2026-05-04_at_7.42.25_PM_1_-Photoroom_khojlo.png\"]},{\"variant_id\":\"25A\",\"price\":877,\"part_no\":\"ZZ08231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777905206/WhatsApp_Image_2026-05-04_at_7.38.09_PM_1_-Photoroom_h5be1f.png\"]},{\"variant_id\":\"32A\",\"price\":877,\"part_no\":\"ZZ08135\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1777904289/WhatsApp_Image_2026-05-04_at_7.35.43_PM-Photoroom_dndhkn.png\"]}]"
   },
   {
     "part_no": "ZZ01340",
@@ -821,7 +711,8 @@
     "variant_name": "20A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07571",
@@ -840,7 +731,8 @@
     "variant_name": "40A",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07457",
@@ -859,7 +751,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04283",
@@ -878,7 +771,8 @@
     "variant_name": "CHOCO BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04287",
@@ -897,7 +791,8 @@
     "variant_name": "WHITE",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07017",
@@ -916,7 +811,8 @@
     "variant_name": "White 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03476",
@@ -936,18 +832,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "Brown gold",
-        "price": 3149,
-        "part_no": "zz03476",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"Brown gold\",\"price\":3149,\"part_no\":\"zz03476\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069941/HighFloWavePLusTableFan400mm_chocobrown__5thangle_u0uure.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778069953/wavepluspl4_1_dwif3g.webp\"]}]"
   },
   {
     "part_no": "ZZ06337",
@@ -966,7 +851,8 @@
     "variant_name": "Blue Grey",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03477",
@@ -986,19 +872,7 @@
     "is_featured": "true",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "KD WHITE",
-        "price": 3699,
-        "part_no": "zz03477",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"KD WHITE\",\"price\":3699,\"part_no\":\"zz03477\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071468/HighFloWavePLusWallFan400mm_KDWhite__1stangle_2_kfkjv3.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL1-_1_1_fi2cbu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778071466/Wave-Plus-White-PL3-_1_1_sbozqb.webp\"]}]"
   },
   {
     "part_no": "ZZ06569",
@@ -1017,7 +891,8 @@
     "variant_name": "Matt Black 450mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07096",
@@ -1036,7 +911,8 @@
     "variant_name": "Black 400mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03734",
@@ -1056,22 +932,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "100MM",
-        "price": 1755,
-        "part_no": "ZZ03733",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"100MM\",\"price\":1755,\"part_no\":\"ZZ03733\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151379/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9ag6k4snfs-Photoroom_kobwdm.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151344/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9asznar57h-Picsart-BackgroundRemover_hrzt3l.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151180/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aanxmyykf_rgg0n2.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9avwzurezd_vwila6.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9aq9g3dydx_x4b3fu.webp\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151179/smart-air-basic-22-1-induction-exhaust-fan-150-orient-electric-original-imahjb9afbd7mukf_jstxtp.webp\"]}]"
   },
   {
     "part_no": "ZZ06576",
@@ -1090,7 +951,8 @@
     "variant_name": "225MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03478",
@@ -1110,17 +972,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "OPAL WHITE",
-        "price": 3519,
-        "part_no": "ZZ03478",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png"
-        ]
-      }
-    ]
+    "variants": "[{\"variant_id\":\"OPAL WHITE\",\"price\":3519,\"part_no\":\"ZZ03478\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778153981/21M2HK9MdxL-Picsart-BackgroundRemover_rtkwsz.png\"]}]"
   },
   {
     "part_no": "ZZ06494",
@@ -1139,7 +991,8 @@
     "variant_name": "CHERRY RED 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08204",
@@ -1158,7 +1011,8 @@
     "variant_name": "Brown 600mm",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03479",
@@ -1177,7 +1031,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ02876",
@@ -1196,7 +1051,8 @@
     "variant_name": "BROWN 900MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07170",
@@ -1215,7 +1071,8 @@
     "variant_name": "BROWN 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ08250",
@@ -1234,7 +1091,8 @@
     "variant_name": "1200MM BROWN",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ04256",
@@ -1253,7 +1111,8 @@
     "variant_name": "BRONZE COPPER 600MM",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06673",
@@ -1272,7 +1131,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "KSB PERIBOOST: Your Water, Elevated. Effortlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07173",
@@ -1291,7 +1151,8 @@
     "variant_name": "1 HP",
     "is_featured": "true",
     "slogan": "Silence The Pump. Amplify The Flow.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07473",
@@ -1310,7 +1171,8 @@
     "variant_name": "1.0Hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07482",
@@ -1329,7 +1191,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07459",
@@ -1348,7 +1211,8 @@
     "variant_name": "0.5hp",
     "is_featured": "false",
     "slogan": "Lakshmi Monoblock: Power Your Flow, Flawlessly.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07461",
@@ -1367,7 +1231,8 @@
     "variant_name": "1.0hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07460",
@@ -1387,6 +1252,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1409,7 +1275,8 @@
     "variant_name": "0.5hp",
     "is_featured": "true",
     "slogan": "Flow. Power. Perfection. Reimagined.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ06586",
@@ -1428,7 +1295,8 @@
     "variant_name": "1hp",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ03647",
@@ -1447,7 +1315,8 @@
     "variant_name": "0.5HP",
     "is_featured": "true",
     "slogan": "CRI Pumps: Your Flow. Perfected.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07451",
@@ -1466,7 +1335,8 @@
     "variant_name": "White 1000L",
     "is_featured": "true",
     "slogan": "Supreme Sintex Hero: Water Security, Built to Last.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ00290",
@@ -1485,7 +1355,8 @@
     "variant_name": "1000L",
     "is_featured": "false",
     "slogan": "",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ07863",
@@ -1504,7 +1375,8 @@
     "variant_name": "1000L white",
     "is_featured": "true",
     "slogan": "Sintex Pure Plus: The Healthiest Tank. Guaranteed Purity.",
-    "video_url": ""
+    "video_url": "",
+    "variants": ""
   },
   {
     "part_no": "ZZ01644",
@@ -1524,26 +1396,7 @@
     "is_featured": "true",
     "slogan": "Prince Thermax Pipes, Only at Peniel!",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "1",
-        "price": 170,
-        "part_no": "ZZ07893",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      },
-      {
-        "variant_id": "1.50",
-        "price": 456,
-        "part_no": "ZZ07854",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"1\",\"price\":170,\"part_no\":\"ZZ07893\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]},{\"variant_id\":\"1.50\",\"price\":456,\"part_no\":\"ZZ07854\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1778769865/green-prince-greenfit-ppr-pipe-Photoroom_vzwyoz.png\"]}]",
     "unit": "meters"
   },
   {
@@ -1564,6 +1417,7 @@
     "is_featured": "true",
     "slogan": "Pupa: Your Infrastructure's Indestructible Shield.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778847578/InShot_20260515_174847503_acmut7.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1587,6 +1441,7 @@
     "is_featured": "true",
     "slogan": "Prince: Unyielding Connections. Unmatched Greenfit Performance.",
     "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1778852725/PPR_pipe_fitting_ppr_pprpipes_pprpipefitting_pprfittings_pvgwg6.mp4",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1610,6 +1465,7 @@
     "is_featured": "true",
     "slogan": "KSB: Unleash Power, Command Water.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1633,6 +1489,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1656,6 +1513,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1679,6 +1537,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1702,6 +1561,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1725,6 +1585,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1748,6 +1609,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1771,6 +1633,7 @@
     "is_featured": "true",
     "slogan": "Aizar: Drink Purer. Store Smarter.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1794,6 +1657,7 @@
     "is_featured": "true",
     "slogan": "Knock with Style. Choose Aceline Brass.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1817,6 +1681,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1840,6 +1705,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1863,6 +1729,7 @@
     "is_featured": "true",
     "slogan": "Yale NxT: Smart Access. Unmatched Security. Peace of Mind.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1886,6 +1753,7 @@
     "is_featured": "true",
     "slogan": "Parryware CLARET: Your Bathtub's Timeless Chrome Upgrade.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subcategory",
@@ -1910,6 +1778,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1934,6 +1803,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -1958,6 +1828,7 @@
     "is_featured": "true",
     "slogan": "V-Guard Crystal: Uninterrupted Power. Uncompromised Entertainment.",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "subsubcategory",
@@ -1982,6 +1853,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2006,6 +1878,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2030,6 +1903,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2054,6 +1928,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2078,6 +1953,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2102,17 +1978,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "3kg",
-        "price": 593,
-        "part_no": "56100801231",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403526/ADH.WAT.105406145_1668179555071_r5lcxg.avif"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"3kg\",\"price\":593,\"part_no\":\"56100801231\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780403526/ADH.WAT.105406145_1668179555071_r5lcxg.avif\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2137,17 +2003,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "4L",
-        "price": 895,
-        "part_no": "56320959240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"4L\",\"price\":895,\"part_no\":\"56320959240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780460939/SC-damp-sheath-interior-new_svq66t.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2172,17 +2028,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "5L",
-        "price": 1000,
-        "part_no": "ZZ07214",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1780472338/ADH.WAT.34408374_1710934539797_wrazfz.avif"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"5L\",\"price\":1000,\"part_no\":\"ZZ07214\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1780472338/ADH.WAT.34408374_1710934539797_wrazfz.avif\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2207,6 +2053,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2231,17 +2078,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "4L",
-        "price": 2450,
-        "part_no": "1B720000240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781069865/Smartcare-Hydfroloc-Xtreme_fko9aq.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"4L\",\"price\":2450,\"part_no\":\"1B720000240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781069865/Smartcare-Hydfroloc-Xtreme_fko9aq.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2266,17 +2103,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "4L",
-        "price": 1875,
-        "part_no": "10480427240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"4L\",\"price\":1875,\"part_no\":\"10480427240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2301,6 +2128,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2325,35 +2153,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "1L",
-        "price": 354,
-        "part_no": "56260908210",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
-        ]
-      },
-      {
-        "variant_id": "20L",
-        "price": 5485,
-        "part_no": "56260908320",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
-        ]
-      },
-      {
-        "variant_id": "4L",
-        "price": 1196,
-        "part_no": "56260908240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"1L\",\"price\":354,\"part_no\":\"56260908210\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]},{\"variant_id\":\"20L\",\"price\":5485,\"part_no\":\"56260908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]},{\"variant_id\":\"4L\",\"price\":1196,\"part_no\":\"56260908240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781071190/sc-Dampsheath-exterior-new_rqja63.avif\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2378,26 +2178,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "200ML",
-        "price": 95,
-        "part_no": "56770908120",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png"
-        ]
-      },
-      {
-        "variant_id": "500ML",
-        "price": 175,
-        "part_no": "56770908150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"200ML\",\"price\":95,\"part_no\":\"56770908120\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png\"]},{\"variant_id\":\"500ML\",\"price\":175,\"part_no\":\"56770908150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781073217/31RvpzETDKL-Photoroom_vqkztn.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2422,17 +2203,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "900gm",
-        "price": 411,
-        "part_no": "10500929212",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781074021/51R-2xOcUzL._SY445_-Photoroom_1_nfce2y.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"900gm\",\"price\":411,\"part_no\":\"10500929212\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781074021/51R-2xOcUzL._SY445_-Photoroom_1_nfce2y.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2457,35 +2228,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "4L",
-        "price": 1692,
-        "part_no": "10480908240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
-        ]
-      },
-      {
-        "variant_id": "10L",
-        "price": 3525,
-        "part_no": "10480908310",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
-        ]
-      },
-      {
-        "variant_id": "20L",
-        "price": 7840,
-        "part_no": "10480908320",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"4L\",\"price\":1692,\"part_no\":\"10480908240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]},{\"variant_id\":\"10L\",\"price\":3525,\"part_no\":\"10480908310\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]},{\"variant_id\":\"20L\",\"price\":7840,\"part_no\":\"10480908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781070203/new-2_bptfhf.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2510,17 +2253,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "20L",
-        "price": 10237,
-        "part_no": "56980908320",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781075292/Damp-Proof-Ultra-Updated_j4lqxr.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"20L\",\"price\":10237,\"part_no\":\"56980908320\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781075292/Damp-Proof-Ultra-Updated_j4lqxr.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2545,17 +2278,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 325,
-        "part_no": "56580801150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":325,\"part_no\":\"56580801150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2580,17 +2303,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 265,
-        "part_no": "56580W06150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":265,\"part_no\":\"56580W06150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2615,17 +2328,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 197,
-        "part_no": "56580403150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":197,\"part_no\":\"56580403150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2650,17 +2353,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 295,
-        "part_no": "56580912150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":295,\"part_no\":\"56580912150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2685,26 +2378,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "4L",
-        "price": 1475,
-        "part_no": "56580413240",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      },
-      {
-        "variant_id": "500ML",
-        "price": 215,
-        "part_no": "56580413150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"4L\",\"price\":1475,\"part_no\":\"56580413240\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]},{\"variant_id\":\"500ML\",\"price\":215,\"part_no\":\"56580413150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2729,17 +2403,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 175,
-        "part_no": "56580119150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":175,\"part_no\":\"56580119150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2764,17 +2428,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 255,
-        "part_no": "56580121150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":255,\"part_no\":\"56580121150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2799,17 +2453,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "500ML",
-        "price": 235,
-        "part_no": "56580616150",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"500ML\",\"price\":235,\"part_no\":\"56580616150\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1781244403/images-Photoroom_horzpj.png\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2826,7 +2470,7 @@
     "description": "Elevate your bathroom with the Pupa ANGLE COCK FUSO BAVLE. Crafted from High Grade Brass with a durable 2-coating chrome finish, this rust-proof angle valve (9L x 5W cm) ensures leak-proof sealing and lasting hygiene. Its sleek, no-sharp-edge design and superior corrosion resistance make it ideal for humid bathroom environments. Enjoy an economical, easy wall-mounted solution for years to come. Experience Pupa's quality today.",
     "brand": "Pupa",
     "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1781249812/61KMDdETvnL-Photoroom_fakz8o.png",
-    "mrp": "490.00",
+    "mrp": "560",
     "slug": "angle-cock-fuso-bavle-pupa",
     "meta_title": "Pupa ANGLE COCK FUSO BAVLE | Premium Bathroom Faucet",
     "meta_description": "Upgrade your bathroom with the Pupa ANGLE COCK FUSO BAVLE. High Grade Brass, 2-coating chrome finish, corrosion & rust-proof. Ensures leak-free durability. Easy install.",
@@ -2834,6 +2478,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2858,6 +2503,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2882,6 +2528,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2906,6 +2553,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "pieces",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2930,6 +2578,7 @@
     "is_featured": "true",
     "slogan": "Havells Vizon: Your World, Clearly Lit.",
     "video_url": "",
+    "variants": "",
     "unit": "pieces",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2954,6 +2603,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
+    "variants": "",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -2978,46 +2628,7 @@
     "is_featured": "false",
     "slogan": "",
     "video_url": "",
-    "variants": [
-      {
-        "variant_id": "40W",
-        "price": 1000,
-        "part_no": "ZZ08006",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787264/61-aIz1o01L._SL1200_-Photoroom_xnfp25.png"
-        ]
-      },
-      {
-        "variant_id": "50W",
-        "price": 1350,
-        "part_no": "ZZ08007",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png"
-        ]
-      },
-      {
-        "variant_id": "60W",
-        "price": 1499,
-        "part_no": "ZZ08009",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg"
-        ]
-      },
-      {
-        "variant_id": "70W",
-        "price": 1699,
-        "part_no": "ZZ08010",
-        "sku": "",
-        "images": [
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png",
-          "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg"
-        ]
-      }
-    ],
+    "variants": "[{\"variant_id\":\"40W\",\"price\":1000,\"part_no\":\"ZZ08006\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787264/61-aIz1o01L._SL1200_-Photoroom_xnfp25.png\"]},{\"variant_id\":\"50W\",\"price\":1350,\"part_no\":\"ZZ08007\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png\"]},{\"variant_id\":\"60W\",\"price\":1499,\"part_no\":\"ZZ08009\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg\"]},{\"variant_id\":\"70W\",\"price\":1699,\"part_no\":\"ZZ08010\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787071/61PdojOo_8L._SL1200_-Photoroom_jzpuao.png\",\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791787070/614_NHr-q4L._SL1200__hjnwwr.jpg\"]}]",
     "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
@@ -3032,20 +2643,396 @@
     "type": "",
     "product_name": "50W LED BATTEN LEDVANCE",
     "description": "Illuminate your space with the LEDVANCE OSRAM 50W LED Batten. This white aluminum batten delivers a brilliant 5000 Lm at 6500K, ideal for workshops, garages, or retail areas. Experience powerful, energy-efficient LED lighting. Discover superior brightness for your needs.",
-    "key_features": "[\"Brand: LEDVANCE OSRAM\",\"Wattage: 50W\",\"Lumen Output: 5000 Lm\",\"Color Temperature: 6500K\",\"Material: Aluminum\"]",
     "brand": "OSRAM",
     "images": "https://res.cloudinary.com/k7wxgxbp/image/upload/v1791791575/osram-ledvance-50w-led-batten-Photoroom.png",
-    "video_url": "",
-    "variant_name": "",
     "mrp": "1400.00",
     "slug": "50w-led-batten-ledvance",
-    "unit": "",
     "meta_title": "LEDVANCE OSRAM 50W LED Batten Light - 6500K",
     "meta_description": "Upgrade to the LEDVANCE OSRAM 50W LED Batten for powerful, energy-efficient lighting. Enjoy 5000 lumens of crisp 6500K light. Perfect for workshops & commercial spaces.",
+    "variant_name": "",
     "is_featured": "false",
     "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
     "featured_link": "",
     "featured_link_type": "product",
-    "featured_button_text": ""
+    "featured_button_text": "",
+    "key_features": "[\"Brand: LEDVANCE OSRAM\",\"Wattage: 50W\",\"Lumen Output: 5000 Lm\",\"Color Temperature: 6500K\",\"Material: Aluminum\"]"
+  },
+  {
+    "part_no": "ZZ01467",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "20W LED INVERTER  BATTEN 6500K LEDVANCE",
+    "description": "Illuminate any space with the OSRAM 20W LED INVERTER BATTEN 6500K LEDVANCE. This versatile LED tube provides crisp 6500K cool daylight and acts as an emergency light during power outages, thanks to its integrated inverter. Ideal for homes, offices, or commercial settings requiring continuous, bright, and reliable illumination. Experience superior lighting performance. Discover your ideal solution today.",
+    "brand": "OSRAM",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791867354/osram-led-batten-light-Photoroom_1_nj55kw.png,https://res.cloudinary.com/dthi2vgiz/image/upload/v1791867288/61gzbTmoiJL_kfi3vg.jpg",
+    "mrp": "800.03",
+    "slug": "20w-led-inverter-batten-6500k-ledvance",
+    "meta_title": "OSRAM 20W LEDVANCE Inverter Batten 6500K Emergency",
+    "meta_description": "OSRAM 20W LEDVANCE Inverter Batten offers crisp 6500K LED light with emergency backup. Perfect for reliable illumination in homes, offices & commercial spaces. Shop now for durable LED tubes.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "OSRAM LEDVANCE: Light On. Even When Power's Off.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 20W\",\"Color Temperature: 6500K\",\"Type: LED Inverter Batten\",\"Emergency Function: Yes\",\"Mounting: Surface\"]"
+  },
+  {
+    "part_no": "ZZ07693",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes",
+    "type": "",
+    "product_name": "9W LED SENSOLITE BULB B22 CDL Sensor",
+    "description": "Illuminate your space smartly with the Havells 9W LED SENSOLITE BULB B22 CDL Sensor. This energy-efficient LED bulb features a built-in sensor for automatic operation, providing crisp Cool Day Light (CDL) at 9W. Perfect for hallways, porches, or security lighting, ensuring light only when needed. Upgrade to intelligent illumination today for smarter energy use.",
+    "brand": "Havells",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868644/51zR5pgFW1L._SL1200_-Photoroom_lh9sfe.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868669/51OuSp0fxFL._SL1080__pxjokm.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868670/41KrxrpCGAL_xyjyej.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868670/516Gm3jx77L._SL1080__tgar2j.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868670/6180irm0h3L._SL1080__obvncz.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868670/61nfrHm8S-L._SL1080__ccjmmr.jpg, https://res.cloudinary.com/dthi2vgiz/image/upload/v1791868670/61JWmrIbvZL._SL1080__vxt3a4.jpg,https://res.cloudinary.com/dthi2vgiz/video/upload/v1791868534/Havells_Sensolite_LED_Bulb_Smart_Motion_Sensor_bulb_online-video-cutter.com_u6ndkk.mp4",
+    "mrp": "599",
+    "slug": "9w-led-sensolite-bulb-b22-cdl-sensor",
+    "meta_title": "Havells 9W LED SENSOLITE B22 CDL Sensor Bulb",
+    "meta_description": "Discover the Havells 9W LED SENSOLITE BULB B22 CDL Sensor. This energy-saving LED bulb offers automatic Cool Day Light with its built-in sensor. Ideal for smart home lighting & security. Shop now for efficient illumination.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Havells Sensolite: Light On Demand.",
+    "video_url": "https://res.cloudinary.com/dthi2vgiz/video/upload/v1791868534/Havells_Sensolite_LED_Bulb_Smart_Motion_Sensor_bulb_online-video-cutter.com_u6ndkk.mp4",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Havells\",\"Wattage: 9W\",\"Base Type: B22\",\"Light Color: Cool Day Light (CDL)\",\"Feature: Built-in Sensor\"]"
+  },
+  {
+    "part_no": "ZZ07129",
+    "category": "Hardwares",
+    "subcategory": "General",
+    "subsubcategory": "Ladder",
+    "type": "",
+    "product_name": "Aluminium 6-step ladder",
+    "description": "Tackle any task with the Aluminium 6-Step Ladder. Crafted from robust aluminum for durability and lightweight handling, this standard ladder features a sleek silver finish. Its compact design is perfect for home use, DIY projects, or accessing higher shelves. Secure, stable, and built to last. Discover the difference quality makes.",
+    "brand": "Other Brands",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791871094/Capture-44-Photoroom_uwfgsg.png",
+    "mrp": "5400",
+    "slug": "aluminium-6-step-ladder",
+    "meta_title": "6-Step Aluminium Ladder",
+    "meta_description": "Durable Other Brands Aluminium 6-Step Ladder for home DIY and tasks. Lightweight, stable, silver finish. Shop now for quality and reliability.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Reach New Heights:  Aluminium Ladder",
+    "video_url": "",
+    "variants": "[{\"variant_id\":\"7-step ladder\",\"price\":6300,\"part_no\":\"8305\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791871927/51t5BMcEbKL._AC_UF894_1000_QL80_-Photoroom_ffhzv1.png\"]},{\"variant_id\":\"8-step ladder\",\"price\":7200,\"part_no\":\"ZZ08205\",\"sku\":\"\",\"images\":[\"https://res.cloudinary.com/dthi2vgiz/image/upload/v1791872166/whatsapp-image-2022-11-02-at-1-31-24-pm-500x500-Photoroom_ndjuhx.png\"]}]",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Material: Aluminum\",\"Steps: 6\",\"Type: Standard Ladder\",\"Finish: Silver\"]"
+  },
+  {
+    "part_no": "ZZ07868",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Flood_Lights, Solar_Lights",
+    "type": "",
+    "product_name": "MT 200 LED SOLAR FLOOD LIGHT",
+    "description": "Illuminate with Inventaa MITHRA C-WHITE SOLAR LED FLOODLIGHT. This 30W auto on/off floodlight features an IP65 waterproof polycarbonate body, motion sensor, and 12ft wire for optimal outdoor security or pathway lighting. Its grey panel (230x15x390mm) ensures efficient solar charging. Backed by a 1-year warranty, discover reliable, eco-friendly illumination. Explore bright, sustainable light today.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1791873016/FrontImage200w-Photoroom_zwg73l.png",
+    "mrp": "9144",
+    "slug": "mt-200-led-solar-flood-light",
+    "meta_title": "Inventaa MITHRA C-WHITE Solar LED Floodlight",
+    "meta_description": "Brighten your outdoors with Inventaa MITHRA C-WHITE 30W Solar LED Floodlight. IP65 waterproof, motion sensor, auto on/off. Ideal for security & pathways. Shop now!",
+    "variant_name": "MT 200C",
+    "is_featured": "true",
+    "slogan": "Brilliant Solar Security, Anytime. Anywhere.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 30W LED\",\"Body Material: Polycarbonate\",\"IP Rating: IP65 Waterproof\",\"Key Features: Motion Sensor, Auto On/Off\",\"Solar Panel Size: 230x15x390mm (Grey)\"]"
+  },
+  {
+    "part_no": "ZZ08257",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "2Y-W27 LED OUT DOOR WALL LIGHT 1WAY WW GIA",
+    "description": "Illuminate your exterior with the Inventaa 2Y-W27 LED OUT DOOR WALL LIGHT. This 1-way, 2W Warm White fixture features a robust aluminum body and IP65 rating, perfect for decorative outdoor wall lighting. Its potted driver ensures reliability, ideal for enhancing any facade or garden. Backed by a 2-year warranty. Discover lasting quality for your outdoor spaces.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791956637/Gemini_Generated_Image_9nie8q9nie8q9nie_dihzio.png, https://res.cloudinary.com/dvvpabney/image/upload/v1791956910/Gemini_Generated_Image_toolzetoolzetool-Photoroom_vbuwb2.png",
+    "mrp": "1711",
+    "slug": "2y-w27-led-out-door-wall-light-1way-ww-gia",
+    "meta_title": "Inventaa 2Y-W27 LED Outdoor Wall Light - Decorative",
+    "meta_description": "Enhance your outdoor space with the Inventaa 2Y-W27 LED Wall Light. This 1-way, 2W Warm White fixture features a durable IP65 aluminum body. Perfect for decorative outdoor illumination. 2-year warranty.",
+    "variant_name": "warm white",
+    "is_featured": "true",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 2W\",\"Light Direction: 1-Way\",\"IP Rating: IP65\",\"Body Material: Aluminum\",\"Warranty: 2 Years\"]"
+  },
+  {
+    "part_no": "ZZ08261",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "Atzia 6W Round LED Waterproof Wall Light",
+    "description": "Elevate your ambiance with the INVENTAA Atzia 6W Round LED Waterproof Wall Light Fixture. This durable aluminum decorative light features an adjustable beam and warm white LED, perfect for illuminating patios, facades, or gardens. IP65 rated for extreme weather, its sleek design seamlessly blends indoor/outdoor spaces. Explore sophisticated wall lighting. Discover yours.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791959153/41oGEJRc0TL._SL1000__aqcbuu.jpg,https://res.cloudinary.com/dvvpabney/image/upload/v1791959219/51rOOWuB7EL._SX466_-Photoroom_ctacfz.png,https://res.cloudinary.com/dvvpabney/image/upload/v1791959153/61u6WGTBjkL._SL1000__jheamo.jpg,,https://res.cloudinary.com/dvvpabney/image/upload/v1791959152/615C6aUl4BL._SL1000__eyey3r.jpg,https://res.cloudinary.com/dvvpabney/image/upload/v1791959152/518pmYQcnaL._SL1000__lfvmmd.jpg,https://res.cloudinary.com/dvvpabney/image/upload/v1791959152/713TYG0kr8L._SL1500__vl4o0j.jpg",
+    "mrp": "2714.00",
+    "slug": "atzia-6w-round-led-waterproof-wall-light",
+    "meta_title": "INVENTAA Atzia 6W Round LED Waterproof Wall Light",
+    "meta_description": "Illuminate your space with the INVENTAA Atzia 6W Round LED Waterproof Wall Light. Featuring an adjustable beam, durable aluminum, and IP65 rating, it's ideal for outdoor decorative lighting. Warm white glow.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "INVENTAA Atzia: Beam Precision, Outdoor Elegance.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 6W LED\",\"IP Rating: IP65 Waterproof\",\"Material: Durable Aluminum\",\"Light Color: Warm White\",\"Beam: Adjustable\"]"
+  },
+  {
+    "part_no": "ZZ08460",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "AYLA WL02 LED OUTDOOR WALL LIGHT 2 WAY",
+    "description": "Illuminate your outdoor space with the Inventaa AYLA WL02 LED Outdoor Wall Light 2 Way. This decorative outdoor wall light delivers a warm white 2W glow, featuring a sophisticated black & gold finish. Designed for durability with a long-life potted LED driver, it's perfect for enhancing pathways, entrances, or garden walls. Elevate your home's exterior appeal. Explore the Inventaa collection today.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791959651/Ayla_2W_2_Way_LED_Wall_Light_czolha.jxl,https://res.cloudinary.com/dvvpabney/image/upload/v1791959651/Ayla_2W_2_Way_LED_Wall_Light_Installed_On_House_Front_kznm78.jxl",
+    "mrp": "1769.00",
+    "slug": "ayla-wl02-led-outdoor-wall-light-2-way",
+    "meta_title": "Inventaa AYLA WL02 LED Outdoor Wall Light 2 Way",
+    "meta_description": "Illuminate with Inventaa AYLA WL02 LED Outdoor Wall Light 2 Way. Discover elegant black & gold decorative lighting, 2W warm white, perfect for enhancing your exterior. Shop now.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Inventaa\",\"Product Name: AYLA WL02 LED Outdoor Wall Light 2 Way\",\"Wattage: 2W\",\"Light Direction: 2 Way\",\"Body Finish: Black & Gold\"]"
+  },
+  {
+    "part_no": "ZZ08258",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "4Y-W16 LED Goldie WALL LIGHT 2w",
+    "description": "Inventaa 4Y-W16 LED Goldie Wall Light offers sophisticated 4W warm white illumination. This 2-way outdoor decorative light, with its elegant Goldie finish, is perfect for enhancing patios, entryways, or garden walls. Discover premium exterior lighting design.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791958910/Goldie_4W_2_Way_LED_Wall_Light_Emitting_Warm_White_Glow_tbqxaq.jxl,https://res.cloudinary.com/dvvpabney/image/upload/v1791958910/Goldie_4W_2_Way_LED_Wall_Light_Installed_On_Stairs_2_fqzeiu.jxl,https://res.cloudinary.com/dvvpabney/image/upload/v1791958910/Goldie_4W_2_Way_LED_Wall_Light_Installed_On_Home_Entrance_wmgaow.jxl",
+    "mrp": "1499",
+    "slug": "4y-w16-led-goldie-wall-light-2w",
+    "meta_title": "Inventaa 4Y-W16 LED Goldie Outdoor Wall Light",
+    "meta_description": "Enhance your home's exterior with Inventaa 4Y-W16 Goldie LED outdoor wall light. Featuring 2-way warm white illumination. Durable & stylish decorative lighting.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Light Type: LED\",\"Wattage: 4W\",\"Light Direction: 2-Way\",\"Light Color: Warm White (WW)\",\"Finish: Goldie\"]"
+  },
+  {
+    "part_no": "ZZ08260",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "4Y-W17 LED WALL LIGHT 4WAY 4W WW GOLDIE",
+    "description": "Elevate your outdoor ambiance with the Inventaa 4Y-W17 LED Wall Light. This decorative outdoor wall light delivers inviting 4-way, 4W Warm White illumination, encased in a striking Goldie finish. Designed for wall mounting, it's ideal for enhancing patios, entryways, or garden walls with a touch of modern elegance. Explore how Inventaa can brighten your exterior spaces.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791958910/Goldie_4W_4_Way_LED_Wall_Light_Emitting_Warm_White_Glow_ad679cac-c00d-4e62-a5a5-15a212039a49_l8cad0.webp",
+    "mrp": "2093.03",
+    "slug": "4y-w17-led-wall-light-4way-4w-ww-goldie",
+    "meta_title": "Inventaa 4Y-W17 Goldie LED Outdoor Wall Light",
+    "meta_description": "Shop Inventaa 4Y-W17 Goldie LED Outdoor Wall Light. Enhance your exterior with 4W 4-way Warm White decorative lighting. Perfect for patios & garden walls.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Light Source: LED\",\"Wattage: 4W\",\"Light Color: Warm White\",\"Finish: black/gold\",\"Illumination: 4-Way\"]"
+  },
+  {
+    "part_no": "ZZ08262",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "6Y-W18 LED LIGHT 2WAY 6W  GOLDIE",
+    "description": "Illuminate your outdoors with the Inventaa 6Y-W18 LED Outdoor Wall Light. Featuring a stunning 2-way light design and a warm white 6W LED, this premium fixture boasts a rich gold finish, crafted from durable aluminum. Perfect for accentuating patios, entrances, or garden walls. Discover sophisticated outdoor lighting.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791958909/Goldie_6W_6_Way_LED_Wall_Light_Emitting_Warm_White_Glow_6965cf00-04aa-4e9e-b9c0-93063e2818e5_snarja.webp",
+    "mrp": "1971.00",
+    "slug": "6y-w18-led-light-2way-6w-goldie",
+    "meta_title": "Inventaa 6Y-W18 LED Outdoor Wall Light",
+    "meta_description": "Discover the Inventaa 6Y-W18 LED Outdoor Wall Light in Goldie finish. 6W warm white, 2-way illumination. Durable aluminum. Enhance your patio or entrance with premium decorative lighting.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Inventaa\",\"Model: 6Y-W18\",\"Type: LED Outdoor Wall Light\",\"Wattage: 6W\",\"Color Temperature: Warm White (WW)\"]"
+  },
+  {
+    "part_no": "ZZ08259",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Decorative_Lights, Outdoor_Wall_Lights",
+    "type": "",
+    "product_name": "GIA 4Y-W27 OUT DOOR WALL LIGHT 2WAY 4W",
+    "description": "Illuminate your exteriors with the Inventaa 4Y-W27 LED Outdoor Wall Light. This 2-way, 4W fixture features warm white light (WW) and a durable design features a robust aluminum body and IP65 rating, perfect for decorative outdoor wall lighting. Its potted driver ensures reliability, ideal for enhancing any facade or garden, it mounts easily to any exterior wall. Enhance your home's ambiance. Explore now!",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1791957166/Gemini_Generated_Image_s2994os2994os299_ldmr77.png, https://res.cloudinary.com/dvvpabney/image/upload/v1791956910/Gemini_Generated_Image_toolzetoolzetool-Photoroom_vbuwb2.png",
+    "mrp": "1779",
+    "slug": "gia-4y-w27-out-door-wall-light-2way-4w",
+    "meta_title": "Inventaa 4Y-W27 LED Outdoor Wall Light",
+    "meta_description": "Discover the Inventaa 4Y-W27 2-way, 4W LED Outdoor Wall Light, a durable IP65 aluminum body. Warm white, durable design for patios & walkways. Enhance your home's exterior. Shop now!",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "GIA: Brilliant Outdoor Lighting. Crafted by Inventaa.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"IP Rating: IP65\",\"Body Material: Aluminum\",\"Product Name: 4Y-W27\",\"Type: LED Outdoor Wall Light\",\"Wattage: 4W\"]"
+  },
+  {
+    "part_no": "ZZ07870",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Outdoor_Wall_Lights, Solar_Lights, Gate_Lights",
+    "type": "",
+    "product_name": "Led Solar Gate Light Bloom SLR-2414",
+    "description": "Illuminate your outdoors effortlessly with the Inventaa SLR-2414 LED Solar Gate Light-Bloom. This 15W Cool White, Motion Sensor, waterproof fixture offers 1000-1500 lumens and features auto on/off for convenience. Ideal for garden gates, outdoor walls, and pathways, its direct mount design ensures easy installation. Enjoy reliable solar lighting with 8-10 hours backup. Upgrade your exterior security and ambiance today.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1792126633/Bloom_Solar_jpg-Photoroom_pdz835.png, https://res.cloudinary.com/dvvpabney/image/upload/v1792126633/Waterproof_Resistant_Bloom_LED_Gate_Light_nre0eq.jpg, https://res.cloudinary.com/dvvpabney/image/upload/v1792126632/Bloom_Panaromic_View_With_Cool_White_LED_Bulb-Desktop_ydrhco.webp, https://res.cloudinary.com/dvvpabney/image/upload/v1792126632/Unbreakable_Bloom_LED_Gate_Light_hsf8dn.jpg, https://res.cloudinary.com/dvvpabney/image/upload/v1792126632/10C-2404Bloom_LED_Gate_Light_Cool_White_t1wvrg.webp, https://res.cloudinary.com/dvvpabney/image/upload/v1792126632/Bulb_Options_Of_Bloom_LED_Gate_Light_rmrlga.webp, https://res.cloudinary.com/dvvpabney/image/upload/v1792126632/UV_Protected_Bloom_LED_Gate_Light_q5an1h.jpg",
+    "mrp": "4420",
+    "slug": "led-solar-gate-light-bloom-slr-2414",
+    "meta_title": "Inventaa SLR-2414 LED Solar Gate Light-Bloom",
+    "meta_description": "Illuminate your gate and outdoor walls with Inventaa's SLR-2414 LED Solar Gate Light 10\" Square. Waterproof, 15W, 1000-1500 lumens, Motion Sensor, auto on/off, 8-10hr backup. Hassle-free outdoor solar lighting.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Solar Brilliance for Your Gate. Effortless Outdoor Lighting.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Model: SLR-2414 LED Solar Gate Light-Bloom\",\"Size: 10\\\" Square\",\"Brand: Inventaa\",\"Wattage: 15W\",\"Luminosity: 1000-1500 Lumens\"]"
+  },
+  {
+    "part_no": "ZZ08461",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Outdoor_Wall_Lights, Solar_Lights, Gate_Lights",
+    "type": "solar, remote, light",
+    "product_name": "SLR 2230 VILLA LED SOLAR GATE LIGHT 10W 3 IN 1 REMOTE",
+    "description": "Illuminate your entrance with the Inventaa SLR 2230 VILLA LED Solar Gate Light. This 10W, 3-in-1 remote-controlled solar light is perfect for enhancing security and ambiance at your gate or villa entrance. Enjoy efficient, autonomous lighting that charges by day and shines brilliantly at night. Discover the ideal solar gate solution for your home.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1792127673/Villa_Solar_jpg-Photoroom_fmne9w.png,https://res.cloudinary.com/dvvpabney/image/upload/v1792127673/Villa-04Application_dfae4940-a182-4f72-a1f0-c44092dada5d_tisijm.jxl",
+    "mrp": "4641.00",
+    "slug": "slr-2230-villa-led-solar-gate-light-10w-3-in-1-remote",
+    "meta_title": "Inventaa SLR 2230 VILLA 10W LED Solar Gate Light",
+    "meta_description": "Brighten your gate with Inventaa SLR 2230 VILLA 10W LED Solar Gate Light. Featuring 3-in-1 remote control, this solar outdoor light offers security and style. Shop now!",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Brand: Inventaa\",\"Model: SLR 2230 VILLA\",\"Light Source: LED\",\"Power: 10W\",\"Energy Type: Solar\"]"
+  },
+  {
+    "part_no": "ZZ07869",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "Flood_Lights, Solar_Lights",
+    "type": "",
+    "product_name": "MHR 400C LED SOLAR FLOOD LIGHT-MITHRA",
+    "description": "Illuminate your outdoors with the Inventaa MHR 400C LED SOLAR FLOOD LIGHT-MITHRA. This high-performance, solar-powered floodlight delivers bright, efficient white LED illumination (MHR 400C series). Ideal for enhanced security, pathways, gardens, or driveways, its durable, weather-resistant construction ensures reliable performance. The clean white finish seamlessly integrates with any exterior. Experience sustainable, powerful floodlighting—explore the future of outdoor illumination.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1792127928/FEATUREautoonoff_jvq4du.webp, https://res.cloudinary.com/dvvpabney/image/upload/v1792127928/FrontImage400w-Photoroom_px7vwz.png",
+    "mrp": "14822",
+    "slug": "mhr-400c-led-solar-flood-light-mithra",
+    "meta_title": "Inventaa MHR 400C LED Solar Flood Light - Outdoor Lighting",
+    "meta_description": "Discover the Inventaa MHR 400C LED Solar Flood Light for superior outdoor illumination. White finish, solar-powered for gardens, driveways & security. Efficient & durable.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Inventaa: Solar Power, Brilliant Light, Zero Wires.",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "subsubcategory",
+    "featured_button_text": "",
+    "key_features": "[\"Product: MHR 400C LED SOLAR FLOOD LIGHT-MITHRA\",\"Brand: Inventaa\",\"Light Type: LED Flood Light\",\"Power Source: Solar Powered\",\"Finish: White\"]"
+  },
+  {
+    "part_no": "ZZ08464",
+    "category": "Electrical",
+    "subcategory": "Lighting_Fixtures",
+    "subsubcategory": "LED_Bulbs_&_Tubes, Decorative_Lights, Flood_Lights",
+    "type": "",
+    "product_name": "5C-2003 GRASSO LED GARDEN FOCUS LIGHT 5W 5C-2003",
+    "description": "Elevate your outdoor ambiance with the Inventaa 5C-2003 GRASSO LED Garden Focus Light. This 12W, IP65-rated wall-mount LED fixture delivers powerful illumination for gardens, pathways, and decorative landscape accents. Engineered for durability, it functions brilliantly as a flood light, ensuring robust performance in any weather. Discover the perfect blend of style and resilience for your outdoor space.",
+    "brand": "Inventaa",
+    "images": "https://res.cloudinary.com/dvvpabney/image/upload/v1792128708/51OhvAZ7bEL_jbghap.jpg,https://res.cloudinary.com/dvvpabney/image/upload/v1792128709/71LiTDTRuBL_oxx3zm.jpg,https://res.cloudinary.com/dvvpabney/image/upload/v1792128709/inventaa-grasso-3w-led-post-top-500x500_rl7qet.webp",
+    "mrp": "1497.00",
+    "slug": "5c-2003-grasso-led-garden-focus-light-5w-5c-2003",
+    "meta_title": "Inventaa 5C-2003 GRASSO LED Garden Focus Light",
+    "meta_description": "Illuminate your garden with Inventaa's 5C-2003 GRASSO LED Focus Light. A 12W, IP65 wall-mount LED designed for decorative outdoor lighting & powerful flood illumination.",
+    "variant_name": "",
+    "is_featured": "false",
+    "slogan": "",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "",
+    "key_features": "[\"Wattage: 12 Watts\",\"Mount Type: Wall Mounted\",\"IP Rating: IP65\",\"Light Source: LED\",\"Application: Outdoor, Garden\"]"
   }
 ]

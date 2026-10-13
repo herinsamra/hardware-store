@@ -6,12 +6,148 @@ import AdminLayout from '../../components/AdminLayout.astro';
   <div class="admin-wrapper">
     <div class="glass-container">
       <header class="admin-header">
-        <div class="title-wrapper">
-          <div class="icon-box">✦</div>
-          <h1>Add New Product</h1>
+        <div class="header-main-row">
+          <div class="title-wrapper">
+            <div class="icon-box">✦</div>
+            <div class="header-text-group">
+              <h1>Add New Product</h1>
+              <p class="subtitle">AI will generate descriptions, meta tags & slugs automatically</p>
+            </div>
+          </div>
+          <div class="header-actions">
+            <button type="button" id="topAddProductBtn" class="top-action-btn" title="Add another product keeping the same category">
+              <span class="btn-icon">＋</span> Add New Product
+            </button>
+          </div>
         </div>
-        <p class="subtitle">AI will generate descriptions, meta tags & slugs automatically</p>
       </header>
+
+      <!-- Submitted Product Details Summary Card -->
+      <div id="submittedProductSummary" class="submitted-summary-card" style="display: none;">
+        <div class="summary-header">
+          <div class="summary-status">
+            <span class="status-icon">✓</span>
+            <div>
+              <h3>Product Saved Successfully!</h3>
+              <p class="summary-sub">All entered details and AI generated content have been saved.</p>
+            </div>
+          </div>
+          <div class="summary-top-actions">
+            <a id="summaryEditBtn" href="#" class="summary-action-btn edit-btn">
+              ✏️ Edit Product
+            </a>
+            <button type="button" id="summaryAddAnotherBtn" class="summary-action-btn add-btn">
+              ＋ Add New Product (Same Category)
+            </button>
+            <a id="summaryLiveBtn" href="#" target="_blank" class="summary-action-btn live-btn">
+              ↗ View Live Page
+            </a>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <!-- Basic Details & Classification -->
+          <div class="summary-section">
+            <h4 class="summary-section-title">📦 Basic Details & Classification</h4>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="label">Part Number</span>
+                <span class="value part-no-badge" id="sum_part_no"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Product Name</span>
+                <span class="value" id="sum_product_name"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Brand</span>
+                <span class="value brand-badge" id="sum_brand"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Price (MRP)</span>
+                <span class="value price-value" id="sum_mrp"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Unit</span>
+                <span class="value" id="sum_unit"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Type</span>
+                <span class="value" id="sum_type"></span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Variant Name</span>
+                <span class="value" id="sum_variant_name"></span>
+              </div>
+              <div class="summary-item full-width">
+                <span class="label">Category Hierarchy</span>
+                <div class="value category-breadcrumb" id="sum_category_path"></div>
+              </div>
+              <div class="summary-item full-width" id="sum_specs_row" style="display: none;">
+                <span class="label">Custom Specifications</span>
+                <span class="value" id="sum_custom_features"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Media -->
+          <div class="summary-section" id="sum_media_section" style="display: none;">
+            <h4 class="summary-section-title">🖼️ Media & Visuals</h4>
+            <div id="sum_images_preview" class="summary-images-gallery"></div>
+            <div class="summary-item" id="sum_video_row" style="display: none; margin-top: 0.8rem;">
+              <span class="label">Video URL</span>
+              <span class="value" id="sum_video_url"></span>
+            </div>
+          </div>
+
+          <!-- Variants -->
+          <div class="summary-section" id="sum_variants_section" style="display: none;">
+            <h4 class="summary-section-title">🔀 Product Variants (<span id="sum_variants_count">0</span>)</h4>
+            <div id="sum_variants_list" class="summary-variants-list"></div>
+          </div>
+
+          <!-- AI Generated Content -->
+          <div class="summary-section ai-summary-section">
+            <h4 class="summary-section-title">✨ AI Generated Content</h4>
+            <div class="summary-ai-block">
+              <div class="ai-block-item">
+                <span class="label">Generated Description</span>
+                <p class="ai-text-preview" id="sum_description"></p>
+              </div>
+              <div class="ai-block-item">
+                <span class="label">Technical Specifications</span>
+                <ul class="ai-specs-list" id="sum_key_features"></ul>
+              </div>
+              <div class="summary-grid" style="margin-top: 1rem;">
+                <div class="summary-item">
+                  <span class="label">Meta Title</span>
+                  <span class="value" id="sum_meta_title"></span>
+                </div>
+                <div class="summary-item">
+                  <span class="label">Generated Slug</span>
+                  <span class="value code-val" id="sum_slug"></span>
+                </div>
+                <div class="summary-item full-width">
+                  <span class="label">Meta Description</span>
+                  <span class="value" id="sum_meta_description"></span>
+                </div>
+              </div>
+              <div class="summary-item full-width" id="sum_slogan_row" style="display: none; margin-top: 0.8rem;">
+                <span class="label">Featured Slogan</span>
+                <span class="value slogan-val" id="sum_slogan"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-bottom-actions">
+          <a id="summaryEditBtnBottom" href="#" class="summary-action-btn edit-btn">
+            ✏️ Edit Product
+          </a>
+          <button type="button" id="summaryAddAnotherBtnBottom" class="summary-action-btn add-btn">
+            ＋ Add New Product (Same Category)
+          </button>
+        </div>
+      </div>
 
       <form id="productForm" class="product-form">
         <div class="form-grid">
@@ -424,28 +560,47 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
       });
 
+      // Helper function to find case-insensitive & space/underscore keys
+      function findCategoryKey(dict, target) {
+        if (!dict || !target) return null;
+        if (dict[target]) return target;
+        const normTarget = target.trim().toLowerCase().replace(/[\s_]+/g, '_');
+        return Object.keys(dict).find(k => {
+          const normKey = k.toLowerCase().replace(/[\s_]+/g, '_');
+          return normKey === normTarget;
+        }) || null;
+      }
+
       // Populate from URL Parameters
       const urlParams = new URLSearchParams(window.location.search);
       const preCat = urlParams.get('category');
       const preSub = urlParams.get('subcategory');
       const preSubSub = urlParams.get('subsub') || urlParams.get('subsubcategory');
 
-      if (preCat && categories[preCat]) {
-        catSelect.value = preCat;
-        catSelect.dispatchEvent(new Event('change'));
+      if (preCat) {
+        const matchedCat = findCategoryKey(categories, preCat);
+        if (matchedCat) {
+          catSelect.value = matchedCat;
+          catSelect.dispatchEvent(new Event('change'));
 
-        if (preSub && categories[preCat][preSub]) {
-          subcatSelect.value = preSub;
-          subcatSelect.dispatchEvent(new Event('change'));
+          if (preSub) {
+            const subcats = categories[matchedCat] || {};
+            const matchedSub = findCategoryKey(subcats, preSub);
+            if (matchedSub) {
+              subcatSelect.value = matchedSub;
+              subcatSelect.dispatchEvent(new Event('change'));
 
-          if (preSubSub) {
-            const preSubSubs = preSubSub.split(',').map(s => s.trim());
-            const checkboxes = subsubSelect.querySelectorAll('.subsub-checkbox');
-            checkboxes.forEach(cb => {
-              if (preSubSubs.includes(cb.value)) {
-                cb.checked = true;
+              if (preSubSub) {
+                const preSubSubs = preSubSub.split(',').map(s => s.trim().toLowerCase().replace(/[\s_]+/g, '_'));
+                const checkboxes = subsubSelect.querySelectorAll('.subsub-checkbox');
+                checkboxes.forEach(cb => {
+                  const normCb = cb.value.toLowerCase().replace(/[\s_]+/g, '_');
+                  if (preSubSubs.includes(normCb)) {
+                    cb.checked = true;
+                  }
+                });
               }
-            });
+            }
           }
         }
       }
@@ -621,12 +776,12 @@ import AdminLayout from '../../components/AdminLayout.astro';
           const result = await response.json();
 
           if (response.ok) {
-            document.getElementById('description').value = result.product.description;
-            const features = result.product.key_features ? JSON.parse(result.product.key_features) : [];
+            document.getElementById('description').value = result.product.description || '';
+            const features = result.product.key_features ? (typeof result.product.key_features === 'string' ? JSON.parse(result.product.key_features) : result.product.key_features) : [];
             document.getElementById('key_features').value = features.map(feature => `- ${feature}`).join('\n');
-            document.getElementById('meta_title').value = result.product.meta_title;
-            document.getElementById('meta_description').value = result.product.meta_description;
-            document.getElementById('slug').value = result.product.slug;
+            document.getElementById('meta_title').value = result.product.meta_title || '';
+            document.getElementById('meta_description').value = result.product.meta_description || '';
+            document.getElementById('slug').value = result.product.slug || '';
             if (result.product.slogan) {
               document.getElementById('slogan').value = result.product.slogan;
               document.getElementById('sloganPreview').style.display = 'block';
@@ -639,9 +794,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
             if (addAnotherBtn) addAnotherBtn.style.display = 'flex';
             submitBtn.querySelector('.btn-text').textContent = 'Product Saved!';
             submitBtn.classList.remove('loading');
-            
-            // Scroll to top to see message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Render submitted summary with all entered & generated data
+            renderSubmittedSummary(result.product, payload);
           } else {
             if (response.status === 409) {
               partNoDuplicateExists = true;
@@ -739,34 +894,206 @@ import AdminLayout from '../../components/AdminLayout.astro';
         });
       }
 
-      // Add Another Logic
-      const addAnotherBtn = document.getElementById('addAnotherBtn');
-      if (addAnotherBtn) {
-        addAnotherBtn.addEventListener('click', () => {
-          // Clear unique fields
-          ['part_no', 'product_name', 'type', 'images', 'video_url', 'custom_features', 'variant_name', 'mrp', 'unit', 'featured_link', 'featured_button_text', 'description', 'key_features', 'meta_title', 'meta_description', 'slug', 'slogan'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = '';
-          });
-          resetPartNoCheck();
-          
-          document.getElementById('variantsContainer').innerHTML = '';
-          document.getElementById('sloganPreview').style.display = 'none';
-          document.getElementById('is_featured').checked = false;
-          document.getElementById('featuredSettings').style.display = 'none';
-          
-          // Reset UI
-          addAnotherBtn.style.display = 'none';
-          submitBtn.querySelector('.btn-text').textContent = 'Generate AI & Save Product';
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('loading');
-          messageDiv.style.display = 'none';
-          
-          // Scroll to the top of the form area
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          document.getElementById('part_no').focus();
+      // Add New Product preserving category logic
+      function resetFormForNewProductSameCategory() {
+        // Clear unique/product-specific fields while preserving category & subcategory selections
+        [
+          'part_no', 'product_name', 'type', 'images', 'video_url', 
+          'custom_features', 'variant_name', 'mrp', 'unit', 
+          'featured_link', 'featured_button_text', 
+          'description', 'key_features', 'meta_title', 'meta_description', 'slug', 'slogan'
+        ].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
         });
+        resetPartNoCheck();
+        
+        const variantsContainer = document.getElementById('variantsContainer');
+        if (variantsContainer) variantsContainer.innerHTML = '';
+        
+        const sloganPreview = document.getElementById('sloganPreview');
+        if (sloganPreview) sloganPreview.style.display = 'none';
+        
+        const isFeatured = document.getElementById('is_featured');
+        if (isFeatured) isFeatured.checked = false;
+        
+        const featuredSettings = document.getElementById('featuredSettings');
+        if (featuredSettings) featuredSettings.style.display = 'none';
+        
+        // Hide summary card
+        const summaryCard = document.getElementById('submittedProductSummary');
+        if (summaryCard) summaryCard.style.display = 'none';
+
+        // Reset submit button & messages
+        const addAnotherBtn = document.getElementById('addAnotherBtn');
+        if (addAnotherBtn) addAnotherBtn.style.display = 'none';
+        
+        submitBtn.querySelector('.btn-text').textContent = 'Generate AI & Save Product';
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        messageDiv.style.display = 'none';
+
+        const cat = catSelect?.value;
+        const subcat = subcatSelect?.value;
+        if (cat) {
+          showMessage(`Category preserved: ${cat.replace(/_/g, ' ')}${subcat ? ' > ' + subcat.replace(/_/g, ' ') : ''}. Ready for next product!`, 'info');
+        }
+
+        // Scroll to top of the form area and focus part_no
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          const partNoEl = document.getElementById('part_no');
+          if (partNoEl) partNoEl.focus();
+        }, 150);
       }
+
+      function renderSubmittedSummary(product, payload) {
+        const summaryCard = document.getElementById('submittedProductSummary');
+        if (!summaryCard) return;
+
+        // Populate basic fields
+        document.getElementById('sum_part_no').textContent = product.part_no || payload.part_no || '—';
+        document.getElementById('sum_product_name').textContent = product.product_name || payload.product_name || '—';
+        document.getElementById('sum_brand').textContent = product.brand || payload.brand || '—';
+        
+        const mrpVal = product.mrp || payload.mrp;
+        const parsedMrp = Number(mrpVal);
+        document.getElementById('sum_mrp').textContent = !isNaN(parsedMrp) ? `₹ ${parsedMrp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : (mrpVal || '—');
+        document.getElementById('sum_unit').textContent = product.unit || payload.unit || '—';
+        document.getElementById('sum_type').textContent = product.type || payload.type || '—';
+        document.getElementById('sum_variant_name').textContent = product.variant_name || payload.variant_name || '—';
+
+        // Category path
+        const cat = (product.category || payload.category || '').replace(/_/g, ' ');
+        const subcat = (product.subcategory || payload.subcategory || '').replace(/_/g, ' ');
+        const subsub = (product.subsubcategory || payload.subsubcategory || '').replace(/_/g, ' ');
+        document.getElementById('sum_category_path').innerHTML = `
+          <span class="crumb">${cat}</span>
+          ${subcat ? `<span class="crumb-sep">›</span><span class="crumb">${subcat}</span>` : ''}
+          ${subsub ? `<span class="crumb-sep">›</span><span class="crumb subsub-crumb">${subsub}</span>` : ''}
+        `;
+
+        // Custom features
+        const customFeatures = product.custom_features || payload.custom_features;
+        const specsRow = document.getElementById('sum_specs_row');
+        if (customFeatures) {
+          document.getElementById('sum_custom_features').textContent = customFeatures;
+          specsRow.style.display = 'flex';
+        } else {
+          specsRow.style.display = 'none';
+        }
+
+        // Media
+        const imagesRaw = product.images || payload.images || '';
+        const imgList = (typeof imagesRaw === 'string' ? imagesRaw.split(',') : (Array.isArray(imagesRaw) ? imagesRaw : [])).map(s => String(s).trim()).filter(Boolean);
+        const mediaSection = document.getElementById('sum_media_section');
+        const imgGallery = document.getElementById('sum_images_preview');
+        
+        if (imgList.length > 0) {
+          mediaSection.style.display = 'block';
+          imgGallery.innerHTML = imgList.map((img, idx) => `
+            <a href="${img}" target="_blank" rel="noopener noreferrer" class="summary-img-thumb" title="Click to view full image">
+              <img src="${img}" alt="Product image ${idx + 1}" loading="lazy" onerror="this.parentElement.style.display='none'">
+              <span class="img-badge">#${idx + 1}</span>
+            </a>
+          `).join('');
+        } else {
+          imgGallery.innerHTML = '';
+          mediaSection.style.display = 'none';
+        }
+
+        const videoUrl = product.video_url || payload.video_url;
+        const videoRow = document.getElementById('sum_video_row');
+        if (videoUrl) {
+          mediaSection.style.display = 'block';
+          videoRow.style.display = 'flex';
+          document.getElementById('sum_video_url').innerHTML = `<a href="${videoUrl}" target="_blank" class="val-link">${videoUrl} ↗</a>`;
+        } else {
+          videoRow.style.display = 'none';
+        }
+
+        // Variants
+        let variants = [];
+        if (product.variants) {
+          try {
+            variants = typeof product.variants === 'string' ? JSON.parse(product.variants) : product.variants;
+          } catch(e) {
+            variants = payload.variants || [];
+          }
+        } else if (payload.variants) {
+          variants = payload.variants;
+        }
+
+        const variantsSection = document.getElementById('sum_variants_section');
+        if (variants && variants.length > 0) {
+          variantsSection.style.display = 'block';
+          document.getElementById('sum_variants_count').textContent = variants.length;
+          const variantsList = document.getElementById('sum_variants_list');
+          variantsList.innerHTML = variants.map(v => `
+            <div class="summary-variant-pill">
+              <strong>${v.variant_id}</strong>
+              <span>₹${v.price || product.mrp || payload.mrp}</span>
+              ${v.part_no ? `<span class="var-part">Part: ${v.part_no}</span>` : ''}
+              ${v.sku ? `<span class="var-sku">SKU: ${v.sku}</span>` : ''}
+            </div>
+          `).join('');
+        } else {
+          variantsSection.style.display = 'none';
+        }
+
+        // AI Generated Content
+        document.getElementById('sum_description').textContent = product.description || '—';
+        
+        let keyFeatures = [];
+        if (product.key_features) {
+          try {
+            keyFeatures = typeof product.key_features === 'string' ? JSON.parse(product.key_features) : product.key_features;
+          } catch(e) {
+            keyFeatures = String(product.key_features).split('\n').filter(Boolean);
+          }
+        }
+        const specsList = document.getElementById('sum_key_features');
+        if (keyFeatures && keyFeatures.length > 0) {
+          specsList.innerHTML = keyFeatures.map(item => `<li>${String(item).replace(/^-\s*/, '')}</li>`).join('');
+        } else {
+          specsList.innerHTML = '<li>None generated</li>';
+        }
+
+        document.getElementById('sum_meta_title').textContent = product.meta_title || '—';
+        document.getElementById('sum_meta_description').textContent = product.meta_description || '—';
+        document.getElementById('sum_slug').textContent = product.slug || '—';
+
+        const sloganRow = document.getElementById('sum_slogan_row');
+        if (product.slogan) {
+          sloganRow.style.display = 'flex';
+          document.getElementById('sum_slogan').textContent = product.slogan;
+        } else {
+          sloganRow.style.display = 'none';
+        }
+
+        // Action links
+        const partNo = encodeURIComponent(product.part_no || payload.part_no);
+        const liveSlug = encodeURIComponent(product.slug || product.part_no || payload.part_no);
+
+        const editHref = `/admin/edit-product?id=${partNo}`;
+        document.getElementById('summaryEditBtn').setAttribute('href', editHref);
+        document.getElementById('summaryEditBtnBottom').setAttribute('href', editHref);
+
+        const liveHref = `/product/${liveSlug}`;
+        document.getElementById('summaryLiveBtn').setAttribute('href', liveHref);
+
+        // Show summary card and scroll smoothly
+        summaryCard.style.display = 'block';
+        setTimeout(() => {
+          summaryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+
+      // Wire up buttons
+      document.getElementById('topAddProductBtn')?.addEventListener('click', resetFormForNewProductSameCategory);
+      document.getElementById('addAnotherBtn')?.addEventListener('click', resetFormForNewProductSameCategory);
+      document.getElementById('summaryAddAnotherBtn')?.addEventListener('click', resetFormForNewProductSameCategory);
+      document.getElementById('summaryAddAnotherBtnBottom')?.addEventListener('click', resetFormForNewProductSameCategory);
     });
   </script>
 </AdminLayout>
@@ -983,16 +1310,420 @@ import AdminLayout from '../../components/AdminLayout.astro';
   }
 
   .admin-header {
-    margin-bottom: 3rem;
-    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .header-main-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 768px) {
+    .header-main-row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   .title-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 1rem;
-    margin-bottom: 0.5rem;
+  }
+
+  .header-text-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .top-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(197, 160, 40, 0.2), rgba(197, 160, 40, 0.08));
+    border: 1px solid var(--accent);
+    color: #fff;
+    padding: 0.75rem 1.4rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 12px rgba(197, 160, 40, 0.15);
+    transition: all 0.25s ease;
+  }
+
+  .top-action-btn:hover {
+    background: linear-gradient(135deg, var(--accent), #eab308);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(197, 160, 40, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .top-action-btn .btn-icon {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  /* Submitted Product Details Summary Card */
+  .submitted-summary-card {
+    background: linear-gradient(180deg, rgba(22, 26, 35, 0.95) 0%, rgba(15, 17, 23, 0.98) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 185, 129, 0.15);
+    animation: fadeInSlide 0.35s ease-out;
+  }
+
+  @keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .summary-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .summary-header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .summary-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .summary-status .status-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--success);
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .summary-status h3 {
+    margin: 0 0 0.25rem 0;
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .summary-sub {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+  }
+
+  .summary-top-actions, .summary-bottom-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .summary-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .summary-action-btn.edit-btn {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+  }
+
+  .summary-action-btn.edit-btn:hover {
+    background: #3b82f6;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .summary-action-btn.add-btn {
+    background: linear-gradient(135deg, rgba(197, 160, 40, 0.25), rgba(197, 160, 40, 0.1));
+    border: 1px solid var(--accent);
+    color: #fff;
+  }
+
+  .summary-action-btn.add-btn:hover {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-2px);
+  }
+
+  .summary-action-btn.live-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+  }
+
+  .summary-action-btn.live-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .summary-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .summary-section {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  .summary-section-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.05rem;
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .summary-item.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .summary-item .label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .summary-item .value {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    word-break: break-word;
+  }
+
+  .part-no-badge {
+    display: inline-block;
+    font-family: monospace;
+    font-size: 0.95rem;
+    background: rgba(197, 160, 40, 0.15);
+    color: var(--accent);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(197, 160, 40, 0.3);
+    width: fit-content;
+  }
+
+  .brand-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    width: fit-content;
+    font-weight: 600;
+  }
+
+  .price-value {
+    color: var(--success);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .category-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .category-breadcrumb .crumb {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+
+  .category-breadcrumb .crumb-sep {
+    color: var(--text-secondary);
+    opacity: 0.6;
+  }
+
+  .category-breadcrumb .subsub-crumb {
+    background: rgba(197, 160, 40, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(197, 160, 40, 0.25);
+  }
+
+  .summary-images-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .summary-img-thumb {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: #000;
+    display: block;
+    transition: transform 0.2s;
+  }
+
+  .summary-img-thumb:hover {
+    transform: scale(1.08);
+    border-color: var(--accent);
+  }
+
+  .summary-img-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .summary-img-thumb .img-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 1px 4px;
+    border-radius: 4px;
+  }
+
+  .summary-variants-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .summary-variant-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .summary-variant-pill .var-part, .summary-variant-pill .var-sku {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  .ai-summary-section {
+    background: rgba(197, 160, 40, 0.03);
+    border: 1px dashed rgba(197, 160, 40, 0.3);
+  }
+
+  .summary-ai-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ai-text-preview {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+  }
+
+  .ai-specs-list {
+    margin: 0.25rem 0 0 1.25rem;
+    padding: 0;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .code-val {
+    font-family: monospace;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .slogan-val {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .val-link {
+    color: #38bdf8;
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .val-link:hover {
+    text-decoration: underline;
+  }
+
+  .summary-bottom-actions {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--glass-border);
+    justify-content: flex-end;
   }
 
   .icon-box {
@@ -1010,7 +1741,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
   }
 
   .admin-header h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
     background: linear-gradient(to right, #fff, #cbd5e1);
     -webkit-background-clip: text;
@@ -1020,8 +1751,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1.1rem;
-    margin: 0;
+    font-size: 1rem;
+    margin: 0.25rem 0 0 0;
   }
 
   .form-grid {

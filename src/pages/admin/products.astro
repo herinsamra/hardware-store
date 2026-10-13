@@ -4,7 +4,10 @@ export const prerender = false;
 import AdminLayout from '../../components/AdminLayout.astro';
 import { fetchAllProducts } from '../../lib/products';
 
-const allProducts = await fetchAllProducts();
+const rawProducts = await fetchAllProducts();
+// In products.xlsx / products.json, new products are appended to the end.
+// Reverse order so recently added products appear first.
+const allProducts = [...rawProducts].reverse();
 
 const category = Astro.url.searchParams.get('category');
 const subcategory = Astro.url.searchParams.get('subcategory');
@@ -26,10 +29,10 @@ const filteredProducts = allProducts.filter(product => {
   return true;
 });
 
-function getProductSearchText(product) {
+function getProductSearchText(product: any) {
   const variantSearch = Array.isArray(product.variants)
     ? product.variants
-        .map(variant => [
+        .map((variant: any) => [
           variant?.part_no,
           variant?.variant_id,
           variant?.sku,
@@ -138,18 +141,18 @@ function getProductSearchText(product) {
 
   <script>
     // Filter functionality
-    const searchInput = document.getElementById('productSearch');
-    const featuredFilter = document.getElementById('featuredFilter');
+    const searchInput = document.getElementById('productSearch') as HTMLInputElement | null;
+    const featuredFilter = document.getElementById('featuredFilter') as HTMLInputElement | null;
     const rows = document.querySelectorAll('.product-row');
     const noResults = document.getElementById('noResults');
 
-    let scrollTimeout;
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
     function filterRows() {
       const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
       const showFeaturedOnly = featuredFilter ? featuredFilter.checked : false;
       let visibleCount = 0;
-      let firstMatch = null;
+      let firstMatch: HTMLElement | null = null;
 
       rows.forEach(row => {
         if (!(row instanceof HTMLElement)) return;
@@ -176,7 +179,7 @@ function getProductSearchText(product) {
       if (firstMatch && query.length > 1) {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-          firstMatch.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          firstMatch?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 400);
       }
     }
@@ -189,7 +192,9 @@ function getProductSearchText(product) {
     featureBtns.forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const target = e.currentTarget;
+        if (!(target instanceof HTMLButtonElement)) return;
         const partNo = target.dataset.partno;
+        if (!partNo) return;
         const isCurrentlyFeatured = target.dataset.featured === 'true';
         const willBeFeatured = !isCurrentlyFeatured;
 
@@ -243,17 +248,17 @@ function getProductSearchText(product) {
     // Delete functionality
     const deleteBtns = document.querySelectorAll('.delete-btn');
     const deleteModal = document.getElementById('deleteModal');
-    const cancelDeleteBtn = document.getElementById('cancelDelete');
-    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete') as HTMLButtonElement | null;
+    const confirmDeleteBtn = document.getElementById('confirmDelete') as HTMLButtonElement | null;
     const targetNameEl = document.getElementById('deleteTargetName');
     
-    let currentPartNoToDelete = null;
+    let currentPartNoToDelete: string | null = null;
 
     deleteBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const target = e.currentTarget;
         if (!(target instanceof HTMLButtonElement)) return;
-        currentPartNoToDelete = target.dataset.partno;
+        currentPartNoToDelete = target.dataset.partno || null;
         if (targetNameEl) targetNameEl.textContent = currentPartNoToDelete;
         if (deleteModal) deleteModal.style.display = 'flex';
       });

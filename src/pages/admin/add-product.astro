@@ -240,12 +240,29 @@ import AdminLayout from '../../components/AdminLayout.astro';
               <div id="imagePreviewContainer" class="image-preview-gallery" style="display: none;"></div>
             </div>
 
-            <div class="input-group full-width">
-              <label for="video_url">Video URL <span class="optional">(optional for featured banner)</span></label>
-              <div class="input-wrapper">
-                <input type="text" id="video_url" placeholder="https://res.cloudinary.com/.../video.mp4" autocomplete="off">
-                <div class="focus-border"></div>
+            <div class="input-group full-width video-upload-group" id="videoUploadGroup">
+              <div class="field-label-row">
+                <label for="video_url">Video URL <span class="optional">(Cloudinary video or upload directly)</span></label>
+                <span class="video-status-badge" id="videoStatusBadge" style="display: none;">Video attached</span>
               </div>
+              <div class="video-input-container">
+                <div class="input-wrapper video-input-wrapper">
+                  <input type="text" id="video_url" placeholder="https://res.cloudinary.com/.../video.mp4 or click Upload Video ➜" autocomplete="off">
+                  <div class="focus-border"></div>
+                </div>
+                <input type="file" id="videoFileInput" accept="video/*" style="display: none;">
+                <button type="button" id="uploadVideoBtn" class="upload-vid-btn" title="Upload a product video directly to Cloudinary">
+                  <span class="upload-vid-icon">🎥</span>
+                  <span class="upload-vid-text">Upload Video</span>
+                  <div class="upload-vid-spinner" style="display: none;"></div>
+                </button>
+              </div>
+
+              <!-- Video Upload Feedback -->
+              <div id="videoUploadFeedback" class="upload-feedback" style="display: none;"></div>
+
+              <!-- Live Video Preview Player Before Saving -->
+              <div id="videoPreviewContainer" class="video-preview-card" style="display: none;"></div>
             </div>
 
             <div class="input-group full-width">
@@ -1056,6 +1073,193 @@ import AdminLayout from '../../components/AdminLayout.astro';
         });
       }
 
+      // ============================================
+      // Cloudinary Video Upload & Live Preview
+      // ============================================
+      const videoUrlInput = document.getElementById('video_url');
+      const uploadVideoBtn = document.getElementById('uploadVideoBtn');
+      const videoFileInput = document.getElementById('videoFileInput');
+      const videoUploadFeedback = document.getElementById('videoUploadFeedback');
+      const videoPreviewContainer = document.getElementById('videoPreviewContainer');
+      const videoStatusBadge = document.getElementById('videoStatusBadge');
+      const videoUploadGroup = document.getElementById('videoUploadGroup');
+
+      function showVideoFeedback(msg, type = 'info', autoHideMs = 4500) {
+        if (!videoUploadFeedback) return;
+        videoUploadFeedback.innerHTML = msg;
+        videoUploadFeedback.className = `upload-feedback ${type}`;
+        videoUploadFeedback.style.display = 'block';
+
+        if (autoHideMs > 0) {
+          clearTimeout(videoUploadFeedback._timer);
+          videoUploadFeedback._timer = setTimeout(() => {
+            videoUploadFeedback.style.display = 'none';
+          }, autoHideMs);
+        }
+      }
+
+      function updateVideoPreview() {
+        if (!videoPreviewContainer || !videoUrlInput) return;
+        const url = videoUrlInput.value.trim();
+
+        if (!url) {
+          videoPreviewContainer.innerHTML = '';
+          videoPreviewContainer.style.display = 'none';
+          if (videoStatusBadge) videoStatusBadge.style.display = 'none';
+          return;
+        }
+
+        if (videoStatusBadge) {
+          videoStatusBadge.style.display = 'inline-block';
+        }
+
+        videoPreviewContainer.style.display = 'block';
+        videoPreviewContainer.innerHTML = `
+          <div class="video-player-wrapper">
+            <video src="${url}" controls playsinline preload="metadata" class="preview-video-element" onerror="this.parentElement.innerHTML='<div class=\\'video-error\\'>⚠️ Unable to load video preview. Please verify URL.</div>'"></video>
+          </div>
+          <div class="video-info-row">
+            <div class="video-meta">
+              <span class="video-badge">🎥 Featured Video</span>
+              <span class="video-meta-detail">Banner Media</span>
+            </div>
+            <div class="video-actions">
+              <a href="${url}" target="_blank" rel="noopener noreferrer" class="preview-action-btn view-btn" title="View video in new tab">↗ Open</a>
+              <button type="button" class="preview-action-btn remove-btn" id="removeVideoBtn" title="Remove video">✕ Remove</button>
+            </div>
+          </div>
+        `;
+
+        const removeBtn = videoPreviewContainer.querySelector('#removeVideoBtn');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', () => {
+            videoUrlInput.value = '';
+            videoUrlInput.dispatchEvent(new Event('input', { bubbles: true }));
+            updateVideoPreview();
+            showVideoFeedback('Video removed from form.', 'info', 2500);
+          });
+        }
+      }
+
+      if (videoUrlInput) {
+        videoUrlInput.addEventListener('input', () => {
+          updateVideoPreview();
+        });
+        videoUrlInput.addEventListener('paste', () => {
+          setTimeout(updateVideoPreview, 50);
+        });
+        updateVideoPreview();
+      }
+
+      async function handleVideoUpload(file) {
+        if (!file) return;
+
+        if (!file.type.startsWith('video/')) {
+          showVideoFeedback('Please select a valid video file (MP4, WebM, MOV, etc.).', 'error', 5000);
+          return;
+        }
+
+        const spinner = uploadVideoBtn?.querySelector('.upload-vid-spinner');
+        const btnText = uploadVideoBtn?.querySelector('.upload-vid-text');
+        const btnIcon = uploadVideoBtn?.querySelector('.upload-vid-icon');
+
+        if (uploadVideoBtn) {
+          uploadVideoBtn.disabled = true;
+          uploadVideoBtn.classList.add('uploading');
+        }
+        if (spinner) spinner.style.display = 'block';
+        if (btnIcon) btnIcon.style.display = 'none';
+        if (btnText) btnText.textContent = 'Uploading Video...';
+
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
+        showVideoFeedback(
+          `<span class="uploading-icon">⏳</span> Uploading video (${fileSizeMB} MB) to Cloudinary... Please wait.`,
+          'uploading',
+          0
+        );
+
+        try {
+          const formData = new FormData();
+          formData.append('video', file);
+
+          const response = await fetch('/api/upload-video', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            throw new Error(result.error || 'Failed to upload video');
+          }
+
+          videoUrlInput.value = result.url;
+          videoUrlInput.dispatchEvent(new Event('input', { bubbles: true }));
+          updateVideoPreview();
+
+          showVideoFeedback(
+            `✓ Video successfully uploaded to Cloudinary! Preview loaded below.`,
+            'success',
+            5000
+          );
+        } catch (err) {
+          console.error('Video upload failed:', err);
+          showVideoFeedback(
+            `✕ Video upload error: ${err.message || 'Could not upload video.'}`,
+            'error',
+            6500
+          );
+        } finally {
+          if (uploadVideoBtn) {
+            uploadVideoBtn.disabled = false;
+            uploadVideoBtn.classList.remove('uploading');
+          }
+          if (spinner) spinner.style.display = 'none';
+          if (btnIcon) btnIcon.style.display = 'inline-block';
+          if (btnText) btnText.textContent = 'Upload Video';
+        }
+      }
+
+      if (uploadVideoBtn && videoFileInput) {
+        uploadVideoBtn.addEventListener('click', () => {
+          videoFileInput.click();
+        });
+
+        videoFileInput.addEventListener('change', async () => {
+          const file = videoFileInput.files?.[0];
+          if (!file) return;
+          await handleVideoUpload(file);
+          videoFileInput.value = '';
+        });
+      }
+
+      // Drag and drop video
+      if (videoUploadGroup) {
+        ['dragenter', 'dragover'].forEach(eventName => {
+          videoUploadGroup.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            videoUploadGroup.classList.add('drag-over');
+          });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+          videoUploadGroup.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            videoUploadGroup.classList.remove('drag-over');
+          });
+        });
+
+        videoUploadGroup.addEventListener('drop', async (e) => {
+          const dt = e.dataTransfer;
+          const file = Array.from(dt?.files || []).find(f => f.type.startsWith('video/'));
+          if (file) {
+            await handleVideoUpload(file);
+          }
+        });
+      }
+
       // Variants JS Logic
       const variantsContainer = document.getElementById('variantsContainer');
       const addVariantBtn = document.getElementById('addVariantBtn');
@@ -1163,6 +1367,14 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
         if (imageCountBadge) imageCountBadge.style.display = 'none';
         if (uploadFeedback) uploadFeedback.style.display = 'none';
+
+        // Clear video preview & badges
+        if (videoPreviewContainer) {
+          videoPreviewContainer.innerHTML = '';
+          videoPreviewContainer.style.display = 'none';
+        }
+        if (videoStatusBadge) videoStatusBadge.style.display = 'none';
+        if (videoUploadFeedback) videoUploadFeedback.style.display = 'none';
 
         // Hide summary card
         const summaryCard = document.getElementById('submittedProductSummary');
@@ -2709,6 +2921,168 @@ import AdminLayout from '../../components/AdminLayout.astro';
       align-items: stretch;
     }
     .upload-img-btn {
+      width: 100%;
+    }
+  }
+
+  /* ============================================
+     Video Upload & Live Preview Styles
+     ============================================ */
+  .video-upload-group {
+    position: relative;
+    transition: all 0.25s ease;
+  }
+
+  .video-status-badge {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .video-input-container {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .video-input-wrapper {
+    flex: 1;
+  }
+
+  .upload-vid-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1.4rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.1));
+    border: 1px solid #3b82f6;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 48px;
+    flex-shrink: 0;
+  }
+
+  .upload-vid-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .upload-vid-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .upload-vid-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: uploadSpin 0.75s linear infinite;
+  }
+
+  .video-upload-group.drag-over {
+    border-radius: 16px;
+    background: rgba(59, 130, 246, 0.05);
+  }
+
+  .video-upload-group.drag-over .video-input-container {
+    outline: 2px dashed #3b82f6;
+    outline-offset: 4px;
+    border-radius: 14px;
+  }
+
+  .video-preview-card {
+    margin-top: 1rem;
+    background: rgba(15, 17, 23, 0.95);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 0.85rem;
+    animation: fadeInSlide 0.3s ease-out;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+
+  .video-player-wrapper {
+    width: 100%;
+    max-height: 280px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-video-element {
+    width: 100%;
+    max-height: 280px;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  .video-error {
+    padding: 2rem;
+    color: #f87171;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .video-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .video-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .video-badge {
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .video-meta-detail {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .video-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .video-input-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .upload-vid-btn {
       width: 100%;
     }
   }

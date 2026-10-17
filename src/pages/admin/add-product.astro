@@ -215,12 +215,29 @@ import AdminLayout from '../../components/AdminLayout.astro';
               </div>
             </div>
 
-            <div class="input-group full-width">
-              <label for="images">Image URLs <span class="optional">(comma separated)</span></label>
-              <div class="input-wrapper">
-                <input type="text" id="images" placeholder="https://image1.jpg, https://image2.jpg" autocomplete="off">
-                <div class="focus-border"></div>
+            <div class="input-group full-width image-upload-group" id="imageUploadGroup">
+              <div class="field-label-row">
+                <label for="images">Product Images <span class="optional">(Cloudinary or comma separated URLs)</span></label>
+                <span class="image-count-badge" id="imageCountBadge" style="display: none;">0 images</span>
               </div>
+              <div class="image-input-container">
+                <div class="input-wrapper image-input-wrapper">
+                  <input type="text" id="images" placeholder="https://res.cloudinary.com/... or click Upload Image ➜" autocomplete="off">
+                  <div class="focus-border"></div>
+                </div>
+                <input type="file" id="imageFileInput" accept="image/*" multiple style="display: none;">
+                <button type="button" id="uploadImageBtn" class="upload-img-btn" title="Upload image(s) to Cloudinary">
+                  <span class="upload-btn-icon">☁️</span>
+                  <span class="upload-btn-text">Upload Image</span>
+                  <div class="upload-spinner" style="display: none;"></div>
+                </button>
+              </div>
+
+              <!-- Upload Feedback -->
+              <div id="uploadFeedback" class="upload-feedback" style="display: none;"></div>
+
+              <!-- Live Image Preview Gallery Before Saving -->
+              <div id="imagePreviewContainer" class="image-preview-gallery" style="display: none;"></div>
             </div>
 
             <div class="input-group full-width">
@@ -820,6 +837,225 @@ import AdminLayout from '../../components/AdminLayout.astro';
         });
       }
 
+      // ============================================
+      // Cloudinary Image Upload & Live Preview
+      // ============================================
+      const imagesInput = document.getElementById('images');
+      const uploadImageBtn = document.getElementById('uploadImageBtn');
+      const imageFileInput = document.getElementById('imageFileInput');
+      const uploadFeedback = document.getElementById('uploadFeedback');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const imageCountBadge = document.getElementById('imageCountBadge');
+      const imageUploadGroup = document.getElementById('imageUploadGroup');
+
+      function parseImageUrls(raw) {
+        if (!raw) return [];
+        return raw.split(',').map(s => s.trim()).filter(Boolean);
+      }
+
+      function setImageUrls(urls) {
+        if (!imagesInput) return;
+        imagesInput.value = urls.join(', ');
+        imagesInput.dispatchEvent(new Event('input', { bubbles: true }));
+        updateImagePreviews();
+      }
+
+      function showUploadFeedback(msg, type = 'info', autoHideMs = 4500) {
+        if (!uploadFeedback) return;
+        uploadFeedback.innerHTML = msg;
+        uploadFeedback.className = `upload-feedback ${type}`;
+        uploadFeedback.style.display = 'block';
+
+        if (autoHideMs > 0) {
+          clearTimeout(uploadFeedback._timer);
+          uploadFeedback._timer = setTimeout(() => {
+            uploadFeedback.style.display = 'none';
+          }, autoHideMs);
+        }
+      }
+
+      function updateImagePreviews() {
+        if (!imagePreviewContainer || !imagesInput) return;
+        const urls = parseImageUrls(imagesInput.value);
+
+        if (imageCountBadge) {
+          if (urls.length > 0) {
+            imageCountBadge.textContent = `${urls.length} image${urls.length > 1 ? 's' : ''}`;
+            imageCountBadge.style.display = 'inline-block';
+          } else {
+            imageCountBadge.style.display = 'none';
+          }
+        }
+
+        if (urls.length === 0) {
+          imagePreviewContainer.innerHTML = '';
+          imagePreviewContainer.style.display = 'none';
+          return;
+        }
+
+        imagePreviewContainer.style.display = 'grid';
+        imagePreviewContainer.innerHTML = urls.map((url, index) => {
+          const isMain = index === 0;
+          return `
+            <div class="preview-card ${isMain ? 'is-main' : ''}" data-index="${index}">
+              <div class="preview-thumb-box">
+                <img src="${url}" alt="Product preview ${index + 1}" class="preview-img" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'%23ef4444\\' stroke-width=\\'2\\'><rect width=\\'18\\' height=\\'18\\' x=\\'3\\' y=\\'3\\' rx=\\'2\\'/><circle cx=\\'9\\' cy=\\'9\\' r=\\'2\\'/><path d=\\'m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\\'/></svg>'; this.classList.add('img-error');">
+                <span class="preview-badge ${isMain ? 'main-badge' : ''}">
+                  ${isMain ? '★ Primary' : '#' + (index + 1)}
+                </span>
+                <div class="preview-overlay">
+                  ${!isMain ? `<button type="button" class="preview-action-btn set-main-btn" data-action="set-main" data-index="${index}" title="Set as primary product image">★ Main</button>` : ''}
+                  <a href="${url}" target="_blank" rel="noopener noreferrer" class="preview-action-btn view-btn" title="View full image">↗</a>
+                  <button type="button" class="preview-action-btn remove-btn" data-action="remove" data-index="${index}" title="Remove this image">✕</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Preview actions delegation (set-main and remove)
+      if (imagePreviewContainer) {
+        imagePreviewContainer.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-action]');
+          if (!btn) return;
+          const action = btn.dataset.action;
+          const index = parseInt(btn.dataset.index, 10);
+          const urls = parseImageUrls(imagesInput.value);
+
+          if (action === 'remove') {
+            urls.splice(index, 1);
+            setImageUrls(urls);
+            showUploadFeedback('Image removed from list.', 'info', 2500);
+          } else if (action === 'set-main') {
+            const [selected] = urls.splice(index, 1);
+            urls.unshift(selected);
+            setImageUrls(urls);
+            showUploadFeedback('Set as primary product image!', 'success', 2500);
+          }
+        });
+      }
+
+      // Live updates when user types or pastes image URLs
+      if (imagesInput) {
+        imagesInput.addEventListener('input', () => {
+          updateImagePreviews();
+        });
+        imagesInput.addEventListener('paste', () => {
+          setTimeout(updateImagePreviews, 50);
+        });
+        // Initial render if field already has value
+        updateImagePreviews();
+      }
+
+      async function handleFilesUpload(files) {
+        if (!files || files.length === 0) return;
+
+        const spinner = uploadImageBtn?.querySelector('.upload-spinner');
+        const btnText = uploadImageBtn?.querySelector('.upload-btn-text');
+        const btnIcon = uploadImageBtn?.querySelector('.upload-btn-icon');
+
+        if (uploadImageBtn) {
+          uploadImageBtn.disabled = true;
+          uploadImageBtn.classList.add('uploading');
+        }
+        if (spinner) spinner.style.display = 'block';
+        if (btnIcon) btnIcon.style.display = 'none';
+        if (btnText) btnText.textContent = files.length > 1 ? `Uploading (${files.length})...` : 'Uploading...';
+
+        showUploadFeedback(
+          `<span class="uploading-icon">⏳</span> Uploading ${files.length} image${files.length > 1 ? 's' : ''} to Cloudinary...`,
+          'uploading',
+          0
+        );
+
+        try {
+          const formData = new FormData();
+          files.forEach(file => {
+            formData.append('files', file);
+          });
+
+          const response = await fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            throw new Error(result.error || 'Failed to upload image(s)');
+          }
+
+          // Merge newly uploaded URLs with any existing URLs
+          const currentUrls = parseImageUrls(imagesInput.value);
+          const newUrls = result.urls || [result.url];
+          const combined = [...currentUrls, ...newUrls];
+          setImageUrls(combined);
+
+          showUploadFeedback(
+            `✓ Successfully uploaded ${newUrls.length} image${newUrls.length > 1 ? 's' : ''} to Cloudinary! Preview updated.`,
+            'success',
+            4500
+          );
+        } catch (err) {
+          console.error('Upload failed:', err);
+          showUploadFeedback(
+            `✕ Upload error: ${err.message || 'Could not upload image.'}`,
+            'error',
+            6000
+          );
+        } finally {
+          if (uploadImageBtn) {
+            uploadImageBtn.disabled = false;
+            uploadImageBtn.classList.remove('uploading');
+          }
+          if (spinner) spinner.style.display = 'none';
+          if (btnIcon) btnIcon.style.display = 'inline-block';
+          if (btnText) btnText.textContent = 'Upload Image';
+        }
+      }
+
+      // Button click triggers file chooser
+      if (uploadImageBtn && imageFileInput) {
+        uploadImageBtn.addEventListener('click', () => {
+          imageFileInput.click();
+        });
+
+        imageFileInput.addEventListener('change', async () => {
+          const files = Array.from(imageFileInput.files || []);
+          if (files.length === 0) return;
+          await handleFilesUpload(files);
+          imageFileInput.value = '';
+        });
+      }
+
+      // Drag and drop image files onto image upload container
+      if (imageUploadGroup) {
+        ['dragenter', 'dragover'].forEach(eventName => {
+          imageUploadGroup.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            imageUploadGroup.classList.add('drag-over');
+          });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+          imageUploadGroup.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            imageUploadGroup.classList.remove('drag-over');
+          });
+        });
+
+        imageUploadGroup.addEventListener('drop', async (e) => {
+          const dt = e.dataTransfer;
+          const files = Array.from(dt?.files || []).filter(f => f.type.startsWith('image/'));
+          if (files.length > 0) {
+            await handleFilesUpload(files);
+          }
+        });
+      }
+
       // Variants JS Logic
       const variantsContainer = document.getElementById('variantsContainer');
       const addVariantBtn = document.getElementById('addVariantBtn');
@@ -920,6 +1156,14 @@ import AdminLayout from '../../components/AdminLayout.astro';
         const featuredSettings = document.getElementById('featuredSettings');
         if (featuredSettings) featuredSettings.style.display = 'none';
         
+        // Clear image previews & badges
+        if (imagePreviewContainer) {
+          imagePreviewContainer.innerHTML = '';
+          imagePreviewContainer.style.display = 'none';
+        }
+        if (imageCountBadge) imageCountBadge.style.display = 'none';
+        if (uploadFeedback) uploadFeedback.style.display = 'none';
+
         // Hide summary card
         const summaryCard = document.getElementById('submittedProductSummary');
         if (summaryCard) summaryCard.style.display = 'none';
@@ -2178,5 +2422,294 @@ import AdminLayout from '../../components/AdminLayout.astro';
   .dest-option:hover .dest-card {
     background: rgba(255, 255, 255, 0.06);
     transform: translateY(-2px);
+  }
+
+  /* ============================================
+     Image Upload & Live Preview Styles
+     ============================================ */
+  .image-upload-group {
+    position: relative;
+    transition: all 0.25s ease;
+  }
+
+  .field-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .field-label-row label {
+    margin-bottom: 0;
+  }
+
+  .image-count-badge {
+    background: rgba(197, 160, 40, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(197, 160, 40, 0.35);
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .image-input-container {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .image-input-wrapper {
+    flex: 1;
+  }
+
+  .upload-img-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1.4rem;
+    background: linear-gradient(135deg, rgba(197, 160, 40, 0.25), rgba(197, 160, 40, 0.1));
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 48px;
+    flex-shrink: 0;
+  }
+
+  .upload-img-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--accent), #eab308);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(197, 160, 40, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .upload-img-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .upload-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: uploadSpin 0.75s linear infinite;
+  }
+
+  @keyframes uploadSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .image-upload-group.drag-over {
+    border-radius: 16px;
+    background: rgba(197, 160, 40, 0.05);
+  }
+
+  .image-upload-group.drag-over .image-input-container {
+    outline: 2px dashed var(--accent);
+    outline-offset: 4px;
+    border-radius: 14px;
+  }
+
+  .upload-feedback {
+    margin-top: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    animation: fadeInSlide 0.25s ease-out;
+  }
+
+  .upload-feedback.uploading {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    color: #93c5fd;
+  }
+
+  .upload-feedback.success {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #6ee7b7;
+  }
+
+  .upload-feedback.error {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+  }
+
+  .upload-feedback.info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+  }
+
+  /* Live Image Preview Gallery */
+  .image-preview-gallery {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 0.9rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1rem;
+    animation: fadeInSlide 0.3s ease-out;
+  }
+
+  .preview-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(15, 17, 23, 0.9);
+    border: 1px solid var(--glass-border);
+    transition: all 0.25s ease;
+  }
+
+  .preview-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(197, 160, 40, 0.5);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+  }
+
+  .preview-card.is-main {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(197, 160, 40, 0.25);
+  }
+
+  .preview-thumb-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #090b0e;
+    overflow: hidden;
+  }
+
+  .preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .preview-card:hover .preview-img {
+    transform: scale(1.05);
+  }
+
+  .preview-img.img-error {
+    object-fit: scale-down;
+    padding: 1.5rem;
+    opacity: 0.6;
+  }
+
+  .preview-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #e5e7eb;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .preview-badge.main-badge {
+    background: linear-gradient(135deg, var(--accent), #eab308);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  .preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+  }
+
+  .preview-card:hover .preview-overlay {
+    opacity: 1;
+  }
+
+  .preview-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 0.3rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .preview-action-btn:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.08);
+  }
+
+  .preview-action-btn.remove-btn {
+    background: rgba(239, 68, 68, 0.4);
+    border-color: rgba(239, 68, 68, 0.6);
+  }
+
+  .preview-action-btn.remove-btn:hover {
+    background: #ef4444;
+    color: #fff;
+  }
+
+  .preview-action-btn.set-main-btn {
+    background: rgba(197, 160, 40, 0.35);
+    border-color: var(--accent);
+    color: #fef08a;
+  }
+
+  .preview-action-btn.set-main-btn:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  @media (max-width: 640px) {
+    .image-input-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .upload-img-btn {
+      width: 100%;
+    }
   }
 </style>

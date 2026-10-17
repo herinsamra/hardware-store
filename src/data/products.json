@@ -3034,5 +3034,30 @@
     "featured_link_type": "product",
     "featured_button_text": "",
     "key_features": "[\"Wattage: 12 Watts\",\"Mount Type: Wall Mounted\",\"IP Rating: IP65\",\"Light Source: LED\",\"Application: Outdoor, Garden\"]"
+  },
+  {
+    "part_no": "ZZ07733",
+    "category": "Paints",
+    "subcategory": "Water_Proofing",
+    "subsubcategory": "Other_Items",
+    "type": "",
+    "product_name": "EZY SEAL MSEAL 40GM",
+    "description": "M-Seal Ezyseal (40gm) is your go-to elastomeric sealant for versatile household repairs.  Perfect for sealing leaks in roofing, water tanks, plumbing, and filling gaps around doors & windows. Its flexible, durable bond adheres well to plastic for lasting solutions. Tackle DIY maintenance with ease!",
+    "brand": "M-seal",
+    "images": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223819/products/dld3zm0xzt2uhotzkggz.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223754/products/ukersp6ylytz5nniwqfq.png, https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223819/products/hbnd9vxj3ird1fezohmn.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223822/products/e7vtkiq5bpssomxifd9b.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223823/products/bek2v64sgcsri4cjrxtb.webp, https://res.cloudinary.com/dthi2vgiz/image/upload/v1792223823/products/mvv5s68f4veq2o8jr83h.webp",
+    "mrp": "40",
+    "slug": "ezy-seal-mseal-40gm",
+    "meta_title": "M-Seal Ezyseal 40gm: Versatile Sealant",
+    "meta_description": "M-Seal Ezyseal (40gm) is a ready-to-use elastomeric sealant for household repairs. Seal leaks, fill gaps, and fix household items with this flexible, durable solution.",
+    "variant_name": "",
+    "is_featured": "true",
+    "slogan": "Ezy Seal: Fix It All, Simply!",
+    "video_url": "",
+    "variants": "",
+    "unit": "",
+    "featured_link": "",
+    "featured_link_type": "product",
+    "featured_button_text": "M-Seal Ezyseal: One Sealant, Multiple Repair Solutions!",
+    "key_features": "[\"Product Name: M-Seal Ezyseal\",\"Size: 40gm\",\"Type: Elastomeric Sealant\",\"Adhesion: Good to Plastic\",\"Application: Gap Filling\"]"
   }
 ]

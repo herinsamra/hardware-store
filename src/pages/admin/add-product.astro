@@ -233,6 +233,31 @@ import AdminLayout from '../../components/AdminLayout.astro';
                 </button>
               </div>
 
+              <!-- Background Removal Toggle -->
+              <div class="bgremove-toggle-row" id="bgRemoveToggleRow">
+                <label class="bgremove-toggle-label" for="bgRemoveToggle">
+                  <input type="checkbox" id="bgRemoveToggle">
+                  <span class="bgremove-switch"></span>
+                  <span class="bgremove-label-text">
+                    <span class="bgremove-icon">✂️</span> Remove Background
+                  </span>
+                  <span class="bgremove-hint">(auto-removes before upload)</span>
+                </label>
+              </div>
+
+              <!-- BgRemove Progress -->
+              <div id="bgRemoveProgress" class="bgremove-progress" style="display: none;">
+                <div class="bgremove-progress-header">
+                  <span class="bgremove-progress-icon">✂️</span>
+                  <span class="bgremove-progress-label">Removing background...</span>
+                  <span class="bgremove-progress-pct" id="bgRemoveProgressPct">0%</span>
+                </div>
+                <div class="bgremove-progress-bar">
+                  <div class="bgremove-progress-fill" id="bgRemoveProgressFill"></div>
+                </div>
+                <p class="bgremove-progress-status" id="bgRemoveProgressStatus">Preparing model...</p>
+              </div>
+
               <!-- Upload Feedback -->
               <div id="uploadFeedback" class="upload-feedback" style="display: none;"></div>
 
@@ -444,6 +469,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
       </form>
     </div>
   </div>
+
+  <!-- BgRemove SDK -->
+  <script src="https://bgremovers.org/sdk/v1.js" defer></script>
 
   <script is:inline>
     document.addEventListener('DOMContentLoaded', async () => {
@@ -965,6 +993,96 @@ import AdminLayout from '../../components/AdminLayout.astro';
         updateImagePreviews();
       }
 
+      // ============================================
+      // BgRemove SDK integration
+      // ============================================
+      const bgRemoveToggle = document.getElementById('bgRemoveToggle');
+      const bgRemoveProgress = document.getElementById('bgRemoveProgress');
+      const bgRemoveProgressFill = document.getElementById('bgRemoveProgressFill');
+      const bgRemoveProgressPct = document.getElementById('bgRemoveProgressPct');
+      const bgRemoveProgressStatus = document.getElementById('bgRemoveProgressStatus');
+      let bgRemovePreloaded = false;
+
+      // Preload BgRemove model when toggle is first enabled
+      if (bgRemoveToggle) {
+        bgRemoveToggle.addEventListener('change', () => {
+          if (bgRemoveToggle.checked && !bgRemovePreloaded) {
+            bgRemovePreloaded = true;
+            try {
+              if (typeof BgRemove !== 'undefined' && BgRemove.preload) {
+                BgRemove.preload();
+                showUploadFeedback('✂️ Background removal model is loading in the background...', 'info', 3000);
+              }
+            } catch (e) {
+              console.warn('BgRemove preload skipped:', e);
+            }
+          }
+        });
+      }
+
+      function showBgRemoveProgress(show) {
+        if (bgRemoveProgress) bgRemoveProgress.style.display = show ? 'block' : 'none';
+        if (!show) {
+          updateBgRemoveProgress(0, 'Preparing model...');
+        }
+      }
+
+      function updateBgRemoveProgress(pct, statusText) {
+        const percent = Math.min(Math.round(pct * 100), 100);
+        if (bgRemoveProgressFill) bgRemoveProgressFill.style.width = `${percent}%`;
+        if (bgRemoveProgressPct) bgRemoveProgressPct.textContent = `${percent}%`;
+        if (bgRemoveProgressStatus) bgRemoveProgressStatus.textContent = statusText || `Processing... ${percent}%`;
+      }
+
+      async function removeBackgroundFromFile(file, index, total) {
+        return new Promise(async (resolve, reject) => {
+          try {
+            if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+              throw new Error('BgRemove SDK not loaded. Please wait and try again.');
+            }
+
+            updateBgRemoveProgress(0, `Removing background from image ${index + 1}/${total}...`);
+
+            const resultBlob = await BgRemove.removeBackground(file, {
+              maxDimension: 4096,
+              onProgress: (p) => {
+                updateBgRemoveProgress(p, `Removing background from image ${index + 1}/${total}... ${Math.round(p * 100)}%`);
+              }
+            });
+
+            // Convert blob to File object for FormData
+            const cleanName = file.name.replace(/\.[^.]+$/, '') + '_nobg.png';
+            const resultFile = new File([resultBlob], cleanName, { type: 'image/png' });
+            resolve(resultFile);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+
+      async function processFilesWithBgRemove(files) {
+        const processed = [];
+        showBgRemoveProgress(true);
+
+        for (let i = 0; i < files.length; i++) {
+          try {
+            const result = await removeBackgroundFromFile(files[i], i, files.length);
+            processed.push(result);
+          } catch (err) {
+            console.error(`BgRemove failed for ${files[i].name}:`, err);
+            showUploadFeedback(
+              `⚠️ Background removal failed for "${files[i].name}": ${err.message}. Uploading original instead.`,
+              'warning',
+              5000
+            );
+            processed.push(files[i]); // Fall back to original file
+          }
+        }
+
+        showBgRemoveProgress(false);
+        return processed;
+      }
+
       async function handleFilesUpload(files) {
         if (!files || files.length === 0) return;
 
@@ -978,17 +1096,41 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
         if (spinner) spinner.style.display = 'block';
         if (btnIcon) btnIcon.style.display = 'none';
-        if (btnText) btnText.textContent = files.length > 1 ? `Uploading (${files.length})...` : 'Uploading...';
+
+        // If BgRemove toggle is ON, process files first
+        let filesToUpload = files;
+        if (bgRemoveToggle?.checked) {
+          if (btnText) btnText.textContent = 'Removing BG...';
+          showUploadFeedback(
+            `<span class="uploading-icon">✂️</span> Removing background from ${files.length} image${files.length > 1 ? 's' : ''}...`,
+            'uploading',
+            0
+          );
+
+          try {
+            filesToUpload = await processFilesWithBgRemove(files);
+          } catch (err) {
+            console.error('BgRemove batch error:', err);
+            showUploadFeedback(
+              `⚠️ Background removal encountered an error. Uploading originals instead.`,
+              'warning',
+              5000
+            );
+            filesToUpload = files; // Fallback to originals
+          }
+        }
+
+        if (btnText) btnText.textContent = filesToUpload.length > 1 ? `Uploading (${filesToUpload.length})...` : 'Uploading...';
 
         showUploadFeedback(
-          `<span class="uploading-icon">⏳</span> Uploading ${files.length} image${files.length > 1 ? 's' : ''} to Cloudinary...`,
+          `<span class="uploading-icon">⏳</span> Uploading ${filesToUpload.length} image${filesToUpload.length > 1 ? 's' : ''} to Cloudinary...`,
           'uploading',
           0
         );
 
         try {
           const formData = new FormData();
-          files.forEach(file => {
+          filesToUpload.forEach(file => {
             formData.append('files', file);
           });
 
@@ -1009,8 +1151,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
           const combined = [...currentUrls, ...newUrls];
           setImageUrls(combined);
 
+          const bgNote = bgRemoveToggle?.checked ? ' (background removed)' : '';
           showUploadFeedback(
-            `✓ Successfully uploaded ${newUrls.length} image${newUrls.length > 1 ? 's' : ''} to Cloudinary! Preview updated.`,
+            `✓ Successfully uploaded ${newUrls.length} image${newUrls.length > 1 ? 's' : ''}${bgNote} to Cloudinary! Preview updated.`,
             'success',
             4500
           );
@@ -3085,5 +3228,164 @@ import AdminLayout from '../../components/AdminLayout.astro';
     .upload-vid-btn {
       width: 100%;
     }
+  }
+
+  /* ============================================
+     BgRemove Toggle & Progress Styles
+     ============================================ */
+  .bgremove-toggle-row {
+    margin-top: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(139, 92, 246, 0.06);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .bgremove-toggle-row:has(input:checked) {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
+  }
+
+  .bgremove-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    user-select: none;
+    transition: color 0.2s;
+  }
+
+  .bgremove-toggle-label:hover {
+    color: var(--text-primary);
+  }
+
+  .bgremove-toggle-label input[type="checkbox"] {
+    display: none;
+  }
+
+  .bgremove-switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .bgremove-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .bgremove-toggle-label input:checked + .bgremove-switch {
+    background: rgba(139, 92, 246, 0.5);
+    border-color: rgba(139, 92, 246, 0.6);
+  }
+
+  .bgremove-toggle-label input:checked + .bgremove-switch::after {
+    left: 18px;
+    background: #a78bfa;
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+  }
+
+  .bgremove-label-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .bgremove-icon {
+    font-size: 1rem;
+  }
+
+  .bgremove-hint {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  /* BgRemove Progress */
+  .bgremove-progress {
+    margin-top: 0.6rem;
+    padding: 0.8rem 1rem;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 10px;
+    animation: bgremovePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes bgremovePulse {
+    0%, 100% { border-color: rgba(139, 92, 246, 0.2); }
+    50% { border-color: rgba(139, 92, 246, 0.45); }
+  }
+
+  .bgremove-progress-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bgremove-progress-icon {
+    font-size: 1rem;
+    animation: scissorSnip 0.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes scissorSnip {
+    0% { transform: rotate(-5deg) scale(1); }
+    100% { transform: rotate(5deg) scale(1.1); }
+  }
+
+  .bgremove-progress-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c4b5fd;
+    flex: 1;
+  }
+
+  .bgremove-progress-pct {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #a78bfa;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bgremove-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bgremove-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa, #c4b5fd);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+  }
+
+  .bgremove-progress-status {
+    margin: 0.4rem 0 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
   }
 </style>

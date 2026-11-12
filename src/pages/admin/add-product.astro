@@ -677,6 +677,16 @@ import AdminLayout from '../../components/AdminLayout.astro';
       let partNoCheckRequestId = 0;
       let partNoDuplicateExists = false;
       let partNoCheckPending = false;
+      let isUploadingImage = false;
+      let isRemovingBg = false;
+      let isUploadingVideo = false;
+
+      // Prevent accidental form submission when pressing Enter in inputs
+      form.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target !== submitBtn) {
+          e.preventDefault();
+        }
+      });
 
       function normalizePartNo(value) {
         return value.trim().toUpperCase();
@@ -690,7 +700,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       function updateSubmitAvailability() {
         if (!submitBtn) return;
-        submitBtn.disabled = partNoDuplicateExists || partNoCheckPending;
+        submitBtn.disabled = partNoDuplicateExists || partNoCheckPending || isUploadingImage || isRemovingBg || isUploadingVideo;
       }
 
       function resetPartNoCheck() {
@@ -783,6 +793,12 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        if (isUploadingImage || isRemovingBg || isUploadingVideo) {
+          showMessage('Please wait for image/video upload to complete before saving the product.', 'warning');
+          return;
+        }
+
         messageDiv.style.display = 'none';
 
         const subsubCheckboxes = Array.from(document.querySelectorAll('.subsub-checkbox:checked')).map(cb => cb.value);
@@ -950,6 +966,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
                 </span>
                 <div class="preview-overlay">
                   ${!isMain ? `<button type="button" class="preview-action-btn set-main-btn" data-action="set-main" data-index="${index}" title="Set as primary product image">★ Main</button>` : ''}
+                  <button type="button" class="preview-action-btn bg-remove-btn" data-action="remove-bg" data-index="${index}" title="Remove background from this image">✂️ Remove BG</button>
                   <a href="${url}" target="_blank" rel="noopener noreferrer" class="preview-action-btn view-btn" title="View full image">↗</a>
                   <button type="button" class="preview-action-btn remove-btn" data-action="remove" data-index="${index}" title="Remove this image">✕</button>
                 </div>
@@ -959,11 +976,13 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }).join('');
       }
 
-      // Preview actions delegation (set-main and remove)
+      // Preview actions delegation (set-main, remove, and remove-bg)
       if (imagePreviewContainer) {
-        imagePreviewContainer.addEventListener('click', (e) => {
+        imagePreviewContainer.addEventListener('click', async (e) => {
           const btn = e.target.closest('[data-action]');
           if (!btn) return;
+          e.preventDefault();
+          e.stopPropagation();
           const action = btn.dataset.action;
           const index = parseInt(btn.dataset.index, 10);
           const urls = parseImageUrls(imagesInput.value);
@@ -977,6 +996,11 @@ import AdminLayout from '../../components/AdminLayout.astro';
             urls.unshift(selected);
             setImageUrls(urls);
             showUploadFeedback('Set as primary product image!', 'success', 2500);
+          } else if (action === 'remove-bg') {
+            const targetUrl = urls[index];
+            if (targetUrl) {
+              await removeBackgroundFromUrl(targetUrl, index);
+            }
           }
         });
       }
@@ -1027,8 +1051,36 @@ import AdminLayout from '../../components/AdminLayout.astro';
         }
       }
 
+      function extractProgressPct(p) {
+        if (typeof p === 'number') return Math.min(Math.max(p, 0), 1);
+        if (!p || typeof p !== 'object') return 0;
+        if (typeof p.progress === 'number') return Math.min(Math.max(p.progress, 0), 1);
+        if (p.progress && typeof p.progress.progress === 'number') return Math.min(Math.max(p.progress.progress, 0), 1);
+        if (p.loaded && p.total) return Math.min(Math.max(p.loaded / p.total, 0), 1);
+        if (p.stage === 'loading-runtime') return 0.1;
+        if (p.stage === 'loading-model') return 0.25;
+        if (p.stage === 'ready') return 0.6;
+        return 0.3;
+      }
+
+      function extractStatusMessage(p, fallback) {
+        if (!p) return fallback;
+        if (typeof p === 'string') return p;
+        if (typeof p === 'object') {
+          if (p.stage === 'loading-runtime') return 'Loading AI runtime...';
+          if (p.stage === 'loading-model') return 'Loading AI model...';
+          if (p.stage === 'downloading') {
+            const pct = Math.round(extractProgressPct(p) * 100);
+            return `Downloading AI model... ${pct}%`;
+          }
+          if (p.stage === 'ready') return 'Processing image...';
+        }
+        return fallback;
+      }
+
       function updateBgRemoveProgress(pct, statusText) {
-        const percent = Math.min(Math.round(pct * 100), 100);
+        const numeric = extractProgressPct(pct);
+        const percent = Math.min(Math.round(numeric * 100), 100);
         if (bgRemoveProgressFill) bgRemoveProgressFill.style.width = `${percent}%`;
         if (bgRemoveProgressPct) bgRemoveProgressPct.textContent = `${percent}%`;
         if (bgRemoveProgressStatus) bgRemoveProgressStatus.textContent = statusText || `Processing... ${percent}%`;
@@ -1038,7 +1090,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
         return new Promise(async (resolve, reject) => {
           try {
             if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
-              throw new Error('BgRemove SDK not loaded. Please wait and try again.');
+              throw new Error('BgRemove SDK not loaded yet. Please wait a moment and try again.');
             }
 
             updateBgRemoveProgress(0, `Removing background from image ${index + 1}/${total}...`);
@@ -1046,7 +1098,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
             const resultBlob = await BgRemove.removeBackground(file, {
               maxDimension: 4096,
               onProgress: (p) => {
-                updateBgRemoveProgress(p, `Removing background from image ${index + 1}/${total}... ${Math.round(p * 100)}%`);
+                const prog = extractProgressPct(p);
+                const status = extractStatusMessage(p, `Removing background from image ${index + 1}/${total}... ${Math.round(prog * 100)}%`);
+                updateBgRemoveProgress(prog, status);
               }
             });
 
@@ -1083,8 +1137,77 @@ import AdminLayout from '../../components/AdminLayout.astro';
         return processed;
       }
 
+      async function removeBackgroundFromUrl(url, index) {
+        if (isUploadingImage || isRemovingBg || isUploadingVideo) {
+          showUploadFeedback('Another upload or processing task is running. Please wait...', 'warning', 3500);
+          return;
+        }
+
+        isRemovingBg = true;
+        updateSubmitAvailability();
+
+        try {
+          if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+            throw new Error('BgRemove SDK is loading. Please wait a few seconds and try again.');
+          }
+
+          showBgRemoveProgress(true);
+          updateBgRemoveProgress(0.05, 'Downloading image for background removal...');
+
+          const response = await fetch(url, { mode: 'cors' });
+          if (!response.ok) {
+            throw new Error(`Failed to load image (${response.status})`);
+          }
+          const blob = await response.blob();
+
+          updateBgRemoveProgress(0.2, 'Removing background (RMBG-1.4 AI)...');
+          const resultBlob = await BgRemove.removeBackground(blob, {
+            maxDimension: 4096,
+            onProgress: (p) => {
+              const prog = extractProgressPct(p);
+              const status = extractStatusMessage(p, `Removing background... ${Math.round(prog * 100)}%`);
+              updateBgRemoveProgress(prog, status);
+            }
+          });
+
+          updateBgRemoveProgress(0.85, 'Uploading transparent image to Cloudinary...');
+          const cleanName = `nobg_${Date.now()}.png`;
+          const resultFile = new File([resultBlob], cleanName, { type: 'image/png' });
+
+          const formData = new FormData();
+          formData.append('files', resultFile);
+
+          const uploadRes = await fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const uploadResult = await uploadRes.json();
+          if (!uploadRes.ok || !uploadResult.success) {
+            throw new Error(uploadResult.error || 'Failed to upload background-removed image');
+          }
+
+          const newUrl = uploadResult.urls?.[0] || uploadResult.url;
+          const urls = parseImageUrls(imagesInput.value);
+          urls[index] = newUrl;
+          setImageUrls(urls);
+
+          showUploadFeedback('✓ Background removed successfully! Image updated.', 'success', 4500);
+        } catch (err) {
+          console.error('Remove BG from URL failed:', err);
+          showUploadFeedback(`✕ Background removal failed: ${err.message}`, 'error', 6000);
+        } finally {
+          isRemovingBg = false;
+          showBgRemoveProgress(false);
+          updateSubmitAvailability();
+        }
+      }
+
       async function handleFilesUpload(files) {
         if (!files || files.length === 0) return;
+
+        isUploadingImage = true;
+        updateSubmitAvailability();
 
         const spinner = uploadImageBtn?.querySelector('.upload-spinner');
         const btnText = uploadImageBtn?.querySelector('.upload-btn-text');
@@ -1165,6 +1288,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
             6000
           );
         } finally {
+          isUploadingImage = false;
+          isRemovingBg = false;
           if (uploadImageBtn) {
             uploadImageBtn.disabled = false;
             uploadImageBtn.classList.remove('uploading');
@@ -1172,16 +1297,40 @@ import AdminLayout from '../../components/AdminLayout.astro';
           if (spinner) spinner.style.display = 'none';
           if (btnIcon) btnIcon.style.display = 'inline-block';
           if (btnText) btnText.textContent = 'Upload Image';
+          updateSubmitAvailability();
         }
       }
 
       // Button click triggers file chooser
       if (uploadImageBtn && imageFileInput) {
-        uploadImageBtn.addEventListener('click', () => {
+        uploadImageBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           imageFileInput.click();
         });
 
-        imageFileInput.addEventListener('change', async () => {
+        uploadImageBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            imageFileInput.click();
+          }
+        });
+
+        imageFileInput.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+
+        imageFileInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+
+        imageFileInput.addEventListener('change', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const files = Array.from(imageFileInput.files || []);
           if (files.length === 0) return;
           await handleFilesUpload(files);
@@ -1302,6 +1451,9 @@ import AdminLayout from '../../components/AdminLayout.astro';
           return;
         }
 
+        isUploadingVideo = true;
+        updateSubmitAvailability();
+
         const spinner = uploadVideoBtn?.querySelector('.upload-vid-spinner');
         const btnText = uploadVideoBtn?.querySelector('.upload-vid-text');
         const btnIcon = uploadVideoBtn?.querySelector('.upload-vid-icon');
@@ -1353,6 +1505,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
             6500
           );
         } finally {
+          isUploadingVideo = false;
           if (uploadVideoBtn) {
             uploadVideoBtn.disabled = false;
             uploadVideoBtn.classList.remove('uploading');
@@ -1360,15 +1513,39 @@ import AdminLayout from '../../components/AdminLayout.astro';
           if (spinner) spinner.style.display = 'none';
           if (btnIcon) btnIcon.style.display = 'inline-block';
           if (btnText) btnText.textContent = 'Upload Video';
+          updateSubmitAvailability();
         }
       }
 
       if (uploadVideoBtn && videoFileInput) {
-        uploadVideoBtn.addEventListener('click', () => {
+        uploadVideoBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           videoFileInput.click();
         });
 
-        videoFileInput.addEventListener('change', async () => {
+        uploadVideoBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            videoFileInput.click();
+          }
+        });
+
+        videoFileInput.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+
+        videoFileInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+
+        videoFileInput.addEventListener('change', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const file = videoFileInput.files?.[0];
           if (!file) return;
           await handleVideoUpload(file);
@@ -3056,6 +3233,17 @@ import AdminLayout from '../../components/AdminLayout.astro';
   .preview-action-btn.set-main-btn:hover {
     background: var(--accent);
     color: #000;
+  }
+
+  .preview-action-btn.bg-remove-btn {
+    background: rgba(139, 92, 246, 0.45);
+    border-color: rgba(139, 92, 246, 0.7);
+    color: #ede9fe;
+  }
+
+  .preview-action-btn.bg-remove-btn:hover {
+    background: #8b5cf6;
+    color: #fff;
   }
 
   @media (max-width: 640px) {

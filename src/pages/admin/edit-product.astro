@@ -218,6 +218,31 @@ const productDataStr = JSON.stringify(product || {});
                   </button>
                 </div>
 
+                <!-- Background Removal Toggle -->
+                <div class="bgremove-toggle-row" id="bgRemoveToggleRow">
+                  <label class="bgremove-toggle-label" for="bgRemoveToggle">
+                    <input type="checkbox" id="bgRemoveToggle">
+                    <span class="bgremove-switch"></span>
+                    <span class="bgremove-label-text">
+                      <span class="bgremove-icon">✂️</span> Remove Background
+                    </span>
+                    <span class="bgremove-hint">(auto-removes before upload)</span>
+                  </label>
+                </div>
+
+                <!-- BgRemove Progress -->
+                <div id="bgRemoveProgress" class="bgremove-progress" style="display: none;">
+                  <div class="bgremove-progress-header">
+                    <span class="bgremove-progress-icon">✂️</span>
+                    <span class="bgremove-progress-label">Removing background...</span>
+                    <span class="bgremove-progress-pct" id="bgRemoveProgressPct">0%</span>
+                  </div>
+                  <div class="bgremove-progress-bar">
+                    <div class="bgremove-progress-fill" id="bgRemoveProgressFill"></div>
+                  </div>
+                  <p class="bgremove-progress-status" id="bgRemoveProgressStatus">Preparing model...</p>
+                </div>
+
                 <!-- Upload Feedback -->
                 <div id="uploadFeedback" class="upload-feedback" style="display: none;"></div>
 
@@ -414,6 +439,9 @@ const productDataStr = JSON.stringify(product || {});
     </div>
   </div>
 
+  <!-- BgRemove SDK -->
+  <script src="https://bgremovers.org/sdk/v1.js" defer></script>
+
   <script define:vars={{ productDataStr }}>
     document.addEventListener('DOMContentLoaded', async () => {
       if (!productDataStr || productDataStr === '{}') return;
@@ -601,6 +629,17 @@ const productDataStr = JSON.stringify(product || {});
       const btnText = submitBtn.querySelector('.btn-text');
       const spinner = submitBtn.querySelector('.spinner');
 
+      let isUploadingImage = false;
+      let isRemovingBg = false;
+      let isUploadingVideo = false;
+
+      // Prevent accidental form submission when pressing Enter in inputs
+      form.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target !== submitBtn) {
+          e.preventDefault();
+        }
+      });
+
       function showMessage(msg, type) {
         messageDiv.textContent = msg;
         messageDiv.className = `message ${type}`;
@@ -619,6 +658,11 @@ const productDataStr = JSON.stringify(product || {});
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        if (isUploadingImage || isRemovingBg || isUploadingVideo) {
+          showMessage('Please wait for image/video upload to complete before saving changes.', 'warning');
+          return;
+        }
         
         btnText.textContent = 'Saving...';
         spinner.style.display = 'block';
@@ -753,6 +797,7 @@ const productDataStr = JSON.stringify(product || {});
                 </span>
                 <div class="preview-overlay">
                   ${!isMain ? `<button type="button" class="preview-action-btn set-main-btn" data-action="set-main" data-index="${index}" title="Set as primary product image">★ Main</button>` : ''}
+                  <button type="button" class="preview-action-btn bg-remove-btn" data-action="remove-bg" data-index="${index}" title="Remove background from this image">✂️ Remove BG</button>
                   <a href="${url}" target="_blank" rel="noopener noreferrer" class="preview-action-btn view-btn" title="View full image">↗</a>
                   <button type="button" class="preview-action-btn remove-btn" data-action="remove" data-index="${index}" title="Remove this image">✕</button>
                 </div>
@@ -762,11 +807,13 @@ const productDataStr = JSON.stringify(product || {});
         }).join('');
       }
 
-      // Preview actions delegation (set-main and remove)
+      // Preview actions delegation (set-main, remove, and remove-bg)
       if (imagePreviewContainer) {
-        imagePreviewContainer.addEventListener('click', (e) => {
+        imagePreviewContainer.addEventListener('click', async (e) => {
           const btn = e.target.closest('[data-action]');
           if (!btn) return;
+          e.preventDefault();
+          e.stopPropagation();
           const action = btn.dataset.action;
           const index = parseInt(btn.dataset.index, 10);
           const urls = parseImageUrls(imagesInput.value);
@@ -780,6 +827,11 @@ const productDataStr = JSON.stringify(product || {});
             urls.unshift(selected);
             setImageUrls(urls);
             showUploadFeedback('Set as primary product image!', 'success', 2500);
+          } else if (action === 'remove-bg') {
+            const targetUrl = urls[index];
+            if (targetUrl) {
+              await removeBackgroundFromUrl(targetUrl, index);
+            }
           }
         });
       }
@@ -796,8 +848,199 @@ const productDataStr = JSON.stringify(product || {});
         updateImagePreviews();
       }
 
+      // ============================================
+      // BgRemove SDK integration
+      // ============================================
+      const bgRemoveToggle = document.getElementById('bgRemoveToggle');
+      const bgRemoveProgress = document.getElementById('bgRemoveProgress');
+      const bgRemoveProgressFill = document.getElementById('bgRemoveProgressFill');
+      const bgRemoveProgressPct = document.getElementById('bgRemoveProgressPct');
+      const bgRemoveProgressStatus = document.getElementById('bgRemoveProgressStatus');
+      let bgRemovePreloaded = false;
+
+      // Preload BgRemove model when toggle is first enabled
+      if (bgRemoveToggle) {
+        bgRemoveToggle.addEventListener('change', () => {
+          if (bgRemoveToggle.checked && !bgRemovePreloaded) {
+            bgRemovePreloaded = true;
+            try {
+              if (typeof BgRemove !== 'undefined' && BgRemove.preload) {
+                BgRemove.preload();
+                showUploadFeedback('✂️ Background removal model is loading in the background...', 'info', 3000);
+              }
+            } catch (e) {
+              console.warn('BgRemove preload skipped:', e);
+            }
+          }
+        });
+      }
+
+      function showBgRemoveProgress(show) {
+        if (bgRemoveProgress) bgRemoveProgress.style.display = show ? 'block' : 'none';
+        if (!show) {
+          updateBgRemoveProgress(0, 'Preparing model...');
+        }
+      }
+
+      function extractProgressPct(p) {
+        if (typeof p === 'number') return Math.min(Math.max(p, 0), 1);
+        if (!p || typeof p !== 'object') return 0;
+        if (typeof p.progress === 'number') return Math.min(Math.max(p.progress, 0), 1);
+        if (p.progress && typeof p.progress.progress === 'number') return Math.min(Math.max(p.progress.progress, 0), 1);
+        if (p.loaded && p.total) return Math.min(Math.max(p.loaded / p.total, 0), 1);
+        if (p.stage === 'loading-runtime') return 0.1;
+        if (p.stage === 'loading-model') return 0.25;
+        if (p.stage === 'ready') return 0.6;
+        return 0.3;
+      }
+
+      function extractStatusMessage(p, fallback) {
+        if (!p) return fallback;
+        if (typeof p === 'string') return p;
+        if (typeof p === 'object') {
+          if (p.stage === 'loading-runtime') return 'Loading AI runtime...';
+          if (p.stage === 'loading-model') return 'Loading AI model...';
+          if (p.stage === 'downloading') {
+            const pct = Math.round(extractProgressPct(p) * 100);
+            return `Downloading AI model... ${pct}%`;
+          }
+          if (p.stage === 'ready') return 'Processing image...';
+        }
+        return fallback;
+      }
+
+      function updateBgRemoveProgress(pct, statusText) {
+        const numeric = extractProgressPct(pct);
+        const percent = Math.min(Math.round(numeric * 100), 100);
+        if (bgRemoveProgressFill) bgRemoveProgressFill.style.width = `${percent}%`;
+        if (bgRemoveProgressPct) bgRemoveProgressPct.textContent = `${percent}%`;
+        if (bgRemoveProgressStatus) bgRemoveProgressStatus.textContent = statusText || `Processing... ${percent}%`;
+      }
+
+      async function removeBackgroundFromFile(file, index, total) {
+        return new Promise(async (resolve, reject) => {
+          try {
+            if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+              throw new Error('BgRemove SDK not loaded yet. Please wait a moment and try again.');
+            }
+
+            updateBgRemoveProgress(0, `Removing background from image ${index + 1}/${total}...`);
+
+            const resultBlob = await BgRemove.removeBackground(file, {
+              maxDimension: 4096,
+              onProgress: (p) => {
+                const prog = extractProgressPct(p);
+                const status = extractStatusMessage(p, `Removing background from image ${index + 1}/${total}... ${Math.round(prog * 100)}%`);
+                updateBgRemoveProgress(prog, status);
+              }
+            });
+
+            // Convert blob to File object for FormData
+            const cleanName = file.name.replace(/\.[^.]+$/, '') + '_nobg.png';
+            const resultFile = new File([resultBlob], cleanName, { type: 'image/png' });
+            resolve(resultFile);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+
+      async function processFilesWithBgRemove(files) {
+        const processed = [];
+        showBgRemoveProgress(true);
+
+        for (let i = 0; i < files.length; i++) {
+          try {
+            const result = await removeBackgroundFromFile(files[i], i, files.length);
+            processed.push(result);
+          } catch (err) {
+            console.error(`BgRemove failed for ${files[i].name}:`, err);
+            showUploadFeedback(
+              `⚠️ Background removal failed for "${files[i].name}": ${err.message}. Uploading original instead.`,
+              'warning',
+              5000
+            );
+            processed.push(files[i]); // Fall back to original file
+          }
+        }
+
+        showBgRemoveProgress(false);
+        return processed;
+      }
+
+      async function removeBackgroundFromUrl(url, index) {
+        if (isUploadingImage || isRemovingBg || isUploadingVideo) {
+          showUploadFeedback('Another upload or processing task is running. Please wait...', 'warning', 3500);
+          return;
+        }
+
+        isRemovingBg = true;
+        if (submitBtn) submitBtn.disabled = true;
+
+        try {
+          if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+            throw new Error('BgRemove SDK is loading. Please wait a few seconds and try again.');
+          }
+
+          showBgRemoveProgress(true);
+          updateBgRemoveProgress(0.05, 'Downloading image for background removal...');
+
+          const response = await fetch(url, { mode: 'cors' });
+          if (!response.ok) {
+            throw new Error(`Failed to load image (${response.status})`);
+          }
+          const blob = await response.blob();
+
+          updateBgRemoveProgress(0.2, 'Removing background (RMBG-1.4 AI)...');
+          const resultBlob = await BgRemove.removeBackground(blob, {
+            maxDimension: 4096,
+            onProgress: (p) => {
+              const prog = extractProgressPct(p);
+              const status = extractStatusMessage(p, `Removing background... ${Math.round(prog * 100)}%`);
+              updateBgRemoveProgress(prog, status);
+            }
+          });
+
+          updateBgRemoveProgress(0.85, 'Uploading transparent image to Cloudinary...');
+          const cleanName = `nobg_${Date.now()}.png`;
+          const resultFile = new File([resultBlob], cleanName, { type: 'image/png' });
+
+          const formData = new FormData();
+          formData.append('files', resultFile);
+
+          const uploadRes = await fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const uploadResult = await uploadRes.json();
+          if (!uploadRes.ok || !uploadResult.success) {
+            throw new Error(uploadResult.error || 'Failed to upload background-removed image');
+          }
+
+          const newUrl = uploadResult.urls?.[0] || uploadResult.url;
+          const urls = parseImageUrls(imagesInput.value);
+          urls[index] = newUrl;
+          setImageUrls(urls);
+
+          showUploadFeedback('✓ Background removed successfully! Image updated.', 'success', 4500);
+        } catch (err) {
+          console.error('Remove BG from URL failed:', err);
+          showUploadFeedback(`✕ Background removal failed: ${err.message}`, 'error', 6000);
+        } finally {
+          isRemovingBg = false;
+          showBgRemoveProgress(false);
+          if (submitBtn && !isUploadingImage && !isUploadingVideo) {
+            submitBtn.disabled = false;
+          }
+        }
+      }
+
       async function handleFilesUpload(files) {
         if (!files || files.length === 0) return;
+
+        isUploadingImage = true;
+        if (submitBtn) submitBtn.disabled = true;
 
         const spinner = uploadImageBtn?.querySelector('.upload-spinner');
         const btnText = uploadImageBtn?.querySelector('.upload-btn-text');
@@ -809,17 +1052,41 @@ const productDataStr = JSON.stringify(product || {});
         }
         if (spinner) spinner.style.display = 'block';
         if (btnIcon) btnIcon.style.display = 'none';
-        if (btnText) btnText.textContent = files.length > 1 ? `Uploading (${files.length})...` : 'Uploading...';
+
+        // If BgRemove toggle is ON, process files first
+        let filesToUpload = files;
+        if (bgRemoveToggle?.checked) {
+          if (btnText) btnText.textContent = 'Removing BG...';
+          showUploadFeedback(
+            `<span class="uploading-icon">✂️</span> Removing background from ${files.length} image${files.length > 1 ? 's' : ''}...`,
+            'uploading',
+            0
+          );
+
+          try {
+            filesToUpload = await processFilesWithBgRemove(files);
+          } catch (err) {
+            console.error('BgRemove batch error:', err);
+            showUploadFeedback(
+              `⚠️ Background removal encountered an error. Uploading originals instead.`,
+              'warning',
+              5000
+            );
+            filesToUpload = files; // Fallback to originals
+          }
+        }
+
+        if (btnText) btnText.textContent = filesToUpload.length > 1 ? `Uploading (${filesToUpload.length})...` : 'Uploading...';
 
         showUploadFeedback(
-          `<span class="uploading-icon">⏳</span> Uploading ${files.length} image${files.length > 1 ? 's' : ''} to Cloudinary...`,
+          `<span class="uploading-icon">⏳</span> Uploading ${filesToUpload.length} image${filesToUpload.length > 1 ? 's' : ''} to Cloudinary...`,
           'uploading',
           0
         );
 
         try {
           const formData = new FormData();
-          files.forEach(file => {
+          filesToUpload.forEach(file => {
             formData.append('files', file);
           });
 
@@ -840,8 +1107,9 @@ const productDataStr = JSON.stringify(product || {});
           const combined = [...currentUrls, ...newUrls];
           setImageUrls(combined);
 
+          const bgNote = bgRemoveToggle?.checked ? ' (background removed)' : '';
           showUploadFeedback(
-            `✓ Successfully uploaded ${newUrls.length} image${newUrls.length > 1 ? 's' : ''} to Cloudinary! Preview updated.`,
+            `✓ Successfully uploaded ${newUrls.length} image${newUrls.length > 1 ? 's' : ''}${bgNote} to Cloudinary! Preview updated.`,
             'success',
             4500
           );
@@ -853,6 +1121,8 @@ const productDataStr = JSON.stringify(product || {});
             6000
           );
         } finally {
+          isUploadingImage = false;
+          isRemovingBg = false;
           if (uploadImageBtn) {
             uploadImageBtn.disabled = false;
             uploadImageBtn.classList.remove('uploading');
@@ -860,16 +1130,42 @@ const productDataStr = JSON.stringify(product || {});
           if (spinner) spinner.style.display = 'none';
           if (btnIcon) btnIcon.style.display = 'inline-block';
           if (btnText) btnText.textContent = 'Upload Image';
+          if (submitBtn && !isUploadingVideo) {
+            submitBtn.disabled = false;
+          }
         }
       }
 
       // Button click triggers file chooser
       if (uploadImageBtn && imageFileInput) {
-        uploadImageBtn.addEventListener('click', () => {
+        uploadImageBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           imageFileInput.click();
         });
 
-        imageFileInput.addEventListener('change', async () => {
+        uploadImageBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            imageFileInput.click();
+          }
+        });
+
+        imageFileInput.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+
+        imageFileInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+
+        imageFileInput.addEventListener('change', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const files = Array.from(imageFileInput.files || []);
           if (files.length === 0) return;
           await handleFilesUpload(files);
@@ -991,6 +1287,9 @@ const productDataStr = JSON.stringify(product || {});
           return;
         }
 
+        isUploadingVideo = true;
+        if (submitBtn) submitBtn.disabled = true;
+
         const spinner = uploadVideoBtn?.querySelector('.upload-vid-spinner');
         const btnText = uploadVideoBtn?.querySelector('.upload-vid-text');
         const btnIcon = uploadVideoBtn?.querySelector('.upload-vid-icon');
@@ -1042,6 +1341,7 @@ const productDataStr = JSON.stringify(product || {});
             6500
           );
         } finally {
+          isUploadingVideo = false;
           if (uploadVideoBtn) {
             uploadVideoBtn.disabled = false;
             uploadVideoBtn.classList.remove('uploading');
@@ -1049,15 +1349,41 @@ const productDataStr = JSON.stringify(product || {});
           if (spinner) spinner.style.display = 'none';
           if (btnIcon) btnIcon.style.display = 'inline-block';
           if (btnText) btnText.textContent = 'Upload Video';
+          if (submitBtn && !isUploadingImage && !isRemovingBg) {
+            submitBtn.disabled = false;
+          }
         }
       }
 
       if (uploadVideoBtn && videoFileInput) {
-        uploadVideoBtn.addEventListener('click', () => {
+        uploadVideoBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           videoFileInput.click();
         });
 
-        videoFileInput.addEventListener('change', async () => {
+        uploadVideoBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            videoFileInput.click();
+          }
+        });
+
+        videoFileInput.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+
+        videoFileInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+
+        videoFileInput.addEventListener('change', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const file = videoFileInput.files?.[0];
           if (!file) return;
           await handleVideoUpload(file);
@@ -2499,6 +2825,17 @@ const productDataStr = JSON.stringify(product || {});
     color: #000;
   }
 
+  .preview-action-btn.bg-remove-btn {
+    background: rgba(139, 92, 246, 0.45);
+    border-color: rgba(139, 92, 246, 0.7);
+    color: #ede9fe;
+  }
+
+  .preview-action-btn.bg-remove-btn:hover {
+    background: #8b5cf6;
+    color: #fff;
+  }
+
   @media (max-width: 640px) {
     .image-input-container {
       flex-direction: column;
@@ -2669,5 +3006,164 @@ const productDataStr = JSON.stringify(product || {});
     .upload-vid-btn {
       width: 100%;
     }
+  }
+
+  /* ============================================
+     BgRemove Toggle & Progress Styles
+     ============================================ */
+  .bgremove-toggle-row {
+    margin-top: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(139, 92, 246, 0.06);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .bgremove-toggle-row:has(input:checked) {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
+  }
+
+  .bgremove-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    user-select: none;
+    transition: color 0.2s;
+  }
+
+  .bgremove-toggle-label:hover {
+    color: var(--text-primary);
+  }
+
+  .bgremove-toggle-label input[type="checkbox"] {
+    display: none;
+  }
+
+  .bgremove-switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .bgremove-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .bgremove-toggle-label input:checked + .bgremove-switch {
+    background: rgba(139, 92, 246, 0.5);
+    border-color: rgba(139, 92, 246, 0.6);
+  }
+
+  .bgremove-toggle-label input:checked + .bgremove-switch::after {
+    left: 18px;
+    background: #a78bfa;
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+  }
+
+  .bgremove-label-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .bgremove-icon {
+    font-size: 1rem;
+  }
+
+  .bgremove-hint {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  /* BgRemove Progress */
+  .bgremove-progress {
+    margin-top: 0.6rem;
+    padding: 0.8rem 1rem;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 10px;
+    animation: bgremovePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes bgremovePulse {
+    0%, 100% { border-color: rgba(139, 92, 246, 0.2); }
+    50% { border-color: rgba(139, 92, 246, 0.45); }
+  }
+
+  .bgremove-progress-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bgremove-progress-icon {
+    font-size: 1rem;
+    animation: scissorSnip 0.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes scissorSnip {
+    0% { transform: rotate(-5deg) scale(1); }
+    100% { transform: rotate(5deg) scale(1.1); }
+  }
+
+  .bgremove-progress-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c4b5fd;
+    flex: 1;
+  }
+
+  .bgremove-progress-pct {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #a78bfa;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bgremove-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bgremove-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa, #c4b5fd);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+  }
+
+  .bgremove-progress-status {
+    margin: 0.4rem 0 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
   }
 </style>

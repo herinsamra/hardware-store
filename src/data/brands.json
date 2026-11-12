@@ -6,13 +6,13 @@
   },
   {
     "name": "Legrand",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761135748/legrand-logo-png_seeklogo-83164_zn0ruu.png",
-    "category": "Electrical"
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794470097/products/iffxodmbrklk6tntglte.png"
   },
   {
     "name": "Crompton",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761143030/crompton_xb5lbx.png",
-    "category": "Electrical"
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794470338/b04bf09aee52f8b804186f06422ac93b_h8qclc.jpg"
   },
   {
     "name": "V-Guard",
@@ -238,5 +238,15 @@
     "name": "Aquatek",
     "category": "Plumbing",
     "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794286033/products/wotee0fduelhghtvwg14.png"
+  },
+  {
+    "name": "Pidilite",
+    "category": "Hardwares",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794466273/products/npwfy58so6mxltkftjcf.png"
+  },
+  {
+    "name": "Roff",
+    "category": "Hardwares",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794469876/images_3_-Photoroom_ppcxbk.png"
   }
 ]

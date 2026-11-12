@@ -47,13 +47,56 @@ import AdminLayout from '../../components/AdminLayout.astro';
         </div>
         <div class="input-group">
           <label>Category <span class="optional">(e.g. Electrical, Plumbing)</span></label>
-          <input type="text" id="brand_category" required>
+          <select id="brand_category" required><option disabled selected>Loading categories…</option></select>
         </div>
         <div class="input-group">
           <label>Logo Image URL</label>
-          <div style="display: flex; gap: 0.5rem;">
-            <input type="text" id="brand_image_url" style="flex: 1;">
-            <button type="button" id="upload_widget" class="button variant-add-btn">Upload</button>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="text" id="brand_image_url" style="flex: 1;" placeholder="URL auto-filled after upload">
+            <input type="file" id="brand_image_file" accept="image/*" style="display:none;">
+            <button type="button" id="upload_widget" class="button variant-add-btn" style="white-space:nowrap;">
+              <span id="upload_widget_text">📤 Upload Image</span>
+            </button>
+          </div>
+
+          <!-- Background Removal Toggle -->
+          <div class="bgremove-toggle-row" id="brandBgRemoveToggleRow" style="margin-top: 0.75rem;">
+            <label class="bgremove-toggle-label" for="brandBgRemoveToggle">
+              <input type="checkbox" id="brandBgRemoveToggle">
+              <span class="bgremove-switch"></span>
+              <span class="bgremove-label-text">
+                <span class="bgremove-icon">✂️</span> Remove Background
+              </span>
+              <span class="bgremove-hint">(auto-removes before upload)</span>
+            </label>
+          </div>
+
+          <!-- BgRemove Progress -->
+          <div id="brandBgRemoveProgress" class="bgremove-progress" style="display: none;">
+            <div class="bgremove-progress-header">
+              <span class="bgremove-progress-icon">✂️</span>
+              <span class="bgremove-progress-label">Removing background...</span>
+              <span class="bgremove-progress-pct" id="brandBgRemoveProgressPct">0%</span>
+            </div>
+            <div class="bgremove-progress-bar">
+              <div class="bgremove-progress-fill" id="brandBgRemoveProgressFill"></div>
+            </div>
+            <p class="bgremove-progress-status" id="brandBgRemoveProgressStatus">Preparing model...</p>
+          </div>
+
+          <!-- Preview & Action Box -->
+          <div id="brand_img_preview" style="margin-top:0.75rem; display:none;">
+            <div class="brand-preview-box">
+              <img id="brand_img_thumb" src="" alt="Brand logo preview">
+              <div class="brand-preview-actions">
+                <button type="button" id="brandRemoveBgBtn" class="preview-action-btn bg-remove-btn" title="Remove background from this logo">
+                  ✂️ Remove BG
+                </button>
+                <a id="brandViewImgBtn" href="#" target="_blank" rel="noopener noreferrer" class="preview-action-btn view-btn" title="View full image">
+                  ↗ View
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-footer" style="margin-top: 1.5rem;">
@@ -84,7 +127,8 @@ import AdminLayout from '../../components/AdminLayout.astro';
     </div>
   </div>
 
-  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <!-- BgRemove SDK -->
+  <script src="https://bgremovers.org/sdk/v1.js" defer></script>
 
   <style is:global>
     :root {
@@ -174,6 +218,222 @@ import AdminLayout from '../../components/AdminLayout.astro';
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px var(--accent-glow); }
 
     .auth-gate { text-align: center; max-width: 400px; margin: 0 auto; padding: 2rem 0; }
+
+    /* BgRemove Toggle Row */
+    .bgremove-toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .bgremove-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .bgremove-toggle-label:hover {
+      color: var(--text-primary);
+    }
+
+    .bgremove-toggle-label input[type="checkbox"] {
+      display: none;
+    }
+
+    .bgremove-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .bgremove-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--text-secondary);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .bgremove-toggle-label input:checked + .bgremove-switch {
+      background: rgba(139, 92, 246, 0.5);
+      border-color: rgba(139, 92, 246, 0.6);
+    }
+
+    .bgremove-toggle-label input:checked + .bgremove-switch::after {
+      left: 18px;
+      background: #a78bfa;
+      box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+    }
+
+    .bgremove-label-text {
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .bgremove-icon {
+      font-size: 1rem;
+    }
+
+    .bgremove-hint {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* BgRemove Progress */
+    .bgremove-progress {
+      margin-top: 0.6rem;
+      padding: 0.8rem 1rem;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 10px;
+      animation: bgremovePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes bgremovePulse {
+      0%, 100% { border-color: rgba(139, 92, 246, 0.2); }
+      50% { border-color: rgba(139, 92, 246, 0.45); }
+    }
+
+    .bgremove-progress-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .bgremove-progress-icon {
+      font-size: 1rem;
+      animation: scissorSnip 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes scissorSnip {
+      0% { transform: rotate(-5deg) scale(1); }
+      100% { transform: rotate(5deg) scale(1.1); }
+    }
+
+    .bgremove-progress-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #c4b5fd;
+      flex: 1;
+    }
+
+    .bgremove-progress-pct {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #a78bfa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bgremove-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bgremove-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa, #c4b5fd);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+    }
+
+    .bgremove-progress-status {
+      margin: 0.4rem 0 0;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.8;
+    }
+
+    /* Brand Preview Box */
+    .brand-preview-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+    }
+
+    .brand-preview-box img {
+      max-height: 70px;
+      max-width: 90px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 4px;
+    }
+
+    .brand-preview-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .bg-remove-btn {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .bg-remove-btn:hover:not(:disabled) {
+      background: rgba(139, 92, 246, 0.4);
+      color: #ffffff;
+      border-color: rgba(139, 92, 246, 0.6);
+    }
+
+    .bg-remove-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .view-btn {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-primary);
+      border-color: var(--glass-border);
+    }
+
+    .view-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+    }
   </style>
 
   <script is:inline>
@@ -184,6 +444,7 @@ import AdminLayout from '../../components/AdminLayout.astro';
 
       function init() {
         fetchBrands();
+        fetchCategories();
         
         // Setup search
         const searchInput = document.getElementById('brand-search');
@@ -206,6 +467,291 @@ import AdminLayout from '../../components/AdminLayout.astro';
         } catch (e) {
           container.innerHTML = `<div class="error">${e.message}</div>`;
         }
+      }
+
+      let categoriesList = [];
+
+      // ── Category dropdown ────────────────────────────────────────────────
+      async function fetchCategories() {
+        const sel = document.getElementById('brand_category');
+        try {
+          const res = await fetch('/api/get-categories', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to fetch categories');
+          const data = await res.json();
+          // Top-level categories excluding 'Brands'
+          const keys = Object.keys(data).filter(k => k !== 'Brands');
+          categoriesList = keys.map(k => k.replace(/_/g, ' '));
+          
+          populateCategorySelect();
+        } catch (err) {
+          sel.innerHTML = '<option value="" disabled selected>Could not load categories</option>';
+          console.error('Category fetch error:', err);
+        }
+      }
+
+      function populateCategorySelect(selectedValue = '') {
+        const sel = document.getElementById('brand_category');
+        if (!sel) return;
+
+        let options = '<option value="" disabled' + (!selectedValue ? ' selected' : '') + '>Select a category…</option>';
+        
+        categoriesList.forEach(cat => {
+          const isSelected = selectedValue && selectedValue.toLowerCase() === cat.toLowerCase();
+          options += `<option value="${cat}"${isSelected ? ' selected' : ''}>${cat}</option>`;
+        });
+
+        // If the brand has a category not present in the standard top-level list (e.g. legacy/combined), preserve it
+        if (selectedValue && !categoriesList.some(c => c.toLowerCase() === selectedValue.toLowerCase())) {
+          options += `<option value="${selectedValue}" selected>${selectedValue}</option>`;
+        }
+
+        sel.innerHTML = options;
+        if (selectedValue) {
+          sel.value = selectedValue;
+        }
+      }
+
+      // ── Brand image upload via /api/upload-image ─────────────────────────
+      let isBrandUploading = false;
+      let isBrandRemovingBg = false;
+      let bgRemovePreloaded = false;
+
+      const brandBgRemoveToggle = document.getElementById('brandBgRemoveToggle');
+      const brandBgRemoveProgress = document.getElementById('brandBgRemoveProgress');
+      const brandBgRemoveProgressFill = document.getElementById('brandBgRemoveProgressFill');
+      const brandBgRemoveProgressPct = document.getElementById('brandBgRemoveProgressPct');
+      const brandBgRemoveProgressStatus = document.getElementById('brandBgRemoveProgressStatus');
+      const brandRemoveBgBtn = document.getElementById('brandRemoveBgBtn');
+      const brandViewImgBtn = document.getElementById('brandViewImgBtn');
+
+      function updateBrandSubmitState() {
+        const submitBtn = brandForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = isBrandUploading || isBrandRemovingBg;
+        }
+      }
+
+      function showBrandBgRemoveProgress(show) {
+        if (brandBgRemoveProgress) brandBgRemoveProgress.style.display = show ? 'block' : 'none';
+        if (!show) {
+          updateBrandBgRemoveProgress(0, 'Preparing model...');
+        }
+      }
+
+      function extractProgressPct(p) {
+        if (typeof p === 'number') return Math.min(Math.max(p, 0), 1);
+        if (!p || typeof p !== 'object') return 0;
+        if (typeof p.progress === 'number') return Math.min(Math.max(p.progress, 0), 1);
+        if (p.progress && typeof p.progress.progress === 'number') return Math.min(Math.max(p.progress.progress, 0), 1);
+        if (p.loaded && p.total) return Math.min(Math.max(p.loaded / p.total, 0), 1);
+        if (p.stage === 'loading-runtime') return 0.1;
+        if (p.stage === 'loading-model') return 0.25;
+        if (p.stage === 'ready') return 0.6;
+        return 0.3;
+      }
+
+      function extractStatusMessage(p, fallback) {
+        if (!p) return fallback;
+        if (typeof p === 'string') return p;
+        if (typeof p === 'object') {
+          if (p.stage === 'loading-runtime') return 'Loading AI runtime...';
+          if (p.stage === 'loading-model') return 'Loading AI model...';
+          if (p.stage === 'downloading') {
+            const pct = Math.round(extractProgressPct(p) * 100);
+            return `Downloading AI model... ${pct}%`;
+          }
+          if (p.stage === 'ready') return 'Processing image...';
+        }
+        return fallback;
+      }
+
+      function updateBrandBgRemoveProgress(pct, statusText) {
+        const numeric = extractProgressPct(pct);
+        const percent = Math.min(Math.round(numeric * 100), 100);
+        if (brandBgRemoveProgressFill) brandBgRemoveProgressFill.style.width = `${percent}%`;
+        if (brandBgRemoveProgressPct) brandBgRemoveProgressPct.textContent = `${percent}%`;
+        if (brandBgRemoveProgressStatus) brandBgRemoveProgressStatus.textContent = statusText || `Processing... ${percent}%`;
+      }
+
+      // Preload BgRemove model when toggle is first enabled
+      if (brandBgRemoveToggle) {
+        brandBgRemoveToggle.addEventListener('change', () => {
+          if (brandBgRemoveToggle.checked && !bgRemovePreloaded) {
+            bgRemovePreloaded = true;
+            try {
+              if (typeof BgRemove !== 'undefined' && BgRemove.preload) {
+                BgRemove.preload();
+              }
+            } catch (e) {
+              console.warn('BgRemove preload skipped:', e);
+            }
+          }
+        });
+      }
+
+      async function removeBackgroundFromFile(file) {
+        if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+          throw new Error('BgRemove SDK not loaded yet. Please wait a moment and try again.');
+        }
+
+        updateBrandBgRemoveProgress(0, 'Removing background from logo...');
+
+        const resultBlob = await BgRemove.removeBackground(file, {
+          maxDimension: 4096,
+          onProgress: (p) => {
+            const prog = extractProgressPct(p);
+            const status = extractStatusMessage(p, `Removing background... ${Math.round(prog * 100)}%`);
+            updateBrandBgRemoveProgress(prog, status);
+          }
+        });
+
+        const cleanName = (file.name ? file.name.replace(/\.[^.]+$/, '') : 'logo') + '_nobg.png';
+        return new File([resultBlob], cleanName, { type: 'image/png' });
+      }
+
+      function updateBrandPreview(url) {
+        const preview = document.getElementById('brand_img_preview');
+        const thumb = document.getElementById('brand_img_thumb');
+        if (url) {
+          thumb.src = url;
+          if (brandViewImgBtn) brandViewImgBtn.href = url;
+          preview.style.display = 'block';
+        } else {
+          preview.style.display = 'none';
+        }
+      }
+
+      document.getElementById('upload_widget').addEventListener('click', () => {
+        document.getElementById('brand_image_file').click();
+      });
+
+      document.getElementById('brand_image_file').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file || isBrandUploading || isBrandRemovingBg) return;
+
+        isBrandUploading = true;
+        updateBrandSubmitState();
+
+        const btn = document.getElementById('upload_widget');
+        const btnText = document.getElementById('upload_widget_text');
+        btn.disabled = true;
+
+        try {
+          let fileToUpload = file;
+
+          // Check if Auto-remove BG toggle is active
+          if (brandBgRemoveToggle && brandBgRemoveToggle.checked) {
+            btnText.textContent = '✂️ Removing BG…';
+            showBrandBgRemoveProgress(true);
+            try {
+              fileToUpload = await removeBackgroundFromFile(file);
+            } catch (bgErr) {
+              console.error('Auto remove-bg failed:', bgErr);
+              alert('⚠️ Background removal failed: ' + bgErr.message + '. Uploading original instead.');
+              fileToUpload = file;
+            } finally {
+              showBrandBgRemoveProgress(false);
+            }
+          }
+
+          btnText.textContent = '⏳ Uploading…';
+
+          const formData = new FormData();
+          formData.append('file', fileToUpload);
+          const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+          if (!res.ok) throw new Error('Upload failed');
+          const data = await res.json();
+          const url = data.url || data.secure_url || '';
+          if (!url) throw new Error('No URL returned');
+          document.getElementById('brand_image_url').value = url;
+          updateBrandPreview(url);
+          btnText.textContent = '✅ Uploaded';
+        } catch (err) {
+          alert('Image upload failed: ' + err.message);
+          btnText.textContent = '📤 Upload Image';
+        } finally {
+          isBrandUploading = false;
+          btn.disabled = false;
+          updateBrandSubmitState();
+          e.target.value = '';
+        }
+      });
+
+      // Individual "✂️ Remove BG" button on existing preview image
+      if (brandRemoveBgBtn) {
+        brandRemoveBgBtn.addEventListener('click', async () => {
+          const currentUrl = document.getElementById('brand_image_url').value.trim();
+          if (!currentUrl) {
+            alert('No image URL available to remove background.');
+            return;
+          }
+          if (isBrandUploading || isBrandRemovingBg) {
+            alert('Another upload or processing task is running. Please wait...');
+            return;
+          }
+
+          isBrandRemovingBg = true;
+          updateBrandSubmitState();
+          brandRemoveBgBtn.disabled = true;
+          const origBtnText = brandRemoveBgBtn.innerHTML;
+          brandRemoveBgBtn.innerHTML = '⏳ Removing…';
+
+          try {
+            if (typeof BgRemove === 'undefined' || !BgRemove.removeBackground) {
+              throw new Error('BgRemove SDK is loading. Please wait a few seconds and try again.');
+            }
+
+            showBrandBgRemoveProgress(true);
+            updateBrandBgRemoveProgress(0.05, 'Downloading image for background removal...');
+
+            const response = await fetch(currentUrl, { mode: 'cors' });
+            if (!response.ok) throw new Error(`Failed to load image (${response.status})`);
+            const blob = await response.blob();
+
+            updateBrandBgRemoveProgress(0.25, 'Removing background (RMBG-1.4 AI)...');
+            const resultBlob = await BgRemove.removeBackground(blob, {
+              maxDimension: 4096,
+              onProgress: (p) => {
+                const prog = extractProgressPct(p);
+                const status = extractStatusMessage(p, `Removing background... ${Math.round(prog * 100)}%`);
+                updateBrandBgRemoveProgress(prog, status);
+              }
+            });
+
+            updateBrandBgRemoveProgress(0.85, 'Uploading transparent image to Cloudinary...');
+            const cleanName = `brand_nobg_${Date.now()}.png`;
+            const resultFile = new File([resultBlob], cleanName, { type: 'image/png' });
+
+            const formData = new FormData();
+            formData.append('file', resultFile);
+
+            const uploadRes = await fetch('/api/upload-image', {
+              method: 'POST',
+              body: formData
+            });
+
+            const uploadResult = await uploadRes.json();
+            if (!uploadRes.ok || !uploadResult.success) {
+              throw new Error(uploadResult.error || 'Failed to upload background-removed image');
+            }
+
+            const newUrl = uploadResult.url || uploadResult.urls?.[0];
+            if (!newUrl) throw new Error('No URL returned from upload');
+
+            document.getElementById('brand_image_url').value = newUrl;
+            updateBrandPreview(newUrl);
+            alert('✓ Background removed successfully! Brand logo updated.');
+          } catch (err) {
+            console.error('Remove BG failed:', err);
+            alert('✕ Background removal failed: ' + err.message);
+          } finally {
+            showBrandBgRemoveProgress(false);
+            isBrandRemovingBg = false;
+            brandRemoveBgBtn.disabled = false;
+            brandRemoveBgBtn.innerHTML = origBtnText;
+            updateBrandSubmitState();
+          }
+        });
       }
 
       function renderBrands(filter = '') {
@@ -249,6 +795,10 @@ import AdminLayout from '../../components/AdminLayout.astro';
       document.getElementById('add-brand-btn').addEventListener('click', () => {
         brandForm.reset();
         document.getElementById('original_name').value = '';
+        populateCategorySelect('');
+        updateBrandPreview('');
+        document.getElementById('upload_widget_text').textContent = '📤 Upload Image';
+        showBrandBgRemoveProgress(false);
         modalTitle.textContent = 'Add Brand';
         brandModal.style.display = 'flex';
       });
@@ -262,14 +812,22 @@ import AdminLayout from '../../components/AdminLayout.astro';
         if (!b) return;
         document.getElementById('original_name').value = b.name;
         document.getElementById('brand_name').value = b.name;
-        document.getElementById('brand_category').value = b.category || '';
+        // Populate and select current category
+        populateCategorySelect(b.category || '');
         document.getElementById('brand_image_url').value = b.imageUrl || '';
+        document.getElementById('upload_widget_text').textContent = b.imageUrl ? '✅ Uploaded' : '📤 Upload Image';
+        showBrandBgRemoveProgress(false);
+        updateBrandPreview(b.imageUrl || '');
         modalTitle.textContent = 'Edit Brand';
         brandModal.style.display = 'flex';
       };
 
       brandForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (isBrandUploading || isBrandRemovingBg) {
+          alert('Please wait for the image upload or background removal to complete.');
+          return;
+        }
         const oldName = document.getElementById('original_name').value;
         const brand = {
           name: document.getElementById('brand_name').value,
@@ -297,26 +855,6 @@ import AdminLayout from '../../components/AdminLayout.astro';
           }
         } catch (err) {
           alert(err.message);
-        }
-      });
-
-      // Cloudinary widget
-      document.addEventListener('click', function(e) {
-        if (e.target && e.target.id === 'upload_widget') {
-          if (typeof cloudinary === 'undefined') {
-            alert("Cloudinary widget failed to load.");
-            return;
-          }
-          cloudinary.createUploadWidget({
-            cloudName: 'dvvpabney', 
-            uploadPreset: 'YOUR_UNSIGNED_UPLOAD_PRESET_HERE', // <--- IMPORTANT: Replace with your actual unsigned preset
-            multiple: false,
-            maxFiles: 1
-          }, (error, result) => { 
-            if (!error && result && result.event === "success") { 
-              document.getElementById('brand_image_url').value = result.info.secure_url;
-            }
-          }).open();
         }
       });
 

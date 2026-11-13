@@ -51,8 +51,8 @@
   },
   {
     "name": "Parryware",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761138115/parryware_wecckh.jpg",
-    "category": "Sanitary"
+    "category": "Sanitary",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794557024/products/jjs4j6eyitkyz7519hmh.jpg"
   },
   {
     "name": "Waterman",
@@ -91,13 +91,13 @@
   },
   {
     "name": "Finolex",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761133916/finolex-logo-png_seeklogo-428098_jlcook.png",
-    "category": "Plumbing"
+    "category": "Plumbing",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794556954/products/ph1gwpypspzhxmcepfck.jpg"
   },
   {
     "name": "Supreme",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761137128/supreme_rqid8t.jpg",
-    "category": "Plumbing"
+    "category": "Plumbing",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794556455/products/axw4hmkb6pyihwl8ta4e.png"
   },
   {
     "name": "Ashirvad",
@@ -111,8 +111,8 @@
   },
   {
     "name": "Asian Paints",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761134221/asianpaint_jaymcv.jpg",
-    "category": "Paints"
+    "category": "Paints",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794556409/products/kdqekitvitqpi7wdk5on.png"
   },
   {
     "name": "Dr. Fixit",
@@ -126,8 +126,8 @@
   },
   {
     "name": "CRI Pumps",
-    "imageUrl": "https://res.cloudinary.com/dvvpabney/image/upload/v1761394798/images_1_ro4beh.png",
-    "category": "Plumbing,Hardware"
+    "category": "Plumbing,Hardware",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794556798/products/a9y2mrihj2uecjyy9mvg.png"
   },
   {
     "name": "Yama Locks",
@@ -151,8 +151,8 @@
   },
   {
     "name": "Aceline",
-    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1776512419/eda7db060cee8a12b7605311d8e851ee.w509.h490_lrvrph.png",
-    "category": "Electrical"
+    "category": "Electrical",
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794557509/products/iea6ulatewstyclpxfyf.png"
   },
   {
     "name": "Hindware",
@@ -182,7 +182,7 @@
   {
     "name": "ORIENT",
     "category": "Electrical",
-    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1778151668/images_2_xsugzg.png"
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794556525/products/pd7shabotynzv3d5cgxm.png"
   },
   {
     "name": "REMI",
@@ -242,11 +242,11 @@
   {
     "name": "Pidilite",
     "category": "Hardwares",
-    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794466273/products/npwfy58so6mxltkftjcf.png"
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794557222/products/znqkb9ssgt8l2vfpef6s.jpg"
   },
   {
     "name": "Roff",
     "category": "Hardwares",
-    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794469876/images_3_-Photoroom_ppcxbk.png"
+    "imageUrl": "https://res.cloudinary.com/dthi2vgiz/image/upload/v1794469929/images_3_xho23d.jpg"
   }
 ]

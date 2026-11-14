@@ -130,15 +130,18 @@ async function generateAI(productName, category, subcategory, brand, type, isFea
   const specificationsInstruction = customFeatures ? `\n- Use these provided product details as technical specifications where relevant: "${customFeatures}"` : '';
   const jsonKeys = isFeatured ? '"description", "specifications", "meta_title", "meta_description", "slogan"' : '"description", "specifications", "meta_title", "meta_description"';
 
-  const prompt = `You are a creative copywriter for a premium hardware brand. Write a *highly personalized* product description that feels like a story, highlighting:
-- the exact product name and brand,
-- its technical details, finish, size, material, mounting, wattage, capacity, warranty, or other real specifications,
-- the ideal use‑case or space where it shines,
-- a subtle invitation to the buyer.${specificationsInstruction}
+  const prompt = `You are a professional B2B/retail technical copywriter for a hardware and industrial supplies company. Write a clear, factual, professional, and SEO-friendly product description (between 250 and 450 characters).
+
+STRICT RULES FOR DESCRIPTION:
+- Do NOT write poetic storytelling, metaphors, philosophy, or meditation-style prose (NO words like "Imagine", "whisper of age", "testament of time", "cherished", "symphony", "embrace", "legacy").
+- Tone must be strictly formal, commercial, crisp, and informative.
+- Highlight the exact product name, brand, key technical characteristics (material, dimensions, capacity, wattage, or voltage), applications, and performance benefits.
+- State clearly what the product does, where it is used, and why it is reliable.${specificationsInstruction}
+
 Also create:
-0. 4 to 6 technical specification points in a JSON array named "specifications". This must be an array of strings, not objects. Use factual product specs only. Prefer concise key-value style like "Material: Brass", "Finish: Chrome", "Mount Type: Wall Mounted", "Size: 600 mm". Do not write benefits, explanations, sales copy, or catchy phrases.
-1️⃣ A meta title (≤60 characters) that combines the brand and product name with a touch of luxury.
-2️⃣ A meta description (≤160 characters) that captures the essence and key benefit.${featuredInstruction}
+0. 4 to 6 technical specification points in a JSON array named "specifications". This must be an array of strings, not objects. Use factual product specs only. Format as concise "Key: Value" pairs (e.g. "Material: High-Grade Steel", "Finish: Anti-Corrosion", "Application: Industrial / Domestic", "Packaging: 400 ml Can"). Do NOT write marketing fluff or conversational sentences.
+1️⃣ A clean meta title (≤60 characters) combining the brand and product name formally (e.g. "[Brand] [Product Name] - Specifications & Overview").
+2️⃣ A concise, factual meta description (≤160 characters) summarizing key specs and application.${featuredInstruction}
 
 Use ONLY valid JSON with the keys ${jsonKeys}. No extra text.
 

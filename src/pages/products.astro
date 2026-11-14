@@ -2293,6 +2293,11 @@ const breadcrumbs = [
   .featured-variant-3 {
     position: relative;
     overflow: hidden;
+    min-height: clamp(24rem, 42vw, 38rem) !important;
+  }
+
+  .featured-variant-3.featured-span-hero {
+    min-height: clamp(26rem, 45vw, 42rem) !important;
   }
 
   .featured-variant-3 .featured-image-wrapper {
@@ -2310,6 +2315,7 @@ const breadcrumbs = [
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     z-index: 1;
     opacity: 1;
   }
@@ -2329,7 +2335,7 @@ const breadcrumbs = [
     align-items: center;
     text-align: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: clamp(3rem, 6vw, 6rem) 2rem;
     margin: 0; /* Override any desktop margins */
     border-radius: 1rem;
   }
@@ -2361,9 +2367,21 @@ const breadcrumbs = [
   }
 
   @media (min-width: 768px) {
+    .featured-variant-3 {
+      min-height: clamp(28rem, 42vw, 40rem) !important;
+    }
+    .featured-variant-3.featured-span-hero {
+      min-height: clamp(30rem, 46vw, 44rem) !important;
+    }
     .featured-variant-3 .featured-slogan {
       font-size: 3rem;
       max-width: 800px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-variant-3.featured-span-hero {
+      min-height: clamp(32rem, 48vw, 46rem) !important;
     }
   }
 
